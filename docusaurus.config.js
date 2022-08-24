@@ -5,7 +5,7 @@ module.exports = {
   tagline: '',
   url: 'https://docs.rke2.io',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'rancher', // Usually your GitHub org/user name.
