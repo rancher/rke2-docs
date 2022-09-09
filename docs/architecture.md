@@ -11,7 +11,7 @@ What this means is that RKE2 is, at its simplest, a single binary to be installe
 to participate in the [Kubernetes][io-kubernetes] cluster. Once started, RKE2 is then able to bootstrap and supervise
 role-appropriate agents per node while sourcing needed content from the network.
 
-![Architecture Overview](overview.png "RKE2 Architecture Overview")
+![Architecture Overview](/img/overview.png "RKE2 Architecture Overview")
 
 RKE2 brings together a number of Open Source technologies to make this all work:
 

@@ -118,7 +118,7 @@ token: <token from server node>
 "@
 ```
 
-To read more about the config.yaml file, see the [Install Options documentation.](install_options.md#configuration-file)
+To read more about the config.yaml file, see the [Install Options documentation.](configuration.md#configuration-file)
 
 3. Configure your PATH
 ```powershell

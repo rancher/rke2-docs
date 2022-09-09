@@ -120,4 +120,4 @@ The RPM will install a corresponding `rke2-server.service` or `rke2-agent.servic
 
 ### Manual
 
-The RKE2 binary is statically compiled and linked which allows for the RKE2 binary to be portable across Linux distributions without the concern for dependency issues. The simplest installation is to download the binary, make sure it's executable, and copy it into the `${PATH}`, generally `/usr/local/bin`. After first execution, RKE2 will create all necessary directories and files. To configure the system any further, you'll want to reference the [config file](install_options.md) documentation.
+The RKE2 binary is statically compiled and linked which allows for the RKE2 binary to be portable across Linux distributions without the concern for dependency issues. The simplest installation is to download the binary, make sure it's executable, and copy it into the `${PATH}`, generally `/usr/local/bin`. After first execution, RKE2 will create all necessary directories and files. To configure the system any further, you'll want to reference the [config file](configuration.md) documentation.

@@ -55,7 +55,7 @@ module.exports = {
           /* other docs plugin options */
           sidebarPath: require.resolve('./sidebars.js'),
           showLastUpdateTime: true,
-          editUrl: 'https://github.com/kubewarden/docs/edit/main/',
+          editUrl: 'https://github.com/rancher/rke2-docs/edit/main/',
         },
         blog: false, // Optional: disable the blog plugin
         // ...

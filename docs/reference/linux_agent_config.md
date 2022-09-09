@@ -2,11 +2,7 @@
 title: Agent Configuration Reference
 ---
 
-<<<<<<<< HEAD:docs/install/installoptions/linux_agent_config.md
-This is a reference to all parameters that can be used to configure the rke2 agent. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](installoptions.md#configuration-file).
-========
-This is a reference to all parameters that can be used to configure the rke2 agent. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](../install/install_options.md#configuration-file).
->>>>>>>> 36a8979 (Layout rework, fix broken links):docs/reference/linux_agent_config.md
+This is a reference to all parameters that can be used to configure the rke2 agent. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](../install/configuration.md#configuration-file).
 
 ### RKE2 Agent CLI Help
 
