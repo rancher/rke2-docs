@@ -1,4 +1,6 @@
-# Automated Upgrades
+---
+title: Automated Upgrades
+---
 
 ### Overview
 

@@ -1,4 +1,6 @@
-# About Hardened Images
+---
+title: About Hardened Images
+---
 
 RKE2 hardened images are scanned for vulnerabilities at build time, and additional security protections have been added to decrease potential weaknesses:
 * Images are not simply mirrored from upstream builds. The images are built from source on top of a hardened minimal base image, which is currently Red Hat Universal Base Image (UBI).

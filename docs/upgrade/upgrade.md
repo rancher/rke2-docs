@@ -1,6 +1,7 @@
-# Upgrading RKE2 Clusters
-
-
+---
+title: Upgrading RKE2 Clusters
+sidebar_label: Overview
+---
 
 This section describes how to upgrade your rke2 cluster.
 

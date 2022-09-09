@@ -1,4 +1,6 @@
-# Upgrade Basics
+---
+title: Upgrade Basics
+---
 
 
 You can upgrade rke2 by using the installation script, or by manually installing the binary of the desired version.

@@ -1,4 +1,6 @@
-# Configuration Options
+---
+title: Configuration Options
+---
 
 This page focuses on the configuration options available when setting up RKE2:
 
