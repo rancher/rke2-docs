@@ -19,11 +19,6 @@ module.exports = {
       ],
     },
     {
-      type: 'doc',
-      id: 'architecture',
-      label: 'Architecture',
-    },
-    {
       type: 'category',
       label: 'Upgrades',
       items:[
@@ -46,6 +41,7 @@ module.exports = {
         'security/secrets_encryption',
       ],
     },
+    'architecture',
     'cluster_access',
     'backup_restore',
     'networking',
