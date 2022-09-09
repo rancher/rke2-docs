@@ -5,8 +5,6 @@ module.exports = {
   tagline: '',
   url: 'https://rancher.github.io/',
   baseUrl: '/rke2-docs/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   organizationName: 'rancher', // Usually your GitHub org/user name.
   projectName: 'rke2-docs', // Usually your repo name.

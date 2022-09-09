@@ -118,7 +118,7 @@ token: <token from server node>
 "@
 ```
 
-To read more about the config.yaml file, see the [Install Options documentation.](./installoptions/installoptions.md#configuration-file)
+To read more about the config.yaml file, see the [Install Options documentation.](install_options.md#configuration-file)
 
 3. Configure your PATH
 ```powershell
@@ -130,7 +130,7 @@ $env:PATH+=";c:\var\lib\rancher\rke2\bin;c:\usr\local\bin"
     [EnvironmentVariableTarget]::Machine)
 ```
 
-4. Start the RKE2 Windows service by running the binary with the desired parameters. Please see the [Windows Agent Configuration reference](./installoptions/windows_agent_config.md) for additional parameters.  
+4. Start the RKE2 Windows service by running the binary with the desired parameters. Please see the [Windows Agent Configuration reference](../reference/windows_agent_config.md) for additional parameters.  
 
 ```powershell
 c:\usr\local\bin\rke2.exe agent service --add

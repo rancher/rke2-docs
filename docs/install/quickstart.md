@@ -103,7 +103,7 @@ journalctl -u rke2-agent -f
 
 **Note:** Each machine must have a unique hostname. If your machines do not have unique hostnames, set the `node-name` parameter in the `config.yaml` file and provide a value with a valid and unique hostname for each node.
 
-To read more about the config.yaml file, see the [Install Options documentation.](./installoptions/installoptions.md#configuration-file)
+To read more about the config.yaml file, see the [Install Options documentation.](install_options.md#configuration-file)
 
 ### Windows Agent (Worker) Node Installation
 **Windows Support is currently Experimental as of v1.21.3+rke2r1**
@@ -138,7 +138,7 @@ token: <token from server node>
 "@
 ```
 
-To read more about the config.yaml file, see the [Install Options documentation.](./installoptions/installoptions.md#configuration-file)
+To read more about the config.yaml file, see the [Install Options documentation.](install_options.md#configuration-file)
 
 
 #### 3. Configure PATH 
