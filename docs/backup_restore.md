@@ -1,6 +1,4 @@
 ---
-sidebar_label: "Etcd Backup and Restore"
-sidebar_position: 7
 title: "Etcd Backup and Restore"
 ---
 

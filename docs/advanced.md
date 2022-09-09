@@ -1,7 +1,6 @@
 ---
-sidebar_label: "Advanced Options and Configuration"
-sidebar_position: 10
-title: ""
+# sidebar_label: 
+title: "Advanced Options and Configuration"
 ---
 
 
@@ -19,7 +18,7 @@ systemctl stop rke2-server
 rke2 certificate rotate
 systemctl start rke2-server
 ```
-It is also possible to rotate an individual service by passing the `--service` flag, for example: `rke2 certificate rotate --service api-server`. See the [certificate subcommand](https://docs.rke2.io/subcommands/#certificate) for more details.
+It is also possible to rotate an individual service by passing the `--service` flag, for example: `rke2 certificate rotate --service api-server`. See the [certificate subcommand](./reference/subcommands.md#certificate) for more details.
 
 ## Auto-Deploying Manifests
 

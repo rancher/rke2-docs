@@ -62,6 +62,5 @@ module.exports = {
       ],
     },
     'known_issues',
-    'subcommands',
   ],
 };
