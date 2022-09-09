@@ -23,7 +23,7 @@ module.exports = {
       label: 'Upgrades',
       items:[
         'upgrade/upgrade',
-        'upgrade/basic_upgrade',
+        'upgrade/manual_upgrade',
         'upgrade/automated_upgrade',
       ],
     },
