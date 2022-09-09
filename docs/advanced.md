@@ -100,7 +100,7 @@ To disable any of the bundled system charts, set the `disable` parameter in the 
 - `rke2-ingress-nginx`
 - `rke2-metrics-server`
 
-Note that it is the cluster operator's responsibility to ensure that components are disabled or replaced with care, as the server charts play important roles in cluster operability.  Refer to the [architecture overview](architecture/architecture.md#server-charts) for more information on the individual system charts role within the cluster.
+Note that it is the cluster operator's responsibility to ensure that components are disabled or replaced with care, as the server charts play important roles in cluster operability.  Refer to the [architecture overview](./architecture.md#server-charts) for more information on the individual system charts role within the cluster.
 
 ## Installation on classified AWS regions or networks with custom AWS API endpoints
 

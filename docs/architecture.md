@@ -61,7 +61,7 @@ The following ops tooling is also provided by the runtime image:
 - **`kubectl`** (kubernetes cluster maintenance and inspection)
 - **`socat`** (needed by `containerd` for port-forwarding)
 
-After the binaries have been extracted RKE2 will then extract [`/charts/`](../charts/) from the image
+After the binaries have been extracted RKE2 will then extract charts from the image
 into the `/var/lib/rancher/rke2/server/manifests` directory.
 
 #### Initialize Server
@@ -120,7 +120,7 @@ to connect to the `kube-apiserver` and begin their processing.
 
 ##### Server Charts
 
-On server nodes, the `helm-controller` can now apply to the cluster any [charts](../charts/) found in `/var/lib/rancher/rke2/server/manifests`.
+On server nodes, the `helm-controller` can now apply to the cluster any charts found in `/var/lib/rancher/rke2/server/manifests`.
 
 - rke2-canal.yaml or rke2-cilium.yaml (daemonset, bootstrap)
 - rke2-coredns.yaml (deployment, bootstrap)
