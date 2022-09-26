@@ -14,7 +14,7 @@ The primary way to configure RKE2 is through its [config file](#configuration-fi
 
 ### Configuring the Linux Installation Script
 
-As mentioned in the [Quick-Start Guide](../../install/quickstart.md), you can use the installation script available at <https://get.rke2.io> to install RKE2 as a service.
+As mentioned in the [Quick-Start Guide](../../install/quickstart.md), you can use the installation script available at [https://get.rke2.io](https://get.rke2.io]) to install RKE2 as a service.
 
 The simplest form of this command is running, as root user or through `sudo`, as follows:
 
@@ -27,11 +27,11 @@ When using this method to install RKE2, the following environment variables can 
 
 | Environment Variable | Description |
 |-----------------------------|---------------------------------------------|
-| <span style="white-space: nowrap">`INSTALL_RKE2_VERSION`</span> | Version of RKE2 to download from GitHub. Will attempt to download the latest release from the `stable` channel if not specified. `INSTALL_RKE2_CHANNEL` should also be set if installing on an RPM-based system and the desired version does not exist in the `stable` channel. |
-| <span style="white-space: nowrap">`INSTALL_RKE2_TYPE`</span> | Type of systemd service to create, can be either "server" or "agent" Default is "server". |
-| <span style="white-space: nowrap">`INSTALL_RKE2_CHANNEL_URL`</span> | Channel URL for fetching RKE2 download URL. Defaults to `https://update.rke2.io/v1-release/channels`. |
-| <span style="white-space: nowrap">`INSTALL_RKE2_CHANNEL`</span> | Channel to use for fetching RKE2 download URL. Defaults to `stable`. Options include: `stable`, `latest`, `testing`. |
-| <span style="white-space: nowrap">`INSTALL_RKE2_METHOD`</span> | Method of installation to use. Default is on RPM-based systems `rpm`, all else `tar`. |
+|`INSTALL_RKE2_VERSION` | Version of RKE2 to download from GitHub. Will attempt to download the latest release from the `stable` channel if not specified. `INSTALL_RKE2_CHANNEL` should also be set if installing on an RPM-based system and the desired version does not exist in the `stable` channel. |
+| `INSTALL_RKE2_TYPE` | Type of systemd service to create, can be either "server" or "agent" Default is "server". |
+| `INSTALL_RKE2_CHANNEL_URL` | Channel URL for fetching RKE2 download URL. Defaults to `https://update.rke2.io/v1-release/channels`. |
+| `INSTALL_RKE2_CHANNEL`| Channel to use for fetching RKE2 download URL. Defaults to `stable`. Options include: `stable`, `latest`, `testing`. |
+| `INSTALL_RKE2_METHOD` | Method of installation to use. Default is on RPM-based systems `rpm`, all else `tar`. |
 
 This installation script is straight-forward and will do the following:
 
@@ -42,12 +42,14 @@ This installation script is straight-forward and will do the following:
 **Windows Support is currently Experimental as of v1.21.3+rke2r1**
 **Windows Support requires choosing Calico as the CNI for the RKE2 cluster**
 
-As mentioned in the [Quick-Start Guide](../../install/quickstart.md), you can use the installation script available at https://github.com/rancher/rke2/blob/master/install.ps1 to install RKE2 on a Windows Agent Node.
+As mentioned in the [Quick-Start Guide](../../install/quickstart.md), you can use the installation script available at [https://github.com/rancher/rke2/blob/master/install.ps1](https://github.com/rancher/rke2/blob/master/install.ps1) to install RKE2 on a Windows Agent Node.
 
 The simplest form of this command is as follows:
+
 ```powershell
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/rancher/rke2/master/install.ps1 -Outfile install.ps1
 ```
+
 When using this method to install the Windows RKE2 agent, the following parameters can be passed to configure the installation script:
 
 ```console
@@ -69,12 +71,14 @@ OPTIONS
 
 ### Other Windows Installation Script Usage Examples
 #### Install the Latest Version Instead of Stable
+
 ```powershell
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/rancher/rke2/master/install.ps1 -Outfile install.ps1
 ./install.ps1 -Channel Latest
 ```
 
 #### Install the Latest Version using Tar Installation Method
+
 ```powershell
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/rancher/rke2/master/install.ps1 -Outfile install.ps1
 ./install.ps1 -Channel Latest -Method Tar
@@ -128,8 +132,8 @@ As stated, the installation script is primarily concerned with configuring RKE2 
 
 Command | Description
 --------|------------------
-<span style="white-space: nowrap">`rke2 server`</span> | Run the RKE2 management server, which will also launch the Kubernetes control plane components such as the API server, controller-manager, and scheduler. Only Supported on Linux.
-<span style="white-space: nowrap">`rke2 agent`</span> |  Run the RKE2 node agent. This will cause RKE2 to run as a worker node, launching the Kubernetes node services `kubelet` and `kube-proxy`. Supported on Linux and Windows.
-<span style="white-space: nowrap">`rke2 help`</span> | Shows a list of commands or help for one command
+`rke2 server`| Run the RKE2 management server, which will also launch the Kubernetes control plane components such as the API server, controller-manager, and scheduler. Only Supported on Linux.
+`rke2 agent` |  Run the RKE2 node agent. This will cause RKE2 to run as a worker node, launching the Kubernetes node services `kubelet` and `kube-proxy`. Supported on Linux and Windows.
+`rke2 help`| Shows a list of commands or help for one command
 
-The `rke2 server` and `rke2 agent` commands have additional configuration options that can be viewed with <span style="white-space: nowrap">`rke2 server --help`</span> or <span style="white-space: nowrap">`rke2 agent --help`</span>.
+The `rke2 server` and `rke2 agent` commands have additional configuration options that can be viewed with `rke2 server --help` or `rke2 agent --help`.

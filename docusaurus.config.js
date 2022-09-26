@@ -3,8 +3,8 @@
 module.exports = {
   title: 'RKE 2',
   tagline: '',
-  url: 'https://docs.rke2.io',
-  baseUrl: '/',
+  url: 'https://rancher.github.io',
+  baseUrl: '/rke2-docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
@@ -29,7 +29,7 @@ module.exports = {
       items: [
         {
           type: 'doc',
-          docId: 'introduction',
+          docId: 'index',
           position: 'right',
           label: 'Docs',
           className: 'navbar__docs',

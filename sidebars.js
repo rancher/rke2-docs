@@ -1,6 +1,6 @@
 module.exports = {
   mySidebar: [
-    'introduction',
+    'index',
     {
       type: 'category',
       label: 'Install',
