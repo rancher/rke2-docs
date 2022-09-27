@@ -45,7 +45,9 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
     
     For more information about the full options of the Canal config please refer to the [rke2-charts](https://github.com/rancher/rke2-charts/blob/main-source/packages/rke2-canal/charts/values.yaml).
 
-    Canal is currently no supported in the windows installation of RKE2
+    > **Note:** Canal requires the iptables or xtables-nft package to be installed on the node.
+
+    > **Warning:** Canal is currently not supported on clusters with Windows nodes.
 
 === "Cilium CNI plugin"
     Starting with RKE2 v1.21, Cilium can be deployed as the CNI plugin. To do so, pass `cilium` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
@@ -81,7 +83,7 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
 
     For more information, please check the [upstream docs](https://docs.cilium.io/en/v1.11/gettingstarted/kubeproxy-free/)
 
-    Cilium is currently not supported in the Windows installation of RKE2
+    > **Warning:** Cilium is currently not supported in the Windows installation of RKE2
 
 === "Calico CNI plugin"
     Starting with RKE2 v1.21, Calico can be deployed as the CNI plugin. To do so, pass `calico` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to change the mtu:
@@ -100,6 +102,8 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
     ```
 
     For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.19.2-204/values.yaml)
+
+    > **Note:** Calico requires the iptables or xtables-nft package  to be installed on the node.
 
 
 ## Dual-stack configuration

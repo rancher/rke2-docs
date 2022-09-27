@@ -96,3 +96,23 @@ Wicked configures the networking settings of the host based on the sysctl config
 net.ipv4.conf.all.forwarding=1
 net.ipv6.conf.all.forwarding=1
 ```
+
+## Canal and IP exhaustion ##
+
+There are two possible reasons for this:
+
+1. `iptables` binary is not installed in the host and there is a pod defining a hostPort. The pod will be given an IP but its creation will fail and Kubernetes will not cease trying to recreate it, consuming one IP every time it tries. Error messages similar to the following will appear in the containerd log. This is the log showing the error:
+
+```console
+plugin type="portmap" failed (add): failed to open iptables: exec: "iptables": executable file not found in $PATH 
+```
+Please install iptables or xtables-nft package to resolve this problem
+
+
+2. By default Canal keeps track of pod IPs by creating a lock file for each IP in `/var/lib/cni/networks/k8s-pod-network`. Each IP belongs to a single pod and will be deleted as soon as the pod is removed. However, in the unlikely event that containerd loses track of the running pods, lock files may be leaked and Canal will not be able to reuse those IPs anymore. If this occurs, you may experience IP exhaustion errors, for example:
+
+
+```console
+failed to allocate for range 0: no IP addresses available in range set
+```
+There are two ways to resolve this. You can either manually remove unused IPs from that directory or drain the node, run rke2-killall.sh, start the rke2 systemd service and uncordon the node. If you need to undertake any of these actions, please report the problem via GitHub, making sure to specify how it was triggered.
