@@ -3,7 +3,7 @@
 module.exports = {
   title: 'RKE 2',
   tagline: '',
-  url: 'https://rancher.github.io',
+  url: 'https://rancher.github.io/',
   baseUrl: '/rke2-docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
