@@ -1,5 +1,4 @@
 ---
-sidebar_label: "Containerd Registry Configuration"
 title: "Containerd Registry Configuration"
 ---
 

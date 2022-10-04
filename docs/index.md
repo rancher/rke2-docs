@@ -1,8 +1,7 @@
 ---
 slug: "/"
-sidebar_label: "Introduction"
 sidebar_position: 1
-title: ""
+title: "Introduction"
 ---
 
 ![](/img/logo-horizontal-rke2.svg)

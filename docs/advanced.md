@@ -1,7 +1,6 @@
 ---
-sidebar_label: "Advanced Options and Configuration"
-sidebar_position: 10
-title: ""
+# sidebar_label: 
+title: "Advanced Options and Configuration"
 ---
 
 
@@ -19,7 +18,7 @@ systemctl stop rke2-server
 rke2 certificate rotate
 systemctl start rke2-server
 ```
-It is also possible to rotate an individual service by passing the `--service` flag, for example: `rke2 certificate rotate --service api-server`. See the [certificate subcommand](https://docs.rke2.io/subcommands/#certificate) for more details.
+It is also possible to rotate an individual service by passing the `--service` flag, for example: `rke2 certificate rotate --service api-server`. See the [certificate subcommand](./reference/subcommands.md#certificate) for more details.
 
 ## Auto-Deploying Manifests
 
@@ -101,7 +100,7 @@ To disable any of the bundled system charts, set the `disable` parameter in the 
 - `rke2-ingress-nginx`
 - `rke2-metrics-server`
 
-Note that it is the cluster operator's responsibility to ensure that components are disabled or replaced with care, as the server charts play important roles in cluster operability.  Refer to the [architecture overview](architecture/architecture.md#server-charts) for more information on the individual system charts role within the cluster.
+Note that it is the cluster operator's responsibility to ensure that components are disabled or replaced with care, as the server charts play important roles in cluster operability.  Refer to the [architecture overview](./architecture.md#server-charts) for more information on the individual system charts role within the cluster.
 
 ## Installation on classified AWS regions or networks with custom AWS API endpoints
 

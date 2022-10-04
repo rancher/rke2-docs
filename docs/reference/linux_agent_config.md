@@ -1,59 +1,30 @@
 ---
-title: Server Configuration Reference
+title: Agent Configuration Reference
 ---
 
-This is a reference to all parameters that can be used to configure the rke2 server. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](installoptions.md#configuration-file).
+This is a reference to all parameters that can be used to configure the rke2 agent. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](../install/configuration.md#configuration-file).
 
-### RKE2 Server CLI Help
+### RKE2 Agent CLI Help
 
-> If an option appears in brackets below, for example `[$RKE2_TOKEN]`, it means that the option can be passed in as an environment variable of that name.
+> If an option appears in brackets below, for example `[$RKE2_URL]`, it means that the option can be passed in as an environment variable of that name.
 
 ```console
 NAME:
-   rke2 server - Run management server
+   rke2 agent - Run node agent
 
 USAGE:
-   rke2 server [OPTIONS]
+   rke2 agent command [command options] [arguments...]
+
+COMMANDS:
+
 
 OPTIONS:
    --config FILE, -c FILE                        (config) Load configuration from FILE (default: "/etc/rancher/rke2/config.yaml") [$RKE2_CONFIG_FILE]
    --debug                                       (logging) Turn on debug logs [$RKE2_DEBUG]
-   --bind-address value                          (listener) rke2 bind address (default: 0.0.0.0)
-   --advertise-address value                     (listener) IPv4 address that apiserver uses to advertise to members of the cluster (default: node-external-ip/node-ip)
-   --tls-san value                               (listener) Add additional hostnames or IPv4/IPv6 addresses as Subject Alternative Names on the server TLS cert
+   --token value, -t value                       (cluster) Token to use for authentication [$RKE2_TOKEN]
+   --token-file value                            (cluster) Token file to use for authentication [$RKE2_TOKEN_FILE]
+   --server value, -s value                      (cluster) Server to connect to [$RKE2_URL]
    --data-dir value, -d value                    (data) Folder to hold state (default: "/var/lib/rancher/rke2")
-   --cluster-cidr value                          (networking) IPv4/IPv6 network CIDRs to use for pod IPs (default: 10.42.0.0/16)
-   --service-cidr value                          (networking) IPv4/IPv6 network CIDRs to use for service IPs (default: 10.43.0.0/16)
-   --service-node-port-range value               (networking) Port range to reserve for services with NodePort visibility (default: "30000-32767")
-   --cluster-dns value                           (networking) IPv4 Cluster IP for coredns service. Should be in your service-cidr range (default: 10.43.0.10)
-   --cluster-domain value                        (networking) Cluster Domain (default: "cluster.local")
-   --token value, -t value                       (cluster) Shared secret used to join a server or agent to a cluster [$RKE2_TOKEN]
-   --token-file value                            (cluster) File containing the cluster-secret/token [$RKE2_TOKEN_FILE]
-   --write-kubeconfig value, -o value            (client) Write kubeconfig for admin client to this file [$RKE2_KUBECONFIG_OUTPUT]
-   --write-kubeconfig-mode value                 (client) Write kubeconfig with this mode [$RKE2_KUBECONFIG_MODE]
-   --kube-apiserver-arg value                    (flags) Customized flag for kube-apiserver process
-   --etcd-arg value                              (flags) Customized flag for etcd process
-   --kube-controller-manager-arg value           (flags) Customized flag for kube-controller-manager process
-   --kube-scheduler-arg value                    (flags) Customized flag for kube-scheduler process
-   --etcd-expose-metrics                         (db) Expose etcd metrics to client interface. (Default false)
-   --etcd-disable-snapshots                      (db) Disable automatic etcd snapshots
-   --etcd-snapshot-name value                    (db) Set the base name of etcd snapshots. Default: etcd-snapshot-<unix-timestamp> (default: "etcd-snapshot")
-   --etcd-snapshot-schedule-cron value           (db) Snapshot interval time in cron spec. eg. every 5 hours '* */5 * * *' (default: "0 */12 * * *")
-   --etcd-snapshot-retention value               (db) Number of snapshots to retain Default: 5 (default: 5)
-   --etcd-snapshot-dir value                     (db) Directory to save db snapshots. (Default location: ${data-dir}/db/snapshots)
-   --etcd-s3                                     (db) Enable backup to S3
-   --etcd-s3-endpoint value                      (db) S3 endpoint url (default: "s3.amazonaws.com")
-   --etcd-s3-endpoint-ca value                   (db) S3 custom CA cert to connect to S3 endpoint
-   --etcd-s3-skip-ssl-verify                     (db) Disables S3 SSL certificate validation
-   --etcd-s3-access-key value                    (db) S3 access key [$AWS_ACCESS_KEY_ID]
-   --etcd-s3-secret-key value                    (db) S3 secret key [$AWS_SECRET_ACCESS_KEY]
-   --etcd-s3-bucket value                        (db) S3 bucket name
-   --etcd-s3-region value                        (db) S3 region / bucket location (optional) (default: "us-east-1")
-   --etcd-s3-folder value                        (db) S3 folder
-   --disable value                               (components) Do not deploy packaged components and delete any deployed components (valid items: rke2-coredns, rke2-ingress-nginx, rke2-metrics-server)
-   --disable-scheduler                           (components) Disable Kubernetes default scheduler
-   --disable-cloud-controller                    (components) Disable rke2 default cloud controller manager
-   --disable-kube-proxy                          (components) Disable running kube-proxy
    --node-name value                             (agent/node) Node name [$RKE2_NODE_NAME]
    --node-label value                            (agent/node) Registering and starting kubelet with set of labels
    --node-taint value                            (agent/node) Registering kubelet with set of taints
@@ -68,15 +39,8 @@ OPTIONS:
    --kubelet-arg value                           (agent/flags) Customized flag for kubelet process
    --kube-proxy-arg value                        (agent/flags) Customized flag for kube-proxy process
    --protect-kernel-defaults                     (agent/node) Kernel tuning behavior. If set, error if kernel tunables are different than kubelet defaults.
-   --agent-token value                           (experimental/cluster) Shared secret used to join agents to the cluster, but not servers [$RKE2_AGENT_TOKEN]
-   --agent-token-file value                      (experimental/cluster) File containing the agent secret [$RKE2_AGENT_TOKEN_FILE]
-   --server value, -s value                      (experimental/cluster) Server to connect to, used to join a cluster [$RKE2_URL]
-   --cluster-reset                               (experimental/cluster) Forget all peers and become sole member of a new cluster [$RKE2_CLUSTER_RESET]
-   --cluster-reset-restore-path value            (db) Path to snapshot file to be restored
-   --system-default-registry value               (image) Private registry to be used for all system images [$RKE2_SYSTEM_DEFAULT_REGISTRY]
    --selinux                                     (agent/node) Enable SELinux in containerd [$RKE2_SELINUX]
    --lb-server-port value                        (agent/node) Local port for supervisor client load-balancer. If the supervisor and apiserver are not colocated an additional port 1 less than this port will also be used for the apiserver client load-balancer. (default: 6444) [$RKE2_LB_SERVER_PORT]
-   --cni value                                   (networking) CNI Plugins to deploy, one of none, calico, canal, cilium; optionally with multus as the first value to enable the multus meta-plugin (default: canal) [$RKE2_CNI]
    --kube-apiserver-image value                  (image) Override image to use for kube-apiserver [$RKE2_KUBE_APISERVER_IMAGE]
    --kube-controller-manager-image value         (image) Override image to use for kube-controller-manager [$RKE2_KUBE_CONTROLLER_MANAGER_IMAGE]
    --kube-proxy-image value                      (image) Override image to use for kube-proxy [$RKE2_KUBE_PROXY_IMAGE]
@@ -102,5 +66,6 @@ OPTIONS:
    --kube-controller-manager-extra-env value     (components) kube-controller-manager extra environment variables [$RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_ENV]
    --kube-proxy-extra-env value                  (components) kube-proxy extra environment variables [$RKE2_KUBE_PROXY_EXTRA_ENV]
    --etcd-extra-env value                        (components) etcd extra environment variables [$RKE2_ETCD_EXTRA_ENV]
-   --cloud-controller-manager-extra-env value    (components) cloud-controller-manager extra environment variables [$RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV]```
+   --cloud-controller-manager-extra-env value    (components) cloud-controller-manager extra environment variables [$RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV]
+   --help, -h                                    show help
 ```

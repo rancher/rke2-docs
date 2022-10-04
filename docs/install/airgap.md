@@ -1,4 +1,6 @@
-# Air-Gap Install
+---
+title: Air-Gap Install
+---
 
 **Important:** If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](https://docs.rke2.io/known_issues/#networkmanager)
 

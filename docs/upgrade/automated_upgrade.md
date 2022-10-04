@@ -1,4 +1,6 @@
-# Automated Upgrades
+---
+title: Automated Upgrades
+---
 
 ### Overview
 
@@ -102,7 +104,7 @@ There are a few important things to call out regarding these plans:
 
 4. The `prepare` step in the agent-plan will cause upgrade jobs for that plan to wait for the server-plan to complete before they execute.
 
-5. Both plans have the `version` field set to v1.23.1+rke2r2. Alternatively, you can omit the `version` field and set the `channel` field to a URL that resolves to a release of rke2. This will cause the controller to monitor that URL and upgrade the cluster any time it resolves to a new release. This works well with the [release channels](basic_upgrade.md/#release-channels). Thus, you can configure your plans with the following channel to ensure your cluster is always automatically upgraded to the newest stable release of rke2:
+5. Both plans have the `version` field set to v1.23.1+rke2r2. Alternatively, you can omit the `version` field and set the `channel` field to a URL that resolves to a release of rke2. This will cause the controller to monitor that URL and upgrade the cluster any time it resolves to a new release. This works well with the [release channels](manual_upgrade.md#release-channels). Thus, you can configure your plans with the following channel to ensure your cluster is always automatically upgraded to the newest stable release of rke2:
 ```
 apiVersion: upgrade.cattle.io/v1
 kind: Plan

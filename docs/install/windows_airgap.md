@@ -1,4 +1,7 @@
-# Windows Air-Gap Install
+---
+title: Windows Air-Gap Install
+---
+
 **Windows Support is currently Experimental as of v1.21.3+rke2r1**
 **Windows Support requires choosing Calico as the CNI for the RKE2 cluster**
 
@@ -118,7 +121,7 @@ token: <token from server node>
 "@
 ```
 
-To read more about the config.yaml file, see the [Install Options documentation.](./installoptions/installoptions.md#configuration-file)
+To read more about the config.yaml file, see the [Install Options documentation.](configuration.md#configuration-file)
 
 3. Configure your PATH
 ```powershell
@@ -130,7 +133,7 @@ $env:PATH+=";c:\var\lib\rancher\rke2\bin;c:\usr\local\bin"
     [EnvironmentVariableTarget]::Machine)
 ```
 
-4. Start the RKE2 Windows service by running the binary with the desired parameters. Please see the [Windows Agent Configuration reference](./installoptions/windows_agent_config.md) for additional parameters.  
+4. Start the RKE2 Windows service by running the binary with the desired parameters. Please see the [Windows Agent Configuration reference](../reference/windows_agent_config.md) for additional parameters.  
 
 ```powershell
 c:\usr\local\bin\rke2.exe agent service --add

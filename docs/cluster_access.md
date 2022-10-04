@@ -1,7 +1,5 @@
 ---
-sidebar_label: "Cluster Access"
-sidebar_position: 6
-title: ""
+title: "Cluster Access"
 ---
 
 The kubeconfig file stored at `/etc/rancher/rke2/rke2.yaml` is used to configure access to the Kubernetes cluster. 

@@ -1,4 +1,6 @@
-# High Availability
+---
+title: High Availability
+---
 
 This section describes how to install a high availability (HA) RKE2 cluster. An HA RKE2 cluster consists of:
 

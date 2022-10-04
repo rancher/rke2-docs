@@ -1,9 +1,6 @@
 ---
-sidebar_label: "Helm Integration"
-sidebar_position: 9
-title: ""
+title: "Helm Integration"
 ---
-# Helm Integration
 
 Helm is the package management tool of choice for Kubernetes. Helm charts provide templating syntax for Kubernetes YAML manifest documents. With Helm we can create configurable deployments instead of just using static files. For more information about creating your own catalog of deployments, check out the docs at [https://helm.sh/docs/intro/quickstart/](https://helm.sh/docs/intro/quickstart/).
 

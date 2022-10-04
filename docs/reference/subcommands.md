@@ -1,10 +1,6 @@
 ---
-sidebar_label: "Subcommands"
-sidebar_position: 11
-title: ""
+title: "Subcommands"
 ---
-
-# Subcommands
 
 The rke2 binary comes packaged with multiple subcommands. This page gives information on the options that come with those.
 
@@ -75,6 +71,7 @@ OPTIONS:
 
 ## secrets-encrypt
 RKE2 has secrets encryption enabled by default. This subcommand allows for disabling that, as well as rotating the encryption key used.
+See the [Secrets Encryption](../security/secrets_encryption.md) page for more information.
 
 ```console
 NAME:

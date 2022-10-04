@@ -1,5 +1,6 @@
 ---
 title: Anatomy of a Next Generation Kubernetes Distribution
+sidebar_label: Architecture
 weight: 204
 ---
 
@@ -11,7 +12,7 @@ What this means is that RKE2 is, at its simplest, a single binary to be installe
 to participate in the [Kubernetes][io-kubernetes] cluster. Once started, RKE2 is then able to bootstrap and supervise
 role-appropriate agents per node while sourcing needed content from the network.
 
-![Architecture Overview](overview.png "RKE2 Architecture Overview")
+![Architecture Overview](/img/overview.png "RKE2 Architecture Overview")
 
 RKE2 brings together a number of Open Source technologies to make this all work:
 
@@ -61,7 +62,7 @@ The following ops tooling is also provided by the runtime image:
 - **`kubectl`** (kubernetes cluster maintenance and inspection)
 - **`socat`** (needed by `containerd` for port-forwarding)
 
-After the binaries have been extracted RKE2 will then extract [`/charts/`](../charts/) from the image
+After the binaries have been extracted RKE2 will then extract charts from the image
 into the `/var/lib/rancher/rke2/server/manifests` directory.
 
 #### Initialize Server
@@ -120,7 +121,7 @@ to connect to the `kube-apiserver` and begin their processing.
 
 ##### Server Charts
 
-On server nodes, the `helm-controller` can now apply to the cluster any [charts](../charts/) found in `/var/lib/rancher/rke2/server/manifests`.
+On server nodes, the `helm-controller` can now apply to the cluster any charts found in `/var/lib/rancher/rke2/server/manifests`.
 
 - rke2-canal.yaml or rke2-cilium.yaml (daemonset, bootstrap)
 - rke2-coredns.yaml (deployment, bootstrap)

@@ -1,4 +1,6 @@
-# Overview
+---
+title: Configuration Options
+---
 
 This page focuses on the configuration options available when setting up RKE2:
 
@@ -14,7 +16,7 @@ The primary way to configure RKE2 is through its [config file](#configuration-fi
 
 ### Configuring the Linux Installation Script
 
-As mentioned in the [Quick-Start Guide](../../install/quickstart.md), you can use the installation script available at [https://get.rke2.io](https://get.rke2.io]) to install RKE2 as a service.
+As mentioned in the [Quick-Start Guide](quickstart.md), you can use the installation script available at <https://get.rke2.io> to install RKE2 as a service.
 
 The simplest form of this command is running, as root user or through `sudo`, as follows:
 
@@ -27,10 +29,10 @@ When using this method to install RKE2, the following environment variables can 
 
 | Environment Variable | Description |
 |-----------------------------|---------------------------------------------|
-|`INSTALL_RKE2_VERSION` | Version of RKE2 to download from GitHub. Will attempt to download the latest release from the `stable` channel if not specified. `INSTALL_RKE2_CHANNEL` should also be set if installing on an RPM-based system and the desired version does not exist in the `stable` channel. |
+| `INSTALL_RKE2_VERSION` | Version of RKE2 to download from GitHub. Will attempt to download the latest release from the `stable` channel if not specified. `INSTALL_RKE2_CHANNEL` should also be set if installing on an RPM-based system and the desired version does not exist in the `stable` channel. |
 | `INSTALL_RKE2_TYPE` | Type of systemd service to create, can be either "server" or "agent" Default is "server". |
 | `INSTALL_RKE2_CHANNEL_URL` | Channel URL for fetching RKE2 download URL. Defaults to `https://update.rke2.io/v1-release/channels`. |
-| `INSTALL_RKE2_CHANNEL`| Channel to use for fetching RKE2 download URL. Defaults to `stable`. Options include: `stable`, `latest`, `testing`. |
+| `INSTALL_RKE2_CHANNEL` | Channel to use for fetching RKE2 download URL. Defaults to `stable`. Options include: `stable`, `latest`, `testing`. |
 | `INSTALL_RKE2_METHOD` | Method of installation to use. Default is on RPM-based systems `rpm`, all else `tar`. |
 
 This installation script is straight-forward and will do the following:
@@ -42,7 +44,7 @@ This installation script is straight-forward and will do the following:
 **Windows Support is currently Experimental as of v1.21.3+rke2r1**
 **Windows Support requires choosing Calico as the CNI for the RKE2 cluster**
 
-As mentioned in the [Quick-Start Guide](../../install/quickstart.md), you can use the installation script available at [https://github.com/rancher/rke2/blob/master/install.ps1](https://github.com/rancher/rke2/blob/master/install.ps1) to install RKE2 on a Windows Agent Node.
+As mentioned in the [Quick-Start Guide](quickstart.md), you can use the installation script available at [https://github.com/rancher/rke2/blob/master/install.ps1](https://github.com/rancher/rke2/blob/master/install.ps1) to install RKE2 on a Windows Agent Node.
 
 The simplest form of this command is as follows:
 
@@ -85,15 +87,15 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/rancher/rke2/master/ins
 ```
 ### Configuring RKE2 Server Nodes
 
-For details on configuring the RKE2 server, refer to the [server configuration reference.](server_config.md)
+For details on configuring the RKE2 server, refer to the [server configuration reference.](../reference/server_config.md)
 
 ### Configuring Linux RKE2 Agent Nodes
 
-For details on configuring the RKE2 agent, refer to the [agent configuration reference.](linux_agent_config.md)
+For details on configuring the RKE2 agent, refer to the [agent configuration reference.](../reference/linux_agent_config.md)
 
 ### Configuring Windows RKE2 Agent Nodes
 
-For details on configuring the RKE2 Windows agent, refer to the [Windows agent configuration reference.](windows_agent_config.md)
+For details on configuring the RKE2 Windows agent, refer to the [Windows agent configuration reference.](../reference/windows_agent_config.md)
 
 ### Configuration File
 
@@ -132,8 +134,8 @@ As stated, the installation script is primarily concerned with configuring RKE2 
 
 Command | Description
 --------|------------------
-`rke2 server`| Run the RKE2 management server, which will also launch the Kubernetes control plane components such as the API server, controller-manager, and scheduler. Only Supported on Linux.
+`rke2 server` | Run the RKE2 management server, which will also launch the Kubernetes control plane components such as the API server, controller-manager, and scheduler. Only Supported on Linux.
 `rke2 agent` |  Run the RKE2 node agent. This will cause RKE2 to run as a worker node, launching the Kubernetes node services `kubelet` and `kube-proxy`. Supported on Linux and Windows.
-`rke2 help`| Shows a list of commands or help for one command
+`rke2 help` | Shows a list of commands or help for one command
 
 The `rke2 server` and `rke2 agent` commands have additional configuration options that can be viewed with `rke2 server --help` or `rke2 agent --help`.

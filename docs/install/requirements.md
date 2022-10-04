@@ -1,7 +1,4 @@
 ---
-slug: ./install/requirements
-sidebar_label: "Requirements"
-sidebar_position: 2
 title: "Requirements"
 ---
 
