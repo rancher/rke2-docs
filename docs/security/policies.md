@@ -142,13 +142,6 @@ The first policy applied is to restrict network traffic to only the namespace it
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  managedFields:
-  - apiVersion: networking.k8s.io/v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:spec:
-        f:ingress: {}
-        f:policyTypes: {}
   name: default-network-policy
   namespace: default
 spec:
@@ -166,14 +159,6 @@ The second policy applied is to the `kube-system` namespace and allows for DNS t
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  managedFields:
-  - apiVersion: networking.k8s.io/v1
-    fieldsV1:
-      f:spec:
-        f:ingress: {}
-        f:podSelector:
-          f:matchLabels:
-        f:policyTypes: {}
   name: default-network-dns-policy
   namespace: kube-system
 spec:
