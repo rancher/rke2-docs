@@ -20,6 +20,8 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
     Canal means using Flannel for inter-node traffic and Calico for intra-node traffic and network policies. By default, it will use vxlan encapsulation to create an overlay network among nodes. Canal is deployed by default in RKE2 and thus nothing must be configured to activate it. To override the default Canal options you should create a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example to override the flannel interface, you can apply the following config:
 
     ```yaml
+    # /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
+    ---
     apiVersion: helm.cattle.io/v1
     kind: HelmChartConfig
     metadata:
@@ -34,6 +36,8 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
     Starting with RKE2 v1.23 it is possible to use flannel's [wireguard backend](https://github.com/flannel-io/flannel/blob/master/Documentation/backends.md#wireguard) for in-kernel WireGuard encapsulation and encryption ([Users of kernels < 5.6 need to install a module](https://www.wireguard.com/install/)). This can be achieved using the following config:
     
     ```yaml
+    # /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
+    ---
     apiVersion: helm.cattle.io/v1
     kind: HelmChartConfig
     metadata:
@@ -59,6 +63,8 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
     Starting with RKE2 v1.21, Cilium can be deployed as the CNI plugin. To do so, pass `cilium` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
 
     ```yaml
+    # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+    ---
     apiVersion: helm.cattle.io/v1
     kind: HelmChartConfig
     metadata:
@@ -70,11 +76,13 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
           enabled: true
     ```
 
-    For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.11.201/values.yaml)
+    For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.12.301/values.yaml)
 
     Cilium includes advanced features to fully replace kube-proxy and implement the routing of services using eBPF instead of iptables. It is not recommended to replace kube-proxy by Cilium if your kernel is not v5.8 or newer, as important bug fixes and features will be missing. To activate this mode, deploy rke2 with the flag `--disable-kube-proxy` and the following cilium configuration:
 
     ```yaml
+    # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+    ---
     apiVersion: helm.cattle.io/v1
     kind: HelmChartConfig
     metadata:
@@ -83,11 +91,13 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
     spec:
       valuesContent: |-
         kubeProxyReplacement: strict
-        k8sServiceHost: REPLACE_WITH_API_SERVER_IP
-        k8sServicePort: REPLACE_WITH_API_SERVER_PORT  
+        k8sServiceHost: <KUBE_API_SERVER_IP>
+        k8sServicePort: <KUBE_API_SERVER_PORT>
+        cni:
+          chainingMode: "none"
     ```
 
-    For more information, please check the [upstream docs](https://docs.cilium.io/en/v1.11/gettingstarted/kubeproxy-free/)
+    For more information, please check the [upstream docs](https://docs.cilium.io/en/v1.12/gettingstarted/kubeproxy-free/)
 
     > **Warning:** Cilium is currently not supported in the Windows installation of RKE2
 
@@ -95,6 +105,8 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
     Starting with RKE2 v1.21, Calico can be deployed as the CNI plugin. To do so, pass `calico` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to change the mtu:
 
     ```yaml
+    # /var/lib/rancher/rke2/server/manifests/rke2-calico-config.yaml
+    ---
     apiVersion: helm.cattle.io/v1
     kind: HelmChartConfig
     metadata:
@@ -107,7 +119,7 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
             mtu: 9000
     ```
 
-    For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.19.2-204/values.yaml)
+    For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.24.102/values.yaml)
 
     > **Note:** Calico requires the iptables or xtables-nft package  to be installed on the node.
 
@@ -116,10 +128,10 @@ The next tabs inform how to deploy each CNI plugin and override the default opti
 
 IPv4/IPv6 dual-stack networking enables the allocation of both IPv4 and IPv6 addresses to Pods and Services. It is supported in RKE2 since v1.21 but not activated by default. To activate it correctly, both RKE2 and the chosen CNI plugin must be configured accordingly. To configure RKE2 in dual-stack mode, it is enough to set a valid IPv4/IPv6 dual-stack cidr for pods and services. To do so, use the flags `--cluster-cidr` and `--service-cidr`, for example:
 
-    ```bash
-    --cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56
-    --service-cidr 10.43.0.0/16,2001:cafe:42:1::/112
-    ```
+```bash
+--cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56
+--service-cidr 10.43.0.0/16,2001:cafe:42:1::/112
+```
 
 Each CNI plugin requires a different configuration for dual-stack:
 
@@ -129,7 +141,7 @@ Each CNI plugin requires a different configuration for dual-stack:
 
 === "Cilium CNI plugin"
 
-    Cilium automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration
+    Cilium automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration.
 
 === "Calico CNI plugin"
 
@@ -139,7 +151,7 @@ Each CNI plugin requires a different configuration for dual-stack:
 ## IPv6 setup
 
 In case of IPv6 only configuration RKE2 needs to use `localhost` to access the liveness URL of the ETCD pod; check that your operating system configures `/etc/hosts` file correctly:
-```
+```bash
 ::1       localhost
 ```
 
@@ -161,8 +173,10 @@ For more information about Multus, refer to the [multus-cni](https://github.com/
 ## Using Multus with Cilium
 
 To use Cilium with Multus the `exclusive` config needs to be disabled.
-You can do this by creating a file named `/var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yml` with the following content:
+You can do this by using the following HelmChartConfig:
 ```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+---
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
 metadata:
@@ -187,8 +201,10 @@ To use any of these plugins, a proper NetworkAttachmentDefinition object will ne
 Starting with RKE2 1.22, RKE2 includes the option to use Whereabouts with Multus to manage the IP addresses of the additional interfaces created through Multus.
 In order to do this, you need to use [HelmChartConfig](../helm.md#customizing-packaged-components-with-helmchartconfig) to configure the Multus CNI to use Whereabouts.
 
-You can do this by creating a file named `/var/lib/rancher/rke2/server/manifests/rke2-multus-config.yml` with the following content:
+You can do this by using the following HelmChartConfig:
 ```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
+---
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
 metadata:
@@ -204,6 +220,8 @@ This will configure the chart for Multus to use `rke2-whereabouts` as a dependen
 
 If you want to customize the Whereabouts image, this is possible like this:
 ```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
+---
 apiVersion: helm.cattle.io/v1
 kind: HelmChartConfig
 metadata:
@@ -235,7 +253,7 @@ The SR-IOV CNI plugin cannot be used as the default CNI plugin for Multus; it mu
 
 After installing the SR-IOV CNI chart, the SR-IOV operator will be deployed. Then, the user must specify what nodes in the cluster are SR-IOV capable by labeling them with `feature.node.kubernetes.io/network-sriov.capable=true`:
 
-```
+```bash
 kubectl label node $NODE-NAME feature.node.kubernetes.io/network-sriov.capable=true
 ```
 
