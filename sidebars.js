@@ -33,10 +33,11 @@ module.exports = {
       items:[
         'security/about_hardened_images',
         'security/hardening_guide',
-        'security/cis_self_assessment15',
         'security/cis_self_assessment16',
+        'security/cis_self_assessment123',
         'security/fips_support',
-        'security/policies',
+        'security/pod_security_policies',
+        'security/pod_security_standards',
         'security/selinux',
         'security/secrets_encryption',
       ],
