@@ -2271,7 +2271,7 @@ A container running in the host's IPC namespace can use IPC to interact with pro
 
 There should be at least one admission control policy defined which does not permit containers to share the host IPC namespace.
 
-If you need to run containers which require hostIPC, this should be definited in a separate policy and you should carefully check to ensure that only limited service accounts and users are given permission to use that policy.
+If you need to run containers which require hostIPC, this should be defined in a separate policy and you should carefully check to ensure that only limited service accounts and users are given permission to use that policy.
 </details>
 
 **Result:** Pass

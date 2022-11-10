@@ -66,11 +66,11 @@ RKE2 will also check the same kernel parameters that the kubelet does and exit w
 
 ### Ensure etcd is configured properly
 
-The CIS Benchmark requires that the etcd data directory be owned by the `etcd` user and group. This implicitly requires the etcd process to be ran as the host-level `etcd` user. To achieve this, RKE2 takes several steps when started with a valid "cis-1.x" profile:
+The CIS Benchmark requires that the etcd data directory be owned by the `etcd` user and group. This implicitly requires the etcd process run as the host-level `etcd` user. To achieve this, RKE2 takes several steps when started with a valid "cis-1.x" profile:
 
 1. Check that the `etcd` user and group exists on the host. If they don't, exit with an error.
 2. Create etcd's data directory with `etcd` as the user and group owner.
-3. Ensure the etcd process is ran as the `etcd` user and group by setting the etcd static pod's `SecurityContext` appropriately.
+3. Ensure the etcd process is run as the `etcd` user and group by setting the etcd static pod's `SecurityContext` appropriately.
 
 ### Setting up hosts
 
@@ -78,7 +78,7 @@ This section gives you the commands necessary to configure your host to meet the
 
 #### Set kernel parameters
 
-When RKE2 is installed, it creates a sysctl config file to set the required parameters appropriately. However, it does not automatically configures the host to use this configuration. You must do this manually. The location of the config file depends on the installation method used.
+When RKE2 is installed, it creates a sysctl config file to set the required parameters appropriately. However, it does not automatically configure the host to use this configuration. You must do this manually. The location of the config file depends on the installation method used.
 
 If RKE2 was installed via RPM, YUM, or DNF (the default on OSes that use RPMs, such as CentOS), run the following commands:
 
