@@ -1,6 +1,8 @@
 ---
 title: Network Options
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 RKE2 requires a CNI plugin to connect pods and services. The Canal CNI plugin is the default and has been supported since the beginning. Starting with RKE2 v1.21, there are two extra supported CNI plugins: Calico and Cilium. All CNI
 plugins get installed via a helm chart after the main components are up and running and can be customized by modifying the helm chart options.
@@ -16,112 +18,125 @@ This page focuses on the network options available when setting up RKE2:
 
 The next tabs inform how to deploy each CNI plugin and override the default options:
 
-=== "Canal CNI plugin"
-    Canal means using Flannel for inter-node traffic and Calico for intra-node traffic and network policies. By default, it will use vxlan encapsulation to create an overlay network among nodes. Canal is deployed by default in RKE2 and thus nothing must be configured to activate it. To override the default Canal options you should create a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example to override the flannel interface, you can apply the following config:
+<Tabs>
+<TabItem value="Canal CNI plugin" default>
+Canal means using Flannel for inter-node traffic and Calico for intra-node traffic and network policies. By default, it will use vxlan encapsulation to create an overlay network among nodes. Canal is deployed by default in RKE2 and thus nothing must be configured to activate it. To override the default Canal options you should create a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example to override the flannel interface, you can apply the following config:
 
-    ```yaml
-    # /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
-    ---
-    apiVersion: helm.cattle.io/v1
-    kind: HelmChartConfig
-    metadata:
-      name: rke2-canal
-      namespace: kube-system
-    spec:
-      valuesContent: |-
-        flannel:
-          iface: "eth1"
-    ```
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-canal
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    flannel:
+      iface: "eth1"
+```
 
-    Starting with RKE2 v1.23 it is possible to use flannel's [wireguard backend](https://github.com/flannel-io/flannel/blob/master/Documentation/backends.md#wireguard) for in-kernel WireGuard encapsulation and encryption ([Users of kernels < 5.6 need to install a module](https://www.wireguard.com/install/)). This can be achieved using the following config:
+Starting with RKE2 v1.23 it is possible to use flannel's [wireguard backend](https://github.com/flannel-io/flannel/blob/master/Documentation/backends.md#wireguard) for in-kernel WireGuard encapsulation and encryption ([Users of kernels < 5.6 need to install a module](https://www.wireguard.com/install/)). This can be achieved using the following config:
     
-    ```yaml
-    # /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
-    ---
-    apiVersion: helm.cattle.io/v1
-    kind: HelmChartConfig
-    metadata:
-      name: rke2-canal
-      namespace: kube-system
-    spec:
-      valuesContent: |-
-        flannel:
-          backend: "wireguard"
-    ```
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-canal
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    flannel:
+      backend: "wireguard"
+```
 
-    After that, please restart the canal daemonset to use the newer config by executing: `kubectl rollout restart ds rke2-canal -n kube-system`    
+After that, please restart the canal daemonset to use the newer config by executing: `kubectl rollout restart ds rke2-canal -n kube-system`    
 
-    For more information about the full options of the Canal config please refer to the [rke2-charts](https://github.com/rancher/rke2-charts/blob/main-source/packages/rke2-canal/charts/values.yaml).
+For more information about the full options of the Canal config please refer to the [rke2-charts](https://github.com/rancher/rke2-charts/blob/main-source/packages/rke2-canal/charts/values.yaml).
 
-    > **Note:** Canal requires the iptables or xtables-nft package to be installed on the node.
+:::note
+Canal requires the iptables or xtables-nft package to be installed on the node.
+:::
 
-    > **Warning:** Canal is currently not supported on clusters with Windows nodes.
+:::caution
+Canal is currently not supported on clusters with Windows nodes.
+:::
 
-    Please check [Known issues and Limitations](https://docs.rke2.io/known_issues/) if you experience IP allocation problems 
+Please check [Known issues and Limitations](https://docs.rke2.io/known_issues/) if you experience IP allocation problems 
 
-=== "Cilium CNI plugin"
-    Starting with RKE2 v1.21, Cilium can be deployed as the CNI plugin. To do so, pass `cilium` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
+</TabItem>
+<TabItem value="Cilium CNI plugin" default>
+Starting with RKE2 v1.21, Cilium can be deployed as the CNI plugin. To do so, pass `cilium` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
 
-    ```yaml
-    # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
-    ---
-    apiVersion: helm.cattle.io/v1
-    kind: HelmChartConfig
-    metadata:
-      name: rke2-cilium
-      namespace: kube-system
-    spec:
-      valuesContent: |-
-        eni:
-          enabled: true
-    ```
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-cilium
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    eni:
+      enabled: true
+```
 
-    For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.12.301/values.yaml)
+For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.12.301/values.yaml)
 
-    Cilium includes advanced features to fully replace kube-proxy and implement the routing of services using eBPF instead of iptables. It is not recommended to replace kube-proxy by Cilium if your kernel is not v5.8 or newer, as important bug fixes and features will be missing. To activate this mode, deploy rke2 with the flag `--disable-kube-proxy` and the following cilium configuration:
+Cilium includes advanced features to fully replace kube-proxy and implement the routing of services using eBPF instead of iptables. It is not recommended to replace kube-proxy by Cilium if your kernel is not v5.8 or newer, as important bug fixes and features will be missing. To activate this mode, deploy rke2 with the flag `--disable-kube-proxy` and the following cilium configuration:
 
-    ```yaml
-    # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
-    ---
-    apiVersion: helm.cattle.io/v1
-    kind: HelmChartConfig
-    metadata:
-      name: rke2-cilium
-      namespace: kube-system
-    spec:
-      valuesContent: |-
-        kubeProxyReplacement: strict
-        k8sServiceHost: <KUBE_API_SERVER_IP>
-        k8sServicePort: <KUBE_API_SERVER_PORT>
-        cni:
-          chainingMode: "none"
-    ```
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-cilium
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    kubeProxyReplacement: strict
+    k8sServiceHost: <KUBE_API_SERVER_IP>
+    k8sServicePort: <KUBE_API_SERVER_PORT>
+    cni:
+      chainingMode: "none"
+```
 
-    For more information, please check the [upstream docs](https://docs.cilium.io/en/v1.12/gettingstarted/kubeproxy-free/)
+For more information, please check the [upstream docs](https://docs.cilium.io/en/v1.12/gettingstarted/kubeproxy-free/)
 
-    > **Warning:** Cilium is currently not supported in the Windows installation of RKE2
+:::caution
+Cilium is currently not supported in the Windows installation of RKE2
+::::
 
-=== "Calico CNI plugin"
-    Starting with RKE2 v1.21, Calico can be deployed as the CNI plugin. To do so, pass `calico` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to change the mtu:
+</TabItem>
+<TabItem value="Calico CNI plugin" default>
+Starting with RKE2 v1.21, Calico can be deployed as the CNI plugin. To do so, pass `calico` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to change the mtu:
 
-    ```yaml
-    # /var/lib/rancher/rke2/server/manifests/rke2-calico-config.yaml
-    ---
-    apiVersion: helm.cattle.io/v1
-    kind: HelmChartConfig
-    metadata:
-      name: rke2-calico
-      namespace: kube-system
-    spec:
-      valuesContent: |-
-        installation:
-          calicoNetwork:
-            mtu: 9000
-    ```
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-calico-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-calico
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    installation:
+      calicoNetwork:
+        mtu: 9000
+```
 
-    For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.24.102/values.yaml)
+For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.24.102/values.yaml)
 
-    > **Note:** Calico requires the iptables or xtables-nft package  to be installed on the node.
+:::note
+Calico requires the iptables or xtables-nft package  to be installed on the node.
+:::
+</TabItem>
+</Tabs>
 
 
 ## Dual-stack configuration
@@ -136,18 +151,22 @@ IPv4/IPv6 dual-stack networking enables the allocation of both IPv4 and IPv6 add
 
 Each CNI plugin requires a different configuration for dual-stack:
 
-=== "Canal CNI plugin"
+<Tabs>
+<TabItem value="Canal CNI plugin" default>
 
-    Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.
+Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.
 
-=== "Cilium CNI plugin"
+</TabItem>
+<TabItem value="Cilium CNI plugin" default>
 
-    Cilium automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration.
+Cilium automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration.
 
-=== "Calico CNI plugin"
+</TabItem>
+<TabItem value="Calico CNI plugin" default>
 
-    Calico automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. When deployed in dual-stack mode, it creates two different ippool resources. Note that when using dual-stack, calico leverages BGP instead of VXLAN encapsulation. Dual-stack and BGP are currently not supported in the windows installations of RKE2.
-
+Calico automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. When deployed in dual-stack mode, it creates two different ippool resources. Note that when using dual-stack, calico leverages BGP instead of VXLAN encapsulation. Dual-stack and BGP are currently not supported in the windows installations of RKE2.
+</TabItem>
+</Tabs>
 
 ## IPv6 setup
 
