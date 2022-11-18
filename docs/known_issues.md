@@ -118,3 +118,26 @@ Please install iptables or xtables-nft package to resolve this problem
 failed to allocate for range 0: no IP addresses available in range set
 ```
 There are two ways to resolve this. You can either manually remove unused IPs from that directory or drain the node, run rke2-killall.sh, start the rke2 systemd service and uncordon the node. If you need to undertake any of these actions, please report the problem via GitHub, making sure to specify how it was triggered.
+
+## Ingress in CIS Mode
+
+By default, when RKE2 is run with a CIS profile selected by the `profile` parameter, it applies network policies that can be restrictive for ingress. This, coupled with the `rke2-ingress-nginx` chart having `hostNetwork: false` by default, requires users to set network policies of their own to allow access to the ingress URLs. Below is an example networkpolicy that allows ingress to any workload in the namespace it is applied in. See https://kubernetes.io/docs/concepts/services-networking/network-policies/ for more configuration options.
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ingress-to-backends
+spec:
+  podSelector: {}
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+      podSelector:
+        matchLabels:
+          app.kubernetes.io/name: rke2-ingress-nginx
+  policyTypes:
+  - Ingress
+```
+For more information, refer to comments on https://github.com/rancher/rke2/issues/3195.

@@ -10,7 +10,7 @@ This document is a companion to the RKE2 security hardening guide. The hardening
 
 This guide is specific to the **v1.20** release line of RKE2 and the **v1.6.1** release of the CIS Kubernetes Benchmark.
 
-For more detail about each control, including more detailed descriptions and remediations for failing tests, you can refer to the corresponding section of the CIS Kubernetes Benchmark v1.5. You can download the benchmark after logging in to [CISecurity.org]( https://www.cisecurity.org/benchmark/kubernetes/).
+For more detail about each control, including more detailed descriptions and remediations for failing tests, you can refer to the corresponding section of the CIS Kubernetes Benchmark v1.6. You can download the benchmark after logging in to [CISecurity.org]( https://www.cisecurity.org/benchmark/kubernetes/).
 
 #### Testing controls methodology
 
