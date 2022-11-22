@@ -131,3 +131,12 @@ a.btn.navbar__github::before {
 [data-theme='dark'] img[src$='#gh-light-mode-only'] {
   display: none;
 }
+
+/* Mobile */
+@media (max-width: 996px) {
+
+  /* Hide useless "Back to main menu" button */
+  .navbar-sidebar__back {
+    display: none;
+  }
+}
