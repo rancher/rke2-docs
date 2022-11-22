@@ -81,36 +81,30 @@ hr {
 .btn.navbar__github {
   display: inline-block;
   font-weight: 400;
-  color: #212529;
+  color: #fff!important;
+  border-color: #384745;
+  background-color: #384745;
   text-align: center;
   vertical-align: middle;
   user-select: none;
-  background-color: initial;
   border: 2px solid transparent;
-  padding: .375rem .75rem;
+  /* padding: 5px 10px 5px 37px; */
+  padding: 8px 20px 7px 47px;
   font-size: 1rem;
   line-height: 1.66;
   border-radius: 3px;
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-a.btn.navbar__github {
-  border: 2px solid transparent;
-  padding: 8px 20px 7px 47px;
-  font-size: 1rem;
-  line-height: 1.66;
-  font-weight: 400;
-  position: relative;
+  box-shadow: inset 0 1px rgb(255 255 255 / 15%), 0 1px 1px rgb(0 0 0 / 8%);
 }
 
 a.btn.navbar__github {
   font-family: poppins,sans-serif;
+  position: relative;
   text-decoration: none;
   align-items: center;
-  border-radius: 3px;
 }
 
-.btn-secondary.navbar__github:hover {
+.btn.navbar__github:hover {
   color: #fff;
   background-color: #273230;
   border-color: #222a29;
@@ -126,21 +120,14 @@ a.btn.navbar__github::before {
   top: 10px;
 }
 
-
-.icon-github.navbar__github {
-  margin-left: 20px;
-}
-
-.btn-secondary.navbar__github {
-  color: #fff!important;
-  border-color: #384745;
-  background-color: #384745;
-  box-shadow: inset 0 1px rgb(255 255 255 / 15%), 0 1px 1px rgb(0 0 0 / 8%);
-}
-
 .docusaurus-highlight-code-line {
   background-color: rgb(72, 77, 91);
   display: block;
   margin: 0 calc(-1 * var(--ifm-pre-padding));
   padding: 0 var(--ifm-pre-padding);
+}
+
+[data-theme='light'] img[src$='#gh-dark-mode-only'],
+[data-theme='dark'] img[src$='#gh-light-mode-only'] {
+  display: none;
 }
