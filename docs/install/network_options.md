@@ -68,7 +68,7 @@ Please check [Known issues and Limitations](https://docs.rke2.io/known_issues/) 
 
 </TabItem>
 <TabItem value="Cilium CNI plugin" default>
-Starting with RKE2 v1.21, Cilium can be deployed as the CNI plugin. To do so, pass `cilium` as the value of the `--cni` flag. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
+Starting with RKE2 v1.21, Cilium can be deployed as the CNI plugin. To do so, pass `cilium` as the value of the `--cni` flag. Ensure that the nodes have the right required kernel version (>= 4.9.17) and they meet the [requirements](https://docs.cilium.io/en/stable/operations/system_requirements/). To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
 
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
