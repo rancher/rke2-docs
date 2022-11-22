@@ -16,27 +16,21 @@ module.exports = {
 
       // Hides the switch in the navbar
       // Useful if you want to support a single color mode
-      disableSwitch: true,
+      disableSwitch: false,
     },
     navbar: {
       title: "",
       logo: {
         alt: 'logo',
         src: 'img/logo-horizontal-rke2.svg',
+        srcDark: 'img/logo-horizontal-rke2-dark.svg',
       },
       items: [
         {
-          type: 'doc',
-          docId: 'index',
-          position: 'right',
-          label: 'Docs',
-          className: 'navbar__docs',
-        },
-        {
-          href: 'https://github.com/rancher/rke2',
+          to: 'https://github.com/rancher/rke2',
           label: 'GitHub',
           position: 'right',
-          className: 'navbar__github btn btn-secondary icon-github',
+          className: 'navbar__github btn icon-github',
         },
       ],
     },
