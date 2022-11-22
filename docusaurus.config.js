@@ -3,7 +3,7 @@
 module.exports = {
   title: 'RKE 2',
   tagline: '',
-  url: 'docs.rke2.io',
+  url: 'https://docs.rke2.io',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
   organizationName: 'rancher', // Usually your GitHub org/user name.
