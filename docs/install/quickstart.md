@@ -51,7 +51,8 @@ After running this installation:
 * Additional utilities will be installed at `/var/lib/rancher/rke2/bin/`. They include: `kubectl`, `crictl`, and `ctr`. Note that these are not on your path by default.
 * Two cleanup scripts will be installed to the path at `/usr/local/bin/rke2`. They are: `rke2-killall.sh` and `rke2-uninstall.sh`.
 * A [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) file will be written to `/etc/rancher/rke2/rke2.yaml`.
-* A token that can be used to register other server or agent nodes will be created at `/var/lib/rancher/rke2/server/node-token`
+* A token that can be used to register other server nodes will be created at `/var/lib/rancher/rke2/server/node-token`
+* A token that can be used to register other agent nodes will be created at `/var/lib/rancher/rke2/server/agent-token`
 
 **Note:** If you are adding additional server nodes, you must have an odd number in total. An odd number is needed to maintain quorum. See the [High Availability documentation](./ha.md) for more details.
 
@@ -84,7 +85,7 @@ Content for config.yaml:
 
 ```yaml
 server: https://<server>:9345
-token: <token from server node>
+token: <agent-token from server node>
 ```
 
 **Note:** The `rke2 server` process listens on port `9345` for new nodes to register. The Kubernetes API is still served on port `6443`, as normal.
@@ -134,14 +135,14 @@ This script will download the `rke2.exe` Windows binary onto your machine.
 New-Item -Type Directory c:/etc/rancher/rke2 -Force
 Set-Content -Path c:/etc/rancher/rke2/config.yaml -Value @"
 server: https://<server>:9345
-token: <token from server node>
+token: <agent-token from server node>
 "@
 ```
 
 To read more about the config.yaml file, see the [Install Options documentation.](configuration.md#configuration-file)
 
 
-#### 3. Configure PATH 
+#### 3. Configure PATH
 ```powershell
 $env:PATH+=";c:\var\lib\rancher\rke2\bin;c:\usr\local\bin"
 
@@ -159,9 +160,9 @@ $env:PATH+=";c:\var\lib\rancher\rke2\bin;c:\usr\local\bin"
 ```powershell
 rke2.exe agent service --add
 ```
-**Note:** Each machine must have a unique hostname. 
+**Note:** Each machine must have a unique hostname.
 
-If you would prefer to use CLI parameters only instead, run the binary with the desired parameters. 
+If you would prefer to use CLI parameters only instead, run the binary with the desired parameters.
 
 ```powershell
 rke2.exe agent --token <> --server <>
