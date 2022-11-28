@@ -19,7 +19,7 @@ RKE2 has been tested and validated on the following operating systems, and their
 *    CentOS/RHEL 7.8 (amd64)
 *    Rocky/RHEL 8.5 (amd64)
 *    SLES 15 SP3, SP4
-*    OpenSUSE, SLE Micro 5.1, 5.3 (amd64)
+*    OpenSUSE, SLE Micro 5.1, 5.2, 5.3 (amd64)
 
 ### Windows
 :::caution Version Gate
