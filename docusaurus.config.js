@@ -50,6 +50,7 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           showLastUpdateTime: true,
           editUrl: 'https://github.com/rancher/rke2-docs/edit/main/',
+          exclude: ['migration.md'],
         },
         blog: false, // Optional: disable the blog plugin
         // ...
