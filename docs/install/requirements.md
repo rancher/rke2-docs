@@ -21,7 +21,6 @@ RKE2 has been tested and validated on the following operating systems, and their
 *    SLES 15 SP3, OpenSUSE, SLE Micro 5.1 (amd64)
 
 ### Windows
-
 **Windows Support requires choosing Calico as the CNI for the RKE2 cluster**
 
 The RKE2 Windows Node (Worker) agent has been tested and validated on the following operating systems, and their subsequent non-major releases:
