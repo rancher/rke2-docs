@@ -5,7 +5,7 @@ module.exports = {
   tagline: '',
   url: 'https://docs.rke2.io',
   baseUrl: '/',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon.png',
   organizationName: 'rancher', // Usually your GitHub org/user name.
   projectName: 'rke2-docs', // Usually your repo name.
   trailingSlash: false,
