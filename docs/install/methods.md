@@ -2,7 +2,7 @@
 title: Installation Methods
 ---
 
-**Important:** If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues/#networkmanager)
+**Important:** If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager)
 
 RKE2 can be installed to a system in a number of ways, two of which are the preferred and supported methods. Those methods are tarball and RPM. The install script referenced in the Quick Start is a wrapper around these two methods.
 
@@ -12,14 +12,14 @@ This document explains these installation methods in greater detail.
 
 To install RKE2 via install you first need to get the install script. This can be done in a number of ways.
 
-This gets the script and immediately starts the install process.
+This gets the script and immediately starts the installation process.
 
 ```sh
 # curl -sfL https://get.rke2.io | sudo sh -
 curl -sfL https://get.rke2.io | sh -
 ```
 
-This will download the install script and make it executable.
+Alternatively, you can download the install script and make it executable.
 
 ```sh
 curl -sfL https://get.rke2.io --output install.sh
@@ -28,7 +28,7 @@ chmod +x install.sh
 
 #### Installation
 
-The install process defaults to the latest RKE2 version and no other qualifiers are necessary. However, if you want specify a version, you should set the `INSTALL_RKE2_CHANNEL` environment variable. An example below:
+The installation process defaults to the latest RKE2 version and no other qualifiers are necessary. However, if you want to specify a version, you should set the `INSTALL_RKE2_CHANNEL` environment variable. An example below:
 
 ```bash
 INSTALL_RKE2_CHANNEL=latest ./install.sh

@@ -7,7 +7,7 @@ title: Windows Air-Gap Install
 
 RKE2 Windows Agent (Worker) Nodes can be used in an air-gapped environment with two different methods. This requires first completing the RKE2 [airgap setup](./airgap.md)
 
-You can either deploy using the `rke2-windows-<BUILD_VERSION>-amd64-images.tar.gz` tarball release artifact, or by using a private registry. There are currently three tarball artifacts released for Windows in accordance with our validated [Windows versions](./requirements/#windows).
+You can either deploy using the `rke2-windows-<BUILD_VERSION>-amd64-images.tar.gz` tarball release artifact, or by using a private registry. There are currently three tarball artifacts released for Windows in accordance with our validated [Windows versions](requirements.md#windows).
 
 - rke2-windows-1809-amd64-images.tar.gz
 - rke2-windows-2004-amd64-images.tar.gz
