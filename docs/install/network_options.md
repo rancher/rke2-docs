@@ -1,8 +1,6 @@
 ---
 title: Network Options
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 RKE2 requires a CNI plugin to connect pods and services. The Canal CNI plugin is the default and has been supported since the beginning. Starting with RKE2 v1.21, there are two extra supported CNI plugins: Calico and Cilium. All CNI
 plugins get installed via a helm chart after the main components are up and running and can be customized by modifying the helm chart options.
@@ -37,7 +35,7 @@ spec:
 ```
 
 Starting with RKE2 v1.23 it is possible to use flannel's [wireguard backend](https://github.com/flannel-io/flannel/blob/master/Documentation/backends.md#wireguard) for in-kernel WireGuard encapsulation and encryption ([Users of kernels < 5.6 need to install a module](https://www.wireguard.com/install/)). This can be achieved using the following config:
-    
+
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
 ---
@@ -52,7 +50,7 @@ spec:
       backend: "wireguard"
 ```
 
-After that, please restart the canal daemonset to use the newer config by executing: `kubectl rollout restart ds rke2-canal -n kube-system`    
+After that, please restart the canal daemonset to use the newer config by executing: `kubectl rollout restart ds rke2-canal -n kube-system`
 
 For more information about the full options of the Canal config please refer to the [rke2-charts](https://github.com/rancher/rke2-charts/blob/main-source/packages/rke2-canal/charts/values.yaml).
 
@@ -64,7 +62,7 @@ Canal requires the iptables or xtables-nft package to be installed on the node.
 Canal is currently not supported on clusters with Windows nodes.
 :::
 
-Please check [Known issues and Limitations](https://docs.rke2.io/known_issues/) if you experience IP allocation problems 
+Please check [Known issues and Limitations](https://docs.rke2.io/known_issues/) if you experience IP allocation problems
 
 </TabItem>
 <TabItem value="Cilium CNI plugin" default>
