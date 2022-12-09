@@ -92,7 +92,7 @@ You should see your server nodes in the Ready state.
 
 Because RKE2 server nodes are schedulable by default, the minimum number of nodes for an HA RKE2 server cluster is three server nodes and zero agent nodes. To add nodes designated to run your apps and services, join agent nodes to your cluster.
 
-Joining agent nodes in an HA cluster is the same as [joining agent nodes in a single server cluster](quickstart.md#agent-worker-node-installation). You just need to specify the URL the agent should register to and the token it should use.
+Joining agent nodes in an HA cluster is the same as [joining agent nodes in a single server cluster](quickstart.md#linux-agent-worker-node-installation). You just need to specify the URL the agent should register to and the token it should use.
 
 ```yaml
 server: https://my-kubernetes-domain.com:9345
