@@ -241,7 +241,6 @@ This can be remediated by starting RKE2 with the `profile` flag set in the confi
 Below is the minimum necessary configuration needed for hardening RKE2 to pass CIS v1.23 hardened profile `rke2-cis-1.23-profile-hardened` available in Rancher.
 
 ```yaml
-secrets-encryption: "true"
 profile: "cis-1.23"           # CIS 4.2.6, 5.2.1, 5.2.8, 5.2.9, 5.3.2
 ```
 
@@ -251,7 +250,6 @@ profile: "cis-1.23"           # CIS 4.2.6, 5.2.1, 5.2.8, 5.2.9, 5.3.2
 Below is the minimum necessary configuration needed for hardening RKE2 to pass CIS v1.6 hardened profile `rke2-cis-1.6-profile-hardened` available in Rancher.
 
 ```yaml
-secrets-encryption: "true"
 profile: "cis-1.6"           # CIS 4.2.6, 5.2.1, 5.2.8, 5.2.9, 5.3.2
 ```
 

@@ -26,6 +26,10 @@ module.exports = {
         srcDark: 'img/logo-horizontal-rke2-dark.svg',
       },
       items: [
+        { 
+          type: 'search',
+          position: 'right',
+        },
         {
           to: 'https://github.com/rancher/rke2',
           label: 'GitHub',
@@ -60,4 +64,16 @@ module.exports = {
       },
     ],
   ], 
+  themes: [
+    [
+      "@easyops-cn/docusaurus-search-local",
+      /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
+      ({
+        docsRouteBasePath: "/",
+        hashed: true,
+        highlightSearchTermsOnTargetPage: true,
+        indexBlog: false,
+      }),
+    ],
+  ],
 };
