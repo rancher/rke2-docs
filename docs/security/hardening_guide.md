@@ -21,9 +21,13 @@ To help ensure these above requirements are met, RKE2 can be started with the `p
 
 1. Checks that host-level requirements have been met. If they haven't, RKE2 will exit with a fatal error describing the unmet requirements.
 
-2. Configures Pod Security Standards of restricted mode to the whole cluster with exception of the kube-system namespace to allow system pods to run without restrictions, for more information about the pod security standards please refer to the [official documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
+2. Applies network policies that allow the cluster to pass associated controls.
 
-3. Apply network policies that allow the cluster to pass associated controls.
+3. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces.
+   These namespaces are exempted to allow system pods to run without restrictions, which is required for proper operation of the cluster.
+   For more information on the default Pod Security Admission configurations, see [pkg/rke2/psa.go](https://github.com/rancher/rke2/blob/v1.25.4+rke2r1/pkg/rke2/psa.go#L40-L78).
+   For more information about Pod Security Standards, please refer to the [official documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
+
 
 :::note
 The only valid value for the profile flag is `cis-1.23`. It accepts a string value to allow for other profiles in the future.
