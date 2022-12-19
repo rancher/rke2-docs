@@ -75,7 +75,11 @@ Now run the rke2-uninstall.sh script. This will also call the rke2-killall.sh.
 ## Tarball Method
 
 To uninstall RKE2 installed via the Tarball method from your system, simply run the command below. This will terminate the process, remove the RKE2 binary, and clean up files used by RKE2.
-
+### Ubuntu 
 ```bash
 /usr/local/bin/rke2-uninstall.sh
+```
+### SLES
+```bash
+/opt/rke2/bin/rke2-uninstall.sh
 ```
