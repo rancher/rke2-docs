@@ -18,7 +18,7 @@ To configure the snapshot interval or the number of retained snapshots, refer to
 
 In RKE2, snapshots are stored on each etcd node. If you have multiple etcd or etcd + control-plane nodes, you will have multiple copies of local etcd snapshots.
 
-You can take a snapshot manually while RKE2 is running with the `etcd-snapshot` subcommand. For example: `rke2 etcd-snapshot save --name pre-upgrade-snapshot`. See the full list of etcd-snapshot subcommands at the [subcommands page](https://docs.rke2.io/reference/subcommands#etcd-snapshot)
+You can take a snapshot manually while RKE2 is running with the `etcd-snapshot` subcommand. For example: `rke2 etcd-snapshot save --name pre-upgrade-snapshot`. See the full list of etcd-snapshot subcommands at the [subcommands page](reference/subcommands.md#etcd-snapshot)
 
 ## Cluster Reset
 
@@ -95,7 +95,7 @@ rke2 server \
 systemctl start rke2-server
 ```
 
-6. You can continue to add new server and worker nodes to cluster per standard [RKE2 HA installation documentation](https://docs.rke2.io/install/ha/#3-launch-additional-server-nodes).
+6. You can continue to add new server and worker nodes to cluster per standard [RKE2 HA installation documentation](install/ha.md#3-launch-additional-server-nodes).
 
 
 ### Other Notes on Restoring a Snapshot

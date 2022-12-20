@@ -62,7 +62,7 @@ Canal requires the iptables or xtables-nft package to be installed on the node.
 Canal is currently not supported on clusters with Windows nodes.
 :::
 
-Please check [Known issues and Limitations](https://docs.rke2.io/known_issues/) if you experience IP allocation problems
+Please check [Known issues and Limitations](../known_issues.md) if you experience IP allocation problems 
 
 </TabItem>
 <TabItem value="Cilium CNI plugin" default>
