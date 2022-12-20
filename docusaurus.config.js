@@ -9,6 +9,18 @@ module.exports = {
   organizationName: 'rancher', // Usually your GitHub org/user name.
   projectName: 'rke2-docs', // Usually your repo name.
   trailingSlash: false,
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "zh"],
+    localeConfigs: {
+      en: {
+        label: "English",
+      },
+      zh: {
+        label: "简体中文",
+      },
+    },
+  },
   themeConfig: {
     colorMode: {
       // "light" | "dark"
@@ -29,6 +41,10 @@ module.exports = {
         { 
           type: 'search',
           position: 'right',
+        },
+        {
+          type: "localeDropdown",
+          position: "right",
         },
         {
           to: 'https://github.com/rancher/rke2',
