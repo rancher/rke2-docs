@@ -2,9 +2,6 @@
 title: Linux Uninstall
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-
 # Linux Uninstall
 
 :::note
@@ -70,7 +67,7 @@ Now run the rke2-uninstall.sh script. This will also call the rke2-killall.sh.
 </TabItem>
 
 </Tabs>
-  
+
 
 ## Tarball Method
 
