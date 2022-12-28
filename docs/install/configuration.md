@@ -128,6 +128,95 @@ It is also possible to use both a configuration file and CLI arguments.  In thes
 
 Finally, the location of the config file can be changed either through the cli argument `--config FILE, -c FILE`, or the environment variable `$RKE2_CONFIG_FILE`.
 
+### example how to setup ip_vs
+
+on each node:
+
+setup package
+
+```bash
+apt install -y ipvsadm
+```
+
+check:
+
+```bash
+ipvsadm -l
+```
+
+setup auto load modules 
+
+and load modules
+
+```bash
+echo ip_vs_dh >> /etc/modules
+echo ip_vs_ftp >> /etc/modules
+echo ip_vs >> /etc/modules
+echo ip_vs_lblc >> /etc/modules
+echo ip_vs_lblcr >> /etc/modules
+echo ip_vs_lc >> /etc/modules
+echo ip_vs_nq >> /etc/modules
+echo ip_vs_rr >> /etc/modules
+echo ip_vs_sed >> /etc/modules
+echo ip_vs_sh >> /etc/modules
+echo ip_vs_wlc >> /etc/modules
+echo ip_vs_wrr >> /etc/modules
+echo nf_conntrack >> /etc/modules
+
+
+modprobe ip_vs_dh
+modprobe ip_vs_ftp
+modprobe ip_vs
+modprobe ip_vs_lblc
+modprobe ip_vs_lblcr
+modprobe ip_vs_lc
+modprobe ip_vs_nq
+modprobe ip_vs_rr
+modprobe ip_vs_sed
+modprobe ip_vs_sh
+modprobe ip_vs_wlc
+modprobe ip_vs_wrr
+modprobe nf_conntrack
+```
+
+you may check  it:
+
+```bash
+lsmod | grep ip_vs
+lsmod | grep nf_conntrack
+```
+
+configure to use ip_vs kube-proxy-arg  in file /etc/rancher/rke2/config.yaml
+lc is least connections
+rr is round robin
+```yaml
+server: https://.....com:9345
+token: token-here
+tls-san:
+...
+kube-proxy-arg:
+  - proxy-mode=ipvs
+  - ipvs-strict-arp=true
+  - ipvs-scheduler=lc
+```
+
+```bash
+systemctl restart rke2-server
+or
+systemctl restart rke2-agent
+```
+
+check:
+```bash
+ipvsadm -l
+```
+check:
+figure out the pod name and get the logs of that pod, for example
+```bash
+kubectl get pods -A |grep proxy
+kubectl logs -n kube-system                 kube-proxy-yourserver.com
+```
+ 
 ### Configuring when Running the Binary Directly
 
 As stated, the installation script is primarily concerned with configuring RKE2 to run as a service. If you choose to not use the script, you can run RKE2 simply by downloading the binary from our [release page](https://github.com/rancher/rke2/releases/latest), placing it on your path, and executing it. The RKE2 binary supports the following commands:
