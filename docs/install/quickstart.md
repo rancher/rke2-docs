@@ -49,7 +49,7 @@ After running this installation:
 
 * The `rke2-server` service will be installed. The `rke2-server` service will be configured to automatically restart after node reboots or if the process crashes or is killed.
 * Additional utilities will be installed at `/var/lib/rancher/rke2/bin/`. They include: `kubectl`, `crictl`, and `ctr`. Note that these are not on your path by default.
-* Two cleanup scripts will be installed to the path at `/usr/local/bin/rke2`. They are: `rke2-killall.sh` and `rke2-uninstall.sh`.
+* Two cleanup scripts will be installed to the path at `/usr/local/bin`. They are: `rke2-killall.sh` and `rke2-uninstall.sh`.
 * A [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) file will be written to `/etc/rancher/rke2/rke2.yaml`.
 * A token that can be used to register other server or agent nodes will be created at `/var/lib/rancher/rke2/server/node-token`
 
