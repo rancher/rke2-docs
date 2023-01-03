@@ -2,15 +2,15 @@
 title: Air-Gap Install
 ---
 
-**Important:** If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](https://docs.rke2.io/known_issues/#networkmanager)
+**Important:** If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager)
 
 RKE2 can be installed in an air-gapped environment with two different methods. You can either deploy via the `rke2-airgap-images` tarball release artifact, or by using a private registry.
 
 All files mentioned in the steps can be obtained from the assets of the desired released rke2 version [here](https://github.com/rancher/rke2/releases).
 
-If running on an air-gapped node with SELinux enabled, you must manually install the necessary SELinux policy RPM before performing these steps. See our [RPM Documentation](https://docs.rke2.io/install/methods/#rpm) to determine what you need.
+If running on an air-gapped node with SELinux enabled, you must manually install the necessary SELinux policy RPM before performing these steps. See our [RPM Documentation](../install/methods.md#rpm) to determine what you need.
 
-If running on an air-gapped node running SELinux, CentOS, or RHEL 8, with SELinux enabled, the following are required dependencies when doing an [RPM install](https://docs.rke2.io/install/methods/#rpm):
+If running on an air-gapped node running SELinux, CentOS, or RHEL 8, with SELinux enabled, the following are required dependencies when doing an [RPM install](../install/methods.md#rpm):
 
     Installing dependencies:
     container-selinux
@@ -78,4 +78,4 @@ curl -sfL https://get.rke2.io --output install.sh
 ```bash
 INSTALL_RKE2_ARTIFACT_PATH=/root/rke2-artifacts sh install.sh
 ```
-3. Enable and run the service as outlined [here.](https://docs.rke2.io/install/quickstart/#2-enable-the-rke2-server-service)
+3. Enable and run the service as outlined [here.](quickstart.md#2-enable-the-rke2-server-service)

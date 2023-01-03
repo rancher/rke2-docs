@@ -18,7 +18,7 @@ jobs:
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-      - name: Check internal links
-        run: yarn run remark --quiet --frail docs/
+      - name: Check links
+        run: yarn run remark --use remark-validate-links --use remark-lint-no-dead-urls  --frail ./docs
       - name: Test build website
         run: yarn build
