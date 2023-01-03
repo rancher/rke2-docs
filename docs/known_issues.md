@@ -64,7 +64,7 @@ For more information regarding exact failures with detailed logs when not follow
 ## Control Groups V2
 
 RKE2 v1.19.5+ ships with `containerd` v1.4.x or later, hence should run on cgroups v2 capable systems.  
-Older versions (< 1.19.5) is shipped with containerd 1.3.x fork (with back-ported SELinux commits from 1.4.x)
+Older versions (< 1.19.5) are shipped with containerd 1.3.x fork (with back-ported SELinux commits from 1.4.x)
 which does not support cgroups v2 and requires a little up-front configuration:
 
 Assuming a `systemd`-based system, setting the [systemd.unified_cgroup_hierarchy=0](https://www.freedesktop.org/software/systemd/man/systemd.html#systemd.unified_cgroup_hierarchy)
@@ -92,7 +92,7 @@ This issue has been observed in Ubuntu 18.04, Ubuntu 20.04 and openSUSE Leap 15.
 
 ## Wicked
 
-Wicked configures the networking settings of the host based on the sysctl configuration files (e.g. under /etc/sysctl.d/ directory). Even though rke2 is setting parameters such as `/net/ipv4/conf/all/forwarding` to 1, that configuration could be reverted by Wicked whenever it reapplies the network configuration (there are several events that result in reapplying the network configuration as well as rcwicked restart during updates). Consequently, it is very important to enable ipv4 (and ipv6 in case of dual-stack) forwarding in sysctl configuration files. For example, it is recommended to create a file with the name `/etc/sysctl.d/90-rke2.conf` containing these paratemers (ipv6 only needed in case of dual-stack):
+Wicked configures the networking settings of the host based on the sysctl configuration files (e.g. under /etc/sysctl.d/ directory). Even though rke2 is setting parameters such as `/net/ipv4/conf/all/forwarding` to 1, that configuration could be reverted by Wicked whenever it reapplies the network configuration (there are several events that result in reapplying the network configuration as well as rcwicked restart during updates). Consequently, it is very important to enable ipv4 (and ipv6 in case of dual-stack) forwarding in sysctl configuration files. For example, it is recommended to create a file with the name `/etc/sysctl.d/90-rke2.conf` containing these parameters (ipv6 only needed in case of dual-stack):
 
 ```bash
 net.ipv4.conf.all.forwarding=1
