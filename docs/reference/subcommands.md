@@ -56,7 +56,7 @@ USAGE:
    rke2 certificate command [command options] [arguments...]
 
 COMMANDS:
-   rotate  Certificate Rotatation
+   rotate  Certificate Rotation
 
 OPTIONS:
    --debug                     (logging) Turn on debug logs [$RKE2_DEBUG]

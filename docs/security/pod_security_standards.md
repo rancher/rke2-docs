@@ -16,7 +16,7 @@ Starting from Kubernetes version v1.25.0, Pod Security Policies (PSP) are totall
 
 * If running without the `--profile=cis-1.23` option, RKE2 will apply a nonrestricted pod security standard via a configuration file which will enforce `privileged` mode throughout the cluster which allows a completely unrestricted mode to all pods in the cluster.
 
-RKE2 will put this configuration file at `/etc/rancher/rke2/rke2-pss.yaml`, the content of the configuration file varries according to the cis mode which you started rke2:
+RKE2 will put this configuration file at `/etc/rancher/rke2/rke2-pss.yaml`, the content of the configuration file varies according to the cis mode which you started rke2:
 
 **CIS Mode**
 

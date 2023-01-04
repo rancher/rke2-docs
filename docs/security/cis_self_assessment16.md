@@ -841,7 +841,7 @@ By default, RKE2 only sets `NodeRestriction,PodSecurityPolicy` as the parameter 
 Ensure that the `--insecure-bind-address` argument is not set (Automated)
 <details>
 <summary>Rationale</summary>
-If you bind the apiserver to an insecure address, basically anyone who could connect to it over the insecure port, would have unauthenticated and unencrypted access to your master node. The apiserver doesn't do any authentication checking for insecure binds and traffic to the Insecure API port is not encrpyted, allowing attackers to potentially read sensitive data in transit.
+If you bind the apiserver to an insecure address, basically anyone who could connect to it over the insecure port, would have unauthenticated and unencrypted access to your master node. The apiserver doesn't do any authentication checking for insecure binds and traffic to the Insecure API port is not encrypted, allowing attackers to potentially read sensitive data in transit.
 </details>
 
 **Result:** Pass
@@ -1222,7 +1222,7 @@ Ensure that the API Server only makes use of Strong Cryptographic Ciphers (Manua
 
 <details>
 <summary>Rationale</summary>
-TLS ciphers have had a number of known vulnerabilities and weaknesses, which can reduce the protection provided by them. By default Kubernetes supports a number of TLS ciphersuites including some that have security concerns, weakening the protection provided.
+TLS ciphers have had a number of known vulnerabilities and weaknesses, which can reduce the protection provided by them. By default Kubernetes supports a number of TLS cipher suites including some that have security concerns, weakening the protection provided.
 </details>
 
 **Result:** **Manual - Operator Dependent**
@@ -1724,7 +1724,7 @@ stat -c %a /var/lib/rancher/rke2/server/manifests/rke2-kube-proxy.yaml
 Verify that if a file is specified and it exists, the permissions are 644 or more restrictive.
 
 **Remediation:**
-By derfault, RKE2 creates `rke2-kube-proxy.yaml` with `644` permissions. No manual remediation needed.
+By default, RKE2 creates `rke2-kube-proxy.yaml` with `644` permissions. No manual remediation needed.
 
 
 #### 4.1.4
@@ -1768,7 +1768,7 @@ stat -c %a /var/lib/rancher/rke2/agent/kubelet.kubeconfig
 ```
 
 **Remediation:**
-By derfault, RKE2 creates `kubelet.kubeconfig` with `644` permissions. No manual remediation needed.
+By default, RKE2 creates `kubelet.kubeconfig` with `644` permissions. No manual remediation needed.
 
 #### 4.1.6
 Ensure that the kubelet.conf file ownership is set to `root:root` (Manual)
@@ -2115,13 +2115,13 @@ By default, RKE2 implements it's own logic for certificate generation and rotati
 Ensure that the Kubelet only makes use of Strong Cryptographic Ciphers (Manual)
 <details>
 <summary>Rationale</summary>
-TLS ciphers have had a number of known vulnerabilities and weaknesses, which can reduce the protection provided by them. By default Kubernetes supports a number of TLS ciphersuites including some that have security concerns, weakening the protection provided.
+TLS ciphers have had a number of known vulnerabilities and weaknesses, which can reduce the protection provided by them. By default Kubernetes supports a number of TLS cipher suites including some that have security concerns, weakening the protection provided.
 </details>
 
 **Result:** Manual - Operator Dependent
 
 **Remediation:**
-Configuration of the parameter is dependent on your use case. Please see the CIS Kubernetes Benchmark for suggestions on configuring this for your usecase.
+Configuration of the parameter is dependent on your use case. Please see the CIS Kubernetes Benchmark for suggestions on configuring this for your use case.
 
 
 ## 5 Kubernetes Policies
@@ -2539,7 +2539,7 @@ If possible, rewrite application code to read secrets from mounted secret files,
 Consider external secret storage (Manual)
 <details>
 <summary>Rationale</summary>
-Kubernetes supports secrets as first-class objects, but care needs to be taken to ensure that access to secrets is carefully limited. Using an external secrets provider can ease the management of access to secrets, especially where secrests are used across both Kubernetes and non-Kubernetes environments.
+Kubernetes supports secrets as first-class objects, but care needs to be taken to ensure that access to secrets is carefully limited. Using an external secrets provider can ease the management of access to secrets, especially where secrets are used across both Kubernetes and non-Kubernetes environments.
 </details>
 
 **Result:** Manual
