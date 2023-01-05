@@ -112,7 +112,7 @@ When the `profile` flag is set it does the following:
 
 3. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces.
    These namespaces are exempted to allow system pods to run without restrictions, which is required for proper operation of the cluster.  
-   For more information about the PSA configuration, see the default [Pod Security Admission configurations](./pod_security_standards.md#pod-security-standards).  
+   For more information about the PSA configuration, see the default [Pod Security Admission configurations](pod_security_standards.md#pod-security-standards).  
    For more information about Pod Security Standards, please refer to the [official documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
 
 
@@ -155,7 +155,7 @@ With the `cis-1.23` profile:
 Without the `cis-1.23` profile:
 * RKE2 will apply a nonrestricted pod security standard via a configuration file which will enforce `privileged` mode throughout the cluster which allows a completely unrestricted mode to all pods in the cluster.
 
-See the [Pod Security Policies](./pod_security_standards.md) page for more details.
+See the [Pod Security Policies](pod_security_standards.md) page for more details.
 </TabItem>
 
 <TabItem value='v1.24 and Older'>
@@ -167,7 +167,7 @@ With the `cis-1.6` profile:
 Without the `cis-1.6` profile:
 * RKE2 will put an unrestricted policy in place that allows Kubernetes to run as though the `PodSecurityPolicy` admission controller was not enabled.
 
-See the [Pod Security Policies](./pod_security_policies.md) page for more details.
+See the [Pod Security Policies](pod_security_policies.md) page for more details.
 </TabItem>
 </Tabs>
 
