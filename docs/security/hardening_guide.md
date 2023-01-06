@@ -39,9 +39,7 @@ The CIS Benchmark requires that the etcd data directory be owned by the `etcd` u
 2. Create etcd's data directory with `etcd` as the user and group owner.
 3. Ensure the etcd process is run as the `etcd` user and group by setting the etcd static pod's `SecurityContext` appropriately.
 
-### Setting up hosts
-
-This section gives you the commands necessary to configure your host to meet the above requirements.
+To meet the above requirements, you must:
 
 #### Set kernel parameters
 
