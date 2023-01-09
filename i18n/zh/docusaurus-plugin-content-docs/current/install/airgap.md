@@ -2,15 +2,15 @@
 title: 离线安装
 ---
 
-**重要**：如果你的节点安装并启用了 NetworkManager，请[确保将其配置为忽略 CNI 管理的接口](https://docs.rke2.io/known_issues/#networkmanager)。
+**重要**：如果你的节点安装并启用了 NetworkManager，请[确保将其配置为忽略 CNI 管理的接口](../known_issues.md#networkmanager)。
 
 你可以使用两种不同的方法在离线环境中安装 RKE2。你可以通过 `rke2-airgap-images` 压缩包发布工件进行部署，也可以使用私有镜像仓库进行部署。
 
 步骤中提到的所有文件都可以从[此处](https://github.com/rancher/rke2/releases)所需 RKE2 版本的 asset 中获取。
 
-如果在启用了 SELinux 的离线节点上运行，则必须在执行这些步骤之前手动安装必要的 SELinux 策略 RPM。请参阅 [RPM 文档](https://docs.rke2.io/install/methods/#rpm) 确定你需要的内容。
+如果在启用了 SELinux 的离线节点上运行，则必须在执行这些步骤之前手动安装必要的 SELinux 策略 RPM。请参阅 [RPM 文档](../install/methods.md#rpm) 确定你需要的内容。
 
-如果在运行 SELinux、CentOS 或 RHEL 8 的离线节点上运行并启用 SELinux，则在执行 [RPM 安装](https://docs.rke2.io/install/methods/#rpm)时需要以下依赖项：
+如果在运行 SELinux、CentOS 或 RHEL 8 的离线节点上运行并启用 SELinux，则在执行 [RPM 安装](../install/methods.md#rpm)时需要以下依赖项：
 
     Installing dependencies:
     container-selinux
@@ -78,4 +78,4 @@ curl -sfL https://get.rke2.io --output install.sh
 ```bash
 INSTALL_RKE2_ARTIFACT_PATH=/root/rke2-artifacts sh install.sh
 ```
-3. 按照[此处](https://docs.rke2.io/install/quickstart/#2-enable-the-rke2-server-service)的概述启用并运行该服务。
+3. 按照[此处](quickstart.md#2-启用-rke2-server-服务)的概述启用并运行该服务。

@@ -18,7 +18,7 @@ title: "Etcd 备份与恢复"
 
 在 RKE2 中，快照会存储在每个 etcd 节点上。如果你有多个 etcd 或 etcd + control plane 节点，你将拥有本地 etcd 快照的多个副本。
 
-你可以在 RKE2 运行时使用 `etcd-snapshot` 子命令手动执行快照。例如：`rke2 etcd-snapshot save --name pre-upgrade-snapshot`。有关 etcd-snapshot 子命令的完整列表，请参阅[子命令页面](https://docs.rke2.io/subcommands/#etcd-snapshot)。
+你可以在 RKE2 运行时使用 `etcd-snapshot` 子命令手动执行快照。例如：`rke2 etcd-snapshot save --name pre-upgrade-snapshot`。有关 etcd-snapshot 子命令的完整列表，请参阅[子命令页面](reference/subcommands.md#etcd-snapshot)。
 
 ## 集群重置
 
@@ -95,7 +95,7 @@ rke2 server \
 systemctl start rke2-server
 ```
 
-6. 你可以根据标准 [RKE2 HA 安装文档](https://docs.rke2.io/install/ha/#3-launch-additional-server-nodes)继续向集群添加新的 Server 和 Worker 节点。
+6. 你可以根据标准 [RKE2 HA 安装文档](install/ha.md#3-启动其他-server-节点)继续向集群添加新的 Server 和 Worker 节点。
 
 
 ### 恢复快照的其他注意事项
