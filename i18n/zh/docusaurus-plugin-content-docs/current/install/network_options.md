@@ -1,8 +1,6 @@
 ---
 title: 网络选项
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 RKE2 需要一个 CNI 插件来连接 pod 和服务。Canal CNI 插件是默认插件，从一开始就被支持。RKE2 v1.21 开始支持另外两个 CNI 插件，分别是 Calico 和 Cilium。在主要组件启动并运行后，所有 CNI 插件均通过 helm chart 安装，并且可以通过修改 helm chart 选项进行自定义。
 
@@ -63,7 +61,7 @@ Canal 要求在节点上安装 iptables 或 xtables-nft 包。
 具有 Windows 节点的集群目前不支持 Canal。
 :::
 
-如果你遇到 IP 分配问题，请参阅[已知问题和限制](https://docs.rke2.io/known_issues/)。
+如果你遇到 IP 分配问题，请参阅[已知问题和限制](../known_issues.md)。
 
 </TabItem>
 <TabItem value="Cilium CNI 插件" default>
@@ -273,5 +271,10 @@ kubectl label node $NODE-NAME feature.node.kubernetes.io/network-sriov.capable=t
 ```
 
 标记后，sriov-network-config Daemonset 将在节点中部署一个 pod，用来收集网络接口的信息。该信息可通过 `sriovnetworknodestates` 自定义资源定义获得。部署几分钟后，每个节点将有一个 `sriovnetworknodestates` 资源，资源名称是节点名称。
+
+注意：来自 `rancher-charts` 的 SR-IOV CNI Chart 现在已包含 `node-feature-discovery` Chart 作为自动依赖项。该 Chart 部署了一个小型守护程序集，它会根据在节点上检测到的功能自动标记每个节点。这适用于硬件和软件功能。值得关注的是 `node-feature-discovery` 可以在检测到兼容节点时自动添加标签 `feature.node.kubernetes.io/network-sriov.capable=true`。
+有关详细信息，请参阅 [NFD 文档](https://kubernetes-sigs.github.io/node-feature-discovery/v0.11/get-started/introduction.html)。
+
+但是，最新版本的 sriov-network-operator 包含了支持硬件的白名单，因此 sriov 实际上仅适用于[该列表](https://github.com/k8snetworkplumbingwg/sriov-network-operator/blob/master/doc/supported-hardware.md)中的 NIC。如果要将 SR-IOV CNI 与不在列表中的 NIC 一起使用，则需要自行更新 `supported-nic-ids` configMap。
 
 有关 SR-IOV Operator 的使用方法，请参阅 [sriov-network-operator](https://github.com/k8snetworkplumbingwg/sriov-network-operator/blob/master/doc/quickstart.md#configuration)。
