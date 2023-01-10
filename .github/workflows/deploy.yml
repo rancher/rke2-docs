@@ -4,22 +4,44 @@ on:
   push:
     branches:
       - main
-
+  workflow_dispatch:
+    inputs:
+      dev_branch:
+            description: 'Change the build branch for deployment to personal website for PR previewing'
+            required: false
+            default: 'main'
+            type: string
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main docs repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.dev_branch }}
+
       - name: Setup Docusaurus
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
           cache: yarn
+      
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Build website
+        if: ${{ github.repository_owner == 'rancher' }}
         run: |
-          yarn install --frozen-lockfile
           yarn build
+          
+      # Developer build used for PR reviews, deploys website with with a custom `baseUrl` for previewing
+      - name: Build website (dev)
+        if: ${{ github.repository_owner != 'rancher' && github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo "replacing baseUrl in docusaurus.config.js with ${{ github.event.repository.name }}"
+          sed -i 's/baseUrl: '\''\//baseUrl: '\''\/${{ github.event.repository.name }}/' docusaurus.config.js
+          yarn build
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
