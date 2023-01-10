@@ -25,6 +25,13 @@ title: 配置选项
 curl -sfL https://get.rke2.io | sh -
 ```
 
+:::note
+中国用户，可以使用以下方法加速安装：
+```
+curl -sfL https://rancher-mirror.rancher.cn/rke2/install.sh | INSTALL_RKE2_MIRROR=cn sh -
+```
+:::
+
 使用该方法安装 RKE2 时，你可以使用以下环境变量来配置安装：
 
 | 环境变量 | 描述 |
