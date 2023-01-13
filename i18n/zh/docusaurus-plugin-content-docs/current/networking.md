@@ -18,7 +18,7 @@ CoreDNS 在启动 server 时默认部署。要禁用它，请在配置文件中�
 
 如果你不安装 CoreDNS，则需要自己安装集群 DNS 提供程序。
 
-默认情况下，CoreDNS 与 [autoscaler](https://github.com/kubernetes-incubator/cluster-proportional-autoscaler) 一起部署。要禁用它或更改配置，请使用 [HelmChartConfig](https://docs.rke2.io/helm/#customizing-packaged-components-with-helmchartconfig) 资源。
+默认情况下，CoreDNS 与 [autoscaler](https://github.com/kubernetes-incubator/cluster-proportional-autoscaler) 一起部署。要禁用它或更改配置，请使用 [HelmChartConfig](helm.md#使用-helmchartconfig-自定义打包组件) 资源。
 
 ### NodeLocal DNSCache
 
