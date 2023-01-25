@@ -89,6 +89,15 @@ systemctl enable rke2-server
 systemctl start rke2-server
 ```
 
+:::note
+中国用户，可以使用以下方法加速安装：
+```
+curl -sfL https://rancher-mirror.rancher.cn/rke2/install.sh | INSTALL_RKE2_MIRROR=cn sh -
+systemctl enable rke2-server
+systemctl start rke2-server
+```
+:::
+
 ## 禁用 Server Chart
 
 在集群引导期间与 `rke2` 绑在一起的 Server Chart 可以被禁用并替换。常见的用例是替换捆绑的 `rke2-ingress-nginx` Chart。

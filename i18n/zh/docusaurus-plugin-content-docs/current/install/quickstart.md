@@ -25,6 +25,13 @@ RKE2 提供了一个安装脚本，可以方便地将其作为服务安装在基
 curl -sfL https://get.rke2.io | sh -
 ```
 
+:::note
+中国用户，可以使用以下方法加速安装：
+```
+curl -sfL https://rancher-mirror.rancher.cn/rke2/install.sh | INSTALL_RKE2_MIRROR=cn sh -
+```
+:::
+
 这会将 `rke2-server` 服务和 `rke2` 二进制文件安装到你的主机上。除非以 root 用户或通过 `sudo` 运行，否则它将失败。
 
 #### 2. 启用 rke2-server 服务
@@ -64,6 +71,13 @@ journalctl -u rke2-server -f
 ```sh
 curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE="agent" sh -
 ```
+
+:::note
+中国用户，可以使用以下方法加速安装：
+```
+curl -sfL https://rancher-mirror.rancher.cn/rke2/install.sh | INSTALL_RKE2_MIRROR=cn INSTALL_RKE2_TYPE="agent" sh -
+```
+:::
 
 这会将 `rke2-agent` 服务和 `rke2` 二进制文件安装到你的主机上。除非以 root 用户或通过 `sudo` 运行，否则它将失败。
 
