@@ -1,5 +1,5 @@
 ---
-title: Default Policy Configuration
+title: Default Pod Security Policies
 ---
 
 This document describes how RKE2 configures `PodSecurityPolicies` and `NetworkPolicies` in order to be secure-by-default while also providing operators with maximum configuration flexibility.

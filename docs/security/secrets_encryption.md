@@ -4,7 +4,7 @@ title: Secrets Encryption
 
 ## Secrets Encryption Config
 
-RKE2 supports encrypting Secrets at rest, and will do the following automatically:
+RKE2 supports [encrypting secrets at rest](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/), and will do the following automatically:
 
 - Generate an AES-CBC key
 - Generate an encryption config file with the generated key:
@@ -43,7 +43,10 @@ RKE2 supports encrypting Secrets at rest, and will do the following automaticall
 Once enabled any created secret will be encrypted with this key. Note that if you disable encryption then any encrypted secrets will not be readable until you enable encryption again using the same key.
 
 ## Secrets Encryption Tool
-_Available as of v1.21.8+rke2r1_
+
+:::caution Version Gate
+Available as of [v1.21.8+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.8%2Brke2r1)
+:::
 
 RKE2 contains a utility [subcommand](../reference/subcommands.md#secrets-encrypt) `secrets-encrypt`, which allows administrators to perform the following tasks:
 
@@ -51,7 +54,9 @@ RKE2 contains a utility [subcommand](../reference/subcommands.md#secrets-encrypt
 - Rotating and deleting encryption keys
 - Reencrypting secrets
 
->**Warning:** Failure to follow proper procedure when rotating secrets encryption keys can cause permanent data loss. Proceed with caution.
+:::warning
+Failure to follow proper procedure when rotating secrets encryption keys can cause permanent data loss. [Creating a snapshot](../backup_restore.md) before rotating is recommended. Proceed with caution.
+:::
 
 ### Single-Server Encryption Key Rotation
 
@@ -90,7 +95,9 @@ To rotate secrets encryption keys on a single-node cluster:
 ### Multi-Server Encryption Key Rotation
 To rotate secrets encryption keys on HA setups:
 
->**Note:** In this example, 3 servers are used to for a HA cluster, referred to as S1, S2, S3. While not required, it is recommended that you pick one server node from which to run the `secrets-encrypt` commands.
+:::note
+In this example, 3 servers are used to for a HA cluster, referred to as S1, S2, S3. While not required, it is recommended that you pick one server node from which to run the `secrets-encrypt` commands.
+:::
 
 1. Prepare on S1
 
@@ -157,7 +164,9 @@ Details on each section are as follows:
 - __Current Rotation Stage__: Indicates the current rotation stage on the node.  
   Stages are: `start`, `prepare`, `rotate`, `reencrypt_request`, `reencrypt_active`, `reencrypt_finished`  
 - __Server Encryption Hashes__: Useful for HA clusters, this indicates whether all servers are on the same stage with their local files. This can be used to identify whether a restart of servers is required before proceeding to the next stage. In the HA example above, node-1 and node-2 have different hashes, indicating that they currently do not have the same encryption configuration. Restarting the servers will sync up their configuration.
-- __Key Table__: Summarizes information about the secrets encryption keys found on the node.  
-  * __Active__: The "*" indicates which, if any, of the keys are currently used for secrets encryption. An active key is used by Kubernetes to encrypt any new secrets.
-  * __Key Type__: RKE2 only supports the `AES-CBC` key type. Find more info [here.](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#providers)
-  * __Name__: Name of the encryption key.  
+
+| Key Table | Description |
+| -------- | ----------- |
+| Active | The `*` indicates which, if any, of the keys are currently used for secrets encryption. The active key is used by Kubernetes to encrypt any new secrets. |
+| Key Type | RKE2 only supports the `AES-CBC` key type. Find more info [here.](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#providers) |
+| Name | Name of the encryption key. Default is `aescbckey-<DATE_AND_TIME>`.|
