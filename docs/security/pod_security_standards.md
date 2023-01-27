@@ -5,14 +5,14 @@ title: Default Pod Security Standards
 This document describes how RKE2 configures `PodSecurityStandards` and `NetworkPolicies` in order to be secure-by-default while also providing operators with maximum configuration flexibility.
 
 :::caution Version Gate
-This document applies to RKE2 v1.25 and higher, which uses Pod Security Standards. For information on Pod Security Policies present in prior releases, please refer to the [Default Policies Documentation](./pod_security_policies.md).
+This document applies to RKE2 v1.25 and newer, please refer to the [Pod Security Policies Documentation](./pod_security_policies.md) for the default policy information for RKE2 v1.24 and older.
 :::
 
 #### Pod Security Standards
 
 Starting from Kubernetes version v1.25.0, Pod Security Policies (PSP) are totally removed from Kubernetes, and replaced by [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/). A default Pod Security Admission config file will be added to the cluster upon startup as follows:
 
-* If running with the `--profile=cis-1.23` option, RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system` and `cis-operator-system` namespaces to ensure successful operation of system pods.
+* If running with the `--profile=cis-1.23` option, RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces to ensure successful operation of system pods.
 
 * If running without the `--profile=cis-1.23` option, RKE2 will apply a nonrestricted pod security standard via a configuration file which will enforce `privileged` mode throughout the cluster which allows a completely unrestricted mode to all pods in the cluster.
 
@@ -38,7 +38,7 @@ plugins:
     exemptions:
       usernames: []
       runtimeClasses: []
-      namespaces: [kube-system, cis-operator-system]
+      namespaces: [kube-system, cis-operator-system, tigera-operator]
 ```
 
 **Non CIS Mode**
