@@ -79,7 +79,7 @@ When rke2 resets the cluster, it creates an empty file at `/var/lib/rancher/rke2
 
 3. Install rke2 v1.20.8+rke2r1 on the first new server node as in the following example:
 ```
-curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION="v1.20.8+rke2r1" sh -`
+curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION="v1.20.8+rke2r1" sh -
 ```
 
 4. Stop RKE2 service on all server nodes if it is enabled and initiate the restore from snapshot on the first server node with the following commands:
