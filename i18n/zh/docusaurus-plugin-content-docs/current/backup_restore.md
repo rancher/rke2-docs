@@ -79,7 +79,7 @@ RKE2 重置集群时会在 `/var/lib/rancher/rke2/server/db/reset-flag` 中创�
 
 3. 在第一个新 Server 节点上安装 rke2 v1.20.8+rke2r1，如下所示：
 ```
-curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION="v1.20.8+rke2r1" sh -`
+curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION="v1.20.8+rke2r1" sh -
 ```
 
 4. 如果 RKE2 已启用，请停止所有 Server 节点上的 RKE2 服务，并使用以下命令在第一个 Server 节点上启动快照恢复：

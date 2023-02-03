@@ -1,5 +1,5 @@
 ---
-title: 默认策略配置
+title: 默认 Pod 安全策略
 ---
 
 本文档描述了 RKE2 如何配置 `PodSecurityPolicies` 和 `NetworkPolicies` 来确保默认安全，同时还为操作人员提供了最大的配置灵活性。
