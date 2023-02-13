@@ -142,7 +142,7 @@ spec:
 ```
 For more information, refer to comments on https://github.com/rancher/rke2/issues/3195.
 
-# Upgrading Hardened Setup from v1.24.x to v1.25.x
+# Upgrading Hardened Clusters from v1.24.x to v1.25.x
 
 Kubernetes dropped the PodSecurityPolicy feature in v1.25 in favor of Pod Security Admission. You can read more about that in the [upstream documentation](https://kubernetes.io/docs/concepts/security/pod-security-policy/). For RKE2, this means there are some manual steps that must be taken in case the `profile: cis-1.5` or `profile: cis-1.6` flag had been set on the nodes.
 
