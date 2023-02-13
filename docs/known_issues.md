@@ -144,7 +144,7 @@ For more information, refer to comments on https://github.com/rancher/rke2/issue
 
 # Upgrading Hardened Clusters from v1.24.x to v1.25.x
 
-Kubernetes dropped the PodSecurityPolicy feature in v1.25 in favor of Pod Security Admission. You can read more about that in the [upstream documentation](https://kubernetes.io/docs/concepts/security/pod-security-policy/). For RKE2, this means there are some manual steps that must be taken in case the `profile: cis-1.5` or `profile: cis-1.6` flag had been set on the nodes.
+Kubernetes removed PodSecurityPolicy from v1.25 in favor of Pod Security Standards. You can read more about PSS in the [upstream documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/). For RKE2, there are some manual steps that must be taken if the `profile` flag has been set on the nodes.
 
 1. On all nodes, update the `profile` value to `cis-1.23`, but do not restart or upgrade RKE2 yet.
 2. Perform the upgrade as normal. If using [Automated Upgrades](./upgrade/automated_upgrade.md), ensure that the namespace where the `system-upgrade-controller` pod is running in is setup to be privileged in accordance with the [Pod Security levels](https://kubernetes.io/docs/concepts/security/pod-security-admission/#pod-security-levels):
