@@ -2,6 +2,9 @@
 title: Network Options
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 RKE2 requires a CNI plugin to connect pods and services. The Canal CNI plugin is the default and has been supported since the beginning. Starting with RKE2 v1.21, there are two extra supported CNI plugins: Calico and Cilium. All CNI
 plugins get installed via a helm chart after the main components are up and running and can be customized by modifying the helm chart options.
 
@@ -16,7 +19,7 @@ This page focuses on the network options available when setting up RKE2:
 
 The next tabs inform how to deploy each CNI plugin and override the default options:
 
-<Tabs>
+<Tabs groupId = "CNIplugin">
 <TabItem value="Canal CNI plugin" default>
 Canal means using Flannel for inter-node traffic and Calico for intra-node traffic and network policies. By default, it will use vxlan encapsulation to create an overlay network among nodes. Canal is deployed by default in RKE2 and thus nothing must be configured to activate it. To override the default Canal options you should create a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example to override the flannel interface, you can apply the following config:
 
@@ -148,7 +151,7 @@ IPv4/IPv6 dual-stack networking enables the allocation of both IPv4 and IPv6 add
 
 Each CNI plugin requires a different configuration for dual-stack:
 
-<Tabs>
+<Tabs groupId = "CNIplugin">
 <TabItem value="Canal CNI plugin" default>
 
 Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.
