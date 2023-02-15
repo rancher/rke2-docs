@@ -141,3 +141,25 @@ spec:
   - Ingress
 ```
 For more information, refer to comments on https://github.com/rancher/rke2/issues/3195.
+
+# Upgrading Hardened Clusters from v1.24.x to v1.25.x
+
+Kubernetes removed PodSecurityPolicy from v1.25 in favor of Pod Security Standards. You can read more about PSS in the [upstream documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/). For RKE2, there are some manual steps that must be taken if the `profile` flag has been set on the nodes.
+
+1. On all nodes, update the `profile` value to `cis-1.23`, but do not restart or upgrade RKE2 yet.
+2. Perform the upgrade as normal. If using [Automated Upgrades](./upgrade/automated_upgrade.md), ensure that the namespace where the `system-upgrade-controller` pod is running in is setup to be privileged in accordance with the [Pod Security levels](https://kubernetes.io/docs/concepts/security/pod-security-admission/#pod-security-levels):
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system-upgrade
+  labels:
+    # This value must be privileged for the controller to run successfully.
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: v1.25
+    # We are setting these to our _desired_ `enforce` level, but note that these below values can be any of the available options.
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/audit-version: v1.25
+    pod-security.kubernetes.io/warn: privileged
+    pod-security.kubernetes.io/warn-version: v1.25
+```
