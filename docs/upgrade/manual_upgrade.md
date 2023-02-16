@@ -9,9 +9,13 @@ You can upgrade rke2 by using the installation script, or by manually installing
 
 ### Release Channels
 
-Upgrades performed via the installation script or using our [automated upgrades](automated_upgrade.md) feature can be tied to different release channels.
+Upgrades performed via the installation script or using our [automated upgrades](automated_upgrade.md) feature can be tied to different release channels. The following channels are available:
 
-Currently, the `latest` channel is the only available channel. Once we have more releases and need to distinguish between the most recent release and the most stable release, we will add a stable channel and set it as the default.
+| Channel         |   Description  |
+|-----------------|---------|
+| stable          | (Default) Stable is recommended for production environments. These releases have been through a period of community hardening, and are compatible with the most recent release of Rancher. |
+| latest          | Latest is recommended for trying out the latest features.  These releases have not yet been through a period of community hardening, and may not be compatible with Rancher. |
+| v1.26 (example) | There is a release channel tied to each Kubernetes minor version, including versions that are end-of-life. These channels will select the latest patch available, not necessarily a stable release. |
 
 For an exhaustive and up-to-date list of channels, you can visit the [rke2 channel service API](https://update.rke2.io/v1-release/channels). For more technical details on how channels work, you can see the [channelserver project](https://github.com/rancher/channelserver).
 
