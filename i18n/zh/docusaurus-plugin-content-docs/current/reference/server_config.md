@@ -38,7 +38,7 @@ OPTIONS:
    --etcd-expose-metrics                         (db) Expose etcd metrics to client interface. (Default false)
    --etcd-disable-snapshots                      (db) Disable automatic etcd snapshots
    --etcd-snapshot-name value                    (db) Set the base name of etcd snapshots. Default: etcd-snapshot-<unix-timestamp> (default: "etcd-snapshot")
-   --etcd-snapshot-schedule-cron value           (db) Snapshot interval time in cron spec. eg. every 5 hours '* */5 * * *' (default: "0 */12 * * *")
+   --etcd-snapshot-schedule-cron value           (db) Snapshot interval time in cron spec. eg. every 5 hours '0 */5 * * *' (default: "0 */12 * * *")
    --etcd-snapshot-retention value               (db) Number of snapshots to retain Default: 5 (default: 5)
    --etcd-snapshot-dir value                     (db) Directory to save db snapshots. (Default location: ${data-dir}/db/snapshots)
    --etcd-s3                                     (db) Enable backup to S3

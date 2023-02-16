@@ -43,12 +43,12 @@ RKE2 会在 `/var/lib/rancher/rke2/agent/etc/containerd/config.toml` 中为 cont
 - `/etc/default/rke2-server`
 - `/etc/default/rke2-agent`
 
-`NO_PROXY` 变量必须包含你的内部网络，以及集群 pod 和 service IP 范围。
+RKE2 会自动将集群内部 Pod 和 Service IP 范围以及集群 DNS 域添加到 `NO_PROXY` 条目列表中。你需要确保 Kubernetes 节点本身使用的 IP 地址范围（即节点的公共和私有 IP）包含在 `NO_PROXY` 列表中，或者可以通过代理访问节点。
 
 ```
 HTTP_PROXY=http://your-proxy.example.com:8888
 HTTPS_PROXY=http://your-proxy.example.com:8888
-NO_PROXY=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.svc,.cluster.local
+NO_PROXY=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
 ```
 
 如果你想在不影响 RKE2 和 Kubelet 的情况下为 containerd 配置代理，你可以在变量前加上 `CONTAINERD_`：
@@ -56,7 +56,7 @@ NO_PROXY=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.svc,.cluster.local
 ```
 CONTAINERD_HTTP_PROXY=http://your-proxy.example.com:8888
 CONTAINERD_HTTPS_PROXY=http://your-proxy.example.com:8888
-CONTAINERD_NO_PROXY=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.svc,.cluster.local
+CONTAINERD_NO_PROXY=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
 ```
 
 ## 节点标签和污点

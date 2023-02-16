@@ -5,14 +5,14 @@ title: 默认 Pod 安全标准
 本文档描述了 RKE2 如何配置 `PodSecurityStandards` 和 `NetworkPolicies` 来确保默认安全，同时还为操作人员提供了最大的配置灵活性。
 
 :::caution 版本
-本文档适用于使用 Pod 安全标准的 RKE2 v1.25 及更高版本。有关先前版本中的 Pod 安全策略的信息，请参阅[默认策略文档](./pod_security_policies.md)。
+本文档适用于 RKE2 v1.25 及更新版本，请参阅 [Pod 安全策略文档](./pod_security_policies.md)了解 RKE2 v1.24 及更低版本的默认策略。
 :::
 
 #### Pod 安全标准
 
 从 Kubernetes v1.25.0 版本开始，Pod Security Policies (PSP) 从 Kubernetes 中完全移除，取而代之的是 [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/)。默认的 Pod Security Admission 配置文件将在启动时添加到集群中，如下所示：
 
-* 如果使用 `--profile=cis-1.23` 选项运行，RKE2 将通过配置文件应用受限的 pod 安全标准，该配置文件将在整个集群中强制执行 `restricted` 模式，其中 `kube-system` 和 `cis-operator-system` 命名空间除外，用于确保系统 pod 能成功运行。
+* 如果使用 `--profile=cis-1.23` 选项运行，RKE2 将通过配置文件应用受限的 Pod 安全标准，该配置文件将在整个集群中强制执行 `restricted` 模式，其中 `kube-system`、`cis-operator-system` 和 `tigera-operator` 命名空间除外，它们用于确保系统 Pod 能成功运行。
 
 * 如果在没有 `--profile=cis-1.23` 选项的情况下运行，RKE2 将通过配置文件应用不受限制的 pod 安全标准，该配置文件将在整个集群中强制执行 `privileged` 模式，该模式允许集群中所有 pod 使用完全不受限的模式。
 
@@ -38,7 +38,7 @@ plugins:
     exemptions:
       usernames: []
       runtimeClasses: []
-      namespaces: [kube-system, cis-operator-system]
+      namespaces: [kube-system, cis-operator-system, tigera-operator]
 ```
 
 **非 CIS 模式**
