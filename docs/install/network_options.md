@@ -11,13 +11,13 @@ This page focuses on the network options available when setting up RKE2:
 - [Dual-stack configuration](#dual-stack-configuration)
 - [Using Multus](#using-multus)
 
-
 ## Install a CNI plugin
 
 The next tabs inform how to deploy each CNI plugin and override the default options:
 
-<Tabs>
+<Tabs groupId = "CNIplugin">
 <TabItem value="Canal CNI plugin" default>
+
 Canal means using Flannel for inter-node traffic and Calico for intra-node traffic and network policies. By default, it will use vxlan encapsulation to create an overlay network among nodes. Canal is deployed by default in RKE2 and thus nothing must be configured to activate it. To override the default Canal options you should create a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example to override the flannel interface, you can apply the following config:
 
 ```yaml
@@ -62,10 +62,11 @@ Canal requires the iptables or xtables-nft package to be installed on the node.
 Canal is currently not supported on clusters with Windows nodes.
 :::
 
-Please check [Known issues and Limitations](../known_issues.md) if you experience IP allocation problems 
+Please check [Known issues and Limitations](../known_issues.md) if you experience IP allocation problems
 
 </TabItem>
 <TabItem value="Cilium CNI plugin" default>
+
 Starting with RKE2 v1.21, Cilium can be deployed as the CNI plugin. To do so, pass `cilium` as the value of the `--cni` flag. Ensure that the nodes have the right required kernel version (>= 4.9.17) and they meet the [requirements](https://docs.cilium.io/en/stable/operations/system_requirements/). To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
 
 ```yaml
@@ -133,9 +134,9 @@ For more information about values available for the Calico chart, please refer t
 :::note
 Calico requires the iptables or xtables-nft package  to be installed on the node.
 :::
+
 </TabItem>
 </Tabs>
-
 
 ## Dual-stack configuration
 
@@ -148,7 +149,7 @@ IPv4/IPv6 dual-stack networking enables the allocation of both IPv4 and IPv6 add
 
 Each CNI plugin requires a different configuration for dual-stack:
 
-<Tabs>
+<Tabs groupId = "CNIplugin">
 <TabItem value="Canal CNI plugin" default>
 
 Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.
@@ -168,10 +169,10 @@ Calico automatically detects the RKE2 configuration for dual-stack and does not 
 ## IPv6 setup
 
 In case of IPv6 only configuration RKE2 needs to use `localhost` to access the liveness URL of the ETCD pod; check that your operating system configures `/etc/hosts` file correctly:
+
 ```bash
 ::1       localhost
 ```
-
 
 ## Using Multus
 
@@ -186,11 +187,11 @@ first position of the list. For example, to use Multus with `canal` as the defau
 
 For more information about Multus, refer to the [multus-cni](https://github.com/k8snetworkplumbingwg/multus-cni/tree/master/docs) documentation.
 
-
 ## Using Multus with Cilium
 
 To use Cilium with Multus the `exclusive` config needs to be disabled.
 You can do this by using the following HelmChartConfig:
+
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
 ---
@@ -205,7 +206,6 @@ spec:
       exclusive: false
 ```
 
-
 ## Using Multus with the containernetworking plugins
 
 Any CNI plugin can be used as secondary CNI plugin for Multus to provide additional network interfaces attached to a pod. However, it is most common to use the CNI plugins maintained by the containernetworking team (bridge, host-device,
@@ -214,11 +214,13 @@ macvlan, etc) as secondary CNI plugins for Multus. These containernetworking plu
 To use any of these plugins, a proper NetworkAttachmentDefinition object will need to be created to define the configuration of the secondary network. The definition is then referenced by pod annotations, which Multus will use to provide extra interfaces to that pod. An example using the macvlan cni plugin with Mu is available [in the multus-cni repo](https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/quickstart.md#storing-a-configuration-as-a-custom-resource).
 
 ## Using Multus with the Whereabouts CNI
+
 [Whereabouts](https://github.com/k8snetworkplumbingwg/whereabouts) is an IP Address Management (IPAM) CNI plugin that assigns IP addresses cluster-wide.
 Starting with RKE2 1.22, RKE2 includes the option to use Whereabouts with Multus to manage the IP addresses of the additional interfaces created through Multus.
 In order to do this, you need to use [HelmChartConfig](../helm.md#customizing-packaged-components-with-helmchartconfig) to configure the Multus CNI to use Whereabouts.
 
 You can do this by using the following HelmChartConfig:
+
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
 ---
@@ -236,6 +238,7 @@ spec:
 This will configure the chart for Multus to use `rke2-whereabouts` as a dependency.
 
 If you want to customize the Whereabouts image, this is possible like this:
+
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
 ---
