@@ -53,7 +53,9 @@ After running this installation:
 * A [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) file will be written to `/etc/rancher/rke2/rke2.yaml`.
 * A token that can be used to register other server or agent nodes will be created at `/var/lib/rancher/rke2/server/node-token`
 
-**Note:** If you are adding additional server nodes, you must have an odd number in total. An odd number is needed to maintain quorum. See the [High Availability documentation](./ha.md) for more details.
+:::note
+If you are adding additional server nodes, you must have an odd number in total. An odd number is needed to maintain quorum. See the [High Availability documentation](./ha.md) for more details.
+:::
 
 ### Linux Agent (Worker) Node Installation
 
@@ -87,7 +89,9 @@ server: https://<server>:9345
 token: <token from server node>
 ```
 
-**Note:** The `rke2 server` process listens on port `9345` for new nodes to register. The Kubernetes API is still served on port `6443`, as normal.
+:::note
+The `rke2 server` process listens on port `9345` for new nodes to register. The Kubernetes API is still served on port `6443`, as normal.
+:::
 
 #### 4. Start the service
 

@@ -26,7 +26,7 @@ RKE2 enables a feature to reset the cluster to one member cluster by passing `--
 
 To pass the reset flag, first you need to stop RKE2 service if its enabled via systemd:
 
-```
+```bash
 systemctl stop rke2-server
 rke2 server --cluster-reset
 ```
@@ -38,12 +38,12 @@ rke2 server --cluster-reset
 When RKE2 is restored from backup, the old data directory will be moved to `/var/lib/rancher/rke2/server/db/etcd-old-%date%/`. RKE2 will then attempt to restore the snapshot by creating a new data directory and start etcd with a new RKE2 cluster with one etcd member.
 
 1. You must stop RKE2 service on all server nodes if it is enabled via systemd. Use the following command to do so:
-```
+```bash
 systemctl stop rke2-server
 ```
 
 2. Next, you will initiate the restore from snapshot on the first server node with the following commands:
-```
+```bash
 rke2 server \
   --cluster-reset \
   --cluster-reset-restore-path=<PATH-TO-SNAPSHOT>
@@ -100,26 +100,27 @@ systemctl start rke2-server
 
 ### Other Notes on Restoring a Snapshot
 
-> * When performing a restore from backup, users do not need to restore a snapshot using the same version of RKE2 with which the snapshot was created. Users may restore using a more recent version. Be aware when changing versions at restore which etcd version is in use.
+* When performing a restore from backup, users do not need to restore a snapshot using the same version of RKE2 with which the snapshot was created. Users may restore using a more recent version. Be aware when changing versions at restore which etcd version is in use.
 
-> * By default, snapshots are enabled and are scheduled to be taken every 12 hours. The snapshots are written to `${data-dir}/server/db/snapshots` with the default `${data-dir}` being `/var/lib/rancher/rke2`.
+* By default, snapshots are enabled and are scheduled to be taken every 12 hours. The snapshots are written to `${data-dir}/server/db/snapshots` with the default `${data-dir}` being `/var/lib/rancher/rke2`.
 
-> **Version-specific requirement for rke2 v1.20.11+rke2r1**
+#### Version-specific requirement for rke2 v1.20.11+rke2r1
 
-> * When restoring RKE2 from backup to a new node in rke2 v1.20.11+rke2r1, you should ensure that all pods are stopped following the initial restore by running `rke2-killall.sh` as follows:
-```
-curl -sfL https://get.rke2.io | sudo INSTALL_RKE2_VERSION=v1.20.11+rke2r1
-rke2 server \
- --cluster-reset \
- --cluster-reset-restore-path=<PATH-TO-SNAPSHOT> \
- --token=<token used in the original cluster>
-rke2-killall.sh
-```
-> Once the restore process is complete, enable and start the rke2-server service on the first server node as follows:    
-```
-systemctl enable rke2-server
-systemctl start rke2-server
-```
+* When restoring RKE2 from backup to a new node in rke2 v1.20.11+rke2r1, you should ensure that all pods are stopped following the initial restore by running `rke2-killall.sh` as follows:
+
+  ```bash
+  curl -sfL https://get.rke2.io | sudo INSTALL_RKE2_VERSION=v1.20.11+rke2r1
+  rke2 server \
+  --cluster-reset \
+  --cluster-reset-restore-path=<PATH-TO-SNAPSHOT> \
+  --token=<token used in the original cluster>
+  rke2-killall.sh
+  ```
+* Once the restore process is complete, enable and start the rke2-server service on the first server node as follows:    
+  ```
+  systemctl enable rke2-server
+  systemctl start rke2-server
+  ```
 
 ### Options
 

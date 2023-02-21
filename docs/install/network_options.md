@@ -142,9 +142,10 @@ Calico requires the iptables or xtables-nft package  to be installed on the node
 
 IPv4/IPv6 dual-stack networking enables the allocation of both IPv4 and IPv6 addresses to Pods and Services. It is supported in RKE2 since v1.21, stable since v1.23 but not activated by default. To activate it correctly, both RKE2 and the chosen CNI plugin must be configured accordingly. To configure RKE2 in dual-stack mode, in the control-plane nodes, you must set a valid IPv4/IPv6 dual-stack cidr for pods and services. To do so, use the flags `--cluster-cidr` and `--service-cidr` for example:
 
-```bash
---cluster-cidr 10.42.0.0/16,2001:cafe:42:0::/56
---service-cidr 10.43.0.0/16,2001:cafe:42:1::/112
+```yaml
+#/etc/rancher/rke2/config.yaml
+cluster-cidr: "10.42.0.0/16,2001:cafe:42:0::/56"
+service-cidr: "10.43.0.0/16,2001:cafe:42:1::/112"
 ```
 
 Each CNI plugin requires a different configuration for dual-stack:
@@ -182,8 +183,16 @@ Starting with RKE2 v1.21 it is possible to deploy the Multus CNI meta-plugin. No
 
 Multus can not be deployed standalone. It always requires at least one conventional CNI plugin that fulfills the Kubernetes cluster network requirements. That CNI plugin becomes the default for Multus, and will be used to provide the primary interface for all pods.
 
-To enable Multus, pass `multus` as the first value to the `--cni` flag, followed by the name of the plugin you want to use alongside Multus (or `none` if you will provide your own default plugin). Note that multus must always be in the
-first position of the list. For example, to use Multus with `canal` as the default plugin you could specify `--cni=multus,canal` or `--cni=multus --cni=canal`.
+To enable Multus, add multus as the first list entry in the cni config key, followed by the name of the plugin you want to use alongside Multus (or `none` if you will provide your own default plugin). Note that multus must always be in the first position of the list. For example, to use Multus with canal as the default plugin you could specify:
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+cni:
+- multus
+- canal
+```
+
+This can also be specified with command-line arguments, i.e. `--cni=multus,canal` or `--cni=multus --cni=canal`.
 
 For more information about Multus, refer to the [multus-cni](https://github.com/k8snetworkplumbingwg/multus-cni/tree/master/docs) documentation.
 

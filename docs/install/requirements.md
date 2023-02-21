@@ -63,7 +63,9 @@ RKE2 performance depends on the performance of the database, and since RKE2 runs
 
 ## Networking
 
-**Important:** If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager). If your node has Wicked installed and enabled, [ensure that the forwarding sysctl config is enabled](../known_issues.md#wicked)
+:::tip Important
+If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager). If your node has Wicked installed and enabled, [ensure that the forwarding sysctl config is enabled](../known_issues.md#wicked)
+:::
 
 The RKE2 server needs port 6443 and 9345 to be accessible by other nodes in the cluster.
 
@@ -73,7 +75,7 @@ If you wish to utilize the metrics server, you will need to open port 10250 on e
 
 **Important:** The VXLAN port on nodes should not be exposed to the world as it opens up your cluster network to be accessed by anyone. Run your nodes behind a firewall/security group that disables access to port 8472.
 
-*Inbound Rules for RKE2 Server Nodes*
+### Inbound Network Rules
 
 | Protocol | Port | Source | Description
 |-----|-----|----------------|---|
