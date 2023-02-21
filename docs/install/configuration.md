@@ -26,7 +26,6 @@ debug: true
 
 The configuration file parameters map directly to CLI arguments, with repeatable CLI arguments being represented as YAML lists. Boolean flags are represented as `true` or `false` in the YAML file.
 
-It is also possible to use both a configuration file and CLI arguments. In these situations, values will be loaded from both sources, but CLI arguments will take precedence. For repeatable arguments such as `--node-label`, the CLI arguments will overwrite all values in the list.
 An identical configuration using solely CLI arguments is shown below to demonstrate this:
 
 ```bash
