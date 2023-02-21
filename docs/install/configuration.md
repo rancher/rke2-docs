@@ -44,7 +44,7 @@ Finally, the location of the config file can be changed either through the cli a
 
 ### Multiple Config Files
 :::info Version Gate
-Available as of [v1.21.0+k3s1](https://github.com/k3s-io/k3s/releases/tag/v1.21.0%2Bk3s1)
+Available as of [v1.21.2+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.2%2Brke2r1)
 :::
 
 Multiple configuration files are supported. Configuration loads by default from `/etc/rancher/rke2/config.yaml` and `/etc/rancher/rke2/config.yaml.d/*.yaml` in alphabetical order. The last value for a given key will be used. Slices are replaced.
