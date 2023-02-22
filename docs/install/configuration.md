@@ -2,19 +2,85 @@
 title: Configuration Options
 ---
 
-This page focuses on the configuration options available when setting up RKE2:
+## Configuration File
 
-- [Configuring the Linux installation script](#configuring-the-linux-installation-script)
-- [Configuring the Windows installation script](#configuring-the-windows-installation-script)
-- [Configuring RKE2 server nodes](#configuring-rke2-server-nodes)
-- [Configuring Linux RKE2 agent nodes](#configuring-linux-rke2-agent-nodes)
-- [Configuring Windows RKE2 agent nodes](#configuring-windows-rke2-agent-nodes)
-- [Using the configuration file](#configuration-file)
-- [Configuring when running the binary directly](#configuring-when-running-the-binary-directly)
+The primary way to configure RKE2 is through its config file. Command line arguments and environment variables are also available, but RKE2 is installed as a systemd service and thus these are not as easy to leverage.
 
-The primary way to configure RKE2 is through its [config file](#configuration-file). Command line arguments and environment variables are also available, but RKE2 is installed as a systemd service and thus these are not as easy to leverage.
+By default, RKE2 will launch with the values present in the YAML file located at `/etc/rancher/rke2/config.yaml`.
 
-### Configuring the Linux Installation Script
+:::note
+The RKE2 config file needs to be created manually. You can do that by running `touch /etc/rancher/rke2/config.yaml` as a privileged user.
+:::
+
+An example of a basic `server` config file is below:
+
+```yaml
+write-kubeconfig-mode: "0644"
+tls-san:
+  - "foo.local"
+node-label:
+  - "foo=bar"
+  - "something=amazing"
+debug: true
+```
+
+The configuration file parameters map directly to CLI arguments, with repeatable CLI arguments being represented as YAML lists. Boolean flags are represented as `true` or `false` in the YAML file.
+
+An identical configuration using solely CLI arguments is shown below to demonstrate this:
+
+```bash
+rke2 server \
+  --write-kubeconfig-mode "0644"    \
+  --tls-san "foo.local"             \
+  --node-label "foo=bar"            \
+  --node-label "something=amazing"  \
+  --debug
+```
+
+It is also possible to use both a configuration file and CLI arguments.  In these situations, values will be loaded from both sources, but CLI arguments will take precedence. For repeatable arguments such as `--node-label`, the CLI arguments will overwrite all values in the list.
+
+Finally, the location of the config file can be changed either through the cli argument `--config FILE, -c FILE`, or the environment variable `$RKE2_CONFIG_FILE`.
+
+### Multiple Config Files
+:::info Version Gate
+Available as of [v1.21.2+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.2%2Brke2r1)
+:::
+
+Multiple configuration files are supported. Configuration loads by default from `/etc/rancher/rke2/config.yaml` and `/etc/rancher/rke2/config.yaml.d/*.yaml` in alphabetical order. The last value for a given key will be used. Slices are replaced.
+
+An example of multiple config files is below:
+
+```yaml
+# config.yaml
+token: boop
+node-label:
+  - foo=bar
+  - bar=baz
+
+
+# config.yaml.d/test1.yaml
+write-kubeconfig-mode: 600
+
+
+# config.yaml.d/test2.yaml
+write-kubeconfig-mode: 777
+node-label:
+  - other=what
+  - foo=three
+
+```
+
+This results in a final configuration of:
+
+```yaml
+write-kubeconfig-mode: 777
+token: boop
+node-label:
+  - other=what
+  - foo=three
+```
+
+## Configuring the Linux Installation Script
 
 As mentioned in the [Quick-Start Guide](quickstart.md), you can use the installation script available at <https://get.rke2.io> to install RKE2 as a service.
 
@@ -40,9 +106,14 @@ This installation script is straight-forward and will do the following:
 1. Obtain the desired version to install based on the above parameters. If no parameters are supplied, the latest official release will be used.
 2. Determine and execute the installation method. There are two methods: rpm and tar. If the `INSTALL_RKE2_METHOD` variable is set, that will be respected, Otherwise, `rpm` will be used on operating systems that use this package management system. On all other systems, tar will be used. In the case of the tar method, the script will simply unpack the tar archive associated with the desired release. In the case of rpm, a yum repository will be set up and the rpm will be installed using yum.
 
-### Configuring the Windows Installation Script
-**Windows Support is currently Experimental as of v1.21.3+rke2r1**
-**Windows Support requires choosing Calico as the CNI for the RKE2 cluster**
+## Configuring the Windows Installation Script
+:::info Version Gate
+Windows Support is currently Experimental as of v1.21.3+rke2r1
+:::
+
+:::note 
+Windows Support requires choosing Calico as the CNI for the RKE2 cluster
+:::
 
 As mentioned in the [Quick-Start Guide](quickstart.md), you can use the installation script available at [https://github.com/rancher/rke2/blob/master/install.ps1](https://github.com/rancher/rke2/blob/master/install.ps1) to install RKE2 on a Windows Agent Node.
 
@@ -85,57 +156,22 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/rancher/rke2/master/ins
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/rancher/rke2/master/install.ps1 -Outfile install.ps1
 ./install.ps1 -Channel Latest -Method Tar
 ```
-### Configuring RKE2 Server Nodes
 
-For details on configuring the RKE2 server, refer to the [server configuration reference.](../reference/server_config.md)
 
-### Configuring Linux RKE2 Agent Nodes
+## Running the Binary Directly
 
-For details on configuring the RKE2 agent, refer to the [agent configuration reference.](../reference/linux_agent_config.md)
-
-### Configuring Windows RKE2 Agent Nodes
-
-For details on configuring the RKE2 Windows agent, refer to the [Windows agent configuration reference.](../reference/windows_agent_config.md)
-
-### Configuration File
-
-By default, RKE2 will launch with the values present in the YAML file located at `/etc/rancher/rke2/config.yaml`.
-
-An example of a basic `server` config file is below:
-
-```yaml
-write-kubeconfig-mode: "0644"
-tls-san:
-  - "foo.local"
-node-label:
-  - "foo=bar"
-  - "something=amazing"
-```
-
-The configuration file parameters map directly to CLI arguments, with repeatable CLI arguments being represented as YAML lists.
-
-An identical configuration using solely CLI arguments is shown below to demonstrate this:
-
-```bash
-rke2 server \
-  --write-kubeconfig-mode "0644"    \
-  --tls-san "foo.local"             \
-  --node-label "foo=bar"            \
-  --node-label "something=amazing"
-```
-
-It is also possible to use both a configuration file and CLI arguments.  In these situations, values will be loaded from both sources, but CLI arguments will take precedence.  For repeatable arguments such as `--node-label`, the CLI arguments will overwrite all values in the list.
-
-Finally, the location of the config file can be changed either through the cli argument `--config FILE, -c FILE`, or the environment variable `$RKE2_CONFIG_FILE`.
-
-### Configuring when Running the Binary Directly
-
-As stated, the installation script is primarily concerned with configuring RKE2 to run as a service. If you choose to not use the script, you can run RKE2 simply by downloading the binary from our [release page](https://github.com/rancher/rke2/releases/latest), placing it on your path, and executing it. The RKE2 binary supports the following commands:
+As stated, the installation script is primarily concerned with configuring RKE2 to run as a service. If you choose to not use the script, you can run RKE2 simply by downloading the binary from our [release page](https://github.com/rancher/rke2/releases/latest), placing it on your path, and executing it. The important commands are:
 
 Command | Description
 --------|------------------
 `rke2 server` | Run the RKE2 management server, which will also launch the Kubernetes control plane components such as the API server, controller-manager, and scheduler. Only Supported on Linux.
 `rke2 agent` |  Run the RKE2 node agent. This will cause RKE2 to run as a worker node, launching the Kubernetes node services `kubelet` and `kube-proxy`. Supported on Linux and Windows.
-`rke2 help` | Shows a list of commands or help for one command
+`rke2 --help` | Shows a list of commands or help for one command
 
-The `rke2 server` and `rke2 agent` commands have additional configuration options that can be viewed with `rke2 server --help` or `rke2 agent --help`.
+## More Info
+
+For details on configuring the RKE2 server, refer to the [server configuration reference.](../reference/server_config.md)
+
+For details on configuring the RKE2 agent, refer to the [agent configuration reference.](../reference/linux_agent_config.md)
+
+For details on configuring the RKE2 Windows agent, refer to the [Windows agent configuration reference.](../reference/windows_agent_config.md)

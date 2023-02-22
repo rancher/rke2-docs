@@ -14,8 +14,7 @@ module.exports = {
         'install/containerd_registry_configuration',
         'install/airgap',
         'install/windows_airgap',
-        'install/linux_uninstall',
-        'install/windows_uninstall',
+        'install/uninstall',
       ],
     },
     {

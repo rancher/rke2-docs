@@ -104,7 +104,12 @@ Note that it is the cluster operator's responsibility to ensure that components 
 
 ## Installation on classified AWS regions or networks with custom AWS API endpoints
 
-In public AWS regions, installing RKE2 with `--cloud-provider-name=aws` will ensure RKE2 is cloud-enabled, and capable of auto-provisioning certain cloud resources.
+In public AWS regions, to ensure RKE2 is cloud-enabled, and capable of auto-provisioning certain cloud resources, config RKE2 with:
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+cloud-provider-name: aws
+```
 
 When installing RKE2 on classified regions (such as SC2S or C2S), there are a few additional pre-requisites to be aware of to ensure RKE2 knows how and where to securely communicate with the appropriate AWS endpoints:
 
@@ -137,7 +142,7 @@ cp <ca.pem> /etc/pki/ca-trust/source/anchors/
 update-ca-trust
 ```
 
-3. configure RKE2 to use the `aws` cloud-provider with the custom `cloud.conf` created in step 1:
+3. Configure RKE2 to use the `aws` cloud-provider with the custom `cloud.conf` created in step 1:
 
 ```yaml
 # /etc/rancher/rke2/config.yaml
@@ -170,10 +175,16 @@ etcd
 cloud-controller-manager
 ```
 
-Thus, an example `--control-plane-resource-requests` or `--control-plane-resource-limits` value may look like:
+Thus, an example config may value may look like:
 
-```
-kube-apiserver-cpu=500m,kube-apiserver-memory=512M,kube-scheduler-cpu=250m,kube-scheduler-memory=512M,etcd-cpu=1000m
+```yaml
+# /etc/rancher/rke2/config.yaml
+control-plane-resource-requests:
+  - kube-apiserver-cpu=500m
+  - kube-apiserver-memory=512M
+  - kube-scheduler-cpu=250m
+  - kube-scheduler-memory=512M
+  - etcd-cpu=1000m
 ```
 
 The unit values for CPU/memory are identical to Kubernetes resource units (See: [Resource Limits in Kubernetes](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes))
@@ -182,14 +193,15 @@ The unit values for CPU/memory are identical to Kubernetes resource units (See: 
 
 The following options are available under the `server` sub-command for RKE2. These options specify host-path mounting of directories from the node filesystem into the static pod component that corresponds to the prefixed name.
 
-```
-   --kube-apiserver-extra-mount value            (components) kube-apiserver extra volume mounts [$RKE2_KUBE_APISERVER_EXTRA_MOUNT]
-   --kube-scheduler-extra-mount value            (components) kube-scheduler extra volume mounts [$RKE2_KUBE_SCHEDULER_EXTRA_MOUNT]
-   --kube-controller-manager-extra-mount value   (components) kube-controller-manager extra volume mounts [$RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_MOUNT]
-   --kube-proxy-extra-mount value                (components) kube-proxy extra volume mounts [$RKE2_KUBE_PROXY_EXTRA_MOUNT]
-   --etcd-extra-mount value                      (components) etcd extra volume mounts [$RKE2_ETCD_EXTRA_MOUNT]
-   --cloud-controller-manager-extra-mount value  (components) cloud-controller-manager extra volume mounts [$RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_MOUNT]
-```
+| Flag | ENV VAR | 
+| --- | --- |
+| `--kube-apiserver-extra-mount` | RKE2_KUBE_APISERVER_EXTRA_MOUNT | kube-apiserver extra volume mounts |
+| `--kube-scheduler-extra-mount` | RKE2_KUBE_SCHEDULER_EXTRA_MOUNT | kube-scheduler extra volume mounts |
+| `--kube-controller-manager-extra-mount` | RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_MOUNT |
+| `--kube-proxy-extra-mount` | RKE2_KUBE_PROXY_EXTRA_MOUNT |
+| `--etcd-extra-mount` | RKE2_ETCD_EXTRA_MOUNT |
+| `--cloud-controller-manager-extra-mount` | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_MOUNT |
+
 
 ### RW Host Path Volume Mount
 `/source/volume/path/on/host:/destination/volume/path/in/staticpod`
@@ -200,17 +212,32 @@ In order to mount a volume as read only, append `:ro` to the end of the volume m
 
 Multiple volume mounts can be specified for the same component by passing the flag values as an array in the config file.
 
+```yaml
+# /etc/rancher/rke2/config.yaml
+kube-apiserver-extra-mount: 
+   - "/tmp/foo.yaml:/root/foo.yaml"
+   - "/tmp/bar.txt:/etc/bar.txt:ro"
+```
+
 ## Extra Control Plane Component Environment Variables
 
 The following options are available under the `server` sub-command for RKE2. These options specify additional environment variables in standard format i.e. `KEY=VALUE` for the static pod component that corresponds to the prefixed name.
 
-```
-   --kube-apiserver-extra-env value              (components) kube-apiserver extra environment variables [$RKE2_KUBE_APISERVER_EXTRA_ENV]
-   --kube-scheduler-extra-env value              (components) kube-scheduler extra environment variables [$RKE2_KUBE_SCHEDULER_EXTRA_ENV]
-   --kube-controller-manager-extra-env value     (components) kube-controller-manager extra environment variables [$RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_ENV]
-   --kube-proxy-extra-env value                  (components) kube-proxy extra environment variables [$RKE2_KUBE_PROXY_EXTRA_ENV]
-   --etcd-extra-env value                        (components) etcd extra environment variables [$RKE2_ETCD_EXTRA_ENV]
-   --cloud-controller-manager-extra-env value    (components) cloud-controller-manager extra environment variables [$RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV]
-```
+| Flag | ENV VAR |
+| --- | --- |
+| `--kube-apiserver-extra-env` | RKE2_KUBE_APISERVER_EXTRA_ENV |
+| `--kube-scheduler-extra-env` | RKE2_KUBE_SCHEDULER_EXTRA_ENV |
+| `--kube-controller-manager-extra-env` | RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_ENV |
+| `--kube-proxy-extra-env` | RKE2_KUBE_PROXY_EXTRA_ENV |
+| `--etcd-extra-env` | RKE2_ETCD_EXTRA_ENV |
+| `--cloud-controller-manager-extra-env` | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV |
 
 Multiple environment variables can be specified for the same component by passing the flag values as an array in the config file.
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+kube-apiserver-extra-env:
+  - "MY_FOO=FOO"
+  - "MY_BAR=BAR"
+kube-scheduler-extra-env: "TZ=America/Los_Angeles"
+```

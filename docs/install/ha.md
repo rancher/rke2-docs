@@ -40,9 +40,11 @@ If you do not specify a pre-shared secret, RKE2 will generate one and place it a
 
 To avoid certificate errors with the fixed registration address, you should launch the server with the `tls-san` parameter set. This option adds an additional hostname or IP as a Subject Alternative Name in the server's TLS cert, and it can be specified as a list if you would like to access via both the IP and the hostname.
 
-Here is an example of what the RKE2 config file (at `/etc/rancher/rke2/config.yaml`) would look like if you are following this guide.
+Example of RKE2 config file for first server:
 
-**Note** The RKE2 config file needs to be created manually. You can do that by running `touch /etc/rancher/rke2/config.yaml` as a privileged user.
+:::note
+The RKE2 config file needs to be created manually. You can do that by running `touch /etc/rancher/rke2/config.yaml` as a privileged user.
+:::
 
 ```yaml
 token: my-shared-secret
@@ -63,7 +65,7 @@ Note: The NGINX Ingress and Metrics Server addons will **not** be deployed when 
 ### 3. Launch additional server nodes
 Additional server nodes are launched much like the first, except that you must specify the `server` and `token` parameters so that they can successfully connect to the initial server node.
 
-Here is an example of what the RKE2 config file would look like for additional server nodes if you are following this guide:
+Example of RKE2 config file for additional server nodes:
 
 ```yaml
 server: https://my-kubernetes-domain.com:9345
@@ -80,13 +82,15 @@ As mentioned previously, you must have an odd number of server nodes in total.
 Once you've launched the `rke2 server` process on all server nodes, ensure that the cluster has come up properly with
 
 ```bash
-/var/lib/rancher/rke2/bin/kubectl \
-        --kubeconfig /etc/rancher/rke2/rke2.yaml get nodes
+/var/lib/rancher/rke2/bin/kubectl get nodes \
+  --kubeconfig /etc/rancher/rke2/rke2.yaml 
 ```
 
 You should see your server nodes in the Ready state.
 
-**NOTE**: By default, any `kubectl` command will require root user access, unless `RKE2_KUBECONFIG_MODE` override is provided. Read more about it in [cluster access page](https://docs.rke2.io/cluster_access).
+:::note
+By default, any `kubectl` command will require root user access, unless `RKE2_KUBECONFIG_MODE` override is provided. Read more about it in [cluster access page](https://docs.rke2.io/cluster_access).
+:::
 
 ### 5. Optional: Join Agent Nodes
 
