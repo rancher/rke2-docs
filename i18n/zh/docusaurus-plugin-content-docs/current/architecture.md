@@ -136,7 +136,7 @@ RKE2 进程现在将无限期运行，直到它收到 SIGTERM 或 SIGKILL，或�
 [gh-ingress-nginx]: <https://github.com/kubernetes/ingress-nginx> "NGINX Ingress Controller for Kubernetes"
 [io-ingress-nginx]: <https://kubernetes.github.io/ingress-nginx> "用于 Kubernetes 的 NGINX Ingress Controller"
 [gh-metrics-server]: <https://github.com/kubernetes-sigs/metrics-server> "资源使用数据的集群范围聚合器"
-[org-projectcalico]: <https://docs.projectcalico.org/about/about-calico> "项目 Calico"
+[org-projectcalico]: <https://docs.tigera.io/calico/latest/about> "项目 Calico"
 [gh-flannel]: <https://github.com/coreos/flannel> "专为 Kubernetes 设计的容器网络结构"
 [io-cilium]: <https://cilium.io> "基于 eBPF 的网络、观测和安全"
 [gh-etcd]: <https://github.com/etcd-io/etcd> "A distributed, reliable key-value store for the most critical data of a distributed system"

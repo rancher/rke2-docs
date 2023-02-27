@@ -129,7 +129,7 @@ spec:
         mtu: 9000
 ```
 
-For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.24.102/values.yaml)
+For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.25.001/values.yaml)
 
 :::note
 Calico requires the iptables or xtables-nft package  to be installed on the node.
