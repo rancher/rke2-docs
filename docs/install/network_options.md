@@ -108,7 +108,7 @@ For more information, please check the [upstream docs](https://docs.cilium.io/en
 
 :::caution
 Cilium is currently not supported in the Windows installation of RKE2
-::::
+:::
 
 </TabItem>
 <TabItem value="Calico CNI plugin" default>

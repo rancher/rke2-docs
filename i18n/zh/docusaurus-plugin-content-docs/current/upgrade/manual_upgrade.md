@@ -9,9 +9,13 @@ title: 手动升级
 
 ### 版本 Channels
 
-通过安装脚本或使用我们的[自动升级](automated_upgrade.md)功能执行的升级可以绑定到不同的版本 channels。
+通过安装脚本或使用我们的[自动升级](automated_upgrade.md)功能执行的升级可以绑定到不同的版本 channels。以下是可用的 channels：
 
-目前，`latest` 是唯一可用的 channel。如果我们有了更多版本并且需要区分最新版本和稳定版本，我们会添加一个 stable channel 并将其设置为默认。
+| Channel | 描述 |
+|-----------------|---------|
+| stable | （默认）生产环境建议使用稳定版。这些版本已经过一段时间的社区强化，并且与最新版本的 Rancher 兼容。 |
+| latest | 建议使用最新版本来试用最新功能。这些版本尚未经过社区强化，可能与 Rancher 不兼容。 |
+| v1.26（示例） | 每个 Kubernetes 次要版本都有一个 release channel，包括 EOL 的版本。这些 channel 会选择可用的最新补丁，不一定是稳定版本。 |
 
 有关详细的最新 channel 列表，你可以访问 [rke2 channel 服务 API](https://update.rke2.io/v1-release/channels)。有关 channel 如何工作的更多信息，请参阅 [channelserver 项目](https://github.com/rancher/channelserver)。
 

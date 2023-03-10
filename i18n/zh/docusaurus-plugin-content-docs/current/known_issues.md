@@ -80,7 +80,7 @@ RKE2 v1.19.5+ 内置 `containerd` v1.4.x 或更高版本，因此应该在支持
 ## Calico 与 vxlan 封装
 
 在使用 vxlan 封装以及启用了 vxlan 接口的校验和卸载时，Calico 遇到了一个内核错误。
-[calico 项目](https://github.com/projectcalico/calico/issues/4865) 和 [rke2项目](https://github.com/rancher/rke2/issues)中描述了该问题。我们的临时解决方法是，在 [calico helm chart](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.19.2-203/values.yaml#L51-L53) 中使用 `ChecksumOffloadBroken=true` 的值，从而默认禁用校验和卸载。
+[calico 项目](https://github.com/projectcalico/calico/issues/4865) 和 [rke2项目](https://github.com/rancher/rke2/issues)中描述了该问题。我们的临时解决方法是，在 [calico helm chart](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.25.001/values.yaml#L75-L76) 中使用 `ChecksumOffloadBroken=true` 的值，从而默认禁用校验和卸载。
 
 此问题已在 Ubuntu 18.04、Ubuntu 20.04 和 openSUSE Leap 15.3 中发现。
 
@@ -136,3 +136,25 @@ spec:
   - Ingress
 ```
 有关更多信息，请参阅[此 issue](https://github.com/rancher/rke2/issues/3195) 上的评论。
+
+# 将强化集群从 v1.24.x 升级到 v1.25.x
+
+Kubernetes 从 v1.25 中删除了 PodSecurityPolicy，以支持 Pod Security Standard（PSS）。你可以在[上游文档](https://kubernetes.io/docs/concepts/security/pod-security-standards/)中阅读有关 PSS 的更多信息。对于 RKE2，如果在节点上设置了 `profile` 标志，则必须手动执行一些步骤。
+
+1. 在所有节点上，将 `profile` 值更新为 `cis-1.23`，但不要重启或升级 RKE2。
+2. 正常执行升级。如果使用[自动升级](./upgrade/automated_upgrade.md)，请确保运行 `system-upgrade-controller` pod 的命名空间按照 [Pod 安全级别](https://kubernetes.io/docs/concepts/security/pod-security-admission/#pod-security-levels)的要求设置为 privileged。
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: system-upgrade
+  labels:
+    # This value must be privileged for the controller to run successfully.
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: v1.25
+    # We are setting these to our _desired_ `enforce` level, but note that these below values can be any of the available options.
+    pod-security.kubernetes.io/audit: privileged
+    pod-security.kubernetes.io/audit-version: v1.25
+    pod-security.kubernetes.io/warn: privileged
+    pod-security.kubernetes.io/warn-version: v1.25
+```
