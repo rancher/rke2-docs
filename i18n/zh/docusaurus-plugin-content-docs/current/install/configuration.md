@@ -2,19 +2,85 @@
 title: 配置选项
 ---
 
-本文介绍了设置 RKE2 时可用的配置选项：
+## 配置文件
 
-- [配置 Linux 安装脚本](#配置-linux-安装脚本)
-- [配置 Windows 安装脚本](#配置-windows-安装脚本)
-- [配置 RKE2 Server 节点](#配置-rke2-server-节点)
-- [配置 Linux RKE2 Agent 节点](#配置-linux-rke2-agent-节点)
-- [配置 Windows RKE2 Agent 节点](#配置-windows-rke2-agent-节点)
-- [使用配置文件](#配置文件)
-- [在直接运行二进制文件时配置](#在直接运行二进制文件时配置)
+配置 RKE2 的主要方法是使用它的配置文件。你也可以使用命令行参数和环境变量，但 RKE2 作为 systemd 服务安装，因此这些方法较为复杂。
 
-配置 RKE2 的主要方法是使用它的[配置文件](#配置文件)。你也可以使用命令行参数和环境变量，但 RKE2 作为 systemd 服务安装，因此这些方法较为复杂。
+默认情况下，RKE2 将使用 `/etc/rancher/rke2/config.yaml` YAML 文件中的值来启动。
 
-### 配置 Linux 安装脚本
+:::note
+RKE2 配置文件需要手动创建。你可以通过以特权用户身份运行 `touch /etc/rancher/rke2/config.yaml` 来实现这一点。
+:::
+
+下面是一个 `server` 配置文件的基本示例：
+
+```yaml
+write-kubeconfig-mode: "0644"
+tls-san:
+  - "foo.local"
+node-label:
+  - "foo=bar"
+  - "something=amazing"
+debug: true
+```
+
+配置文件参数直接映射到 CLI 参数，可重复的 CLI 参数呈现为 YAML 列表。布尔标志在 YAML 文件中表示为 `true` 或 `false`。
+
+下面展示了一个仅使用 CLI 参数的相同配置：
+
+```bash
+rke2 server \
+  --write-kubeconfig-mode "0644"    \
+  --tls-san "foo.local"             \
+  --node-label "foo=bar"            \
+  --node-label "something=amazing"  \
+  --debug
+```
+
+也可以同时使用配置文件和 CLI 参数。 在这种情况下，值将从两个来源加载，但 CLI 参数将优先。 对于 `--node-label` 等可重复参数，CLI 参数将覆盖列表中的所有值。
+
+最后，配置文件的位置可以通过 CLI 参数 `--config FILE, -c FILE` 或者环境变量 `$RKE2_CONFIG_FILE` 来改变。
+
+### 多个配置文件
+:::info 版本
+从 [v1.21.2+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.2%2Brke2r1) 起可用
+:::
+
+支持多个配置文件。默认情况下，配置从 `/etc/rancher/rke2/config.yaml` 和 `/etc/rancher/rke2/config.yaml.d/*.yaml` 按字母顺序加载。将使用给定键的最后一个值。切片会被替换。
+
+多个配置文件的示例如下：
+
+```yaml
+# config.yaml
+token: boop
+node-label:
+  - foo=bar
+  - bar=baz
+
+
+# config.yaml.d/test1.yaml
+write-kubeconfig-mode: 600
+
+
+# config.yaml.d/test2.yaml
+write-kubeconfig-mode: 777
+node-label:
+  - other=what
+  - foo=three
+
+```
+
+因此，最终配置如下：
+
+```yaml
+write-kubeconfig-mode: 777
+token: boop
+node-label:
+  - other=what
+  - foo=three
+```
+
+## 配置 Linux 安装脚本
 
 如[快速入门指南](quickstart.md)中所述，你可以使用 <https://get.rke2.io> 上提供的安装脚本将 RKE2 安装为服务。
 
@@ -47,9 +113,14 @@ curl -sfL https://rancher-mirror.rancher.cn/rke2/install.sh | INSTALL_RKE2_MIRRO
 1. 根据以上参数获取需要安装的版本。如果没有指定参数，将使用最新的官方版本。
 2. 确定并执行安装方法。有两种方法：rpm 和 tar。如果设置了 `INSTALL_RKE2_METHOD` 变量，将遵守该变量，否则，将在使用此包管理系统的操作系统上使用 `rpm`。在其他系统上将使用 tar。如果使用 tar，脚本将简单地解压缩所需版本的 tar 包。如果使用 rpm，将设置一个 yum 仓库，并使用 yum 安装 rpm。
 
-### 配置 Windows 安装脚本
-**Windows 支持目前处于实验阶段（从 v1.21.3+rke2r1 开始）**  
-**Windows 支持要求选择 Calico 作为 RKE2 集群的 CNI**
+## 配置 Windows 安装脚本
+:::info 版本
+从 v1.21.3+rke2r1 开始，Windows 支持处于试验阶段。
+:::
+
+:::note
+Windows 支持要求选择 Calico 作为 RKE2 集群的 CNI。
+:::
 
 正如[快速入门指南](quickstart.md)中所述，你可以使用位于 [https://github.com/rancher/rke2/blob/master/install.ps1](https://github.com/rancher/rke2/blob/master/install.ps1) 的安装脚本在 Windows Agent 节点上安装 RKE2。
 
@@ -92,57 +163,22 @@ Invoke-WebRequest -Uri https://raw.githubusercontent.com/rancher/rke2/master/ins
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/rancher/rke2/master/install.ps1 -Outfile install.ps1
 ./install.ps1 -Channel Latest -Method Tar
 ```
-### 配置 RKE2 Server 节点
 
-关于配置 RKE2 Server 的详细信息，请参阅 [Server 配置参考](../reference/server_config.md)。
 
-### 配置 Linux RKE2 Agent 节点
+## 直接运行二进制文件
 
-关于配置 RKE2 Agent 的详细信息，请参阅 [Agent 配置参考](../reference/linux_agent_config.md)
-
-### 配置 Windows RKE2 Agent 节点
-
-有关配置 RKE2 Windows Agent 的详细信息，请参阅 [Windows Agent 配置参考](../reference/windows_agent_config.md)。
-
-### 配置文件
-
-默认情况下，RKE2 将使用 `/etc/rancher/rke2/config.yaml` YAML 文件中的值来启动。
-
-下面是一个 `server` 配置文件的基本示例：
-
-```yaml
-write-kubeconfig-mode: "0644"
-tls-san:
-  - "foo.local"
-node-label:
-  - "foo=bar"
-  - "something=amazing"
-```
-
-配置文件参数直接映射到 CLI 参数，可重复的 CLI 参数呈现为 YAML 列表。
-
-下面展示了一个仅使用 CLI 参数的相同配置：
-
-```bash
-rke2 server \
-  --write-kubeconfig-mode "0644"    \
-  --tls-san "foo.local"             \
-  --node-label "foo=bar"            \
-  --node-label "something=amazing"
-```
-
-也可以同时使用配置文件和 CLI 参数。 在这种情况下，值将从两个来源加载，但 CLI 参数将优先。 对于 `--node-label` 等可重复参数，CLI 参数将覆盖列表中的所有值。
-
-最后，配置文件的位置可以通过 CLI 参数 `--config FILE, -c FILE` 或者环境变量 `$RKE2_CONFIG_FILE` 来改变。
-
-### 在直接运行二进制文件时配置
-
-如前所述，安装脚本主要与将 RKE2 配置为服务运行有关。如果你选择不使用该脚本，只需从我们的 [releases 页面](https://github.com/rancher/k3s/releases/latest)下载二进制文件，将文件放在你的路径上并执行即可运行 RKE2。RKE2 二进制文件支持以下命令：
+如前所述，安装脚本主要与将 RKE2 配置为服务运行有关。如果你选择不使用该脚本，只需从我们的 [releases 页面](https://github.com/rancher/k3s/releases/latest)下载二进制文件，将文件放在你的路径上并执行即可运行 RKE2。重要命令：
 
 | 命令 | 描述 |
 --------|------------------
 | `rke2 server` | 运行 RKE2 management server，它还将启动 Kubernetes control plane 组件，例如 API Server、controller-manager 和 scheduler。仅在 Linux 上支持。 |
 | `rke2 agent` | 运行 RKE2 Node Agent。这将使 RKE2 作为 Worker 节点运行，同时启动 Kubernetes 节点服务 `kubelet` 和 `kube-proxy`。在 Linux 和 Windows 上支持。 |
-| `rke2 help` | 显示命令列表或某个命令的帮助 |
+| `rke2 --help` | 显示命令列表或某个命令的帮助 |
 
-`rke2 server` 和 `rke2 agent` 命令有额外的配置选项，你可以通过 `rke2 server --help` 或 `rke2 agent --help` 查看帮助。
+## 更多信息
+
+关于配置 RKE2 Server 的详细信息，请参阅 [Server 配置参考](../reference/server_config.md)。
+
+关于配置 RKE2 Agent 的详细信息，请参阅 [Agent 配置参考](../reference/linux_agent_config.md)
+
+有关配置 RKE2 Windows Agent 的详细信息，请参阅 [Windows Agent 配置参考](../reference/windows_agent_config.md)。

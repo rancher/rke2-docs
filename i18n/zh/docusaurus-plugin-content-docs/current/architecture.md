@@ -139,7 +139,6 @@ RKE2 进程现在将无限期运行，直到它收到 SIGTERM 或 SIGKILL，或�
 [org-projectcalico]: <https://docs.tigera.io/calico/latest/about> "项目 Calico"
 [gh-flannel]: <https://github.com/coreos/flannel> "专为 Kubernetes 设计的容器网络结构"
 [io-cilium]: <https://cilium.io> "基于 eBPF 的网络、观测和安全"
-[gh-etcd]: <https://github.com/etcd-io/etcd> "A distributed, reliable key-value store for the most critical data of a distributed system"
 [io-etcd]: <https://etcd.io> "用于分布式系统最关键数据的分布式、可靠的键值存储"
 [gh-helm]: <https://github.com/helm/helm> "The Kubernetes Package Manager"
 [sh-helm]: <https://helm.sh> "Kubernetes 包管理器"

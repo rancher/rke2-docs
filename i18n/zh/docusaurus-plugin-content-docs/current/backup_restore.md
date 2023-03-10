@@ -26,7 +26,7 @@ RKE2 启用了一项功能，可以通过传递 `--cluster-reset` 标志将集�
 
 要传递重置标志，首先你需要停止 RKE2 服务（如果 RKE2 是通过 systemd 启用的）：
 
-```
+```bash
 systemctl stop rke2-server
 rke2 server --cluster-reset
 ```
@@ -38,12 +38,12 @@ rke2 server --cluster-reset
 使用备份恢复 RKE2 时，旧的数据目录将被移动到 `/var/lib/rancher/rke2/server/db/etcd-old-%date%/`。然后 RKE2 将尝试通过创建一个新的数据目录来恢复快照，并使用一个具有一个 etcd 成员的新 RKE2 集群启动 etcd。
 
 1. 如果通过 systemd 启用，则必须在所有 Server 节点上停止 RKE2 服务。使用以下命令执行此操作：
-```
+```bash
 systemctl stop rke2-server
 ```
 
 2. 接下来，使用以下命令在第一个 Server 节点上启动快照恢复：
-```
+```bash
 rke2 server \
   --cluster-reset \
   --cluster-reset-restore-path=<PATH-TO-SNAPSHOT>
@@ -100,26 +100,27 @@ systemctl start rke2-server
 
 ### 恢复快照的其他注意事项
 
-> * 执行备份恢复时，用户不需要使用创建快照时使用的 RKE2 版本。用户可以使用更新的版本进行恢复。如果你在恢复时更改版本，请注意正在使用哪个 etcd 版本。
+* 执行备份恢复时，用户不需要使用创建快照时使用的 RKE2 版本。用户可以使用更新的版本进行恢复。如果你在恢复时更改版本，请注意正在使用哪个 etcd 版本。
 
-> * 快照默认启用，并且每 12 小时获取一次。快照写入到 `${data-dir}/server/db/snapshots`，默认 `${data-dir}` 为 `/var/lib/rancher /rke2`。
+* 快照默认启用，并且每 12 小时获取一次。快照写入到 `${data-dir}/server/db/snapshots`，默认 `${data-dir}` 为 `/var/lib/rancher /rke2`。
 
-> **rke2 v1.20.11+rke2r1 的要求**
+#### rke2 v1.20.11+rke2r1 的要求
 
-> * 使用备份将 RKE2 恢复到使用 rke2 v1.20.11+rke2r1 的新节点时，请运行 `rke2-killall.sh` 确保所有 pod 在初始恢复后已停止，如下所示：
-```
-curl -sfL https://get.rke2.io | sudo INSTALL_RKE2_VERSION=v1.20.11+rke2r1
-rke2 server \
- --cluster-reset \
- --cluster-reset-restore-path=<PATH-TO-SNAPSHOT> \
- --token=<token used in the original cluster>
-rke2-killall.sh
-```
-> 恢复完成后，在第一个 Server 节点上启动 rke2-server 服务，如下所示：
-```
-systemctl enable rke2-server
-systemctl start rke2-server
-```
+* 使用备份将 RKE2 恢复到使用 rke2 v1.20.11+rke2r1 的新节点时，请运行 `rke2-killall.sh` 确保所有 pod 在初始恢复后已停止，如下所示：
+
+   ```bash
+   curl -sfL https://get.rke2.io | sudo INSTALL_RKE2_VERSION=v1.20.11+rke2r1
+   rke2 server \
+   --cluster-reset \
+   --cluster-reset-restore-path=<PATH-TO-SNAPSHOT> \
+   --token=<token used in the original cluster>
+   rke2-killall.sh
+   ```
+* 恢复完成后，在第一个 Server 节点上启动 rke2-server 服务，如下所示：
+   ```
+   systemctl enable rke2-server
+   systemctl start rke2-server
+   ```
 
 ### 选项
 

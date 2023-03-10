@@ -28,7 +28,7 @@ RKE2 已在以下操作系统及其后续非主要版本上进行了测试和验
 
 :::info
 Windows 支持要求选择 Calico 作为 RKE2 集群的 CNI。
-::::
+:::
 
 RKE2 Windows Node (Worker) agent 已在以下操作系统及其后续非主要版本上进行了测试和验证：
 
@@ -63,7 +63,9 @@ RKE2 的性能取决于数据库的性能。由于 RKE2 嵌入式运行 etcd 并
 
 ## 网络
 
-**重要**：如果你的节点安装并启用了 NetworkManager，请[确保将其配置为忽略 CNI 管理的接口](../known_issues.md#networkmanager)。如果你的节点安装并启用了 Wicked，请[确保转发 sysctl 配置已启用](../known_issues.md#wicked)。
+:::tip 重要提示
+如果你的节点安装并启用了 NetworkManager，请[确保将其配置为忽略 CNI 管理的接口](../known_issues.md#networkmanager)。如果你的节点安装并启用了 Wicked，请[确保转发 sysctl 配置已启用](../known_issues.md#wicked)。
+:::
 
 RKE2 server 需要开放端口 6443 和 9345 才能供集群中的其他节点访问。
 
@@ -73,7 +75,7 @@ RKE2 server 需要开放端口 6443 和 9345 才能供集群中的其他节点�
 
 **重要提示**：节点上的 VXLAN 端口会开放集群网络，让任何人均能访问集群。因此，不要将 VXLAN 端口暴露给外界。请使用禁用 8472 端口的防火墙/安全组来运行节点。
 
-*RKE2 Server 节点的入站规则*
+### 入站网络规则
 
 | 协议 | 端口 | 源 | 描述 |
 |-----|-----|----------------|---|

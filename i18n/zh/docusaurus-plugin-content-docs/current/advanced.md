@@ -113,7 +113,12 @@ systemctl start rke2-server
 
 ## 在分类的 AWS 区域或具有自定义 AWS API 端点的网络上安装
 
-在公共 AWS 区域，使用 `--cloud-provider-name=aws` 安装 RKE2 能确保 RKE2 支持云，并且能够自动配置某些云资源。
+在公共 AWS 区域，为确保 RKE2 支持云并且能够自动配置某些云资源，请使用以下内容配置 RKE2：
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+cloud-provider-name: aws
+```
 
 在分类区域（例如 SC2S 或 C2S）上安装 RKE2 时，你需要注意一些额外的条件，从而确保 RKE2 知道如何以及在哪里与适当的 AWS 端点进行安全通信。
 
@@ -179,10 +184,16 @@ etcd
 cloud-controller-manager
 ```
 
-因此，`--control-plane-resource-requests` 或 `--control-plane-resource-limits` 的值可能如下所示：
+因此，示例配置值可能如下所示：
 
-```
-kube-apiserver-cpu=500m,kube-apiserver-memory=512M,kube-scheduler-cpu=250m,kube-scheduler-memory=512M,etcd-cpu=1000m
+```yaml
+# /etc/rancher/rke2/config.yaml
+control-plane-resource-requests:
+  - kube-apiserver-cpu=500m
+  - kube-apiserver-memory=512M
+  - kube-scheduler-cpu=250m
+  - kube-scheduler-memory=512M
+  - etcd-cpu=1000m
 ```
 
 CPU/内存的单位值与 Kubernetes 资源单位相同（参见 [Kubernetes 中的资源限制](https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/#resource-units-in-kubernetes)）。
@@ -191,14 +202,15 @@ CPU/内存的单位值与 Kubernetes 资源单位相同（参见 [Kubernetes 中
 
 以下选项在 RKE2 的 `server` 子命令下可用。些选项指定主机路径，将节点文件系统中的目录挂载到与前缀名称相对应的静态 Pod 组件中。
 
-```
-   --kube-apiserver-extra-mount value            (components) kube-apiserver extra volume mounts [$RKE2_KUBE_APISERVER_EXTRA_MOUNT]
-   --kube-scheduler-extra-mount value            (components) kube-scheduler extra volume mounts [$RKE2_KUBE_SCHEDULER_EXTRA_MOUNT]
-   --kube-controller-manager-extra-mount value   (components) kube-controller-manager extra volume mounts [$RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_MOUNT]
-   --kube-proxy-extra-mount value                (components) kube-proxy extra volume mounts [$RKE2_KUBE_PROXY_EXTRA_MOUNT]
-   --etcd-extra-mount value                      (components) etcd extra volume mounts [$RKE2_ETCD_EXTRA_MOUNT]
-   --cloud-controller-manager-extra-mount value  (components) cloud-controller-manager extra volume mounts [$RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_MOUNT]
-```
+| 标志 | ENV VAR |
+| --- | --- |
+| `--kube-apiserver-extra-mount` | RKE2_KUBE_APISERVER_EXTRA_MOUNT | kube-apiserver extra volume mounts |
+| `--kube-scheduler-extra-mount` | RKE2_KUBE_SCHEDULER_EXTRA_MOUNT | kube-scheduler extra volume mounts |
+| `--kube-controller-manager-extra-mount` | RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_MOUNT |
+| `--kube-proxy-extra-mount` | RKE2_KUBE_PROXY_EXTRA_MOUNT |
+| `--etcd-extra-mount` | RKE2_ETCD_EXTRA_MOUNT |
+| `--cloud-controller-manager-extra-mount` | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_MOUNT |
+
 
 ### RW 主机路径卷挂载
 `/source/volume/path/on/host:/destination/volume/path/in/staticpod`
@@ -209,17 +221,32 @@ CPU/内存的单位值与 Kubernetes 资源单位相同（参见 [Kubernetes 中
 
 通过在配置文件中以数组形式传递标志值，可以为同一个组件指定多个卷挂载。
 
+```yaml
+# /etc/rancher/rke2/config.yaml
+kube-apiserver-extra-mount:
+   - "/tmp/foo.yaml:/root/foo.yaml"
+   - "/tmp/bar.txt:/etc/bar.txt:ro"
+```
+
 ## 额外的 Control Plane 组件环境变量
 
 以下选项在 RKE2 的 `server` 子命令下可用。这些选项以标准格式指定额外的环境变量，即 `KEY=VALUE`，用于与前缀名称相对应的静态 Pod 组件。
 
-```
-   --kube-apiserver-extra-env value              (components) kube-apiserver extra environment variables [$RKE2_KUBE_APISERVER_EXTRA_ENV]
-   --kube-scheduler-extra-env value              (components) kube-scheduler extra environment variables [$RKE2_KUBE_SCHEDULER_EXTRA_ENV]
-   --kube-controller-manager-extra-env value     (components) kube-controller-manager extra environment variables [$RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_ENV]
-   --kube-proxy-extra-env value                  (components) kube-proxy extra environment variables [$RKE2_KUBE_PROXY_EXTRA_ENV]
-   --etcd-extra-env value                        (components) etcd extra environment variables [$RKE2_ETCD_EXTRA_ENV]
-   --cloud-controller-manager-extra-env value    (components) cloud-controller-manager extra environment variables [$RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV]
-```
+| 标志 | ENV VAR |
+| --- | --- |
+| `--kube-apiserver-extra-env` | RKE2_KUBE_APISERVER_EXTRA_ENV |
+| `--kube-scheduler-extra-env` | RKE2_KUBE_SCHEDULER_EXTRA_ENV |
+| `--kube-controller-manager-extra-env` | RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_ENV |
+| `--kube-proxy-extra-env` | RKE2_KUBE_PROXY_EXTRA_ENV |
+| `--etcd-extra-env` | RKE2_ETCD_EXTRA_ENV |
+| `--cloud-controller-manager-extra-env` | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV |
 
 通过在配置文件中以数组形式传递标志值，可以为同一个组件指定多个环境变量。
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+kube-apiserver-extra-env:
+  - "MY_FOO=FOO"
+  - "MY_BAR=BAR"
+kube-scheduler-extra-env: "TZ=America/Los_Angeles"
+```
