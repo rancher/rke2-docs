@@ -38,7 +38,7 @@ module.exports = {
         srcDark: 'img/logo-horizontal-rke2-dark.svg',
       },
       items: [
-        { 
+        {
           type: 'search',
           position: 'right',
         },
@@ -77,9 +77,12 @@ module.exports = {
         theme: {
           customCss: [require.resolve("./src/css/custom.css")],
         },
+        googleTagManager: {
+          containerId: 'GTM-57KS2MW',
+        },
       },
     ],
-  ], 
+  ],
   themes: [
     [
       "@easyops-cn/docusaurus-search-local",
