@@ -142,7 +142,7 @@ spec:
 ```
 For more information, refer to comments on https://github.com/rancher/rke2/issues/3195.
 
-# Upgrading Hardened Clusters from v1.24.x to v1.25.x
+## Upgrading Hardened Clusters from v1.24.x to v1.25.x {#hardened-125}
 
 Kubernetes removed PodSecurityPolicy from v1.25 in favor of Pod Security Standards. You can read more about PSS in the [upstream documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/). For RKE2, there are some manual steps that must be taken if the `profile` flag has been set on the nodes.
 
