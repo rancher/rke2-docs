@@ -137,7 +137,7 @@ spec:
 ```
 有关更多信息，请参阅[此 issue](https://github.com/rancher/rke2/issues/3195) 上的评论。
 
-# 将强化集群从 v1.24.x 升级到 v1.25.x
+## 将强化集群从 v1.24.x 升级到 v1.25.x {#hardened-125}
 
 Kubernetes 从 v1.25 中删除了 PodSecurityPolicy，以支持 Pod Security Standard（PSS）。你可以在[上游文档](https://kubernetes.io/docs/concepts/security/pod-security-standards/)中阅读有关 PSS 的更多信息。对于 RKE2，如果在节点上设置了 `profile` 标志，则必须手动执行一些步骤。
 

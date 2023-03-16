@@ -29,7 +29,7 @@ RKE2 完美结合了 1.x 版本的 RKE（以下简称 RKE1）和 K3s。
 ## 为什么有两个名字？
 它被称为 RKE Government，目的是传达其当前针对的主要用例和部门。
 
-它也被称为 RKE 2，因为它是 Rancher Kubernetes Engine 针对数据中心用例的下一次迭代。该发行版独立运行，我们正在进行它与 Rancher 的集成工作。一旦 RKE 2 与 RKE 的功能对等，我们会让 RKE 2 成为 Rancher 中的一个选项。我们也在开发从 RKE 迁移到 RKE2 的升级路径。
+它也被称为 RKE2，因为它是 Rancher Kubernetes Engine 针对数据中心用例的下一次迭代。该发行版独立运行，我们正在进行它与 Rancher 的集成工作。RKE2 与 RKE 的功能对等后，我们会让 RKE2 成为 Rancher 中的一个选项。我们也在开发从 RKE 迁移到 RKE2 的升级路径。
 
 ## 安全
 
