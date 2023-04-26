@@ -14,6 +14,7 @@ module.exports = {
         'install/containerd_registry_configuration',
         'install/airgap',
         'install/windows_airgap',
+        'install/server_roles',
         'install/uninstall',
       ],
     },
