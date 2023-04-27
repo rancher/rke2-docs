@@ -267,9 +267,9 @@ spec:
 
 NOTE: You should write this file before starting rke2.
 
-## Using Multus with SR-IOV (experimental)
+## Using Multus with SR-IOV
 
-**Please note this is an experimental feature introduced with v1.21.2+rke2r1.**
+**This is no longer experimental as of April 2023 releases: v1.26.4+rke2r1, v1.25.9+rke2r1, and v1.24.13+rke2r1**
 
 Using the SR-IOV CNI with Multus can help with data-plane acceleration use cases, providing an extra interface in the pod that can achieve very high throughput. SR-IOV will not work in all environments, and there are several requirements
 that must be fulfilled to consider the node as SR-IOV capable:
@@ -278,7 +278,7 @@ that must be fulfilled to consider the node as SR-IOV capable:
 * The host operating system must activate IOMMU virtualization
 * The host operating system includes drivers capable of doing sriov (e.g. i40e, vfio-pci, etc)
 
-The SR-IOV CNI plugin cannot be used as the default CNI plugin for Multus; it must be deployed alongside both Multus and a traditional CNI plugin. The SR-IOV CNI helm chart can be found in the `rancher-charts` Helm repo. For more information see [Rancher Helm Charts documentation](https://rancher.com/docs/rancher/v2.x/en/helm-charts/).
+The SR-IOV CNI plugin cannot be used as the default CNI plugin for Multus; it must be deployed alongside both Multus and a traditional CNI plugin. The SR-IOV CNI helm chart can be found in the `rancher-charts` Helm repo. For more information see [Rancher Helm Charts documentation](https://ranchermanager.docs.rancher.com/pages-for-subheaders/helm-charts-in-rancher).
 
 After installing the SR-IOV CNI chart, the SR-IOV operator will be deployed. Then, the user must specify what nodes in the cluster are SR-IOV capable by labeling them with `feature.node.kubernetes.io/network-sriov.capable=true`:
 
