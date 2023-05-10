@@ -26,11 +26,6 @@ From RKE1, it inherits close alignment with upstream Kubernetes. In places K3s h
 
 Importantly, RKE2 does not rely on Docker as RKE1 does. RKE1 leveraged Docker for deploying and managing the control plane components as well as the container runtime for Kubernetes. RKE2 launches control plane components as static pods, managed by the kubelet. The embedded container runtime is containerd.
 
-## Why two names?
-It is known as RKE Government in order to convey the primary use cases and sector it currently targets.
-
-It is also known as RKE2 as it is the next iteration of the Rancher Kubernetes Engine for datacenter use cases. The distribution runs standalone and integration work into Rancher is underway. We intend to make RKE2 an option in Rancher once it achieves feature parity with RKE. An upgrade path from RKE to RKE2 is also under development for those that want to migrate.
-
 ## Security
 
 Rancher Labs supports responsible disclosure and endeavors to resolve security
