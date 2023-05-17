@@ -215,8 +215,8 @@ Multiple volume mounts can be specified for the same component by passing the fl
 ```yaml
 # /etc/rancher/rke2/config.yaml
 kube-apiserver-extra-mount: 
-   - "/tmp/foo.yaml:/root/foo.yaml"
-   - "/tmp/bar.txt:/etc/bar.txt:ro"
+   - "/tmp/foofolder/:/root/foofolder"
+   - "/tmp/barfolder:/etc/barfolder:ro"
 ```
 
 ## Extra Control Plane Component Environment Variables
