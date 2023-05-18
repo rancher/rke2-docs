@@ -265,9 +265,9 @@ spec:
 
 注意：你需要在启动 RKE2 之前写这个文件。
 
-## 结合使用 Multus 与 SR-IOV（实验性）
+## 结合使用 Multus 与 SR-IOV
 
-**请注意，这是 v1.21.2+rke2r1 引入的实验性功能**。
+**v1.21.2+rke2r1 添加了 SR-IOV 实验性支持，并从 2023 年 4 月的 v1.26.4+rke2r1、v1.25.9+rke2r1 和 v1.24.13+rke2r1 版本开始提供全面支持。**
 
 将 SR-IOV CNI 与 Multus 结合使用可用于数据平面加速的用例，在 pod 中提供额外的接口来实现非常高的吞吐量。SR-IOV 不会在所有环境下工作，必须满足几个要求才能将节点视为支持 SR-IOV 的节点：
 
@@ -275,7 +275,7 @@ spec:
 * 主机操作系统必须激活 IOMMU 虚拟化
 * 主机操作系统包括能够执行 sriov（例如 i40e、vfio-pci 等）的驱动程序
 
-SR-IOV CNI 插件不能用作 Multus 的默认 CNI 插件。它必须与 Multus 和传统的 CNI 插件一起部署。你可以在 `rancher-charts` Helm 仓库中找到 SR-IOV CNI helm chart。有关详细信息，请参阅 [Rancher Helm Chart 文档](https://rancher.com/docs/rancher/v2.x/en/helm-charts/)。
+SR-IOV CNI 插件不能用作 Multus 的默认 CNI 插件。它必须与 Multus 和传统的 CNI 插件一起部署。你可以在 `rancher-charts` Helm 仓库中找到 SR-IOV CNI helm chart。有关详细信息，请参阅 [Rancher Helm Chart 文档](https://ranchermanager.docs.rancher.com/pages-for-subheaders/helm-charts-in-rancher)。
 
 安装 SR-IOV CNI chart 后，将部署 SR-IOV operator。然后，用户必须通过 `feature.node.kubernetes.io/network-sriov.capable=true` 标记来指定集群中支持 SR-IOV 的节点：
 
