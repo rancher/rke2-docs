@@ -56,7 +56,10 @@ journalctl -u rke2-server -f
 
 * `rke2-server` 服务将会安装。`rke2-server` 服务将被配置为在节点重启后或进程崩溃或被杀死时自动重启。
 * 其他实用程序将安装到 `/var/lib/rancher/rke2/bin/`，包括 `kubectl`、`crictl` 和 `ctr`。请注意，默认情况下它们不在你的路径上。
-* 两个清理脚本将安装到路径 `/usr/local/bin/rke2` 中，它们分别是 `rke2-killall.sh` 和 `rke2-uninstall.sh`。
+* 两个清理脚本 `rke2-killall.sh` 和 `rke2-uninstall.sh` 将安装到以下路径：
+   - 如果是常规文件系统，则是 `/usr/local/bin`
+   - 如果是只读和 brtfs 文件系统，则是 `/opt/rke2/bin`
+   - 如果设置了 `INSTALL_RKE2_TAR_PREFIX`，则是 `INSTALL_RKE2_TAR_PREFIX/bin`
 * [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) 文件将写入 `/etc/rancher/rke2/rke2.yaml`。
 * 可用于注册其他 Server 或 Agent 节点的令牌将在 `/var/lib/rancher/rke2/server/node-token` 中创建。
 
