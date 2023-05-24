@@ -19,9 +19,10 @@ RKE2 has been tested and validated on the following operating systems, and their
 | - | - |
 | Ubuntu | 18.04, 20.04, 22.04 | 
 | CentOS/RHEL | 7.8 |
-| Rocky/RHEL | 8.5, 9.0 | 
+| Rocky/RHEL | 8.5, 9.1 | 
+| Oracle Linux | 8.7 |
 | SLES | 15 SP3, SP4 |
-| OpenSUSE, SLE Micro | 5.1, 5.2, 5.3 |
+| OpenSUSE, SLE Micro | 5.1, 5.2, 5.3, 5.4 |
 
 ### Windows
 :::caution Version Gate
