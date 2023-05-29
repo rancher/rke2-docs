@@ -168,6 +168,12 @@ rke2.exe agent service --add
 ```
 **Note:** Each machine must have a unique hostname. 
 
+Don;t forget to start the RKE2 service with:
+
+```powershell
+Start-Service rke2
+```
+
 If you would prefer to use CLI parameters only instead, run the binary with the desired parameters. 
 
 ```powershell
