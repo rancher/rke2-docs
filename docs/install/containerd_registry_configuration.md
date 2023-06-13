@@ -23,7 +23,7 @@ The file consists of two main sections:
 
 Mirrors is a directive that defines the names and endpoints of the private registries. Private registries can be used as a local mirror for the default docker.io registry, or for images where the registry is explicitly specified in the name.
 
-For example, the following configuration would pull from the private registry at `https://registry.example.com:5000` for both `library/busybox:latest` and `registry.example.com/library/busybox:latest`:
+For example, the following configuration would pull from the private registry at `https://registry.example.com:5000` for both `docker.io/busybox:latest` and `registry.example.com/library/busybox:latest`:
 
 ```yaml
 mirrors:
