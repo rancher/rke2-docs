@@ -6,9 +6,9 @@ RKE2 is very lightweight, but has some minimum requirements as outlined below.
 
 ## Prerequisites
 
-Two nodes cannot have the same hostname.
+Two rke2 nodes cannot have the same node name. By default, the node name is taken from the machine's hostname.
 
-If all your nodes have the same hostname, set the `node-name` parameter in the RKE2 config file for each node you add to the cluster to have a different node name.
+If two or more of your machines have the same hostname, either change it or set the `node-name` parameter in the RKE2 config file for each node you add to the cluster to have a different node name.
 
 ## Operating Systems
 
