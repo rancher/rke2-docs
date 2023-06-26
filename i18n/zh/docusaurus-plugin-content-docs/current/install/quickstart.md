@@ -182,6 +182,12 @@ rke2.exe agent service --add
 ```
 **注意**：每台主机必须具有唯一的主机名。
 
+不要忘记使用以下命令启动 RKE2 服务：
+
+```powershell
+Start-Service rke2
+```
+
 如果想仅使用 CLI 参数，请使用所需参数运行二进制文件。
 
 ```powershell
