@@ -47,7 +47,7 @@ As of v1.21.2, RKE2 supports selecting a different CNI via the `--cni` flag and 
 
 ## Ingress
 
-RKE2 ships with NGNIX as its default ingress provider. As of v1.21+, this component is FIPS compliant. There are two primary sub-components for NGINX ingress:
+RKE2 ships with NGINX as its default ingress provider. As of v1.21+, this component is FIPS compliant. There are two primary sub-components for NGINX ingress:
 
 - controller - responsible for monitoring/updating Kubernetes resources and configuring the server accordingly
 - server - responsible for accepting and routing traffic
