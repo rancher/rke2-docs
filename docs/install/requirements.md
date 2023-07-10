@@ -8,7 +8,14 @@ RKE2 is very lightweight, but has some minimum requirements as outlined below.
 
 Two rke2 nodes cannot have the same node name. By default, the node name is taken from the machine's hostname.
 
-If two or more of your machines have the same hostname, either change it or set the `node-name` parameter in the RKE2 config file for each node you add to the cluster to have a different node name.
+If two or more of your machines have the same hostname, you must do one of the following:
+
+* Update the hostname to a unique value
+* Set the `node-name` parameter in the config file to a unique value
+* Set the `with-node-id` parameter in the config file to `true` to append a randomly generated ID number to the hostname.
+:::info Version Gate
+The `with-node-id` parameter is available starting with the 2023-05 releases (v1.27.2+rke2r1, v1.26.5+rke2r1, v1.25.10+rke2r1, v1.24.14+rke2r1)
+:::
 
 ## Operating Systems
 
