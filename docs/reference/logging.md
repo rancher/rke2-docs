@@ -16,7 +16,7 @@ Logs from each Kubernetes Pod can be accessed with `kubectl`:
 /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml logs -n kube-system -l component=kube-apiserver
 ```
 
-Logs from each container can be accessed with `crictl`:
+Logs from each container are written to `/var/log/pods` or can be accessed with `crictl`:
 
 ```
 export CONTAINER_RUNTIME_ENDPOINT=unix:///run/k3s/containerd/containerd.sock
