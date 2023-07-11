@@ -19,8 +19,9 @@ Logs from each Kubernetes Pod can be accessed with `kubectl`:
 Logs from each container can be accessed with `crictl`:
 
 ```
+export CONTAINER_RUNTIME_ENDPOINT=unix:///run/k3s/containerd/containerd.sock
 # list running containers
-/var/lib/rancher/rke2/bin/crictl --runtime-endpoint unix:///run/k3s/containerd/containerd.sock ps
+/var/lib/rancher/rke2/bin/crictl ps
 # get logs from container by container id
-/var/lib/rancher/rke2/bin/crictl --runtime-endpoint unix:///run/k3s/containerd/containerd.sock logs <container_id>
+/var/lib/rancher/rke2/bin/crictl logs <container_id>
 ```
