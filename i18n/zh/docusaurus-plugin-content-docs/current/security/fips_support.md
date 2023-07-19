@@ -47,7 +47,7 @@ RKE2 系统的大部分组件都是使用 GoBoring Go 编译器实现静态编�
 
 ## Ingress
 
-RKE2 附带了 NGNIX 作为其默认的 ingress provider。从 v1.21+ 开始，此组件符合 FIPS 标准。NGINX ingress 有两个主要的子组件：
+RKE2 附带了 NGINX 作为其默认的 ingress provider。从 v1.21+ 开始，此组件符合 FIPS 标准。NGINX ingress 有两个主要的子组件：
 
 - controller - 负责监控/更新 Kubernetes 资源并相应地配置 server
 - server - 负责接收和路由流量
