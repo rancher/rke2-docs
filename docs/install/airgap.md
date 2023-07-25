@@ -10,7 +10,7 @@ All files mentioned in the steps can be obtained from the assets of the desired 
 
 If running on an air-gapped node with SELinux enabled, you must manually install the necessary SELinux policy RPM before performing these steps. See our [RPM Documentation](../install/methods.md#rpm) to determine what you need.
 
-If running on an air-gapped node running SELinux, CentOS, or RHEL 8, with SELinux enabled, the following are required dependencies when doing an [RPM install](../install/methods.md#rpm):
+If running on an air-gapped node with SELinux enabled, the following are required dependencies for SLES, CentOS, or RHEL 8 when doing an [RPM install](../install/methods.md#rpm):
 
     Installing dependencies:
     container-selinux
