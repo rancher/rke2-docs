@@ -78,3 +78,5 @@ spec:
     image: coredns/coredns
     imageTag: v1.7.1
 ```
+
+你可以在 [RKE2 Chart 仓库](https://github.com/rancher/rke2-charts/tree/main/charts)找到所有打包的 Helm Chart，包括其文档和默认值。
