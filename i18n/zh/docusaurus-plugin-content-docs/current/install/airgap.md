@@ -10,7 +10,7 @@ title: 离线安装
 
 如果在启用了 SELinux 的离线节点上运行，则必须在执行这些步骤之前手动安装必要的 SELinux 策略 RPM。请参阅 [RPM 文档](../install/methods.md#rpm) 确定你需要的内容。
 
-如果在运行 SELinux、CentOS 或 RHEL 8 的离线节点上运行并启用 SELinux，则在执行 [RPM 安装](../install/methods.md#rpm)时需要以下依赖项：
+如果在启用了 SELinux 的离线节点上运行，则执行 [RPM 安装](../install/methods.md#rpm)时 SLES、CentOS 或 RHEL 8 所需的依赖项如下：
 
     Installing dependencies:
     container-selinux
