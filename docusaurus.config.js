@@ -1,7 +1,7 @@
 
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 module.exports = {
-  title: 'RKE 2',
+  title: 'RKE2',
   tagline: '',
   url: 'https://docs.rke2.io',
   baseUrl: '/',
