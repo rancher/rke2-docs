@@ -98,6 +98,7 @@ If you wish to utilize the metrics server, you will need to open port 10250 on e
 | TCP | 10250 | RKE2 server and agent nodes | kubelet
 | TCP | 2379 | RKE2 server nodes | etcd client port
 | TCP | 2380 | RKE2 server nodes | etcd peer port
+| TCP | 2381 | RKE2 server nodes | etcd metrics port
 | TCP | 30000-32767 | RKE2 server and agent nodes | NodePort port range
 | UDP | 8472 | RKE2 server and agent nodes | Cilium CNI VXLAN
 | TCP | 4240 | RKE2 server and agent nodes | Cilium CNI health checks
