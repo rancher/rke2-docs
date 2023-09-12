@@ -44,6 +44,50 @@ spec:
         enabled: true
 ```
 
+An example of deploying a helm chart from a private repo with authentication:
+
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  namespace: kube-system
+  name: example-app
+spec:
+  targetNamespace: example-space
+  createNamespace: true
+  version: v1.2.3
+  chart: example-app
+  repo: https://secure-repo.example.com
+  authSecret:
+    name: example-repo-auth
+  repoCAConfigMap:
+    name: example-repo-ca
+  valuesContent: |-
+    image:
+      tag: v1.2.2
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: kube-system
+  name: example-repo-auth
+type: kubernetes.io/basic-auth
+stringData:
+  username: user
+  password: pass
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: kube-system
+  name: example-repo-ca
+data:
+  ca.crt: |-
+    -----BEGIN CERTIFICATE-----
+    <YOUR CERTIFICATE>
+    -----END CERTIFICATE-----
+```
+
 #### HelmChart Field Definitions
 
 | Field | Default | Description | Helm Argument / Flag Equivalent |
