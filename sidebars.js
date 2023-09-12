@@ -40,6 +40,7 @@ module.exports = {
         'security/pod_security_standards',
         'security/selinux',
         'security/secrets_encryption',
+        'security/certificates',
       ],
     },
     'architecture',
