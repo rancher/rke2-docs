@@ -36,7 +36,6 @@ Kubernetes requires a number of CA certificates for proper operation. For more i
 
 By default, RKE2 generates self-signed CA certificates during startup of the first server node. These CA certificates are valid for 10 years from date of issuance, and are not automatically renewed.
 
-#TODO IS THE BELOW STILL TRUE IN RKE2?  
 The authoritative CA certificates and keys are stored within the datastore's bootstrap key, encrypted using the server token as the PBKDF2 passphrase with AES256-GCM and HMAC-SHA1.
 Copies of the CA certificates and keys are extracted to disk during RKE2 server startup.
 Any server may generate leaf certificates for nodes as they join the cluster, and the Kubernetes [Certificates API](https://kubernetes.io/docs/reference/access-authn-authz/certificate-signing-requests/) controllers may issue additional certificates at runtime.
@@ -287,7 +286,7 @@ rke2 certificate rotate-ca --path=/var/lib/rancher/rke2/server/rotate-ca
 If the `rotate-ca` command returns an error, check the service log for errors.
 If the command completes successfully, restart RKE2 on all nodes in the cluster - servers first, then agents.
 
-Ensure that any nodes that were joined with a [secure token](token.md#secure), including other server nodes, are reconfigured to use the new token value prior to being restarted.
+Ensure that any nodes that were joined with a secure token, including other server nodes, are reconfigured to use the new token value prior to being restarted.
 The token may be stored in a `.env` file, systemd unit, or config.yaml, depending on how the node was configured during initial installation.
 
 ## Service-Account Issuer Key Rotation
