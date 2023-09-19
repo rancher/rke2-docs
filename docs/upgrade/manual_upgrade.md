@@ -28,6 +28,11 @@ curl -sfL https://get.rke2.io | sh -
 ```
 This will upgrade to the most recent version in the stable channel by default.
 
+If upgrading agent nodes, you should specify the `INSTALL_RKE2_TYPE` environment variable:
+```sh
+curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE=agent sh -
+```
+
 If you want to upgrade to the most recent version in a specific channel (such as latest) you can specify the channel:
 ```sh
 curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL=latest sh -
