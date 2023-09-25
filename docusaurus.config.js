@@ -9,6 +9,9 @@ module.exports = {
   organizationName: 'rancher', // Usually your GitHub org/user name.
   projectName: 'rke2-docs', // Usually your repo name.
   trailingSlash: false,
+  markdown: {
+    mermaid: true,
+  },
   i18n: {
     defaultLocale: "en",
     locales: ["en", "zh"],
@@ -90,6 +93,7 @@ module.exports = {
     ],
   ],
   themes: [
+    '@docusaurus/theme-mermaid',
     [
       "@easyops-cn/docusaurus-search-local",
       /** @type {import("@easyops-cn/docusaurus-search-local").PluginOptions} */
