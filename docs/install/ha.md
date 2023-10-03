@@ -8,6 +8,8 @@ This section describes how to install a high availability (HA) RKE2 cluster. An 
 * An odd number (three recommended) of **server nodes** that will run etcd, the Kubernetes API, and other control plane services
 * Zero or more **agent nodes** that are designated to run your apps and services
 
+![High Availability](/img/rke2-production-setup.svg)
+
 Agents register through the fixed registration address. However, when RKE2 launches the kubelet and it must connect to the Kubernetes api-server, it does so through the `rke2 agent` process, which acts as a client-side load balancer.
 
 Setting up an HA cluster requires the following steps:
@@ -16,6 +18,7 @@ Setting up an HA cluster requires the following steps:
 1. Launch the first server node
 1. Join additional server nodes
 1. Join agent nodes
+
 
 ### 1. Configure the Fixed Registration Address
 
