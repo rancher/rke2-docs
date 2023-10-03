@@ -22,7 +22,7 @@ To renew agent certificates, restart rke2-agent in agent nodes. Agent certificat
 ```sh
 systemctl restart rke2-agent
 ```
-It is also possible to rotate an individual service by passing the `--service` flag, for example: `rke2 certificate rotate --service api-server`. See the [certificate subcommand](./reference/subcommands.md#certificate) for more details.
+It is also possible to rotate an individual service by passing the `--service` flag, for example: `rke2 certificate rotate --service api-server`. See [Certificate Management](./security/certificates.md#rotating-client-and-server-certificates-manually) for more details.
 
 ## Auto-Deploying Manifests
 
