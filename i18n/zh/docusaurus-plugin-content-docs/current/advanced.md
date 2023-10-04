@@ -18,7 +18,7 @@ systemctl stop rke2-server
 rke2 certificate rotate
 systemctl start rke2-server
 ```
-你也可以通过传递 `--service` 标志来轮换单个服务，例如：`rke2 certificate rotate --service api-server`。有关详细信息，请参阅 [certificate 子命令](./reference/subcommands.md#certificate)。
+你也可以通过传递 `--service` 标志来轮换单个服务，例如：`rke2 certificate rotate --service api-server`。
 
 ## 自动部署清单
 
