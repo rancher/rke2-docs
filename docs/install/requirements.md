@@ -86,7 +86,7 @@ When limited on CPU and RAM on the control-plane + etcd nodes, there could be li
 
 It is recommended to join agent nodes in batches of 50 or less to allow the CPU to free up space, as there is a spike on node join. Remember to modify the default `cluster-cidr` if desiring more than 255 nodes!
 
-This data was retrieved under specific test conditions. It will vary depending upon environment and workloads. The steps below give an overview of the test that was run to retrieve this. It was last performed on v1.27.4+rke2r1.
+This data was retrieved under specific test conditions. It will vary depending upon environment and workloads. The steps below give an overview of the test that was run to retrieve this. It was last performed on v1.27.4+rke2r1. All of the machines were provisioned in AWS with standard 20 GiB gp3 volumes.
 1. Monitor resources on grafana using prometheus data source.
 2. Deploy workloads in such a way to simulate continuous cluster activity:
     - A basic workload that scales up and down continuously
