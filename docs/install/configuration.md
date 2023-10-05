@@ -46,7 +46,9 @@ Finally, the location of the config file can be changed either through the cli a
 Available as of [v1.21.2+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.2%2Brke2r1)
 :::
 
-Multiple configuration files are supported. Configuration loads by default from `/etc/rancher/rke2/config.yaml` and `/etc/rancher/rke2/config.yaml.d/*.yaml` in alphabetical order. The last value for a given key will be used. Slices are replaced.
+Multiple configuration files are supported. By default, configuration files are read from `/etc/rancher/rke2/config.yaml` and `/etc/rancher/rke2/config.yaml.d/*.yaml` in alphabetical order. 
+
+By default, the last value found for a given key will be used. A `+` can be appended to the key to append the value to the existing string or slice, instead of replacing it. All occurrences of this key in subsequent files will also require a `+` to prevent overwriting the accumulated value.
 
 An example of multiple config files is below:
 
@@ -60,14 +62,16 @@ node-label:
 
 # config.yaml.d/test1.yaml
 write-kubeconfig-mode: 600
-
+node-taint:
+  - alice=bob:NoExecute
 
 # config.yaml.d/test2.yaml
 write-kubeconfig-mode: 777
 node-label:
   - other=what
   - foo=three
-
+node-taint+:
+  - charlie=delta:NoSchedule
 ```
 
 This results in a final configuration of:
@@ -78,6 +82,9 @@ token: boop
 node-label:
   - other=what
   - foo=three
+node-taint:
+  - alice=bob:NoExecute
+  - charlie=delta:NoSchedule
 ```
 
 ## Configuring the Linux Installation Script
