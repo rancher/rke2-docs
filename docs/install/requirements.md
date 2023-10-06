@@ -70,10 +70,6 @@ Hardware requirements scale based on the size of your deployments. Minimum recom
 *    RAM: 4GB Minimum (we recommend at least 8GB)
 *    CPU: 2 Minimum (we recommend at least 4CPU)
 
-#### Disks
-
-RKE2 performance depends on the performance of the database, and since RKE2 runs etcd embeddedly and it stores the data dir on disk, we recommend using an SSD when possible to ensure optimal performance.
-
 ### VM Sizing Guide
 When limited on CPU and RAM on the control-plane + etcd nodes, there could be limitations for the amount of agent nodes that can be joined under standard workload conditions. 
 
@@ -94,6 +90,9 @@ This data was retrieved under specific test conditions. It will vary depending u
     - A constant workload that contains multiple other resources including CRDs.
 3. Join agent nodes in batches of 30-50 at a time.
 
+#### Disks
+
+RKE2 performance depends on the performance of the database, and since RKE2 runs etcd embeddedly and it stores the data dir on disk, we recommend using an SSD when possible to ensure optimal performance.
 
 ## Networking
 
