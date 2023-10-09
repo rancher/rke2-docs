@@ -2,13 +2,11 @@
 title: "Etcd Backup and Restore"
 ---
 
-# Etcd Backup and Restore
-
 In this section, you'll learn how to create backups of the rke2 cluster data and to restore the cluster from backup.
 
 **Note:** /var/lib/rancher/rke2 is the default data directory for rke2, it is configurable however via `data-dir` parameter.
 
-### Creating Snapshots
+## Creating Snapshots
 
 Snapshots are enabled by default.
 
@@ -18,7 +16,7 @@ To configure the snapshot interval or the number of retained snapshots, refer to
 
 In RKE2, snapshots are stored on each etcd node. If you have multiple etcd or etcd + control-plane nodes, you will have multiple copies of local etcd snapshots.
 
-You can take a snapshot manually while RKE2 is running with the `etcd-snapshot` subcommand. For example: `rke2 etcd-snapshot save --name pre-upgrade-snapshot`. See the full list of etcd-snapshot subcommands at the [subcommands page](reference/subcommands.md#etcd-snapshot)
+You can take a snapshot manually while RKE2 is running with the `etcd-snapshot` subcommand. For example: `rke2 etcd-snapshot save --name pre-upgrade-snapshot`.
 
 ## Cluster Reset
 
@@ -122,24 +120,11 @@ systemctl start rke2-server
   systemctl start rke2-server
   ```
 
-### Options
+## S3 Compatible API Support
 
-These options can be set in the configuration file:
+RKE2 supports writing etcd snapshots to and restoring etcd snapshots from systems with S3-compatible APIs. S3 support is available for both on-demand and scheduled snapshots.
 
-| Options | Description |
-| ----------- | --------------- |
-| `etcd-disable-snapshots` | Disable automatic etcd snapshots |
-| `etcd-snapshot-schedule-cron` value  |  Snapshot interval time in cron spec. eg. every 4 hours `0 */4 * * *`(default: `0 */12 * * *`) |
-| `etcd-snapshot-retention` value  | Number of snapshots to retain (default: 5) |
-| `etcd-snapshot-dir` value  | Directory to save db snapshots. (Default location: `${data-dir}/db/snapshots`) |
-| `cluster-reset`  | Forget all peers and become sole member of a new cluster. This can also be set with the environment variable `[$RKE2_CLUSTER_RESET]`.
-| `cluster-reset-restore-path` value | Path to snapshot file to be restored
-
-### S3 Compatible API Support
-
-rke2 supports writing etcd snapshots to and restoring etcd snapshots from systems with S3-compatible APIs. S3 support is available for both on-demand and scheduled snapshots.
-
-The arguments below have been added to the `server` subcommand. These flags exist for the `etcd-snapshot` subcommand as well however the `--etcd-s3` portion is removed to avoid redundancy.
+The arguments below exist for both the `server` and `etcd-snapshot` subcommands. 
 
 | Options | Description |
 | ----------- | --------------- |
@@ -152,6 +137,12 @@ The arguments below have been added to the `server` subcommand. These flags exis
 | `--etcd-s3-bucket` | S3 bucket name |
 | `--etcd-s3-region` | S3 region / bucket location (optional). defaults to us-east-1 |
 | `--etcd-s3-folder` | S3 folder |
+| `--etcd-s3-insecure` | Disables S3 over HTTPS |
+| `--etcd-s3-timeout` | S3 timeout. Defaults to 30s |
+
+:::info Flag Aliases
+For the `etcd-snapshot` subcommand, the `--etcd-s3` flags are aliased to `--s3`.
+:::
 
 To perform an on-demand etcd snapshot and save it to S3:
 
@@ -163,7 +154,7 @@ rke2 etcd-snapshot \
   --s3-secret-key=<S3-SECRET-KEY>
 ```
 
-To perform an on-demand etcd snapshot restore from S3, first make sure that rke2 isn't running. Then run the following commands:
+To perform an S3 etcd snapshot restore, first make sure that RKE2 isn't running. Then execute the following commands:
 
 ```
 rke2 server \
@@ -173,4 +164,33 @@ rke2 server \
   --etcd-s3-bucket=<S3-BUCKET-NAME> \
   --etcd-s3-access-key=<S3-ACCESS-KEY> \
   --etcd-s3-secret-key=<S3-SECRET-KEY>
+```
+
+## Snapshot Configuration
+
+### Options
+
+These options can be set in the configuration file:
+
+| Options | Description |
+| ----------- | --------------- |
+| `etcd-disable-snapshots` | Disable automatic etcd snapshots |
+| `etcd-snapshot-schedule-cron` value  |  Snapshot interval time in cron spec. eg. every 4 hours `0 */4 * * *`. Defaults is every 12 hours `0 */12 * * *` |
+| `etcd-snapshot-retention` value  | Number of snapshots to retain. Defaults to 5 |
+| `etcd-snapshot-dir` value  | Directory to save db snapshots. Default location: `${data-dir}/db/snapshots` |
+| `cluster-reset`  | Forget all peers and become sole member of a new cluster. This can also be set with the environment variable `[$RKE2_CLUSTER_RESET]` |
+| `cluster-reset-restore-path` value | Path to snapshot file to be restored |
+| `etcd-snapshot-compress`        | Compress etcd snapshots |
+
+### List Snapshots
+
+You can list local snapshots with the `etcd-snapshot ls` subcommand. 
+
+### Prune Snapshots
+
+Snapshots are pruned automatically when the number of snapshots exceeds the configured retention count. The oldest snapshots are removed first. 
+
+You can manually prune snapshots down to a smaller amount using the following command:
+```
+rke2 etcd-snapshot prune --snapshot-retention <NUM-OF-SNAPSHOTS-TO-RETAIN>
 ```

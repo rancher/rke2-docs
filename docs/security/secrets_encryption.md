@@ -48,7 +48,7 @@ Once enabled any created secret will be encrypted with this key. Note that if yo
 Available as of [v1.21.8+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.8%2Brke2r1)
 :::
 
-RKE2 contains a utility [subcommand](../reference/subcommands.md#secrets-encrypt) `secrets-encrypt`, which allows administrators to perform the following tasks:
+RKE2 contains a subcommand `secrets-encrypt`, which allows administrators to perform the following tasks:
 
 - Adding new encryption keys
 - Rotating and deleting encryption keys

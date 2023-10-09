@@ -18,7 +18,7 @@ title: "Etcd 备份与恢复"
 
 在 RKE2 中，快照会存储在每个 etcd 节点上。如果你有多个 etcd 或 etcd + control plane 节点，你将拥有本地 etcd 快照的多个副本。
 
-你可以在 RKE2 运行时使用 `etcd-snapshot` 子命令手动执行快照。例如：`rke2 etcd-snapshot save --name pre-upgrade-snapshot`。有关 etcd-snapshot 子命令的完整列表，请参阅[子命令页面](reference/subcommands.md#etcd-snapshot)。
+你可以在 RKE2 运行时使用 `etcd-snapshot` 子命令手动执行快照。例如：`rke2 etcd-snapshot save --name pre-upgrade-snapshot`。
 
 ## 集群重置
 
