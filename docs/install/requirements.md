@@ -70,6 +70,26 @@ Hardware requirements scale based on the size of your deployments. Minimum recom
 *    RAM: 4GB Minimum (we recommend at least 8GB)
 *    CPU: 2 Minimum (we recommend at least 4CPU)
 
+### VM Sizing Guide
+When limited on CPU and RAM on the control-plane + etcd nodes, there could be limitations for the amount of agent nodes that can be joined under standard workload conditions. 
+
+| Server CPU | Server RAM | Number of Agents | 
+| ---------- | ---------- | ---------------- |
+| 2          | 4 GB       | 0-225            |
+| 4          | 8 GB       | 226-450          |
+| 8          | 16 GB      | 451-1300         |
+| 16+        | 32 GB      | 1300+            |
+
+It is recommended to join agent nodes in batches of 50 or less to allow the CPU to free up space, as there is a spike on node join. Remember to modify the default `cluster-cidr` if desiring more than 255 nodes!
+
+This data was retrieved under specific test conditions. It will vary depending upon environment and workloads. The steps below give an overview of the test that was run to retrieve this. It was last performed on v1.27.4+rke2r1. All of the machines were provisioned in AWS with standard 20 GiB gp3 volumes.
+1. Monitor resources on grafana using prometheus data source.
+2. Deploy workloads in such a way to simulate continuous cluster activity:
+    - A basic workload that scales up and down continuously
+    - A workload that is deleted and recreated in a loop
+    - A constant workload that contains multiple other resources including CRDs.
+3. Join agent nodes in batches of 30-50 at a time.
+
 #### Disks
 
 RKE2 performance depends on the performance of the database, and since RKE2 runs etcd embeddedly and it stores the data dir on disk, we recommend using an SSD when possible to ensure optimal performance.
