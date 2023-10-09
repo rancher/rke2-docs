@@ -2,9 +2,13 @@
 title: Air-Gap Install
 ---
 
-**Important:** If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager)
-
 RKE2 can be installed in an air-gapped environment with two different methods. You can either deploy via the `rke2-airgap-images` tarball release artifact, or by using a private registry.
+
+## Prerequisites
+
+:::warning Important
+If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager)
+:::
 
 All files mentioned in the steps can be obtained from the assets of the desired released rke2 version [here](https://github.com/rancher/rke2/releases).
 
@@ -23,6 +27,14 @@ If running on an air-gapped node with SELinux enabled, the following are require
     rke2-selinux
 
 All the steps listed on this document must be run as the root user or through `sudo`.
+
+If your nodes do not have an interface with a default route, a default route must be configured; even a black-hole route via a dummy interface will suffice. RKE2 requires a default route in order to auto-detect the node's primary IP, and for kube-proxy ClusterIP routing to function properly. To add a dummy route, do the following:
+  ```
+  ip link add dummy0 type dummy
+  ip link set dummy0 up
+  ip addr add 169.254.255.254/31 dev dummy0
+  ip route add default via 169.254.255.255 dev dummy0 metric 1000
+  ```
 
 ## Tarball Method
 

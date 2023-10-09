@@ -104,3 +104,16 @@ OPTIONS:
    --etcd-extra-env value                        (components) etcd extra environment variables [$RKE2_ETCD_EXTRA_ENV]
    --cloud-controller-manager-extra-env value    (components) cloud-controller-manager extra environment variables [$RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV]```
 ```
+
+## Critical Configuration Values
+
+The following options must be set to the same value on all servers in the cluster. Failure to do so will cause new servers to fail to join the cluster.
+
+* `--agent-token`
+* `--cluster-cidr`
+* `--cluster-dns`
+* `--cluster-domain`
+* `--disable-cloud-controller`
+* `--disable-kube-proxy`
+* `--egress-selector-mode`
+* `--service-cidr`

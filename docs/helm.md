@@ -117,7 +117,9 @@ data:
 
 To allow overriding values for packaged components that are deployed as HelmCharts (such as Canal, CoreDNS, Nginx-Ingress, etc), RKE2 supports customizing deployments via a `HelmChartConfig` resources. The `HelmChartConfig` resource must match the name and namespace of its corresponding HelmChart, and supports providing additional `valuesContent`, which is passed to the `helm` command as an additional value file.
 
-> **Note:** HelmChart `spec.set` values override HelmChart and HelmChartConfig `spec.valuesContent` settings.
+:::note
+HelmChart `spec.set` values override HelmChart and HelmChartConfig `spec.valuesContent` settings.
+:::
 
 For example, to customize the packaged CoreDNS configuration, you can create a file named `/var/lib/rancher/rke2/server/manifests/rke2-coredns-config.yaml` and populate it with the following content:
 
@@ -134,3 +136,15 @@ spec:
 ```
 
 You can find all the packaged Helm charts including their documentation and default values in the [RKE2 charts repository](https://github.com/rancher/rke2-charts/tree/main/charts).
+
+#### File Naming Requirements
+
+The `AddOn` name for each file in the manifest directory is derived from the file basename. 
+Ensure that all files within the manifests directory (or within any subdirectories) have names that are unique, and adhere to Kubernetes [object naming restrictions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/).
+Care should also be taken not to conflict with names in use by the default RKE2 packaged components, even if those components are disabled.
+
+An example of an error that would be reported if the file name contains underscores:
+> `Failed to process config: failed to process /var/lib/rancher/rke2/server/manifests/example_manifest.yaml:
+   Addon.k3s.cattle.io "example_manifest" is invalid: metadata.name: Invalid value: "example_manifest": 
+   a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+   (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')`

@@ -8,6 +8,14 @@ This section describes how to install a high availability (HA) RKE2 cluster. An 
 * An odd number (three recommended) of **server nodes** that will run etcd, the Kubernetes API, and other control plane services
 * Zero or more **agent nodes** that are designated to run your apps and services
 
+<details><summary>Why An Odd Number Of Server Nodes?</summary>
+<p>
+An etcd cluster must be comprised of an odd number of server nodes for etcd to maintain quorum. For a cluster with n servers, quorum is (n/2)+1. For any odd-sized cluster, adding one node will always increase the number of nodes necessary for quorum. Although adding a node to an odd-sized cluster appears better since there are more machines, the fault tolerance is worse. Exactly the same number of nodes can fail without losing quorum, but there are now more nodes that can fail.
+</p>
+</details>
+
+![High Availability](/img/rke2-production-setup.svg)
+
 Agents register through the fixed registration address. However, when RKE2 launches the kubelet and it must connect to the Kubernetes api-server, it does so through the `rke2 agent` process, which acts as a client-side load balancer.
 
 Setting up an HA cluster requires the following steps:
@@ -16,6 +24,7 @@ Setting up an HA cluster requires the following steps:
 1. Launch the first server node
 1. Join additional server nodes
 1. Join agent nodes
+
 
 ### 1. Configure the Fixed Registration Address
 
@@ -64,6 +73,11 @@ Note: The NGINX Ingress and Metrics Server addons will **not** be deployed when 
 
 ### 3. Launch additional server nodes
 Additional server nodes are launched much like the first, except that you must specify the `server` and `token` parameters so that they can successfully connect to the initial server node.
+
+:::info Matching Flags
+It is important to match critical flags on your server nodes. For example, if you use the flag `--cluster-cidr=10.200.0.0/16` on your first server node, but don't set it on other server nodes, the nodes will fail to join. They will print errors such as: `failed to validate server configuration: critical configuration value mismatch.`
+See [Server Configuration](../reference/server_config.md#critical-configuration-values) for more information on which flags must be set identically on server nodes.
+:::
 
 Example of RKE2 config file for additional server nodes:
 
