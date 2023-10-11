@@ -144,9 +144,14 @@ IPv4/IPv6 dual-stack networking enables the allocation of both IPv4 and IPv6 add
 
 ```yaml
 #/etc/rancher/rke2/config.yaml
-cluster-cidr: "10.42.0.0/16,2001:cafe:42:0::/56"
-service-cidr: "10.43.0.0/16,2001:cafe:42:1::/112"
+cluster-cidr: "10.42.0.0/16,2001:db8:cafe:0::/56"
+service-cidr: "10.43.0.0/16,2001:db8:cafe:100::/112"
 ```
+:::caution
+The IPv6 addresses above are reserved for documentation/examples, and should not be used. It's advised to use ULA IPv6 addresses as defined in RFC [4193](https://www.rfc-editor.org/rfc/rfc4193.txt). Tips: Use a [ULA generator](https://cd34.com/rfc4193/).
+
+The cluster-cidr must have a netmask of /56, and the service-cidr must be /108 or smaller.
+:::
 
 Each CNI plugin requires a different configuration for dual-stack:
 
