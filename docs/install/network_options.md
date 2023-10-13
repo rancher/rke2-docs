@@ -150,7 +150,7 @@ service-cidr: "10.43.0.0/16,2001:db8:cafe:100::/112"
 :::caution
 The IPv6 addresses above are reserved for documentation/examples, and should not be used. It's advised to use ULA IPv6 addresses as defined in RFC [4193](https://www.rfc-editor.org/rfc/rfc4193.txt). Tips: Use a [ULA generator](https://cd34.com/rfc4193/).
 
-The cluster-cidr must have a netmask of /56, and the service-cidr must be /108 or smaller.
+The netmask for `service-cidr` must be /108 or smaller.
 :::
 
 Each CNI plugin requires a different configuration for dual-stack:
@@ -160,10 +160,18 @@ Each CNI plugin requires a different configuration for dual-stack:
 
 Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.
 
+:::note
+When choosing a netmask for cluster-cidr, please note that `node-cidr-mask-size-ipv6` has a default value of /64 - thus this need to be changed if you choose a netmask of /64 or smaller for `cluster-cidr`
+:::
+
 </TabItem>
 <TabItem value="Cilium CNI plugin" default>
 
 Cilium automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration.
+
+:::note
+When choosing a netmask for cluster-cidr, please note that `node-cidr-mask-size-ipv6` has a default value of /64 - thus this need to be changed if you choose a netmask of /64 or smaller for `cluster-cidr`
+:::
 
 </TabItem>
 <TabItem value="Calico CNI plugin" default>
