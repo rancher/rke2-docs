@@ -161,7 +161,7 @@ Each CNI plugin requires a different configuration for dual-stack:
 Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.
 
 :::note
-When choosing a netmask for cluster-cidr, please note that `node-cidr-mask-size-ipv6` has a default value of /64 - thus this need to be changed if you choose a netmask of /64 or smaller for `cluster-cidr`
+When choosing a netmask for cluster-cidr, please note that `node-cidr-mask-size-ipv6` has a default value of /64 - thus this need to be changed if you choose a netmask of /64 or smaller for `cluster-cidr`. This is accomplished by adding `--node-cidr-mask-size-ipv6=xx"` as an argument to the `kube-controller-manager` manifest.
 :::
 
 </TabItem>
@@ -170,7 +170,7 @@ When choosing a netmask for cluster-cidr, please note that `node-cidr-mask-size-
 Cilium automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration.
 
 :::note
-When choosing a netmask for cluster-cidr, please note that `node-cidr-mask-size-ipv6` has a default value of /64 - thus this need to be changed if you choose a netmask of /64 or smaller for `cluster-cidr`
+When choosing a netmask for cluster-cidr, please note that `node-cidr-mask-size-ipv6` has a default value of /64 - thus this need to be changed if you choose a netmask of /64 or smaller for `cluster-cidr` This is accomplished by adding `--node-cidr-mask-size-ipv6=xx"` as an argument to the `kube-controller-manager` manifest.
 :::
 
 </TabItem>
