@@ -88,24 +88,28 @@ hr {
   background-color: var(--ifm-navbar-link-color);
 }
 
-.navbar__icon:hover:before {
-  background-color: #2e68e9;
-}
-
 .navbar__github:before {
   mask: url(/static/img/github-mark.svg) no-repeat;
   mask-size: cover;
   padding-right: 1px;
-
 }
 
+.navbar__rancher:hover:before {
+  background-color: #2e68e9;
+}
 .navbar__rancher:before {
-  mask: url(/static/img/rancher-favicon.png) no-repeat 100% 100%;
+  mask: url(/static/img/icon-rancher.png) no-repeat 100% 100%;
   mask-size: cover;
   width: 30px;
   padding-bottom: 7px;
 }
 
+.navbar__rancher_desktop:before {
+  mask: url(/static/img/icon-rancher.png) no-repeat 100% 100%;
+  mask-size: cover;
+  width: 30px;
+  padding-bottom: 7px;
+}
 
 .docusaurus-highlight-code-line {
   background-color: rgb(72, 77, 91);
