@@ -78,6 +78,10 @@ module.exports = {
               to: "https://rancherdesktop.io",
             },
             {
+              label: 'Kubewarden',
+              to: "https://kubewarden.io",
+            },
+            {
               type: 'html',
               value: '<hr style="margin: 0.3rem 0;">',
             },
