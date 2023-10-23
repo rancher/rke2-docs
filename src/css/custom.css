@@ -76,7 +76,7 @@ hr {
 
 .navbar__icon {
   font-family: poppins,sans-serif;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .navbar__icon:before {
@@ -86,6 +86,14 @@ hr {
   width: 20px;
   margin-right: 4px;
   background-color: var(--ifm-navbar-link-color);
+}
+
+.navbar__github{
+  font-size: 18px;
+}
+
+.navbar__github:hover:before {
+  background-color: #3d98d3;
 }
 
 .navbar__github:before {
@@ -98,16 +106,42 @@ hr {
   background-color: #2e68e9;
 }
 .navbar__rancher:before {
-  mask: url(/static/img/icon-rancher.png) no-repeat 100% 100%;
+  mask: url(/static/img/icon-rancher-mask.png) no-repeat 100% 100%;
   mask-size: cover;
-  width: 30px;
+  width: 35px;
+  padding-bottom: 10px;
+}
+
+.navbar__rd:hover:before {
+  background-color: #0081be;
+}
+.navbar__rd:before {
+  mask: url(/static/img/icon-rd-mask.png) no-repeat 100% 100%;
+  mask-size: cover;
+  width: 35px;
+  height: 22px;
   padding-bottom: 7px;
 }
 
-.navbar__rancher_desktop:before {
-  mask: url(/static/img/icon-rancher.png) no-repeat 100% 100%;
+.navbar__harvester:hover:before {
+  background-color: #00a580;
+}
+.navbar__harvester:before {
+  mask: url(/static/img/icon-harvester-mask.png) no-repeat 100% 100%;
   mask-size: cover;
-  width: 30px;
+  width: 35px;
+  height: 22px;
+  padding-bottom: 7px;
+}
+
+.navbar__kubewarden:hover:before {
+  background-color: #bc2a46;
+}
+.navbar__kubewarden:before {
+  mask: url(/static/img/icon-kubewarden-mask.png) no-repeat 100% 100%;
+  mask-size: cover;
+  width: 35px;
+  height: 22px;
   padding-bottom: 7px;
 }
 

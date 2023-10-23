@@ -72,14 +72,17 @@ module.exports = {
             {
               label: 'Harvester',
               to: "http://harvesterhci.io",
+              className: 'navbar__icon navbar__harvester',
             },
             {
               label: 'Rancher Desktop',
               to: "https://rancherdesktop.io",
+              className: 'navbar__icon navbar__rd',
             },
             {
               label: 'Kubewarden',
               to: "https://kubewarden.io",
+              className: 'navbar__icon navbar__kubewarden',
             },
             {
               type: 'html',
