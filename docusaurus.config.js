@@ -56,10 +56,44 @@ module.exports = {
           className: 'navbar__icon navbar__github',
         },
         {
-          to: 'https://www.rancher.com',
-          label: 'Rancher',
+          type: 'dropdown',
+          label: 'More From SUSE',
           position: 'right',
-          className: 'navbar__icon navbar__rancher',
+          items: [
+            {
+              label: 'Rancher',
+              to: 'https://www.rancher.com',
+              className: 'navbar__icon navbar__rancher',
+            },
+            {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
+              label: 'Harvester',
+              to: "http://harvesterhci.io",
+              className: 'navbar__icon navbar__harvester',
+            },
+            {
+              label: 'Rancher Desktop',
+              to: "https://rancherdesktop.io",
+              className: 'navbar__icon navbar__rd',
+            },
+            {
+              label: 'Kubewarden',
+              to: "https://kubewarden.io",
+              className: 'navbar__icon navbar__kubewarden',
+            },
+            {
+              type: 'html',
+              value: '<hr style="margin: 0.3rem 0;">',
+            },
+            {
+              label: 'More Projects...',
+              to: "https://opensource.suse.com",
+              className: 'navbar__icon navbar__suse',
+            },
+          ],
         },
       ],
     },
