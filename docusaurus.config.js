@@ -91,6 +91,7 @@ module.exports = {
             {
               label: 'More Projects...',
               to: "https://opensource.suse.com",
+              className: 'navbar__icon navbar__suse',
             },
           ],
         },
