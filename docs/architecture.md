@@ -29,7 +29,7 @@ RKE2 brings together a number of Open Source technologies to make this all work:
 - [containerd][io-containerd]/[cri][gh-cri-api]
 - [CNI][gh-cni]: Canal ([Calico][org-projectcalico] &amp; [Flannel][gh-flannel]), [Cilium][io-cilium] or [Calico][org-projectcalico]
 - [CoreDNS][io-coredns]
-- [Ingress-Nginx Controller][io-ingress-nginx]
+- [Ingress NGINX Controller][io-ingress-nginx]
 - [Metrics Server][gh-metrics-server]
 - [Helm][sh-helm]
 
