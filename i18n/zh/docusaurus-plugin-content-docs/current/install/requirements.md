@@ -31,6 +31,7 @@ RKE2 已在以下操作系统及其后续非主要版本上进行了测试和验
 | CentOS/RHEL | 7.8 |
 | Rocky/RHEL | 8.5, 9.1 |
 | Oracle Linux | 8.7 |
+| Amazon Linux | 2023 |
 | SLES | 15 SP3, SP4 |
 | OpenSUSE, SLE Micro | 5.1, 5.2, 5.3, 5.4 |
 

@@ -27,10 +27,11 @@ RKE2 has been tested and validated on the following operating systems, and their
 
 | Distro | Version |
 | - | - |
-| Ubuntu | 18.04, 20.04, 22.04 | 
+| Ubuntu | 18.04, 20.04, 22.04 |
 | CentOS/RHEL | 7.8 |
-| Rocky/RHEL | 8.5, 9.1 | 
+| Rocky/RHEL | 8.5, 9.1 |
 | Oracle Linux | 8.7 |
+| Amazon Linux | 2023 |
 | SLES | 15 SP3, SP4 |
 | OpenSUSE, SLE Micro | 5.1, 5.2, 5.3, 5.4 |
 
@@ -71,9 +72,9 @@ Hardware requirements scale based on the size of your deployments. Minimum recom
 *    CPU: 2 Minimum (we recommend at least 4CPU)
 
 ### VM Sizing Guide
-When limited on CPU and RAM on the control-plane + etcd nodes, there could be limitations for the amount of agent nodes that can be joined under standard workload conditions. 
+When limited on CPU and RAM on the control-plane + etcd nodes, there could be limitations for the amount of agent nodes that can be joined under standard workload conditions.
 
-| Server CPU | Server RAM | Number of Agents | 
+| Server CPU | Server RAM | Number of Agents |
 | ---------- | ---------- | ---------------- |
 | 2          | 4 GB       | 0-225            |
 | 4          | 8 GB       | 226-450          |
