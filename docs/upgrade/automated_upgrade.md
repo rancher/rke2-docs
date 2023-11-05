@@ -30,7 +30,7 @@ To automate upgrades in this manner you must:
 ### Install the system-upgrade-controller
 The system-upgrade-controller can be installed as a deployment into your cluster. The deployment requires a service-account, clusterRoleBinding, and a configmap. To install these components, run the following command:
 ```
-kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.9.1/system-upgrade-controller.yaml
+kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.13.1/system-upgrade-controller.yaml
 ```
 The controller can be configured and customized via the previously mentioned configmap, but the controller must be redeployed for the changes to be applied.
 
@@ -54,6 +54,11 @@ spec:
        - {key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"]}
        # When using k8s version 1.19 or older, swap control-plane with master
        - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
+  tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
   serviceAccountName: system-upgrade
   cordon: true
 #  drain:
