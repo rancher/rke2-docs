@@ -112,7 +112,7 @@ If you wish to utilize the metrics server, you will need to open port 10250 on e
 
 | Protocol | Port        | Source            | Destination       | Description
 |----------|-------------|-------------------|-------------------|---|
-| ICMP     | 8/0         | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
+| ICMP     | n/a         | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
 | TCP      | 179         | All RKE2 nodes    | All RKE2 nodes    | Calico CNI with BGP
 | TCP      | 2379        | RKE2 server nodes | RKE2 server nodes | etcd client port
 | TCP      | 2380        | RKE2 server nodes | RKE2 server nodes | etcd peer port
