@@ -32,8 +32,8 @@ If your nodes do not have an interface with a default route, a default route mus
   ```
   ip link add dummy0 type dummy
   ip link set dummy0 up
-  ip addr add 169.254.255.254/31 dev dummy0
-  ip route add default via 169.254.255.255 dev dummy0 metric 1000
+  ip addr add 203.0.113.254/31 dev dummy0
+  ip route add default via 203.0.113.255 dev dummy0 metric 1000
   ```
 
 ## Tarball Method
@@ -81,9 +81,9 @@ system-default-registry: "registry.example.com:5000"
 1. Download the install script, rke2, rke2-images, and sha256sum archives from the release into a directory, as in the example below:
 ```bash
 mkdir /root/rke2-artifacts && cd /root/rke2-artifacts/
-curl -OLs https://github.com/rancher/rke2/releases/download/v1.21.5%2Brke2r2/rke2-images.linux-amd64.tar.zst
-curl -OLs https://github.com/rancher/rke2/releases/download/v1.21.5%2Brke2r2/rke2.linux-amd64.tar.gz
-curl -OLs https://github.com/rancher/rke2/releases/download/v1.21.5%2Brke2r2/sha256sum-amd64.txt
+curl -OLs https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-images.linux-amd64.tar.zst
+curl -OLs https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2.linux-amd64.tar.gz
+curl -OLs https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/sha256sum-amd64.txt
 curl -sfL https://get.rke2.io --output install.sh
 ```
 2. Next, run install.sh using the directory, as in the example below:
