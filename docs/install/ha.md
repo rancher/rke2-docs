@@ -8,10 +8,11 @@ This section describes how to install a high availability (HA) RKE2 cluster. An 
 * An odd number (three recommended) of **server nodes** that will run etcd, the Kubernetes API, and other control plane services
 * Zero or more **agent nodes** that are designated to run your apps and services
 
-<details><summary>Why An Odd Number Of Server Nodes?</summary>
-<p>
+<details>
+<summary>Why An Odd Number Of Server Nodes?</summary>
+
 An etcd cluster must be comprised of an odd number of server nodes for etcd to maintain quorum. For a cluster with n servers, quorum is (n/2)+1. For any odd-sized cluster, adding one node will always increase the number of nodes necessary for quorum. Although adding a node to an odd-sized cluster appears better since there are more machines, the fault tolerance is worse. Exactly the same number of nodes can fail without losing quorum, but there are now more nodes that can fail.
-</p>
+
 </details>
 
 ![High Availability](/img/rke2-production-setup.svg)

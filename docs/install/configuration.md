@@ -89,7 +89,7 @@ node-taint:
 
 ## Configuring the Linux Installation Script
 
-As mentioned in the [Quick-Start Guide](quickstart.md), you can use the installation script available at <https://get.rke2.io> to install RKE2 as a service.
+As mentioned in the [Quick-Start Guide](quickstart.md), you can use the installation script available at https://get.rke2.io to install RKE2 as a service.
 
 The simplest form of this command is running, as root user or through `sudo`, as follows:
 
