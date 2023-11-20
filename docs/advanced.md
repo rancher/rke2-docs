@@ -97,12 +97,19 @@ systemctl start rke2-server
 
 The server charts bundled with `rke2` deployed during cluster bootstrapping can be disabled and replaced with alternatives.  A common use case is replacing the bundled `rke2-ingress-nginx` chart with an alternative.
 
-To disable any of the bundled system charts, set the `disable` parameter in the config file before bootstrapping.  The full list of system charts to disable is below:
+To disable any of the bundled system charts, set the `disable` parameter in the config file before bootstrapping. An example of disabling all avaliable system charts is:
 
-- `rke2-canal`
-- `rke2-coredns`
-- `rke2-ingress-nginx`
-- `rke2-metrics-server`
+```yaml
+# /etc/rancher/rke2/config.yaml
+disable:
+  - rke2-canal
+  - rke2-coredns
+  - rke2-ingress-nginx
+  - rke2-metrics-server
+  - rke2-snapshot-controller
+  - rke2-snapshot-controller-crd
+  - rke2-snapshot-validation-webhook
+```
 
 Note that it is the cluster operator's responsibility to ensure that components are disabled or replaced with care, as the server charts play important roles in cluster operability.  Refer to the [architecture overview](./architecture.md#server-charts) for more information on the individual system charts role within the cluster.
 
