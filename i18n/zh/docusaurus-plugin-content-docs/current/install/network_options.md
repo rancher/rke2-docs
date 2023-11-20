@@ -143,8 +143,8 @@ IPv4/IPv6 双栈网络支持将 IPv4 和 IPv6 地址分配给 Pod 和 Service。
 
 ```yaml
 #/etc/rancher/rke2/config.yaml
-cluster-cidr: "10.42.0.0/16,2001:cafe:42:0::/56"
-service-cidr: "10.43.0.0/16,2001:cafe:42:1::/112"
+cluster-cidr: "10.42.0.0/16,2001:cafe:42::/56"
+service-cidr: "10.43.0.0/16,2001:cafe:43::/112"
 ```
 
 每个 CNI 插件都需要不同的双栈配置：
