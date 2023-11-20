@@ -54,7 +54,7 @@ RKE2 包含一个实用的子命令 `secrets-encrypt`，它允许管理员执行
 - 轮换和删除加密密钥
 - 重新加密 Secret
 
-:::warning
+:::danger
 如果你在轮换 Secret 加密密钥时没有遵循正确的程序，数据可能永久丢失。建议在轮换之前[创建快照](../backup_restore.md)。因此，请谨慎操作。
 :::
 

@@ -54,7 +54,7 @@ RKE2 contains a subcommand `secrets-encrypt`, which allows administrators to per
 - Rotating and deleting encryption keys
 - Reencrypting secrets
 
-:::warning
+:::danger
 Failure to follow proper procedure when rotating secrets encryption keys can cause permanent data loss. [Creating a snapshot](../backup_restore.md) before rotating is recommended. Proceed with caution.
 :::
 
