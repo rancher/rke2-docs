@@ -143,7 +143,7 @@ If the script generated root and/or intermediate CA files, you should back up th
 To rotate custom CA certificates, use the `rke2 certificate rotate-ca` subcommand.
 Updated files must be staged into a temporary directory, loaded into the datastore, and rke2 must be restarted on all nodes to use the updated certificates.
 
-:::caution
+:::warning
 You must not overwrite the currently in-use data in `/var/lib/rancher/rke2/server/tls`.  
 Stage the updated certificates and keys into a separate directory.
 :::
@@ -186,7 +186,7 @@ The token may be stored in a `.env` file, systemd unit, or config.yaml, dependin
 To rotate the RKE2-generated self-signed CA certificates, use the `rke2 certificate rotate-ca` subcommand.
 Updated files must be staged into a temporary directory, loaded into the datastore, and rke2 must be restarted on all nodes to use the updated certificates.
 
-:::caution
+:::warning
 You must not overwrite the currently in-use data in `/var/lib/rancher/rke2/server/tls`.  
 Stage the updated certificates and keys into a separate directory.
 :::
@@ -295,7 +295,7 @@ The service-account issuer key is an RSA private key used to sign service-accoun
 When rotating the service-account issuer key, at least one old key should be retained in the file so that existing service-account tokens are not invalidated.
 It can be rotated independent of the cluster CAs by using the `rke2 certificate rotate-ca` to install only an updated `service.key` file that includes both the new and old keys.
 
-:::caution
+:::warning
 You must not overwrite the currently in-use data in `/var/lib/rancher/rke2/server/tls`.  
 Stage the updated key into a separate directory.
 :::

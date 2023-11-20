@@ -35,7 +35,7 @@ RKE2 has been tested and validated on the following operating systems, and their
 | OpenSUSE, SLE Micro | 5.1, 5.2, 5.3, 5.4 |
 
 ### Windows
-:::caution Version Gate
+:::warning Version Gate
 Experimental as of [v1.21.3+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.3%2Brke2r1)
 :::
 

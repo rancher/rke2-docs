@@ -4,7 +4,7 @@ title: 默认 Pod 安全策略
 
 本文档描述了 RKE2 如何配置 `PodSecurityPolicies` 和 `NetworkPolicies` 来确保默认安全，同时还为操作人员提供了最大的配置灵活性。
 
-:::caution 版本
+:::info 版本
 本文档适用于 RKE2 v1.24 及更早版本，请参阅 [Pod 安全标准文档](./pod_security_standards.md)了解 RKE2 v1.25 及更高版本的默认策略。
 :::
 

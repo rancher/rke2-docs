@@ -44,7 +44,7 @@ RKE2 支持[静态加密 Secret](https://kubernetes.io/docs/tasks/administer-clu
 
 ## Secret 加密工具
 
-:::caution 版本
+:::info 版本
 从 [v1.21.8+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.8%2Brke2r1) 起可用
 :::
 

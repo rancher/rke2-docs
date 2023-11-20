@@ -44,7 +44,7 @@ Once enabled any created secret will be encrypted with this key. Note that if yo
 
 ## Secrets Encryption Tool
 
-:::caution Version Gate
+:::info Version Gate
 Available as of [v1.21.8+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.8%2Brke2r1)
 :::
 

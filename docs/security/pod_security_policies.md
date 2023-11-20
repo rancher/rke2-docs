@@ -4,7 +4,7 @@ title: Default Pod Security Policies
 
 This document describes how RKE2 configures `PodSecurityPolicies` and `NetworkPolicies` in order to be secure-by-default while also providing operators with maximum configuration flexibility.
 
-:::caution Version Gate
+:::info Version Gate
 This document applies to RKE2 v1.24 and older, please refer to the [Pod Security Standards Documentation](./pod_security_standards.md) for the default policy information for RKE2 v1.25 and higher.
 :::
 
