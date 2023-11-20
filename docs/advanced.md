@@ -102,7 +102,6 @@ To disable any of the bundled system charts, set the `disable` parameter in the 
 ```yaml
 # /etc/rancher/rke2/config.yaml
 disable:
-  - rke2-canal
   - rke2-coredns
   - rke2-ingress-nginx
   - rke2-metrics-server
