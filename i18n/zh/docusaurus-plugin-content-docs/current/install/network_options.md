@@ -33,7 +33,7 @@ spec:
       iface: "eth1"
 ```
 
-从 RKE2 v1.23 开始，你可以使用 Flannel 的 [wireguard 后端](https://github.com/flannel-io/flannel/blob/master/Documentation/backends.md#wireguard) 进行内核 WireGuard 封装和加密（[内核版本 <5.6 的用户需要安装模块](https://www.wireguard.com/install/)）。可以使用以下配置来实现：
+从 RKE2 v1.23 开始，你可以使用 Flannel 的 [wireguard 后端](https://github.com/flannel-io/flannel/blob/master/Documentation/backends.md#wireguard) 进行内核 WireGuard 封装和加密（[内核版本 < 5.6 的用户需要安装模块](https://www.wireguard.com/install/)）。可以使用以下配置来实现：
 
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml

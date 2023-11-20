@@ -82,7 +82,7 @@ node-label:
 
 ## 配置 Linux 安装脚本
 
-如[快速入门指南](quickstart.md)中所述，你可以使用 <https://get.rke2.io> 上提供的安装脚本将 RKE2 安装为服务。
+如[快速入门指南](quickstart.md)中所述，你可以使用 https://get.rke2.io 上提供的安装脚本将 RKE2 安装为服务。
 
 此命令最简单的形式是以 root 用户身份或通过 `sudo` 运行，如下所示：
 
