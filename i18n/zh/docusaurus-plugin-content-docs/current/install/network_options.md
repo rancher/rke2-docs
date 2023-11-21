@@ -57,7 +57,7 @@ spec:
 Canal 要求在节点上安装 iptables 或 xtables-nft 包。
 :::
 
-:::caution
+:::warning
 具有 Windows 节点的集群目前不支持 Canal。
 :::
 
@@ -105,7 +105,7 @@ spec:
 
 有关更多信息，请查看[上游文档](https://docs.cilium.io/en/v1.12/gettingstarted/kubeproxy-free/)。
 
-:::caution
+:::warning
 RKE2 的 Windows 安装目前不支持 Cilium。
 :::
 

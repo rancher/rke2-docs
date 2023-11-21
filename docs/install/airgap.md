@@ -6,7 +6,7 @@ RKE2 can be installed in an air-gapped environment with two different methods. Y
 
 ## Prerequisites
 
-:::warning Important
+:::warning
 If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager)
 :::
 

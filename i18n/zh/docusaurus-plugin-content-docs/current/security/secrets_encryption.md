@@ -44,7 +44,7 @@ RKE2 支持[静态加密 Secret](https://kubernetes.io/docs/tasks/administer-clu
 
 ## Secret 加密工具
 
-:::caution 版本
+:::info 版本
 从 [v1.21.8+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.8%2Brke2r1) 起可用
 :::
 
@@ -54,7 +54,7 @@ RKE2 包含一个实用的子命令 `secrets-encrypt`，它允许管理员执行
 - 轮换和删除加密密钥
 - 重新加密 Secret
 
-:::warning
+:::danger
 如果你在轮换 Secret 加密密钥时没有遵循正确的程序，数据可能永久丢失。建议在轮换之前[创建快照](../backup_restore.md)。因此，请谨慎操作。
 :::
 

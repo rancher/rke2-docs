@@ -58,7 +58,7 @@ For more information about the full options of the Canal config please refer to 
 Canal requires the iptables or xtables-nft package to be installed on the node.
 :::
 
-:::caution
+:::warning
 Canal is currently not supported on clusters with Windows nodes.
 :::
 
@@ -106,7 +106,7 @@ spec:
 
 For more information, please check the [upstream docs](https://docs.cilium.io/en/v1.12/gettingstarted/kubeproxy-free/)
 
-:::caution
+:::warning
 Cilium is currently not supported in the Windows installation of RKE2
 :::
 

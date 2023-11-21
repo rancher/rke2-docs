@@ -179,7 +179,7 @@ When ran with a valid "cis-1.XX" profile, RKE2 will put `NetworkPolicies` in pla
 
 The `NetworkPolicy` used will only allow pods within the same namespace to talk to each other. The notable exception to this is that it allows DNS requests to be resolved.
 
-:::caution Operator Intervention Required
+:::warning Operator Intervention Required
 Operators must manage network policies as normal for additional namespaces that are created.
 :::
 
@@ -195,7 +195,7 @@ For each namespace including `default` and `kube-system` on a standard RKE2 inst
 automountServiceAccountToken: false
 ```
 
-:::caution Operator Intervention Required
+:::warning Operator Intervention Required
 
 For namespaces created by the cluster operator, the following script and configuration file can be used to configure the `default` service account.
 
@@ -241,7 +241,7 @@ rules:
 - level: None
 ```
 
-:::caution Operator Intervention Required
+:::warning Operator Intervention Required
 To start logging requests to the API Server, at least `level` parameter must be modified, for example, to `Metadata`. Detailed information about policy configuration for the API server can be found in the Kubernetes [documentation](https://kubernetes.io/docs/tasks/debug-application-cluster/audit/).
 
 After adapting the audit policy, RKE2 must be restarted to load the new configuration.

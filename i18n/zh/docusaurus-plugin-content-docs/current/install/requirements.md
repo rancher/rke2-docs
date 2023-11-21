@@ -35,7 +35,7 @@ RKE2 已在以下操作系统及其后续非主要版本上进行了测试和验
 | OpenSUSE, SLE Micro | 5.1, 5.2, 5.3, 5.4 |
 
 ### Windows
-:::caution 版本
+:::warning 版本
 从 [v1.21.3+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.3%2Brke2r1) 开始作为实验性功能。
 :::
 

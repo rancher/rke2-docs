@@ -2,7 +2,7 @@
 title: 卸载
 ---
 
-:::caution
+:::warning
 卸载 RKE2 会删除集群数据和所有脚本。
 :::
 
