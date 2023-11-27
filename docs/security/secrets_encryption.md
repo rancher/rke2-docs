@@ -61,7 +61,7 @@ Failure to follow proper procedure when rotating secrets encryption keys can cau
 ### New Encryption Key Rotation
 
 :::warning Expiremental Version Gate
-Available as of [v1.28.1+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.28.1%2Brke2r1). This new version of the tool utilized K8s [automatic config reloading](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#configure-automatic-reloading) which is currently in beta. GA is expected in v1.29.0
+Available as of [v1.28.1+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.28.1%2Brke2r1). This new version of the tool utilizes K8s [automatic config reloading](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#configure-automatic-reloading) which is currently in beta. GA is expected in v1.29.0
 
 For older releases, see [Encryption Key Rotation Classic](#encryption-key-rotation-classic)
 :::
@@ -76,7 +76,7 @@ To rotate secrets encryption keys on a single-server cluster:
     rke2 secrets-encrypt rotate-keys
     ```
 
-3. Wait for reencryption to finish. Watch the server logs, or wait for:
+2. Wait for reencryption to finish. Watch the server logs, or wait for:
     ```bash
     $ rke2 secrets-encrypt status
     Encryption Status: Enabled
@@ -108,7 +108,7 @@ In this example, 3 servers are used to for a HA cluster, referred to as S1, S2, 
     RKE2 will reencrypt ~5 secrets per second. Clusters with large # of secrets can take several minutes to reencrypt. You can track progress in the server logs.
     ::: 
 
-2. Sequentially Restart RKE2 on S1, S2, S3
+3. Sequentially Restart RKE2 on S1, S2, S3
     ```
     systemctl restart rke2-server.service
     ```
