@@ -5,7 +5,7 @@ function gen_md_link()
     echo "${release_link}"
 }
 
-MINORS="v1.24 v1.25 v1.26 v1.27 v1.28"
+MINORS=${MINORS:-"v1.25 v1.26 v1.27 v1.28"}
 
 for minor in $MINORS; do
     product=rke2
@@ -41,8 +41,8 @@ for minor in $MINORS; do
         previous=$patch
         # Remove the component table from each individual release notes
         perl -i -p0e 's/^## Packaged Component Versions.*?^-----/-----/gms' "${file}"
-        # Add extra levels for Docusaurus Sidebar
-        sed -i 's/^# Release/## Release/' "${file}"
+        # Add extra levels for Docusaurus Sidebar and link to GH release page
+        sed -i 's/^# Release \(.*\)/## Release [\1](https:\/\/github.com\/rancher\/rke2\/releases\/tag\/\1)/' "${file}"
         sed -i 's/^## Changes since/### Changes since/' "${file}"
     done
     echo -e "\n<br />\n" >> $global_table
