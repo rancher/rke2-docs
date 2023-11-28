@@ -83,7 +83,7 @@ spec:
       enabled: true
 ```
 
-For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.12.301/values.yaml)
+For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.14.400/values.yaml)
 
 Cilium includes advanced features to fully replace kube-proxy and implement the routing of services using eBPF instead of iptables. It is not recommended to replace kube-proxy by Cilium if your kernel is not v5.8 or newer, as important bug fixes and features will be missing. To activate this mode, deploy rke2 with the flag `--disable-kube-proxy` and the following cilium configuration:
 
@@ -97,14 +97,12 @@ metadata:
   namespace: kube-system
 spec:
   valuesContent: |-
-    kubeProxyReplacement: strict
+    kubeProxyReplacement: true
     k8sServiceHost: <KUBE_API_SERVER_IP>
     k8sServicePort: <KUBE_API_SERVER_PORT>
-    cni:
-      chainingMode: "none"
 ```
 
-For more information, please check the [upstream docs](https://docs.cilium.io/en/v1.12/gettingstarted/kubeproxy-free/)
+For more information, please check the [upstream docs](https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/)
 
 :::warning
 Cilium is currently not supported in the Windows installation of RKE2
@@ -129,7 +127,7 @@ spec:
         mtu: 9000
 ```
 
-For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.25.001/values.yaml)
+For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.26.300/values.yaml)
 
 :::note
 Calico requires the iptables or xtables-nft package  to be installed on the node.
