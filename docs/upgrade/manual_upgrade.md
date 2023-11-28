@@ -19,6 +19,11 @@ Upgrades performed via the installation script or using our [automated upgrades]
 
 For an exhaustive and up-to-date list of channels, you can visit the [rke2 channel service API](https://update.rke2.io/v1-release/channels). For more technical details on how channels work, you can see the [channelserver project](https://github.com/rancher/channelserver).
 
+:::tip
+When attempting to upgrade to a new version of RKE2, the [Kubernetes version skew policy](https://kubernetes.io/docs/setup/release/version-skew-policy/) applies. Ensure that your plan does not skip intermediate minor versions when upgrading. Nothing in the upgrade process will protect against unsupported changes to the Kubernetes version.
+:::
+
+
 ### Upgrade rke2 Using the Installation Script
 
 To upgrade rke2 from an older version you can re-run the installation script using the same flags, for example:
