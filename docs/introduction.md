@@ -4,7 +4,17 @@ sidebar_position: 1
 title: "Introduction"
 ---
 
-![](/img/logo-horizontal-rke2.svg#gh-light-mode-only)![](/img/logo-horizontal-rke2-dark.svg#gh-dark-mode-only)
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
+<ThemedImage
+  sources={{
+    light: useBaseUrl('/img/logo-horizontal-rke2.svg'),
+    dark: useBaseUrl('/img/logo-horizontal-rke2-dark.svg'),
+  }}
+  style={{width: "350px"}}
+/>
+
 
 RKE2, also known as RKE Government, is Rancher's next-generation Kubernetes distribution.
 
