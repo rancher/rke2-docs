@@ -93,6 +93,8 @@ tls-san:
 
 As mentioned previously, you must have an odd number of server nodes in total.
 
+If an etcd datastore is found on disk either because that node has either initialized or joined a cluster already, the argument `--server` is ignored.
+
 ### 4. Confirm cluster is functional
 Once you've launched the `rke2 server` process on all server nodes, ensure that the cluster has come up properly with
 
