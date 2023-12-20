@@ -14,7 +14,7 @@ RKE2 不需要任何特殊配置即可配合 Helm 命令行工具一起使用。
 
 ### 自动部署清单和 Helm Chart
 
-在 `/var/lib/rancher/rke2/server/manifests` 中找到的 Kubernetes 清单都会以类似于 `kubectl apply` 的方式自动部署到 RKE2。以这种方式部署的清单作为 AddOn 自定义资源进行管理，你可以通过运行 `kubectl get addon -A` 查看它们。你能找到用于打包组件的 AddOn，例如 CoreDNS、Local-Storage、Nginx-Ingress 等。AddOn 由部署控制器自动创建，并根据它们在清单目录中的文件名命名。
+在 `/var/lib/rancher/rke2/server/manifests` 中找到的 Kubernetes 清单都会以类似于 `kubectl apply` 的方式自动部署到 RKE2。以这种方式部署的清单作为 AddOn 自定义资源进行管理，你可以通过运行 `kubectl get addon -A` 查看它们。你能找到用于打包组件的 AddOn，例如 CoreDNS、Nginx-Ingress 等。AddOn 由部署控制器自动创建，并根据它们在清单目录中的文件名命名。
 
 你也可以将 Helm Chart 部署为 AddOn。RKE2 包含一个 [Helm Controller](https://github.com/k3s-io/helm-controller)，它使用 HelmChart 自定义资源定义 (CRD) 管理 Helm Chart。
 
