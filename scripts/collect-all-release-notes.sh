@@ -44,6 +44,8 @@ for minor in $MINORS; do
         # Add extra levels for Docusaurus Sidebar and link to GH release page
         sed -i 's/^# Release \(.*\)/## Release [\1](https:\/\/github.com\/rancher\/rke2\/releases\/tag\/\1)/' "${file}"
         sed -i 's/^## Changes since/### Changes since/' "${file}"
+        # Wrap Important Notes in a Warning block
+        perl -i -p0e 's/\*\*Important Notes\*\*(.*?)###/:::warning Important Notes\n$1\n:::\n\n###/s' "${file}"
     done
     echo -e "\n<br />\n" >> $global_table
     # Append the global component and version table
