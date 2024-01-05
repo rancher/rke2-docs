@@ -218,9 +218,39 @@ spec:
 Any CNI plugin can be used as secondary CNI plugin for Multus to provide additional network interfaces attached to a pod. However, it is most common to use the CNI plugins maintained by the containernetworking team (bridge, host-device,
 macvlan, etc) as secondary CNI plugins for Multus. These containernetworking plugins are automatically deployed when installing Multus. For more information about these plugins, refer to the [containernetworking plugins](https://www.cni.dev/plugins/current) documentation.
 
-To use any of these plugins, a proper NetworkAttachmentDefinition object will need to be created to define the configuration of the secondary network. The definition is then referenced by pod annotations, which Multus will use to provide extra interfaces to that pod. An example using the macvlan cni plugin with Mu is available [in the multus-cni repo](https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/quickstart.md#storing-a-configuration-as-a-custom-resource).
+To use any of these plugins, a proper NetworkAttachmentDefinition object will need to be created to define the configuration of the secondary network. The definition is then referenced by pod annotations, which Multus will use to provide extra interfaces to that pod. An example using the macvlan cni plugin with Multus is available [in the multus-cni repo](https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/quickstart.md#storing-a-configuration-as-a-custom-resource).
 
-## Using Multus with the Whereabouts CNI
+## Multus IPAM plugin options
+
+<Tabs groupId = "MultusIPAMplugins">
+<TabItem value="host-local" default>
+host-local IPAM plugin allocates ip addresses out of a set of address ranges. It stores the state locally on the host filesystem, therefore ensuring uniqueness of IP addresses on a single host. Therefore, we don't recommend it for multi-node clusters. This IPAM plugin does not require any extra deployment. For more information: https://www.cni.dev/plugins/current/ipam/host-local/.
+</TabItem>
+<TabItem value="Multus DHCP daemon" default>
+
+Multus provides an optional daemonset to deploy the DHCP daemon required to run the [DHCP IPAM plugin](https://www.cni.dev/plugins/current/ipam/dhcp/).
+
+You can do this by using the following [HelmChartConfig](../helm.md#customizing-packaged-components-with-helmchartconfig):
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-multus
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    manifests:
+      dhcpDaemonSet: true
+```
+
+This will configure the chart for Multus to deploy the DHCP daemonset.
+This feature is available starting with the 2024-01 releases (v1.29.1+rke2r1, v1.28.6+rke2r1, v1.27.10+rke2r1, v1.26.13+rke2r1).
+
+NOTE: You should write this file before starting rke2.
+</TabItem>
+<TabItem value="Whereabouts" default>
 
 [Whereabouts](https://github.com/k8snetworkplumbingwg/whereabouts) is an IP Address Management (IPAM) CNI plugin that assigns IP addresses cluster-wide.
 Starting with RKE2 1.22, RKE2 includes the option to use Whereabouts with Multus to manage the IP addresses of the additional interfaces created through Multus.
@@ -244,26 +274,9 @@ spec:
 
 This will configure the chart for Multus to use `rke2-whereabouts` as a dependency.
 
-If you want to customize the Whereabouts image, this is possible like this:
-
-```yaml
-# /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
----
-apiVersion: helm.cattle.io/v1
-kind: HelmChartConfig
-metadata:
-  name: rke2-multus
-  namespace: kube-system
-spec:
-  valuesContent: |-
-    rke2-whereabouts:
-      enabled: true
-      image:
-        repository: ghcr.io/k8snetworkplumbingwg/whereabouts
-        tag: latest-amd64
-```
-
 NOTE: You should write this file before starting rke2.
+</TabItem>
+</Tabs>
 
 ## Using Multus with SR-IOV
 
