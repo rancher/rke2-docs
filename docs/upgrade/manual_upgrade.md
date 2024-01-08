@@ -3,7 +3,7 @@ title: Manual Upgrades
 ---
 
 
-You can upgrade rke2 by using the installation script, or by manually installing the binary of the desired version.
+You can upgrade rke2 by using the installation script, by manually installing the binary of the desired version, or by using rpm upgrades in case of rpm installation.
 
 >**Note:** Upgrade the server nodes first, one at a time. Once all servers have been upgraded, you may then upgrade agent nodes.
 
@@ -67,6 +67,48 @@ Or to manually upgrade rke2:
 2. Copy the downloaded binary to `/usr/local/bin/rke2` for tarball installed rke2, and `/usr/bin` for rpm installed rke2
 3. Stop the old rke2 binary
 4. Launch the new rke2 binary
+
+### Upgrade rke2 Using the RPM upgrades
+
+In case of RPM installation, its expected to upgrade rke2 from an older version using rpm upgrades, for example:
+
+```sh
+# zypper upgrade
+zypper update rke2-server
+```
+
+```sh
+yum update rke2-server
+```
+This will upgrade `rke2-server` rpm package to the latest package in your channel which is configured initially in the yum or zypper repos by the install script at the initial installation.
+
+If upgrading agent nodes, you should specify name of the `rke2-agent` package
+
+```sh
+# zypper upgrade
+zypper update rke2-agent
+```
+
+```sh
+# yum upgrade
+yum update rke2-agent
+```
+
+Remember to restart the rke2 process after installing:
+
+```sh
+# Server nodes:
+systemctl restart rke2-server
+
+# Agent nodes:
+systemctl restart rke2-agent
+```
+
+**Note**: in case you enabled `rke2-selinux` you should also be able to upgrade rke2-selinux to the latest version using:
+
+```sh
+yum update rke2-selinux
+```
 
 ### Restarting rke2
 
