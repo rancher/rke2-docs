@@ -4,7 +4,20 @@ title: Server Configuration Reference
 
 This is a reference to all parameters that can be used to configure the rke2 server. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](../install/configuration.md#configuration-file).
 
-### RKE2 Server CLI Help
+## Critical Configuration Values
+
+The following options must be set to the same value on all servers in the cluster. Failure to do so will cause new servers to fail to join the cluster.
+
+* `agent-token`
+* `cluster-cidr`
+* `cluster-dns`
+* `cluster-domain`
+* `disable-cloud-controller`
+* `disable-kube-proxy`
+* `egress-selector-mode`
+* `service-cidr`
+
+
 ### Common
 | Flag | Description | Default | Enviroment Variable |
 | --- | --- | --- | --- |
