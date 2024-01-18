@@ -1,5 +1,5 @@
 # This script takes the output of `rke2 server -h` and converts it to markdown tables
-# Example: rke2 server -h &> help.txt && python3 help_to_markdown.py help.txt > help.md
+# Example: rke2 server -h | python3 help_to_markdown.py /dev/stdin > help.md
 
 import sys
 import re
