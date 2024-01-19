@@ -9,7 +9,7 @@ The primary way to configure RKE2 is through its config file. Command line argum
 By default, RKE2 will launch with the values present in the YAML file located at `/etc/rancher/rke2/config.yaml`.
 
 :::note
-The RKE2 config file needs to be created manually. You can do that by running `touch /etc/rancher/rke2/config.yaml` as a privileged user. Also, RKE2 systemd service needs to be restarted after adding the config file.
+The RKE2 config file needs to be created manually. You can do that by running `touch /etc/rancher/rke2/config.yaml` as a privileged user. If the configuration is changed after starting RKE2, the service must be restarted to apply the new configuration.
 :::
 
 An example of a basic `server` config file is below:
