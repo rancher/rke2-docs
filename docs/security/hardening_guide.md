@@ -33,7 +33,7 @@ RKE2 will also check the same kernel parameters that the kubelet does and exit w
 
 ### Ensure etcd is configured properly
 
-The CIS Benchmark requires that the etcd data directory be owned by the `etcd` user and group. This implicitly requires the etcd process run as the host-level `etcd` user. To achieve this, RKE2 takes several steps when started with a valid `cis-1.XX`/`cis` profile:
+The CIS Benchmark requires that the etcd data directory be owned by the `etcd` user and group. This implicitly requires the etcd process run as the host-level `etcd` user. To achieve this, RKE2 takes several steps when started with a valid `cis` or `cis-1.XX` profile:
 
 1. Check that the `etcd` user and group exists on the host. If they don't, exit with an error.
 2. Create etcd's data directory with `etcd` as the user and group owner.
@@ -91,7 +91,7 @@ profile: "cis"
 
 Using the generic `cis` profile will ensure that the cluster passes the CIS benchmark (rke2-cis-1.XX-profile-hardened) associated with the Kubernetes version that RKE2 is running. For example, RKE2 v1.28.XX with the `profile: cis` will pass the `rke2-cis-1.7-profile-hardened` in Rancher. 
 
-Additionally, it ensures that upgrades to RKE2 do not require a change to existing configuration. Whatever changes are necessary to pass the newer associated CIS benchmark with automatically be applied.
+Use of the generic `cis` profile ensures that upgrades to RKE2 do not require a change to existing configuration. Whatever changes are necessary to pass applicable CIS benchmark will be automatically applied.
 
 A rough mapping of RKE2 versions to CIS benchmark versions is as follows:
 
@@ -165,10 +165,10 @@ RKE2 always runs with some amount of pod security.
 
 On v1.25 and newer, [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/) are used for pod security. A default Pod Security Admission config file will be added to the cluster upon startup as follows:
 
-With the `cis-1.23`/`cis` profile:
+With the `cis`/`cis-1.23` profile:
 *  RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system` and `cis-operator-system` namespaces to ensure successful operation of system pods.
 
-Without the `cis-1.23`/`cis` profile:
+Without the `cis`/`cis-1.23` profile:
 * RKE2 will apply a nonrestricted pod security standard via a configuration file which will enforce `privileged` mode throughout the cluster which allows a completely unrestricted mode to all pods in the cluster.
 
 See the [Pod Security Policies](pod_security_standards.md) page for more details.

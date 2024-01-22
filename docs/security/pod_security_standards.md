@@ -12,7 +12,7 @@ This document applies to RKE2 v1.25 and newer, please refer to the [Pod Security
 
 Starting from Kubernetes version v1.25.0, Pod Security Policies (PSP) are totally removed from Kubernetes, and replaced by [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/). A default Pod Security Admission config file will be added to the cluster upon startup as follows:
 
- If running with the `profile: cis-1.23` or `profile: cis` configuration:
+ If running with the `profile: cis` or `profile: cis-1.23` configuration:
 * RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces to ensure successful operation of system pods.
 
 If running without a `profile` configuration:
