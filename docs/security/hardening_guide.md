@@ -85,7 +85,11 @@ sudo useradd -r -c "etcd user" -s /sbin/nologin -M etcd -U
 Available with October 2023 releases (v1.25.15+rke2r1, v1.26.10+rke2r1, v1.27.7+rke2r1, v1.28.3+rke2r1)
 :::
 
-Using the generic `cis` profile will ensure that the cluster passes the CIS benchmark (rke2-cis-1.XX-profile-hardened) associated with the Kubernetes version that RKE2 is running. For example, RKE2 v1.28.XX with the `profile: cis` will pass the `rke2-cis-1.7-profile-hardedened` in Rancher. 
+```yaml
+profile: "cis"
+```
+
+Using the generic `cis` profile will ensure that the cluster passes the CIS benchmark (rke2-cis-1.XX-profile-hardened) associated with the Kubernetes version that RKE2 is running. For example, RKE2 v1.28.XX with the `profile: cis` will pass the `rke2-cis-1.7-profile-hardened` in Rancher. 
 
 Additionally, it ensures that upgrades to RKE2 do not require a change to existing configuration. Whatever changes are necessary to pass the newer associated CIS benchmark with automatically be applied.
 
@@ -144,10 +148,6 @@ When the `profile` flag is set it does the following:
 2. Applies network policies that allow the cluster to pass associated controls.
 3. Configures runtime pod security policies that allow the cluster to pass associated controls.
 
-:::note
-The only valid values for the profile flag are `cis-1.5` or `cis-1.6`.  
-The self-assessment guide for CIS v1.5 (`cis-1.5`) was removed from this documentation, since this version is applicable only to Kubernetes v1.15 which is not supported anymore. The profile, however, is still available in RKE2.
-:::
 
 </TabItem>
 </Tabs>
