@@ -5,6 +5,10 @@ import sys
 import re
 
 filename = sys.argv[1]
+is_agent = False
+if len(sys.argv) == 3:
+    is_agent = sys.argv[2] == "agent"
+
 
 with open(filename, 'r') as file:
     lines = file.readlines()
@@ -15,6 +19,10 @@ def weirdGroups(group):
         group = "database"
     if group.startswith("experimental"):
         group = "experimental"
+    if is_agent and group.startswith("agent/"):
+        group = group.split("agent/")[1]
+    if is_agent and group.startswith("flags"):
+        group = "components"
     return group
 
 
