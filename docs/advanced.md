@@ -97,7 +97,7 @@ systemctl start rke2-server
 
 The server charts bundled with `rke2` deployed during cluster bootstrapping can be disabled and replaced with alternatives.  A common use case is replacing the bundled `rke2-ingress-nginx` chart with an alternative.
 
-To disable any of the bundled system charts, set the `disable` parameter in the config file before bootstrapping. An example of disabling all avaliable system charts is:
+To disable any of the bundled system charts, set the `disable` parameter in the config file before bootstrapping. An example of disabling all available system charts is:
 
 ```yaml
 # /etc/rancher/rke2/config.yaml
