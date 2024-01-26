@@ -9,7 +9,7 @@ For more details about evaluating a hardened cluster against the official CIS be
 RKE2 is designed to be "hardened by default" and pass the majority of the Kubernetes CIS controls without modification. There are a few notable exceptions to this that require manual intervention to fully pass the CIS Benchmark:
 
 1. RKE2 will not modify the host operating system. Therefore, you, the operator, must make a few host-level modifications.
-2. Certain CIS controls for Network Policies and Pod Security Standards (or Pod Security Policies (PSP) on RKE2 versions prior to v1.25) will restrict the functionality of the cluster. You must opt into having RKE2 configure these for you. To help ensure these requirements are met, RKE2 can be started with the `profile` flag set to `cis-1.23`, or `cis-1.6`. 
+2. Certain CIS controls for Network Policies and Pod Security Standards (or Pod Security Policies (PSP) on RKE2 versions prior to v1.25) will restrict the functionality of the cluster. You must opt into having RKE2 configure these for you. To help ensure these requirements are met, RKE2 can be started with the `profile` flag set to `cis`, `cis-1.23`, or `cis-1.6` depending on the RKE2 version. 
 
 :::note
 This guide assumes that RKE2 has been installed, but is not yet running. If you have already started RKE2, you will need to stop the RKE2 service.
@@ -33,7 +33,7 @@ RKE2 will also check the same kernel parameters that the kubelet does and exit w
 
 ### Ensure etcd is configured properly
 
-The CIS Benchmark requires that the etcd data directory be owned by the `etcd` user and group. This implicitly requires the etcd process run as the host-level `etcd` user. To achieve this, RKE2 takes several steps when started with a valid `cis-1.XX` profile:
+The CIS Benchmark requires that the etcd data directory be owned by the `etcd` user and group. This implicitly requires the etcd process run as the host-level `etcd` user. To achieve this, RKE2 takes several steps when started with a valid `cis` or `cis-1.XX` profile:
 
 1. Check that the `etcd` user and group exists on the host. If they don't, exit with an error.
 2. Create etcd's data directory with `etcd` as the user and group owner.
@@ -76,13 +76,39 @@ sudo useradd -r -c "etcd user" -s /sbin/nologin -M etcd -U
 
 ## RKE2 configuration
 
+
 <Tabs groupId="rke2-version">
 <TabItem value='v1.25 and Newer' default>
 
-Below is the minimum necessary configuration needed for hardening RKE2 to pass CIS v1.23 hardened profile `rke2-cis-1.23-profile-hardened` available in Rancher.
+### Generic CIS configuration
+:::info Version Gate
+Available with October 2023 releases (v1.25.15+rke2r1, v1.26.10+rke2r1, v1.27.7+rke2r1, v1.28.3+rke2r1)
+:::
 
 ```yaml
-profile: "cis-1.23"           # CIS 4.2.6, 5.2.1, 5.2.8, 5.2.9, 5.3.2
+profile: "cis"
+```
+
+Using the generic `cis` profile will ensure that the cluster passes the CIS benchmark (rke2-cis-1.XX-profile-hardened) associated with the Kubernetes version that RKE2 is running. For example, RKE2 v1.28.XX with the `profile: cis` will pass the `rke2-cis-1.7-profile-hardened` in Rancher. 
+
+Use of the generic `cis` profile ensures that upgrades to RKE2 do not require a change to existing configuration. Whatever changes are necessary to pass applicable CIS benchmark will be automatically applied.
+
+A rough mapping of RKE2 versions to CIS benchmark versions is as follows:
+
+| CIS Benchmark | Applicable RKE2 Minors | Profile Flag |
+| - | - | - |
+| 1.5 | 1.15-1.18 | `cis-1.5` |
+| 1.6 | 1.19-1.22 | `cis-1.6` |
+| 1.23 | 1.23 | `cis-1.23` |
+| 1.24 | 1.24 | `cis-1.23` |
+| 1.7 | 1.25-1.28 | `cis-1.23`, `cis` |
+| 1.8 | 1.29+ | `cis` |
+
+### CIS v1.23 configuration
+For older versions of 1.25 and 1.26, the `cis-1.23` profile is still available. This profile will ensure that the cluster passes the CIS v1.7 benchmark (rke2-cis-1.7-profile-hardened) available in Rancher.
+
+```yaml
+profile: "cis-1.23"
 ```
 
 </TabItem>
@@ -114,10 +140,6 @@ When the `profile` flag is set it does the following:
    For more information about Pod Security Standards, please refer to the [official documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
 
 
-:::note
-The only valid value for the profile flag is `cis-1.23`. It accepts a string value to allow for other profiles in the future.
-:::
-
 </TabItem>
 
 <TabItem value='v1.24 and Older'>
@@ -126,10 +148,6 @@ The only valid value for the profile flag is `cis-1.23`. It accepts a string val
 2. Applies network policies that allow the cluster to pass associated controls.
 3. Configures runtime pod security policies that allow the cluster to pass associated controls.
 
-:::note
-The only valid values for the profile flag are `cis-1.5` or `cis-1.6`.  
-The self-assessment guide for CIS v1.5 (`cis-1.5`) was removed from this documentation, since this version is applicable only to Kubernetes v1.15 which is not supported anymore. The profile, however, is still available in RKE2.
-:::
 
 </TabItem>
 </Tabs>
@@ -147,10 +165,10 @@ RKE2 always runs with some amount of pod security.
 
 On v1.25 and newer, [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/) are used for pod security. A default Pod Security Admission config file will be added to the cluster upon startup as follows:
 
-With the `cis-1.23` profile:
+With the `cis`/`cis-1.23` profile:
 *  RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system` and `cis-operator-system` namespaces to ensure successful operation of system pods.
 
-Without the `cis-1.23` profile:
+Without the `cis`/`cis-1.23` profile:
 * RKE2 will apply a nonrestricted pod security standard via a configuration file which will enforce `privileged` mode throughout the cluster which allows a completely unrestricted mode to all pods in the cluster.
 
 See the [Pod Security Policies](pod_security_standards.md) page for more details.
