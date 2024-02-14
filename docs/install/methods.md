@@ -58,46 +58,24 @@ Signed RPMs are published for RKE2 within the `rpm-testing.rancher.io` and `rpm.
 
 The RPMs provide `systemd` units for managing `rke2`, but will need to be configured via configuration file before starting the services for the first time.
 
-#### Enterprise Linux 7
+#### Enterprise Linux 7/8/9
 
-In order to use the RPM repository, on a CentOS 7 or RHEL 7 system, run the following bash snippet:
+In order to use the RPM repository, on a CentOS or RHEL system, run the following bash snippet:
 
 ```bash
-export RKE2_MINOR=26
+export RKE2_MINOR=28
+export LINUX_MAJOR=7 # or 8 or 9 etc
 cat << EOF > /etc/yum.repos.d/rancher-rke2-1-${RKE2_MINOR}-latest.repo
 [rancher-rke2-common-latest]
 name=Rancher RKE2 Common Latest
-baseurl=https://rpm.rancher.io/rke2/latest/common/centos/7/noarch
+baseurl=https://rpm.rancher.io/rke2/latest/common/centos/${LINUX_MAJOR}/noarch
 enabled=1
 gpgcheck=1
 gpgkey=https://rpm.rancher.io/public.key
 
 [rancher-rke2-1-${RKE2_MINOR}-latest]
 name=Rancher RKE2 1.${RKE2_MINOR} Latest
-baseurl=https://rpm.rancher.io/rke2/latest/1.${RKE2_MINOR}/centos/7/x86_64
-enabled=1
-gpgcheck=1
-gpgkey=https://rpm.rancher.io/public.key
-EOF
-```
-
-#### Enterprise Linux 8
-
-In order to use the RPM repository, on a CentOS 8 or RHEL 8 system, run the following bash snippet:
-
-```bash
-export RKE2_MINOR=26
-cat << EOF > /etc/yum.repos.d/rancher-rke2-1-${RKE2_MINOR}-latest.repo
-[rancher-rke2-common-latest]
-name=Rancher RKE2 Common Latest
-baseurl=https://rpm.rancher.io/rke2/latest/common/centos/8/noarch
-enabled=1
-gpgcheck=1
-gpgkey=https://rpm.rancher.io/public.key
-
-[rancher-rke2-1-${RKE2_MINOR}-latest]
-name=Rancher RKE2 1.${RKE2_MINOR} Latest
-baseurl=https://rpm.rancher.io/rke2/latest/1.${RKE2_MINOR}/centos/8/x86_64
+baseurl=https://rpm.rancher.io/rke2/latest/1.${RKE2_MINOR}/centos/${LINUX_MAJOR}/x86_64
 enabled=1
 gpgcheck=1
 gpgkey=https://rpm.rancher.io/public.key
