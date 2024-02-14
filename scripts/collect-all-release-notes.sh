@@ -5,7 +5,7 @@ function gen_md_link()
     echo "${release_link}"
 }
 
-MINORS=${MINORS:-"v1.25 v1.26 v1.27 v1.28"}
+MINORS=${MINORS:-"v1.26 v1.27 v1.28 v1.29"}
 
 for minor in $MINORS; do
     product=rke2
@@ -18,6 +18,8 @@ for minor in $MINORS; do
         gh release view "${patch}" -R "rancher/${product}" --json body -q '.body' >> "${file}"
         echo "-----" >> "${file}"
         body=$(gh release view "${patch}" -R "rancher/${product}" --json body -q '.body')
+        # Some releases have a Chart Versions Table. Strip it out, we don't include it in the release notes
+        body=$(perl -0777 -pe 's/(## Charts Versions).*?\n(## Packaged Component Versions)/$2/ms' <<< "$body")
         # Extract from each release notes the component table, building a single table with all the components
         if [ -z "${previous}" ]; then
             title="---\nhide_table_of_contents: true\n---\n\n# ${minor}.X\n"
