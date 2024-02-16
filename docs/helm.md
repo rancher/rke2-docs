@@ -8,7 +8,9 @@ RKE2 does not require any special configuration to use with Helm command-line to
 
 ### Automatically Deploying Manifests and Helm Charts
 
-Any Kubernetes manifests found in `/var/lib/rancher/rke2/server/manifests` will automatically be deployed to RKE2 in a manner similar to `kubectl apply`. Manifests deployed in this manner are managed as AddOn custom resources, and can be viewed by running `kubectl get addon -A`. By default, you will find AddOns for packaged components such as CoreDNS, Nginx-Ingress, and Metrics Server. AddOns are created automatically by the deploy controller, and are named based on their filename in the manifests directory.
+Any Kubernetes manifests found in `/var/lib/rancher/rke2/server/manifests` will automatically be deployed to RKE2 in a manner similar to `kubectl apply`, both on startup and when the file is changed on disk. Deleting files out of this directory will not delete the corresponding resources from the cluster.
+
+Manifests deployed in this manner are managed as AddOn custom resources, and can be viewed by running `kubectl get addon -A`. By default, you will find AddOns for packaged components such as CoreDNS, Nginx-Ingress, and Metrics Server. AddOns are created automatically by the deploy controller, and are named based on their filename in the manifests directory. 
 
 It is also possible to deploy Helm charts as AddOns. RKE2 includes a [Helm Controller](https://github.com/k3s-io/helm-controller/) that manages Helm charts using a HelmChart Custom Resource Definition (CRD).
 
