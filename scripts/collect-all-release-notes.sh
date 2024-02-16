@@ -55,3 +55,12 @@ for minor in $MINORS; do
     cat $global_table "${file}" > $rke2tmp && mv $rke2tmp "${file}"
     echo "Collected release notes for ${product} ${minor}"
 done
+
+# For all the releases, order the release notes in reverse numerical order
+ITER=1
+echo "Reordering release notes in sidebar"
+for file in $(ls -r docs/release-notes/v1.*.X.md); do
+   # Add sidebar_position: $ITER to each release notes
+    sed -i "s/^sidebar_position:.*/sidebar_position: $ITER/" "${file}"
+    ITER=$((ITER+1))
+done
