@@ -41,6 +41,7 @@ module.exports = {
         'security/selinux',
         'security/secrets_encryption',
         'security/certificates',
+        'security/token',
       ],
     },
     'architecture',
