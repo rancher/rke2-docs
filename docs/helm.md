@@ -6,17 +6,36 @@ Helm is the package management tool of choice for Kubernetes. Helm charts provid
 
 RKE2 does not require any special configuration to use with Helm command-line tools. Just be sure you have properly set up your kubeconfig as per the section about [cluster access](./cluster_access.md). RKE2 does include some extra functionality to make deploying both traditional Kubernetes resource manifests and Helm Charts even easier with the [rancher/helm-release CRD.](#using-the-helm-crd)
 
-This section covers the following topics:
-
-- [Automatically Deploying Manifests and Helm Charts](#automatically-deploying-manifests-and-helm-charts)
-- [Using the Helm CRD](#using-the-helm-crd)
-- [Customizing Packaged Components with HelmChartConfig](#customizing-packaged-components-with-helmchartconfig)
-
 ### Automatically Deploying Manifests and Helm Charts
 
-Any Kubernetes manifests found in `/var/lib/rancher/rke2/server/manifests` will automatically be deployed to RKE2 in a manner similar to `kubectl apply`. Manifests deployed in this manner are managed as AddOn custom resources, and can be viewed by running `kubectl get addon -A`. You will find AddOns for packaged components such as CoreDNS, Nginx-Ingress, etc. AddOns are created automatically by the deploy controller, and are named based on their filename in the manifests directory.
+Any Kubernetes manifests found in `/var/lib/rancher/rke2/server/manifests` will automatically be deployed to RKE2 in a manner similar to `kubectl apply`. Manifests deployed in this manner are managed as AddOn custom resources, and can be viewed by running `kubectl get addon -A`. By default, you will find AddOns for packaged components such as CoreDNS, Nginx-Ingress, and Metrics Server. AddOns are created automatically by the deploy controller, and are named based on their filename in the manifests directory.
 
 It is also possible to deploy Helm charts as AddOns. RKE2 includes a [Helm Controller](https://github.com/k3s-io/helm-controller/) that manages Helm charts using a HelmChart Custom Resource Definition (CRD).
+
+#### File Naming Requirements
+
+The `AddOn` name for each file in the manifest directory is derived from the file basename. 
+Ensure that all files within the manifests directory (or within any subdirectories) have names that are unique, and adhere to Kubernetes [object naming restrictions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/).
+Care should also be taken not to conflict with names in use by the default RKE2 packaged components, even if those components are disabled.
+
+An example of an error that would be reported if the file name contains underscores:
+> `Failed to process config: failed to process /var/lib/rancher/rke2/server/manifests/example_manifest.yaml:
+   Addon.k3s.cattle.io "example_manifest" is invalid: metadata.name: Invalid value: "example_manifest": 
+   a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
+   (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')`
+
+### Disabling AddOns
+
+The AddOns for packaged components listed above, in addition to AddOns for any additional manifests placed in the manifests directory, can be disabled with the --disable flag. Disabled AddOns are actively uninstalled from the cluster, and the source files deleted from the manifests directory.
+
+For example, to disable CoreDNS from being installed on a new cluster, or to uninstall it and remove the manifest from an existing cluster, you can start RKE2 with `disable: rke2-coredns` in the config file. Multiple items can be disabled in a nested list.
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+disable:
+  - rke2-coredns
+  - rke2-metrics-server
+```
 
 ### Using the Helm CRD
 
@@ -136,15 +155,3 @@ spec:
 ```
 
 You can find all the packaged Helm charts including their documentation and default values in the [RKE2 charts repository](https://github.com/rancher/rke2-charts/tree/main/charts).
-
-#### File Naming Requirements
-
-The `AddOn` name for each file in the manifest directory is derived from the file basename. 
-Ensure that all files within the manifests directory (or within any subdirectories) have names that are unique, and adhere to Kubernetes [object naming restrictions](https://kubernetes.io/docs/concepts/overview/working-with-objects/names/).
-Care should also be taken not to conflict with names in use by the default RKE2 packaged components, even if those components are disabled.
-
-An example of an error that would be reported if the file name contains underscores:
-> `Failed to process config: failed to process /var/lib/rancher/rke2/server/manifests/example_manifest.yaml:
-   Addon.k3s.cattle.io "example_manifest" is invalid: metadata.name: Invalid value: "example_manifest": 
-   a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
-   (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')`
