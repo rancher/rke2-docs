@@ -41,7 +41,7 @@ Experimental as of [v1.21.3+rke2r1](https://github.com/rancher/rke2/releases/tag
 :::
 
 :::info
-Windows Support requires choosing Calico as the CNI for the RKE2 cluster
+Windows Support requires choosing Calico or Flannel as the CNI for the RKE2 cluster
 :::
 
 The RKE2 Windows Node (Worker) agent has been tested and validated on the following operating systems, and their subsequent non-major releases:
