@@ -134,6 +134,7 @@ If you wish to utilize the metrics server, you will need to open port 10250 on e
 | TCP      | 9099        | All RKE2 nodes    | All RKE2 nodes    | Canal CNI health checks
 | UDP      | 51820       | All RKE2 nodes    | All RKE2 nodes    | Canal CNI with WireGuard IPv4
 | UDP      | 51821       | All RKE2 nodes    | All RKE2 nodes    | Canal CNI with WireGuard IPv6/dual-stack
+| UDP      | 4789        | All RKE2 nodes    | All RKE2 nodes    | Flannel CNI with VXLAN
 
 ### Windows Specific Inbound Network Rules
 

@@ -13,6 +13,8 @@ This page focuses on the network options available when setting up RKE2:
 
 ## Install a CNI plugin
 
+RKE2 integrates with four different CNI plugins: Canal, Cilium, Calico and Flannel. Note that only Calico and Flannel are options for RKE2 deployments with Windows nodes.
+
 The next tabs inform how to deploy each CNI plugin and override the default options:
 
 <Tabs groupId = "CNIplugin">
@@ -134,6 +136,17 @@ Calico requires the iptables or xtables-nft package  to be installed on the node
 :::
 
 </TabItem>
+<TabItem value="Flannel CNI plugin" default>
+Starting with RKE2 2024 Feb release (v1.29.2, v1.28.7, v1.27.11, v1.26.14), Flannel can be deployed as the CNI plugin. To do so, pass `flannel` as the value of the `--cni` flag.
+
+:::note
+Only vxlan backend is supported at this point
+:::
+
+:::warning
+Flannel does not support network policies. Therefore, it is not recommended for hardened installations
+:::
+</TabItem>
 </Tabs>
 
 ## Dual-stack configuration
@@ -162,6 +175,11 @@ Cilium automatically detects the RKE2 configuration for dual-stack and does not 
 <TabItem value="Calico CNI plugin" default>
 
 Calico automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. When deployed in dual-stack mode, it creates two different ippool resources. Note that when using dual-stack, calico leverages BGP instead of VXLAN encapsulation. Dual-stack and BGP are currently not supported in the windows installations of RKE2.
+</TabItem>
+<TabItem value="Flannel CNI plugin" default>
+
+Flannel automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration.
+
 </TabItem>
 </Tabs>
 
