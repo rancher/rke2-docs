@@ -2,6 +2,7 @@
 .navbar__icon {
   font-family: poppins,sans-serif;
   font-size: 16px;
+  display: flex;
 }
 
 .navbar__icon:before {
@@ -15,7 +16,7 @@
 }
 
 .navbar__github{
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .navbar__github:hover:before {
@@ -39,6 +40,7 @@
   mask-size: cover;
   height: 14px;
   padding-bottom: 2px;
+  margin-top: 4px;
 }
 
 .navbar__rd:hover:before {
