@@ -104,6 +104,27 @@ spec:
 
 For more information, please check the [upstream docs](https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/)
 
+Cilium includes also an observability platform called [Hubble](https://docs.cilium.io/en/stable/overview/intro/#what-is-hubble)
+To enable Hubble the following configuration is required:
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-cilium
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    hubble:
+      enabled: true
+      relay:
+        enabled: true
+      ui:
+        enabled: true
+```
+
 :::warning
 Cilium is currently not supported in the Windows installation of RKE2
 :::
