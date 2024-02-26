@@ -22,7 +22,7 @@ for minor in $MINORS; do
         body=$(perl -0777 -pe 's/(## Charts Versions).*?\n(## Packaged Component Versions)/$2/ms' <<< "$body")
         # Extract from each release notes the component table, building a single table with all the components
         if [ -z "${previous}" ]; then
-            title="---\nhide_table_of_contents: true\n---\n\n# ${minor}.X\n"
+            title="---\nhide_table_of_contents: true\nsidebar_position: 0\n---\n\n# ${minor}.X\n"
             echo -e "${title}" >> $global_table
             upgrade_link="[Urgent Upgrade Notes](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-${minor:1}.md#urgent-upgrade-notes)"
             upgrade_warning=":::warning Upgrade Notice\nBefore upgrading from earlier releases, be sure to read the Kubernetes ${upgrade_link}.\n:::\n"
@@ -54,4 +54,13 @@ for minor in $MINORS; do
     rke2tmp=$(mktemp)
     cat $global_table "${file}" > $rke2tmp && mv $rke2tmp "${file}"
     echo "Collected release notes for ${product} ${minor}"
+done
+
+# For all the releases, order the release notes in reverse numerical order
+ITER=1
+echo "Reordering release notes in sidebar"
+for file in $(ls -r docs/release-notes/v1.*.X.md); do
+   # Add sidebar_position: $ITER to each release notes
+    sed -i "s/^sidebar_position:.*/sidebar_position: $ITER/" "${file}"
+    ITER=$((ITER+1))
 done
