@@ -11,12 +11,16 @@ on:
             required: false
             default: 'main'
             type: string
+
+permissions:
+  contents: read
+
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main docs repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.dev_branch }}
 
@@ -42,8 +46,27 @@ jobs:
           sed -i 's/baseUrl: '\''\//baseUrl: '\''\/${{ github.event.repository.name }}/' docusaurus.config.js
           yarn build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Create build artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          path: ./build
+  
+  # Seperate the deploy job to isolate write permissions
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    # This is required to avoid https://github.com/actions/deploy-pages/issues/271
+    environment:
+      name: github-pages
+
+    permissions:
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+      
