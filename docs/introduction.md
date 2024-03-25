@@ -8,7 +8,7 @@ title: "Introduction"
 
 RKE2, also known as RKE Government, is Rancher's next-generation Kubernetes distribution.
 
-It is a fully [conformant Kubernetes distribution](https://landscape.cncf.io/card-mode?selected=rke-government) that focuses on security and compliance within the U.S. Federal Government sector.
+It is a fully [conformant Kubernetes distribution](https://landscape.cncf.io/?group=projects-and-products&view-mode=card&item=platform--certified-kubernetes-distribution--rke-government#app-definition-and-development--application-definition-image-build) that focuses on security and compliance within the U.S. Federal Government sector.
 
 To meet these goals, RKE2 does the following:
 
