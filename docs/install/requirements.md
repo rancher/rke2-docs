@@ -23,17 +23,8 @@ The `with-node-id` parameter is available starting with the 2023-05 releases (v1
 ## Operating Systems
 
 ### Linux
-RKE2 has been tested and validated on the following operating systems, and their subsequent non-major releases:
 
-| Distro | Version |
-| - | - |
-| Ubuntu | 18.04, 20.04, 22.04 |
-| CentOS/RHEL | 7.8 |
-| Rocky/RHEL | 8.5, 9.1 |
-| Oracle Linux | 8.7 |
-| Amazon Linux | 2023 |
-| SLES | 15 SP3, SP4 |
-| OpenSUSE, SLE Micro | 5.1, 5.2, 5.3, 5.4 |
+See the (RKE2 Support Matrix)[https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-29/] for all the OS versions that have been validated with RKE2. In general, RKE2 should work on any Linux distribution that uses systemd and iptables.
 
 ### Windows
 :::warning Version Gate
