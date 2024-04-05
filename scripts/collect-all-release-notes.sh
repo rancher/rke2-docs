@@ -5,6 +5,52 @@ function gen_md_link()
     echo "${release_link}"
 }
 
+# This function extract any CNI table, dealing with the different number of CNIs in each release
+# and the different column names that are used across releases.
+# We transpose the table to have the CNIs as columns and the versions as rows.
+function process_cni_table {
+
+    # Read the markdown table into an array
+    mapfile -t lines <<< "$(echo "$1" | sed -n '/### Available CNIs/,/^\s*$/p' | tail -n +4)"
+
+    # Initialize arrays for the headers and rows
+    declare -a headers
+    declare -a rows
+
+    # Process each line
+    for line in "${lines[@]}"; do
+        # Split the line into fields
+        IFS='|' read -r -a fields <<< "$line"
+
+        # Remove leading and trailing whitespace from each field
+        for i in "${!fields[@]}"; do
+            fields[i]=$(echo "${fields[i]}" | sed 's/^\s*//;s/\s*$//')
+        done
+
+        # Add the fields to the rows array
+        headers+=("${fields[1]}")
+        rows+=("${fields[2]}")
+    done
+
+    # Build the headers, the last header is empty, capping the table
+    CNI_HEADERS=""
+    for header in "${headers[@]}"; do
+        CNI_HEADERS+="| $header "
+    done
+
+    # Build the separator
+    CNI_SEPARATORS="|"
+    for ((i=1; i<=${#headers[@]}; i++)); do
+        CNI_SEPARATORS+=" ----- |"
+    done
+
+    # Build the rows, the last row is empty, capping the table
+    CNI_ROWS=""
+    for ((i=0; i<${#rows[@]}; i++)); do
+        CNI_ROWS+="| ${rows[i]} "
+    done
+}
+
 MINORS=${MINORS:-"v1.26 v1.27 v1.28 v1.29"}
 
 for minor in $MINORS; do
@@ -21,6 +67,7 @@ for minor in $MINORS; do
         # Some releases have a Chart Versions Table. Strip it out, we don't include it in the release notes
         body=$(perl -0777 -pe 's/(## Charts Versions).*?\n(## Packaged Component Versions)/$2/ms' <<< "$body")
         # Extract from each release notes the component table, building a single table with all the components
+        process_cni_table "$body"
         if [ -z "${previous}" ]; then
             title="---\nhide_table_of_contents: true\nsidebar_position: 0\n---\n\n# ${minor}.X\n"
             echo -e "${title}" >> $global_table
@@ -30,16 +77,13 @@ for minor in $MINORS; do
             echo -n "| Version | Release date " >> $global_table
             # RKE2 Core Components
             echo "$body"  | grep "^|" | tail +3 | head -8 | awk -F'|' '{ print $2 }' | while read column; do echo -n "| $column " >> $global_table; done
-            # RKE2 CNIs
-            echo "$body"  | grep "^|" | tail -4 | awk -F'|' '{ print $2 }' | while read column; do echo -n "| $column " >> $global_table; done
-            echo " |" >> $global_table
-            for i in {0..13}; do echo -n "| ----- " >> $global_table; done
-            echo " |" >> $global_table
+            echo $CNI_HEADERS >> $global_table
+            for i in {0..8}; do echo -n "| ----- " >> $global_table; done
+            echo $CNI_SEPARATORS >> $global_table
         fi
         echo -n "| [${patch}](${minor}.X.md#release-$(gen_md_link $patch)) | $(date +"%b %d %Y" -d "${publish_date}")" >> $global_table
         echo "$body"  | grep "^|" | tail +3 | head -8 | awk -F'|' '{ print $3 }' | while read column; do echo -n "| $column " >> $global_table; done
-        echo "$body"  | grep "^|" | tail -4 | awk -F'|' '{ print $3 }' | while read column; do echo -n "| $column " >> $global_table; done
-        echo " |" >> $global_table
+        echo $CNI_ROWS >> $global_table
         previous=$patch
         # Remove the component table from each individual release notes
         perl -i -p0e 's/^## Packaged Component Versions.*?^-----/-----/gms' "${file}"
