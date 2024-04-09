@@ -167,6 +167,10 @@ Only vxlan backend is supported at this point
 :::warning
 Flannel does not support network policies. Therefore, it is not recommended for hardened installations
 :::
+:::warning
+Flannel support in RKE2 is currently experimental. Do not run it on production systems before extensive testing
+:::
+
 </TabItem>
 </Tabs>
 
