@@ -10,7 +10,7 @@ Verification of compliance is avaliable in: [FIPS 140-2 Verifed pdf](/RKE2_FIPS_
 
 The Go compiler in use can be found [here](https://go.googlesource.com/go/+/dev.boringcrypto). Each component of the system is built with the version of this compiler that matches the same standard Go compiler version that would be used otherwise.
 
-This version of Go replaces the standard Go crypto libraries with the FIPS validated BoringCrypto module. See GoBoring's [readme](https://go.dev/src/crypto/internal/boring/README) for more details. This module is validated by by NIST as the [BoringCrypto](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/4407) module on a wide range of systems. 
+This version of Go replaces the standard Go crypto libraries with the FIPS validated BoringCrypto module. See GoBoring's [readme](https://go.dev/src/crypto/internal/boring/README) for more details. This module is validated by NIST as the [BoringCrypto](https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/4407) module on a wide range of systems. 
 
 ### FIPS Support in Cluster Components
 
