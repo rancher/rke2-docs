@@ -114,7 +114,7 @@ To read more about the config.yaml file, see the [Install Options documentation.
 
 ### Windows Agent (Worker) Node Installation
 **Windows Support is currently Experimental as of v1.21.3+rke2r1**
-**Windows Support requires choosing Calico as the CNI for the RKE2 cluster**
+**Windows Support works with Calico or Flannel as the CNI for the RKE2 cluster**
 
 #### 0. Prepare the Windows Agent Node
 **Note** The Windows Server Containers feature needs to be enabled for the RKE2 agent to work.
@@ -124,11 +124,16 @@ Open a new Powershell window with Administrator privileges
 powershell -Command "Start-Process PowerShell -Verb RunAs"
 ```
 
-In the new Powershell window, run the following command.
+In the new Powershell window, run the following command to install the containers feature.
 ```powershell
 Enable-WindowsOptionalFeature -Online -FeatureName containers –All
 ```
-This will require a reboot for the `Containers` feature to properly function.
+As well as the following command to install all the required HNS networking components:
+```powershell
+Install-WindowsFeature -Name Hyper-V-PowerShell
+```
+
+This will require a reboot for the `Containers` and the `Hyper-V` features to properly function.
 
 #### 1. Download the Install Script
 ```powershell
