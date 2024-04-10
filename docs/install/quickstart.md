@@ -128,12 +128,7 @@ In the new Powershell window, run the following command to install the container
 ```powershell
 Enable-WindowsOptionalFeature -Online -FeatureName containers –All
 ```
-As well as the following command to install all the required HNS networking components:
-```powershell
-Install-WindowsFeature -Name Hyper-V-PowerShell
-```
-
-This will require a reboot for the `Containers` and the `Hyper-V` features to properly function.
+This will require a reboot for the `Containers` feature to properly function.
 
 #### 1. Download the Install Script
 ```powershell
