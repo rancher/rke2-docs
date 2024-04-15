@@ -194,7 +194,7 @@ Container Network Interface provides various networking options for overlay netw
 
 **Audit:**
 ```bash
-stat -c %a /var/lib/rancher/rke2/server/manifests/rke2-canal.yml
+stat -c %a /var/lib/rancher/rke2/server/manifests/rke2-canal.yaml
 644
 ```
 
@@ -213,7 +213,7 @@ Container Network Interface provides various networking options for overlay netw
 
 **Audit:**
 ```bash
-stat -c %U:%G /var/lib/rancher/rke2/server/manifests/rke2-canal.yml
+stat -c %U:%G /var/lib/rancher/rke2/server/manifests/rke2-canal.yaml
 root:root
 ```
 
