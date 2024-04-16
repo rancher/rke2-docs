@@ -8,7 +8,6 @@ module.exports = {
         'install/quickstart',
         'install/requirements',
         'install/configuration',
-        'install/network_options',
         'install/ha',
         'install/methods',
         'install/containerd_registry_configuration',
@@ -47,7 +46,15 @@ module.exports = {
     'architecture',
     'cluster_access',
     'backup_restore',
-    'networking',
+    {
+      type: 'category',
+      label: 'Networking',
+      items: [
+        'networking/basic-network-options',
+        'networking/multus-sriov',
+        'networking/networking-services',
+      ],
+    },
     'helm',
     'advanced',
     {
