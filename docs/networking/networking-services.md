@@ -1,16 +1,12 @@
 ---
-title: "Networking"
+title: "Networking Services"
 ---
 
 This page explains how CoreDNS and the Nginx-Ingress controller work within RKE2.
 
-Refer to the [Installation Network Options](install/network_options.md) page for details on Canal configuration options, or how to set up your own CNI.
+Refer to the [Basic Network Options](basic-network-options.md) page for details on Canal configuration options, or how to set up your own CNI.
 
-For information on which ports need to be opened for RKE2, refer to the [Installation Requirements](install/requirements.md).
-
-- [CoreDNS](#coredns)
-- [Nginx Ingress Controller](#nginx-ingress-controller)
-- [Nodes Without a Hostname](#nodes-without-a-hostname)
+For information on which ports need to be opened for RKE2, refer to the [Installation Requirements](../install/requirements.md).
 
 ## CoreDNS
 
@@ -18,7 +14,7 @@ CoreDNS is deployed by default when starting the server. To disable, run each se
 
 If you don't install CoreDNS, you will need to install a cluster DNS provider yourself.
 
-CoreDNS is deployed with the [autoscaler](https://github.com/kubernetes-incubator/cluster-proportional-autoscaler) by default. To disable it or change its config, use the [HelmChartConfig](helm.md#customizing-packaged-components-with-helmchartconfig) resource.
+CoreDNS is deployed with the [autoscaler](https://github.com/kubernetes-incubator/cluster-proportional-autoscaler) by default. To disable it or change its config, use the [HelmChartConfig](../helm.md#customizing-packaged-components-with-helmchartconfig) resource.
 
 ### NodeLocal DNSCache
 
@@ -61,7 +57,7 @@ spec:
 
 `nginx-ingress` is deployed by default when starting the server. Ports 80 and 443 will be bound by the ingress controller in its default configuration, making these unusable for HostPort or NodePort services in the cluster.
 
-Configuration options can be specified by creating a [HelmChartConfig manifest](helm.md#customizing-packaged-components-with-helmchartconfig) to customize the `rke2-ingress-nginx` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml` with the following contents sets `use-forwarded-headers` to `"true"` in the ConfigMap storing the NGINX config:
+Configuration options can be specified by creating a [HelmChartConfig manifest](../helm.md#customizing-packaged-components-with-helmchartconfig) to customize the `rke2-ingress-nginx` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml` with the following contents sets `use-forwarded-headers` to `"true"` in the ConfigMap storing the NGINX config:
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml
 ---
@@ -76,10 +72,12 @@ spec:
       config:
         use-forwarded-headers: "true"
 ```
-For more information, refer to the official [nginx-ingress Helm Configuration Parameters](https://github.com/kubernetes/ingress-nginx/tree/9c0a39636da11b7e262ddf0b4548c79ae9fa1667/charts/ingress-nginx#configuration).
+For more information, refer to the official [nginx-ingress Helm Configuration Parameters](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#configuration).
 
 To disable the NGINX ingress controller, start each server with the `disable: rke2-ingress-nginx` option in your configuration file.
 
-## Nodes Without a Hostname
+## Service Load Balancer
 
-Some cloud providers, such as Linode, will create machines with "localhost" as the hostname and others may not have a hostname set at all. This can cause problems with domain name resolution. You can run RKE2 with the `node-name` parameter and this will pass the node name to resolve this issue.
+Kubernetes Services can be of type LoadBalancer but it requires an external load balancer controller to implement things correctly and for example,provide the external-ip. RKE2 can optionally deploy a load balancer controller known as [ServiceLB](https://github.com/k3s-io/klipper-lb) that uses available host ports. For more information, please read the following [link](https://docs.k3s.io/networking/networking-services#service-load-balancer).
+
+To enable serviceLB, use the flag `--serviceLB` when deploying RKE2 
