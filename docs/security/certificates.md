@@ -12,13 +12,13 @@ To rotate client and server certificates manually, use the `rke2 certificate rot
 
 ```bash
 # Stop RKE2
-systemctl stop rke2
+systemctl stop rke2-server
 
 # Rotate certificates
 rke2 certificate rotate
 
 # Start RKE2
-systemctl start rke2
+systemctl start rke2-server
 ```
 
 Individual or lists of certificates can be rotated by specifying the certificate name:
