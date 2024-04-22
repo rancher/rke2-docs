@@ -144,7 +144,7 @@ module.exports = {
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
-          { from: '/install/network-options', to: '/networking/basic-network-options' },
+          { from: '/install/network_options', to: '/networking/basic_network_options' },
         ],
       },
     ],

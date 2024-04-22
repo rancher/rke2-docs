@@ -4,7 +4,7 @@ title: "Networking Services"
 
 This page explains how CoreDNS and the Nginx-Ingress controller work within RKE2.
 
-Refer to the [Basic Network Options](basic-network-options.md) page for details on Canal configuration options, or how to set up your own CNI.
+Refer to the [Basic Network Options](basic_network_options.md) page for details on Canal configuration options, or how to set up your own CNI.
 
 For information on which ports need to be opened for RKE2, refer to the [Installation Requirements](../install/requirements.md).
 
