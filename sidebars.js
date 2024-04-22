@@ -50,9 +50,9 @@ module.exports = {
       type: 'category',
       label: 'Networking',
       items: [
-        'networking/basic-network-options',
-        'networking/multus-sriov',
-        'networking/networking-services',
+        'networking/basic_network_options',
+        'networking/multus_sriov',
+        'networking/networking_services',
       ],
     },
     'helm',
