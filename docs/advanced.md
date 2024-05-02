@@ -253,3 +253,130 @@ kube-apiserver-extra-env:
   - "MY_BAR=BAR"
 kube-scheduler-extra-env: "TZ=America/Los_Angeles"
 ```
+
+## Deploy NVIDIA operator (experimental)
+
+The [NVIDIA operator](https://github.com/NVIDIA/gpu-operator) allows administrators of Kubernetes clusters to manage GPUs just like CPUs. It includes everything needed for pods to be able to operate GPUs.
+
+Depending on the underlying OS, some steps need to be fulfilled
+
+<Tabs groupId = "GPU Operating System">
+<TabItem value="SLES" default>
+
+The NVIDIA operator cannot automatically install kernel drivers on SLES. NVIDIA drivers must be manually installed on all GPU nodes before deploying the operator in the cluster. It can be done with the following steps:
+
+```
+# Assuming you are using sle15sp5, if different, change the url accordingly
+sudo zypper addrepo --refresh 'https://download.nvidia.com/suse/sle15sp5' NVIDIA
+sudo zypper --gpg-auto-import-keys refresh
+sudo zypper install -y –-auto-agree-with-licenses nvidia-gl-G06 nvidia-video-G06 nvidia-compute-utils-G06
+```
+Then reboot.
+
+If everything worked correctly, after the reboot, you should see the NVRM and GCC version of the driver when executing the command:
+
+```
+cat /proc/driver/nvidia/version
+```
+
+Finally, create the symlink:
+```
+sudo ln -s /sbin/ldconfig /sbin/ldconfig.real
+```
+
+</TabItem>
+<TabItem value="Ubuntu" default>
+
+The NVIDIA operator can automatically install kernel drivers on Ubuntu using the `nvidia-driver-daemonset`, although not all versions are supported. You can also pre-install them manually and the operator will detect them: 
+
+```
+sudo apt install nvidia-driver-535-server
+```
+Then reboot.
+
+If everything worked correctly, after the reboot, you should see a correct output when executing the command:
+
+```
+cat /proc/driver/nvidia/version
+```
+
+</TabItem>
+<TabItem value="RHEL" default>
+
+The NVIDIA operator can automatically install kernel drivers on RHEL using the `nvidia-driver-daemonset`. You would only need to create the symlink:
+```
+sudo ln -s /sbin/ldconfig /sbin/ldconfig.real
+```
+
+</TabItem>
+</Tabs>
+
+Once the OS is ready and RKE2 is running, install the GPU Operator with the following yaml manifest:
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    toolkit:
+      env:
+      - name: CONTAINERD_SOCKET
+        value: /run/k3s/containerd/containerd.sock
+```
+:::warning
+The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
+:::
+
+After one minute approximately, you can make the following checks to verify that everything worked as expected:
+
+1 - Check if the operator detected the driver and GPU correctly:
+```
+kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' | jq | grep "nvidia.com"
+```
+You should see labels specifying driver and GPU (e.g. nvidia.com/gpu.machine or nvidia.com/cuda.driver.major)
+
+2 - Check if the gpu was added (by nvidia-device-plugin-daemonset) as an allocatable resource in the node:
+```
+kubectl get node $NODENAME -o jsonpath='{.status.allocatable}' | jq
+```
+You should see `"nvidia.com/gpu":` followed by the number of gpus in the node
+
+3 - Check that the container runtime binary was installed by the operator (in particular by the `nvidia-container-toolkit-daemonset`):
+```
+ls /usr/local/nvidia/toolkit/nvidia-container-runtime
+```
+
+4 - Verify if containerd config was updated to include the nvidia container runtime:
+```
+grep nvidia /etc/containerd/config.toml
+```
+
+5 - Run a pod to verify that the GPU resource can successfully be scheduled on a pod and the pod can detect it
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nbody-gpu-benchmark
+  namespace: default
+spec:
+  restartPolicy: OnFailure
+  runtimeClassName: nvidia
+  containers:
+  - name: cuda-container
+    image: nvcr.io/nvidia/k8s/cuda-sample:nbody
+    args: ["nbody", "-gpu", "-benchmark"]
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+    env:
+    - name: NVIDIA_VISIBLE_DEVICES
+      value: all
+    - name: NVIDIA_DRIVER_CAPABILITIES
+      value: all
+```
