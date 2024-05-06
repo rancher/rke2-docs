@@ -110,7 +110,7 @@ When the `profile` flag is set it does the following:
 
 3. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces.
    These namespaces are exempted to allow system pods to run without restrictions, which is required for proper operation of the cluster.  
-   For more information about the PSA configuration, see the default [Pod Security Admission configurations](pod_security_standards.md#pod-security-standards).  
+   For more information about the PSA configuration, see the default [Pod Security Admission configurations](pod_security_standards.md#pod-安全标准).  
    For more information about Pod Security Standards, please refer to the [official documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
 
 
