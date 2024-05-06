@@ -29,7 +29,7 @@ Importantly, RKE2 does not rely on Docker as RKE1 does. RKE1 leveraged Docker fo
 ## Why two names?
 It is known as RKE2 as it is the next iteration of the Rancher Kubernetes Engine for datacenter use cases. The distribution runs standalone or integrated into Rancher. Automated provisioning of new RKE2 clusters is available in Rancher v2.6+.
 
-It is also known as RKE Government in order to convey the another use case and sector it currently targets.
+It is also known as RKE Government in order to convey another use case and sector it currently targets.
 
 
 
