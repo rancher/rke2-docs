@@ -8,3 +8,9 @@ updates:
       docusaurous-dependencies:
         patterns:
           - "@docusaurus/*"
+      react-dependencies:
+        patterns:
+          - "react*"
+      remark-dependencies:
+        patterns:
+          - "remark-*"
