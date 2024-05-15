@@ -17,33 +17,11 @@ This guide assumes that RKE2 has been installed, but is not yet running. If you 
 
 ## Host-level requirements
 
-There are two areas of host-level requirements: kernel parameters and etcd process/directory configuration. These are outlined in this section.
+There are three areas of host-level requirements: kernel parameters, kubelet's protect-kernel-defaults and etcd process/directory configuration. These are outlined in this section.
 
-### Ensure `protect-kernel-defaults` is set
+### Kernel parameters
 
-This is a kubelet flag that will cause the kubelet to exit if the required kernel parameters are unset or are set to values that are different from the kubelet's defaults.
-
-When the `profile` flag is set, RKE2 will set the flag to `true`.
-
-:::note
-`protect-kernel-defaults` is exposed as a top-level flag for RKE2. If you have set `profile` to `cis-1.XX` and `protect-kernel-defaults` to `false` explicitly, RKE2 will exit with an error.
-:::
-
-RKE2 will also check the same kernel parameters that the kubelet does and exit with an error following the same rules as the kubelet. This is done as a convenience to help the operator more quickly and easily identify what kernel parameters are violating the kubelet defaults.
-
-### Ensure etcd is configured properly
-
-The CIS Benchmark requires that the etcd data directory be owned by the `etcd` user and group. This implicitly requires the etcd process run as the host-level `etcd` user. To achieve this, RKE2 takes several steps when started with a valid `cis` or `cis-1.XX` profile:
-
-1. Check that the `etcd` user and group exists on the host. If they don't, exit with an error.
-2. Create etcd's data directory with `etcd` as the user and group owner.
-3. Ensure the etcd process is run as the `etcd` user and group by setting the etcd static pod's `SecurityContext` appropriately.
-
-To meet the above requirements, you must:
-
-#### Set kernel parameters
-
-When RKE2 is installed, it creates a sysctl config file to set the required parameters appropriately. However, it does not automatically configure the host to use this configuration. You must do this manually. The location of the config file depends on the installation method used.
+CIS benchmark requires some specific kernel parameters configuration to be set. When RKE2 is installed, it creates a sysctl config file to set the required parameters appropriately. However, it does not automatically configure the host to use this configuration. You must do this manually. The location of the config file depends on the installation method used.
 
 If RKE2 was installed via RPM, YUM, or DNF (the default on OSes that use RPMs, such as CentOS), run the following commands:
 
@@ -67,7 +45,26 @@ sudo sysctl -p /usr/local/share/rke2/rke2-cis-sysctl.conf
 
 Please perform this step only on fresh installations, before actually using RKE2 to deploy Kubernetes. Many Kubernetes components, including CNI plugins, set up their own sysctls. Restarting the `systemd-sysctl` service on a running Kubernetes cluster can result in unexpected side-effects.
 
-#### Create the etcd user
+### Kubelet parameter `protect-kernel-defaults` is set to `true`
+
+This is a kubelet flag that will cause the kubelet to exit if the required kernel parameters are unset or are set to values that are different from the kubelet's defaults.
+
+RKE2 will automatically set the flag to `true` when the `profile` flag is set.
+
+:::note
+`protect-kernel-defaults` is exposed as a top-level flag for RKE2. If you have set `profile` to `cis-1.XX` and `protect-kernel-defaults` to `false` explicitly, RKE2 will exit with an error.
+:::
+
+RKE2 will also check the same kernel parameters that the kubelet does and exit with an error following the same rules as the kubelet. This is done as a convenience to help the operator more quickly and easily identify what kernel parameters are violating the kubelet defaults.
+
+### Etcd is configured properly
+
+The CIS Benchmark requires that the etcd data directory be owned by the `etcd` user and group. This implicitly requires the etcd process run as the host-level `etcd` user. To achieve this, RKE2 takes several steps when started with a valid `cis` or `cis-1.XX` profile:
+
+1. Check that the `etcd` user and group exists on the host. If they don't, exit with an error.
+2. Create etcd's data directory with `etcd` as the user and group owner.
+3. Ensure the etcd process is run as the `etcd` user and group by setting the etcd static pod's `SecurityContext` appropriately.
+
 On some Linux distributions, the `useradd` command will not create a group. The `-U` flag is included below to account for that. This flag tells `useradd` to create a group with the same name as the user.
 
 ```bash
@@ -166,7 +163,7 @@ RKE2 always runs with some amount of pod security.
 On v1.25 and newer, [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/) are used for pod security. A default Pod Security Admission config file will be added to the cluster upon startup as follows:
 
 With the `cis`/`cis-1.23` profile:
-*  RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system` and `cis-operator-system` namespaces to ensure successful operation of system pods.
+*  RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system`, `cis-operator-system` and `tigera-operator` namespaces to ensure successful operation of system pods.
 
 Without the `cis`/`cis-1.23` profile:
 * RKE2 will apply a nonrestricted pod security standard via a configuration file which will enforce `privileged` mode throughout the cluster which allows a completely unrestricted mode to all pods in the cluster.
@@ -193,9 +190,15 @@ The Kubernetes control plane components and critical additions such as CNI, DNS,
 
 ### Network Policies
 
-When ran with a valid "cis-1.XX" profile, RKE2 will put `NetworkPolicies` in place that passes the CIS Benchmark for Kubernetes' built-in namespaces. These namespaces are: `kube-system`, `kube-public`, `kube-node-lease`, and `default`.
+When ran with a valid "cis-1.XX" profile, RKE2 will put `NetworkPolicies` in place that passes the CIS Benchmark for Kubernetes' built-in namespaces. These namespaces are: `kube-system`, `kube-public`, and `default`.
 
-The `NetworkPolicy` used will only allow pods within the same namespace to talk to each other. The notable exception to this is that it allows DNS requests to be resolved.
+The `NetworkPolicy` used will only allow pods within the same namespace to talk to each other. There are some notable exceptions to this is that it allows DNS requests to be resolved.
+
+* DNS requests are allowed to reach the dns server
+* HTTP/s requests are allowed to reach the ingress-nginx service
+* HTTPs requests are allowed to reach the metrics-server
+* Requests to the ingress-nginx webhook on the specified pod by the ingress-nginx pod (normally 8443)
+* HTTPs requests to the rke2-snapshot-validation-webhook
 
 :::warning Operator Intervention Required
 Operators must manage network policies as normal for additional namespaces that are created.
@@ -212,6 +215,8 @@ For each namespace including `default` and `kube-system` on a standard RKE2 inst
 ```yaml
 automountServiceAccountToken: false
 ```
+
+RKE2 will automatically set the value correctly for kube-system, cis-operator-system, kube-node-lease and tigera-operator namespaces.
 
 :::warning Operator Intervention Required
 
@@ -273,7 +278,7 @@ API Server audit logs will be written to `/var/lib/rancher/rke2/server/logs/audi
 
 ## Known issues
 
-The following are controls that RKE2 currently does not pass. Each gap will be explained and whether it can be passed through manual operator intervention or if it will be addressed in a future release.
+The following are controls that default RKE2 currently does not pass. Each gap will be explained and how it is addressed.
 
 ### Control 1.1.12
 Ensure that the etcd data directory ownership is set to `etcd:etcd`.
@@ -282,7 +287,7 @@ Ensure that the etcd data directory ownership is set to `etcd:etcd`.
 etcd is a highly-available key-value store used by Kubernetes deployments for persistent storage of all of its REST API objects. This data directory should be protected from any unauthorized reads or writes. It should be owned by `etcd:etcd`.
 
 **Remediation**  
-This can be remediated by creating an `etcd` user and group as described [above](#create-the-etcd-user).
+This can be remediated by creating an `etcd` user and group as described [above](#etcd-is-configured-properly).
 
 ### Control 5.1.5
 Ensure that default service accounts are not actively used
