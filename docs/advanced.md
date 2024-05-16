@@ -380,3 +380,9 @@ spec:
     - name: NVIDIA_DRIVER_CAPABILITIES
       value: all
 ```
+
+## How to create symbolic link to RKE2 related directory
+If you want to create symbolic link to RKE2 related directory, please create a symbolic link with `-r` option as follows to allow RKE2 to resolve it.
+```sh
+sudo ln -sr /mnt/disk2/rancher /var/lib/rancher
+```
