@@ -51,7 +51,7 @@ function process_cni_table {
     done
 }
 
-MINORS=${MINORS:-"v1.26 v1.27 v1.28 v1.29"}
+MINORS=${MINORS:-"v1.27 v1.28 v1.29 v1.30"}
 
 for minor in $MINORS; do
     product=rke2
