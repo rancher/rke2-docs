@@ -254,7 +254,7 @@ kube-apiserver-extra-env:
 kube-scheduler-extra-env: "TZ=America/Los_Angeles"
 ```
 
-## Deploy NVIDIA operator (experimental)
+## Deploy NVIDIA operator
 
 The [NVIDIA operator](https://github.com/NVIDIA/gpu-operator) allows administrators of Kubernetes clusters to manage GPUs just like CPUs. It includes everything needed for pods to be able to operate GPUs.
 
