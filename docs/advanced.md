@@ -224,11 +224,15 @@ In order to mount a volume as read only, append `:ro` to the end of the volume m
 
 Multiple volume mounts can be specified for the same component by passing the flag values as an array in the config file.
 
+:::info Version Gate
+Prior to April 2024 releases (v1.27.13+rke2r1, v1.28.9+rke2r1, v1.29.4+rke2r1), only directories can be mounted.
+:::
+
 ```yaml
 # /etc/rancher/rke2/config.yaml
 kube-apiserver-extra-mount: 
-   - "/tmp/foo.yaml:/root/foo.yaml"
-   - "/tmp/bar.txt:/etc/bar.txt:ro"
+   - "/tmp/foo:/root/foo"
+   - "/tmp/bar.txt:/etc/bar.txt:ro" 
 ```
 
 ## Extra Control Plane Component Environment Variables
