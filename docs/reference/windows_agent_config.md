@@ -4,7 +4,7 @@ title: Windows Agent Configuration Reference
 
 This is a reference to all parameters that can be used to configure the Windows RKE2 agent.  
 
-**Windows Support is currently Experimental as of v1.21.3+rke2r1 and requires choosing Calico as the CNI for the RKE2 cluster**  
+**Windows Support is currently Experimental as of v1.21.3+rke2r1 and requires choosing Calico or Flannel as the CNI for the RKE2 cluster**  
 
 ### Windows RKE2 Agent CLI Help
 

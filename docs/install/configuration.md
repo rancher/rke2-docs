@@ -119,7 +119,7 @@ Windows Support is currently Experimental as of v1.21.3+rke2r1
 :::
 
 :::note 
-Windows Support requires choosing Calico as the CNI for the RKE2 cluster
+Windows Support requires choosing Calico or Flannel as the CNI for the RKE2 cluster
 :::
 
 As mentioned in the [Quick-Start Guide](quickstart.md), you can use the installation script available at [https://github.com/rancher/rke2/blob/master/install.ps1](https://github.com/rancher/rke2/blob/master/install.ps1) to install RKE2 on a Windows Agent Node.
