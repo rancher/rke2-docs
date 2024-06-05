@@ -114,10 +114,6 @@ This installation script is straight-forward and will do the following:
 2. Determine and execute the installation method. There are two methods: rpm and tar. If the `INSTALL_RKE2_METHOD` variable is set, that will be respected, Otherwise, `rpm` will be used on operating systems that use this package management system. On all other systems, tar will be used. In the case of the tar method, the script will simply unpack the tar archive associated with the desired release. In the case of rpm, a yum repository will be set up and the rpm will be installed using yum.
 
 ## Configuring the Windows Installation Script
-:::info Version Gate
-Windows Support is currently Experimental as of v1.21.3+rke2r1
-:::
-
 :::note 
 Windows Support requires choosing Calico or Flannel as the CNI for the RKE2 cluster
 :::
