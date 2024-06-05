@@ -27,9 +27,6 @@ The `with-node-id` parameter is available starting with the 2023-05 releases (v1
 See the [RKE2 Support Matrix](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions) for all the OS versions that have been validated with RKE2. In general, RKE2 should work on any Linux distribution that uses systemd and iptables.
 
 ### Windows
-:::warning Version Gate
-Experimental as of [v1.21.3+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.3%2Brke2r1)
-:::
 
 :::info
 Windows Support requires choosing Calico or Flannel as the CNI for the RKE2 cluster

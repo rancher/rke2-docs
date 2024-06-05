@@ -113,7 +113,6 @@ journalctl -u rke2-agent -f
 To read more about the config.yaml file, see the [Install Options documentation.](configuration.md#configuration-file)
 
 ### Windows Agent (Worker) Node Installation
-**Windows Support is currently Experimental as of v1.21.3+rke2r1**
 **Windows Support works with Calico or Flannel as the CNI for the RKE2 cluster**
 
 #### 0. Prepare the Windows Agent Node

@@ -2,7 +2,6 @@
 title: Windows Air-Gap Install
 ---
 
-**Windows Support is currently Experimental as of v1.21.3+rke2r1**
 **Windows Support requires choosing Calico or Flannel as the CNI for the RKE2 cluster**
 
 RKE2 Windows Agent (Worker) Nodes can be used in an air-gapped environment with two different methods. This requires first completing the RKE2 [airgap setup](./airgap.md)
