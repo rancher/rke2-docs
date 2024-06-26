@@ -33,9 +33,14 @@ When attempting to upgrade to a new version of RKE2, the [Kubernetes version ske
 ### Install the system-upgrade-controller
 The system-upgrade-controller can be installed as a deployment into your cluster. The deployment requires a service-account, clusterRoleBinding, and a configmap. To install these components, run the following command:
 ```
-kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.13.2/system-upgrade-controller.yaml
+kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/latest/download/system-upgrade-controller.yaml
 ```
 The controller can be configured and customized via the previously mentioned configmap, but the controller must be redeployed for the changes to be applied.
+
+To be able to apply plans, the system-upgrade-controller CRD needs to be deployed:
+```
+kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/latest/download/crd.yaml
+```
 
 
 ### Configure plans
