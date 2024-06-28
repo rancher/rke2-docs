@@ -145,6 +145,22 @@ spec:
         mtu: 9000
 ```
 
+Because of a kernel bug in versions previous to 5.7, by default we are disabling the checksum offload done by the kernel. That config caps TCP performance to ~2.5Gbps. If you require higher throughput and have a kernel version greater than 5.7, you can enable the checksum offloading by using the following HelmChartConfig:
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-calico-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-calico
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    felixConfiguration:
+      featureDetectOverride: "ChecksumOffloadBroken=false"
+```
+
 For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.26.300/values.yaml)
 
 :::note
