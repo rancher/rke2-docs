@@ -39,7 +39,7 @@ This endpoint can be set up using any number approaches, such as:
 
 This endpoint can also be used for accessing the Kubernetes API. So you can, for example, modify your [kubeconfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/) file to point to it instead of a specific node.
 
-Note that the `rke2 server` process listens on port `9345` for new nodes to register. The Kubernetes API is served on port `6443`, as normal. Configure your load balancer accordingly.
+Note that the `rke2 server` process listens on port `9345` for new nodes to register. The Kubernetes API is served on port `6443`, as normal. Configure your load balancer accordingly. Note that when adding new nodes to the cluster, additional checks may be required in your load balancer to determine if the server is ready. For example, an additional monitoring check in the load balancer for port 6443 can help determine if the node can join the cluster.
 
 ### 2. Launch the first server node
 The first server node establishes the secret token that other server or agent nodes will register with when connecting to the cluster.
