@@ -12,7 +12,7 @@ RKE2 integrates with four different CNI plugins: Canal, Cilium, Calico and Flann
 
 The next tabs inform how to deploy each CNI plugin and override the default options:
 
-<Tabs groupId = "CNIplugin">
+<Tabs groupId = "CNIplugin" queryString>
 <TabItem value="Canal CNI plugin" default>
 
 Canal means using Flannel for inter-node traffic and Calico for intra-node traffic and network policies. By default, it will use vxlan encapsulation to create an overlay network among nodes. Canal is deployed by default in RKE2 and thus nothing must be configured to activate it. To override the default Canal options you should create a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example to override the flannel interface, you can apply the following config:
@@ -197,7 +197,7 @@ service-cidr: "10.43.0.0/16,2001:cafe:43::/112"
 
 Each CNI plugin may require a different configuration for dual-stack:
 
-<Tabs groupId = "CNIplugin">
+<Tabs groupId = "CNIplugin" queryString>
 <TabItem value="Canal CNI plugin" default>
 
 Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.

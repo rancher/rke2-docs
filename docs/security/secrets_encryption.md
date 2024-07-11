@@ -120,7 +120,7 @@ In this example, 3 servers are used to for a HA cluster, referred to as S1, S2, 
 
 ### Encryption Key Rotation Classic
 
-<Tabs groupId="se">
+<Tabs groupId="se" queryString>
 <TabItem value="Single-Server" default>
 
 To rotate secrets encryption keys on a single-node cluster:
