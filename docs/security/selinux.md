@@ -7,6 +7,8 @@ The [policy](https://github.com/rancher/rke2-selinux) supporting this is a speci
 [container-selinux](https://github.com/containers/container-selinux) policy for containerd. It accounts
 for the non-standard location(s) which containerd is installed and places persistent and ephemeral state.
 
+Note: In some circumstances, a reboot of the node may be required after installing the rke2-selinux package and before starting the rke2 service. If you encounter denials in your selinux audit log despite installation of the rke2-selinux and container-selinux packages, please reboot the node.
+
 #### Custom Context Labels
 
 RKE2 runs control-plane services as static pods which require access to multiple
