@@ -50,6 +50,46 @@ spec:
       ipvs: true
 ```
 
+### NodeLocal DNS Cache with Cilium in kube-proxy replacement mode
+This feature is available starting from versions v1.28.13+rke2r1, v1.29.8+rke2r1 and v1.30.4+rke2r1.
+
+If your choice of CNI is [Cilium in kube-proxy replacement mode](https://docs.rke2.io/networking/basic_network_options#install-a-cni-plugin) and you wish to use NodeLocal DNS Cache, you need to configure Cilium to use a [Local Redirect Policy (LRP)](https://docs.cilium.io/en/v1.15/network/kubernetes/local-redirect-policy/#node-local-dns-cache) to route the DNS traffic to your NodeLocal cache. This is because in this mode, Cilium eBPF routing bypasses iptables rules so nodelocal cannot configure them to route the DNS traffic towards itself.
+
+This is done in 2 steps:
+1. Activate the Local Redirect Policy feature in Cilium by setting the `localRedirectPolicy` flag to true in the Cilium HelmChartConfig.
+This would look like this:
+```yaml
+---
+# /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-cilium
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    kubeProxyReplacement: true
+    k8sServiceHost: <KUBE_API_SERVER_IP>
+    k8sServicePort: <KUBE_API_SERVER_PORT>
+    localRedirectPolicy: true
+
+```
+2. Configure the `rke2-coredns` chart to setup its LRP by applying the following HelmChartConfig:
+```yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-coredns
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    nodelocal:
+      enabled: true
+      use_cilium_lrp: true
+```
+
 
 ## Nginx Ingress Controller
 
