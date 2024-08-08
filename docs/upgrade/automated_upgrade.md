@@ -58,8 +58,6 @@ spec:
   concurrency: 1
   nodeSelector:
     matchExpressions:
-       - {key: rke2-upgrade, operator: Exists}
-       - {key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"]}
        # When using k8s version 1.19 or older, swap control-plane with master
        - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
   tolerations:
