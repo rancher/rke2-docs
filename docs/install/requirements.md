@@ -99,29 +99,58 @@ If you wish to utilize the metrics server, you will need to open port 10250 on e
 
 ### Inbound Network Rules
 
-| Protocol | Port        | Source            | Destination       | Description
-|----------|-------------|-------------------|-------------------|---|
-| TCP      | 9345        | RKE2 agent nodes  | RKE2 server nodes | RKE2 supervisor API
-| TCP      | 6443        | RKE2 agent nodes  | RKE2 server nodes | Kubernetes API
-| UDP      | 8472        | All RKE2 nodes    | All RKE2 nodes    | Required only for Flannel VXLAN
-| TCP      | 10250       | All RKE2 nodes    | All RKE2 nodes    | kubelet metrics
-| TCP      | 2379        | RKE2 server nodes | RKE2 server nodes | etcd client port
-| TCP      | 2380        | RKE2 server nodes | RKE2 server nodes | etcd peer port
-| TCP      | 2381        | RKE2 server nodes | RKE2 server nodes | etcd metrics port
-| TCP      | 30000-32767 | All RKE2 nodes    | All RKE2 nodes    | NodePort port range
-| UDP      | 8472        | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI VXLAN
-| TCP      | 4240        | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
-| ICMP     | 8/0         | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
-| TCP      | 179         | All RKE2 nodes    | All RKE2 nodes    | Calico CNI with BGP
-| UDP      | 4789        | All RKE2 nodes    | All RKE2 nodes    | Calico CNI with VXLAN
-| TCP      | 5473        | All RKE2 nodes    | All RKE2 nodes    | Calico CNI with Typha
-| TCP      | 9098        | All RKE2 nodes    | All RKE2 nodes    | Calico Typha health checks
-| TCP      | 9099        | All RKE2 nodes    | All RKE2 nodes    | Calico health checks
-| UDP      | 8472        | All RKE2 nodes    | All RKE2 nodes    | Canal CNI with VXLAN
-| TCP      | 9099        | All RKE2 nodes    | All RKE2 nodes    | Canal CNI health checks
-| UDP      | 51820       | All RKE2 nodes    | All RKE2 nodes    | Canal CNI with WireGuard IPv4
-| UDP      | 51821       | All RKE2 nodes    | All RKE2 nodes    | Canal CNI with WireGuard IPv6/dual-stack
-| UDP      | 4789        | All RKE2 nodes    | All RKE2 nodes    | Flannel CNI with VXLAN
+| Port        | Protocol | Source            | Destination       | Description
+|-------------|----------|-------------------|-------------------|------------
+| 6443        | TCP      | RKE2 agent nodes  | RKE2 server nodes | Kubernetes API
+| 9345        | TCP      | RKE2 agent nodes  | RKE2 server nodes | RKE2 supervisor API
+| 10250       | TCP      | All RKE2 nodes    | All RKE2 nodes    | kubelet metrics
+| 2379        | TCP      | RKE2 server nodes | RKE2 server nodes | etcd client port
+| 2380        | TCP      | RKE2 server nodes | RKE2 server nodes | etcd peer port
+| 2381        | TCP      | RKE2 server nodes | RKE2 server nodes | etcd metrics port
+| 30000-32767 | TCP      | All RKE2 nodes    | All RKE2 nodes    | NodePort port range
+
+
+#### CNI Specific Inbound Network Rules
+
+<Tabs groupId="cni-rules" queryString>
+<TabItem value="Canal">
+
+| Port        | Protocol | Source            | Destination       | Description
+|-------------|----------|-------------------|-------------------|------------
+| 8472        | UDP      | All RKE2 nodes    | All RKE2 nodes    | Canal CNI with VXLAN
+| 9099        | TCP      | All RKE2 nodes    | All RKE2 nodes    | Canal CNI health checks
+| 51820       | UDP      | All RKE2 nodes    | All RKE2 nodes    | Canal CNI with WireGuard IPv4
+| 51821       | UDP      | All RKE2 nodes    | All RKE2 nodes    | Canal CNI with WireGuard IPv6/dual-stack
+
+</TabItem>
+<TabItem value="Cilium">
+
+| Port        | Protocol | Source            | Destination       | Description
+|-------------|----------|-------------------|-------------------|------------
+| 8/0         | ICMP     | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
+| 4240        | TCP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
+| 8472        | UDP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI with VXLAN
+
+</TabItem>
+<TabItem value="Calico">
+
+| Port        | Protocol | Source            | Destination       | Description
+|-------------|----------|-------------------|-------------------|------------
+| 179         | TCP      | All RKE2 nodes    | All RKE2 nodes    | Calico CNI with BGP
+| 4789        | UDP      | All RKE2 nodes    | All RKE2 nodes    | Calico CNI with VXLAN
+| 5473        | TCP      | All RKE2 nodes    | All RKE2 nodes    | Calico CNI with Typha
+| 9098        | TCP      | All RKE2 nodes    | All RKE2 nodes    | Calico Typha health checks
+| 9099        | TCP      | All RKE2 nodes    | All RKE2 nodes    | Calico health checks
+
+</TabItem>
+<TabItem value="Flannel">
+
+| Port        | Protocol | Source            | Destination       | Description
+|-------------|----------|-------------------|-------------------|------------
+| 4789        | UDP      | All RKE2 nodes    | All RKE2 nodes    | Flannel CNI with VXLAN
+
+</TabItem>
+</Tabs>
 
 ### Windows Specific Inbound Network Rules
 
