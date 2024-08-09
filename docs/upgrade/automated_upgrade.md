@@ -37,9 +37,14 @@ Automated upgrades are currently not supported on Windows nodes
 ### Install the system-upgrade-controller
 The system-upgrade-controller can be installed as a deployment into your cluster. The deployment requires a service-account, clusterRoleBinding, and a configmap. To install these components, run the following command:
 ```
-kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/download/v0.13.2/system-upgrade-controller.yaml
+kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/latest/download/system-upgrade-controller.yaml
 ```
 The controller can be configured and customized via the previously mentioned configmap, but the controller must be redeployed for the changes to be applied.
+
+To be able to apply plans, the system-upgrade-controller CRD needs to be deployed:
+```
+kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/latest/download/crd.yaml
+```
 
 
 ### Configure plans
@@ -57,8 +62,6 @@ spec:
   concurrency: 1
   nodeSelector:
     matchExpressions:
-       - {key: rke2-upgrade, operator: Exists}
-       - {key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"]}
        # When using k8s version 1.19 or older, swap control-plane with master
        - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
   tolerations:
