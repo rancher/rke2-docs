@@ -6,6 +6,10 @@ title: Uninstall
 Uninstalling RKE2 deletes the cluster data and all of the scripts.
 :::
 
+:::note
+For cleaning a Rancher deployed RKE2 cluster see: [Clean Cluster Nodes](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/manage-clusters/clean-cluster-nodes#cleaning-up-nodes)
+:::
+
 ## Linux Uninstall
 
 Depending on the method used to install RKE2, the uninstallation process varies.
