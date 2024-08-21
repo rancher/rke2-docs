@@ -190,7 +190,12 @@ You can list local snapshots with the `etcd-snapshot ls` subcommand.
 
 Snapshots are pruned automatically when the number of snapshots exceeds the configured retention count. The oldest snapshots are removed first. 
 
-You can manually prune snapshots down to a smaller amount using the following command:
+You can manually prune "on-demand" snapshots down to a smaller amount using the following command:
 ```
-rke2 etcd-snapshot prune --snapshot-retention <NUM-OF-SNAPSHOTS-TO-RETAIN>
+rke2 etcd-snapshot prune --etcd-snapshot-retention <NUM-OF-SNAPSHOTS-TO-RETAIN>
+```
+
+You can manually prune "scheduled" snapshots down to a smaller amount using the following command:
+```
+rke2 etcd-snapshot prune --name etcd-snapshot --etcd-snapshot-retention <NUM-OF-SNAPSHOTS-TO-RETAIN>
 ```
