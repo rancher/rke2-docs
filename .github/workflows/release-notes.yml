@@ -1,14 +1,16 @@
 name: Collect Release Notes
 on:
-  workflow_dispatch
-
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 6 * * 1' # every Monday at 6:00 AM
 env:
-  MINORS: "v1.27 v1.28 v1.29 v1.30"
+  MINORS: "v1.28 v1.29 v1.30 v1.31"
 permissions:
   contents: write
   pull-requests: write
 jobs:
   collect-all:
+    if: github.repository == 'rancher/rke2-docs'
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
