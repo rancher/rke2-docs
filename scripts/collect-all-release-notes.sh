@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+MINORS=${MINORS:-"v1.28 v1.29 v1.30 v1.31"}
+
 function gen_md_link()
 {
     release_link=$(echo $1 | tr '[:upper:]' '[:lower:]' | sed -e 's/ /-/g' -e 's/\.//g' -e 's/+//g')
@@ -50,8 +53,6 @@ function process_cni_table {
         CNI_ROWS+="| ${rows[i]} "
     done
 }
-
-MINORS=${MINORS:-"v1.27 v1.28 v1.29 v1.30"}
 
 for minor in $MINORS; do
     product=rke2
