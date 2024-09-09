@@ -2,17 +2,15 @@
 title: CIS 1.23 Self-Assessment Guide
 ---
 
-### CIS Kubernetes Benchmark v1.23 - RKE2
-
-#### Overview
+## Overview
 
 This document is a companion to the RKE2 security hardening guide. The hardening guide provides prescriptive guidance for hardening a production installation of RKE2, and this benchmark guide is meant to help you evaluate the level of security of the hardened cluster against each control in the CIS Kubernetes benchmark. It is to be used by RKE2 operators, security teams, auditors, and decision makers.
 
-This guide is specific to the **v1.25** release line of RKE2 and the **v1.23** release of the CIS Kubernetes Benchmark.
+This guide is specific to the **v1.23** release line of RKE2 and the **v1.23** release of the CIS Kubernetes Benchmark.
 
 For more details about each control, including detailed descriptions and remediations for failing tests, you can refer to the corresponding section of the CIS Kubernetes Benchmark v1.23 You can download the benchmark after logging in to [CISecurity.org](https://www.cisecurity.org/benchmark/kubernetes/).
 
-#### Testing controls methodology
+### Testing controls methodology
 
 Each control in the CIS Kubernetes Benchmark was evaluated against an RKE2 cluster that was configured according to the accompanying hardening guide.
 
@@ -24,9 +22,6 @@ These are the possible results for each control:
 - **Not Applicable** - The control is not applicable to RKE2 because of how it is designed to operate. The remediation section will explain why this is so.
 - **Manual - Operator Dependent** - The control is Manual in the CIS benchmark and it depends on the cluster's use case or some other factor that must be determined by the cluster operator. These controls have been evaluated to ensure RKE2 does not prevent their implementation, but no further configuration or auditing of the cluster under test has been performed.
 
-### Controls
-
----
 ## 1 Master Node Security Configuration
 ### 1.1 Master Node Configuration Files
 
