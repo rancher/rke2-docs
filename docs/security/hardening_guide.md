@@ -4,7 +4,10 @@ title: CIS Hardening Guide
 
 This document provides prescriptive guidance for hardening a production installation of RKE2. It outlines the configurations and controls required to address Kubernetes benchmark controls from the Center for Internet Security (CIS).
 
-For more details about evaluating a hardened cluster against the official CIS benchmark, refer to the CIS Benchmark [Self-Assessment Guide v1.23](cis_self_assessment123.md), or [Self-Assessment Guide v1.6](cis_self_assessment16.md) for RKE2 versions prior to v1.25.
+For more details about evaluating a hardened cluster against the official CIS benchmark, refer to the appropiate CIS Self-Assessment Guide:
+- [CIS Self-Assessment Guide v1.8](cis_self_assessment18.md) for RKE2 v1.26 and newer
+- [CIS Self-Assessment Guide v1.7](cis_self_assessment17.md) for RKE2 v1.25
+- [CIS Self-Assessment Guide v1.24](cis_self_assessment124.md) for RKE2 v1.24 and older
 
 RKE2 is designed to be "hardened by default" and pass the majority of the Kubernetes CIS controls without modification. There are a few notable exceptions to this that require manual intervention to fully pass the CIS Benchmark:
 
@@ -86,35 +89,27 @@ Available with October 2023 releases (v1.25.15+rke2r1, v1.26.10+rke2r1, v1.27.7+
 profile: "cis"
 ```
 
-Using the generic `cis` profile will ensure that the cluster passes the CIS benchmark (rke2-cis-1.XX-profile-hardened) associated with the Kubernetes version that RKE2 is running. For example, RKE2 v1.28.XX with the `profile: cis` will pass the `rke2-cis-1.7-profile-hardened` in Rancher. 
+Using the generic `cis` profile will ensure that the cluster passes the CIS benchmark (rke2-cis-1.XX-profile-hardened) associated with the Kubernetes version that RKE2 is running. For example, RKE2 v1.26.XX with the `profile: cis` will pass the `rke2-cis-1.8-profile-hardened` in Rancher. 
 
 Use of the generic `cis` profile ensures that upgrades to RKE2 do not require a change to existing configuration. Whatever changes are necessary to pass applicable CIS benchmark will be automatically applied.
 
 A rough mapping of RKE2 versions to CIS benchmark versions is as follows:
 
-| CIS Benchmark | Applicable RKE2 Minors | Profile Flag |
+| RKE2 Minors | Applicable CIS Benchmark | Profile Flag |
 | - | - | - |
-| 1.5 | 1.15-1.18 | `cis-1.5` |
-| 1.6 | 1.19-1.22 | `cis-1.6` |
-| 1.23 | 1.23 | `cis-1.23` |
+| 1.27+ | 1.8 | `cis` |
+| 1.26 | 1.8 | `cis-1.23`, `cis` |
+| 1.25 | 1.7 | `cis-1.23`, `cis` |
 | 1.24 | 1.24 | `cis-1.23` |
-| 1.7 | 1.25-1.28 | `cis-1.23`, `cis` |
-| 1.8 | 1.29+ | `cis` |
-
-### CIS v1.23 configuration
-For older versions of 1.25 and 1.26, the `cis-1.23` profile is still available. This profile will ensure that the cluster passes the CIS v1.7 benchmark (rke2-cis-1.7-profile-hardened) available in Rancher.
-
-```yaml
-profile: "cis-1.23"
-```
+| 1.23 | 1.23 | `cis-1.23` |
+| 1.19-1.22 | 1.6 | `cis-1.6` |
+| 1.15-1.18 | 1.5 | `cis-1.5` |
 
 </TabItem>
 <TabItem value='v1.24 and Older'>
 
-Below is the minimum necessary configuration needed for hardening RKE2 to pass CIS v1.6 hardened profile `rke2-cis-1.6-profile-hardened` available in Rancher.
-
 ```yaml
-profile: "cis-1.6"           # CIS 4.2.6, 5.2.1, 5.2.8, 5.2.9, 5.3.2
+profile: "cis-1.6"
 ```
 
 </TabItem>
@@ -301,20 +296,6 @@ The `default` service account should be configured such that it does not provide
 
 This can be remediated by updating the `automountServiceAccountToken` field to `false` for the `default` service account in each namespace.
 
-**Remediation**  
-You can manually update this field on service accounts in your cluster to pass the control as described [above](#configure-default-service-account).
-
-### Control 5.3.2
-Ensure that all Namespaces have Network Policies defined
-
-**Rationale**  
-Running different applications on the same Kubernetes cluster creates a risk of one compromised application attacking a neighboring application. Network segmentation is important to ensure that containers can communicate only with those they are supposed to. A network policy is a specification of how selections of pods are allowed to communicate with each other and other network endpoints.
-
-Network Policies are namespace scoped. When a network policy is introduced to a given namespace, all traffic not allowed by the policy is denied. However, if there are no network policies in a namespace all traffic will be allowed into and out of the pods in that namespace.
-
-**Remediation**  
-This can be remediated by starting RKE2 with the `profile` flag set in the configuration file as described [above](#rke2-configuration).
-
 ## Conclusion
 
-If you have followed this guide, your RKE2 cluster will be configured to pass the CIS Kubernetes Benchmark. You can review our CIS Benchmark Self-Assessment Guide [v1.6](cis_self_assessment16.md) or [v1.23](cis_self_assessment123.md) to understand how we verified each of the benchmarks and how you can do the same on your cluster.
+If you have followed this guide, your RKE2 cluster will be configured to pass the CIS Kubernetes Benchmark. You can review our CIS Self-Assessment Guides to understand how we verified each of the benchmarks and how you can do the same on your cluster.
