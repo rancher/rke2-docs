@@ -32,6 +32,7 @@ module.exports = {
       items:[
         'security/about_hardened_images',
         'security/hardening_guide',
+        'security/cis_self_assessment18',
         'security/cis_self_assessment17',
         'security/cis_self_assessment124',
         'security/fips_support',
