@@ -16,9 +16,9 @@ Each control in the CIS Kubernetes Benchmark was evaluated against a RKE2 cluste
 
 These are the possible results for each control:
 
-- **PASS** - The RKE2 cluster under test passed the audit outlined in the benchmark.
-- **Not Applicable** - The control is not applicable to RKE2 because of how it is designed to operate. The rationale section will explain why this is so.
-- **WARN** - The control is manual in the CIS benchmark and depends on the manual operator intervention. The remediation section will provide guidance on how to achieve a PASS result.
+- **PASS** - The control is automated (scored: true). The RKE2 cluster under test passed the audit outlined in the benchmark.
+- **Not Applicable** - The control is not applicable (type: skip) to RKE2 because of how it is designed to operate. The rationale section will explain why this is so.
+- **WARN** - The control is manual (scored: false) in the CIS benchmark and depends on the manual operator intervention. The remediation section will provide guidance on how to achieve a PASS result.
 
 ## 1 Control Plane Security Configuration
 
