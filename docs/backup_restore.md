@@ -147,7 +147,7 @@ For the `etcd-snapshot` subcommand, the `--etcd-s3` flags are aliased to `--s3`.
 To perform an on-demand etcd snapshot and save it to S3:
 
 ```
-rke2 etcd-snapshot \
+rke2 etcd-snapshot save \
   --s3 \
   --s3-bucket=<S3-BUCKET-NAME> \
   --s3-access-key=<S3-ACCESS-KEY> \
