@@ -267,11 +267,17 @@ Depending on the underlying OS, some steps need to be fulfilled
 <Tabs groupId = "GPU Operating System">
 <TabItem value="SLES" default>
 
-The NVIDIA operator cannot automatically install kernel drivers on SLES. NVIDIA drivers must be manually installed on all GPU nodes before deploying the operator in the cluster. It can be done with the following steps:
+The NVIDIA operator cannot automatically install kernel drivers on SLES. NVIDIA drivers must be manually installed on all GPU nodes before deploying the operator in the cluster.
+
+The SLES repositories have the nvidia-open packages, which include the open gpu kernel drivers. If your GPU supports the open drivers, you can check that in this [list](https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus), you can install the drivers by executing:
+```
+sudo zypper install -y nvidia-open
+```
+
+If the GPU does not support gpu kernel drivers, you will need to download the proprietary drivers from an NVIDIA repo. In that case, follow these steps:
 
 ```
-# Assuming you are using sle15sp5, if different, change the url accordingly
-sudo zypper addrepo --refresh 'https://download.nvidia.com/suse/sle15sp5' NVIDIA
+sudo zypper addrepo --refresh 'https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/' NVIDIA
 sudo zypper --gpg-auto-import-keys refresh
 sudo zypper install -y –-auto-agree-with-licenses nvidia-gl-G06 nvidia-video-G06 nvidia-compute-utils-G06
 ```
@@ -294,7 +300,7 @@ sudo ln -s /sbin/ldconfig /sbin/ldconfig.real
 The NVIDIA operator can automatically install kernel drivers on Ubuntu using the `nvidia-driver-daemonset`, although not all versions are supported. You can also pre-install them manually and the operator will detect them: 
 
 ```
-sudo apt install nvidia-driver-535-server
+sudo apt install nvidia-driver-550-server
 ```
 Then reboot.
 
