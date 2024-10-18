@@ -170,7 +170,7 @@ rke2 server \
 
 ### Options
 
-These options can be set in the configuration file:
+These options can be set in the [configuration file](./install/configuration.md):
 
 | Options | Description |
 | ----------- | --------------- |

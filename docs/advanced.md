@@ -36,8 +36,23 @@ RKE2 will generate the `config.toml` for containerd in `/var/lib/rancher/rke2/ag
 
 For advanced customization of this file you can create another file called `config.toml.tmpl` in the same directory and it will be used instead.
 
-The `config.toml.tmpl` will be treated as a Go template file, and the `config.Node` structure is being passed to the template. See [this template](https://github.com/k3s-io/k3s/blob/master/pkg/agent/templates/templates.go#L16-L32) for an example of how to use the structure to customize the configuration file.
+The `config.toml.tmpl` will be treated as a Go template file, and the `config.Node` structure is being passed to the template. See [this template](https://github.com/k3s-io/k3s/blob/master/pkg/agent/templates/templates_linux.go#L10-L104) for an example of how to use the structure to customize the configuration file.
 
+### Base template
+
+You can extend the RKE2 base template instead of copy-pasting the complete stock template out of the source code. This is useful if you need to build on the existing configuration, and add a few extra lines at the end.
+
+```toml
+#/var/lib/rancher/rke2/agent/etc/containerd/config.toml.tmpl
+
+{{ template "base" . }}
+
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes."custom"]
+  runtime_type = "io.containerd.runc.v2"
+[plugins."io.containerd.grpc.v1.cri".containerd.runtimes."custom".options]
+  BinaryName = "/usr/bin/custom-container-runtime"
+
+```
 ## Configuring an HTTP proxy
 
 If you are running RKE2 in an environment, which only has external connectivity through an HTTP proxy, you can configure your proxy settings on the RKE2 systemd service. These proxy settings will then be used in RKE2 and passed down to the embedded containerd and kubelet.
