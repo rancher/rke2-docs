@@ -292,7 +292,7 @@ sudo zypper install -y nvidia-open
 If the GPU does not support gpu kernel drivers, you will need to download the proprietary drivers from an NVIDIA repo. In that case, follow these steps:
 
 ```
-sudo zypper addrepo --refresh 'https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/' NVIDIA
+sudo zypper addrepo --refresh https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/ cuda-sles15
 sudo zypper --gpg-auto-import-keys refresh
 sudo zypper install -y –-auto-agree-with-licenses nvidia-gl-G06 nvidia-video-G06 nvidia-compute-utils-G06
 ```
@@ -379,7 +379,7 @@ ls /usr/local/nvidia/toolkit/nvidia-container-runtime
 
 4 - Verify if containerd config was updated to include the nvidia container runtime:
 ```
-grep nvidia /etc/containerd/config.toml
+grep nvidia /var/lib/rancher/rke2/agent/etc/containerd/config.toml
 ```
 
 5 - Run a pod to verify that the GPU resource can successfully be scheduled on a pod and the pod can detect it
