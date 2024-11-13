@@ -296,6 +296,10 @@ sudo zypper addrepo --refresh https://developer.download.nvidia.com/compute/cuda
 sudo zypper --gpg-auto-import-keys refresh
 sudo zypper install -y –-auto-agree-with-licenses nvidia-gl-G06 nvidia-video-G06 nvidia-compute-utils-G06
 ```
+:::warning
+Version v565 of the proprietary drivers does not install correctly. Use v560 instead
+:::
+
 Then reboot.
 
 If everything worked correctly, after the reboot, you should see the NVRM and GCC version of the driver when executing the command:
