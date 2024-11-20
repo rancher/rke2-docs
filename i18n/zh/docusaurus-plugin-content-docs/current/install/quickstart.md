@@ -64,7 +64,7 @@ journalctl -u rke2-server -f
 * 可用于注册其他 Server 或 Agent 节点的令牌将在 `/var/lib/rancher/rke2/server/node-token` 中创建。
 
 :::note
-如果要添加其他 Server 节点，则总数必须为奇数。仲裁要求节点数为奇数。有关详细信息，请参阅[高可用文档](./ha.md)。
+如果要添加其他 Server 节点，则总数必须为奇数。仲裁要求节点数为奇数。有关详细信息，请参阅[高可用文档](ha.md)。
 :::
 
 ### Linux Agent（Worker）节点安装

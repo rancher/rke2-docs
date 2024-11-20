@@ -405,3 +405,26 @@ spec:
     - name: NVIDIA_DRIVER_CAPABILITIES
       value: all
 ```
+
+:::info Version Gate
+Available as of October 2024 releases: v1.28.15+rke2r1, v1.29.10+rke2r1, v1.30.6+rke2r1, v1.31.2+rke2r1.
+:::
+
+RKE2 will now use `PATH` to find alternative container runtimes, in addition to checking the default paths used by the container runtime packages. In order to use this feature, you must modify the RKE2 service's PATH environment variable to add the directories containing the container runtime binaries.
+
+It's recommended that you modify one of this two environment files:
+
+- /etc/default/rke2-server # or rke2-agent
+- /etc/sysconfig/rke2-server # or rke2-agent
+
+This example will add the `PATH` in `/etc/default/rke2-server`:
+
+```bash
+echo PATH=$PATH >> /etc/default/rke2-server
+```
+
+:::warning
+`PATH` changes should be done with care to avoid placing untrusted binaries in the path of services that run as root.
+:::
+
+

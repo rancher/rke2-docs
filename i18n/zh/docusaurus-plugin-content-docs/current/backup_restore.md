@@ -95,7 +95,7 @@ rke2 server \
 systemctl start rke2-server
 ```
 
-6. 你可以根据标准 [RKE2 HA 安装文档](install/ha.md#3-启动其他-server-节点)继续向集群添加新的 Server 和 Worker 节点。
+6. 你可以根据标准 [RKE2 HA 安装文档](../install/ha.md#3-启动其他-server-节点)继续向集群添加新的 Server 和 Worker 节点。
 
 
 ### 恢复快照的其他注意事项

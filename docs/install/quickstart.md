@@ -57,7 +57,7 @@ After running this installation:
 * A token that can be used to register other server or agent nodes will be created at `/var/lib/rancher/rke2/server/node-token`
 
 :::note
-If you are adding additional server nodes, you must have an odd number in total. An odd number is needed to maintain quorum. See the [High Availability documentation](./ha.md) for more details.
+If you are adding additional server nodes, you must have an odd number in total. An odd number is needed to maintain quorum. See the [High Availability documentation](ha.md) for more details.
 :::
 
 ### Linux Agent (Worker) Node Installation

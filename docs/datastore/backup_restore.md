@@ -1,10 +1,10 @@
 ---
-title: "Etcd Backup and Restore"
+title: Backup and Restore
 ---
 
-In this section, you'll learn how to create backups of the rke2 cluster data and to restore the cluster from backup.
-
-**Note:** /var/lib/rancher/rke2 is the default data directory for rke2, it is configurable however via `data-dir` parameter.
+:::warning Backup and restore for external databases or sqlite
+Snapshots are for embedded etcd only, if you use another datastore with `datastore-endpoint` config go to [Experimental](backup_restore.md#external-db-backups-experimental)
+:::
 
 ## Creating Snapshots
 
@@ -93,7 +93,7 @@ rke2 server \
 systemctl start rke2-server
 ```
 
-6. You can continue to add new server and worker nodes to cluster per standard [RKE2 HA installation documentation](install/ha.md#3-launch-additional-server-nodes).
+6. You can continue to add new server and worker nodes to cluster per standard [RKE2 HA installation documentation](../install/ha.md#3-launch-additional-server-nodes).
 
 
 ### Other Notes on Restoring a Snapshot
@@ -170,7 +170,7 @@ rke2 server \
 
 ### Options
 
-These options can be set in the [configuration file](./install/configuration.md):
+These options can be set in the [configuration file](../install/configuration.md):
 
 | Options | Description |
 | ----------- | --------------- |
@@ -199,3 +199,31 @@ You can manually prune "scheduled" snapshots down to a smaller amount using the 
 ```
 rke2 etcd-snapshot prune --name etcd-snapshot --etcd-snapshot-retention <NUM-OF-SNAPSHOTS-TO-RETAIN>
 ```
+
+## External DB Backups (Experimental)
+
+:::warning
+In addition to backing up the datastore itself, you must also back up the server token file at `/var/lib/rancher/rke2/server/token`.
+You must restore this file, or pass its value into the `token` option, when restoring from backup.
+If you do not use the same token value when restoring, the snapshot will be unusable, as the token is used to encrypt confidential data within the datastore itself.
+:::
+
+### Backup and Restore with SQLite
+
+No special commands are required to back up or restore the SQLite datastore.
+
+* To back up the SQLite datastore, take a copy of `/var/lib/rancher/rke2/server/db/`.
+* To restore the SQLite datastore, restore the contents of `/var/lib/rancher/rke2/server/db` (and the token, as discussed above).
+
+### Backup and Restore with External Datastore
+
+When an external datastore is used, backup and restore operations are handled outside of RKE2. The database administrator will need to back up the external database, or restore it from a snapshot or dump.
+
+We recommend configuring the database to take recurring snapshots.
+
+For details on taking database snapshots and restoring your database from them, refer to the official database documentation:
+
+- [Official MySQL documentation](https://dev.mysql.com/doc/refman/8.0/en/replication-snapshot-method.html)
+- [Official PostgreSQL documentation](https://www.postgresql.org/docs/8.3/backup-dump.html)
+- [Official etcd documentation](https://etcd.io/docs/latest/op-guide/recovery/)
+
