@@ -63,7 +63,7 @@ As mentioned, the format of the value passed to the `datastore-endpoint` paramet
 
   `mysql://username:password@tcp(hostname:3306)/database-name`
 
-  More advanced configuration parameters are available. For more information on these, please see https://github.com/go-sql-driver/mysql#dsn-data-source-name
+  More advanced configuration parameters are available. For more information, please see https://github.com/go-sql-driver/mysql#dsn-data-source-name
 
   If you specify a database name and it does not exist, the server will attempt to create it.
 
