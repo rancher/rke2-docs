@@ -12,7 +12,7 @@ By default, certificates in RKE2 expire in 12 months.
 
 If the certificates are expired or have fewer than 90 days remaining before they expire, the certificates are rotated when RKE2 is restarted.
 
-As of v1.21.8+rke2r1, certificates can also be rotated manually. To do this, it is best to stop the rke2-server process, rotate the certificates, then start the process up again: 
+Certificates can also be rotated manually. To do this, it is best to stop the rke2-server process, rotate the certificates, then start the process up again: 
 ```sh
 systemctl stop rke2-server
 rke2 certificate rotate
@@ -89,8 +89,6 @@ If you want to change node labels and taints after node registration you should 
 Agent nodes are registered via a websocket connection initiated by the `rke2 agent` process, and the connection is maintained by a client-side load balancer running as part of the agent process.
 
 Agents register with the server using the cluster secret portion of the join token, along with a randomly generated node-specific password, which is stored on the agent at `/etc/rancher/node/password`. The server will store the passwords for individual nodes as Kubernetes secrets, and any subsequent attempts must use the same password. Node password secrets are stored in the `kube-system` namespace with names using the template `<host>.node-password.rke2`. These secrets are deleted when the corresponding Kubernetes node is deleted.
-
-Note: Prior to RKE2 v1.20.2 servers stored passwords on disk at `/var/lib/rancher/rke2/server/cred/node-passwd`.
 
 If the `/etc/rancher/node` directory of an agent is removed, the password file should be recreated for the agent prior to startup, or the entry removed from the server or Kubernetes cluster (depending on the RKE2 version).
 

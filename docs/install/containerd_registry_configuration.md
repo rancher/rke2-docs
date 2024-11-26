@@ -8,8 +8,6 @@ Upon startup, RKE2 will check to see if a `registries.yaml` file exists at `/etc
 
 Note that server nodes are schedulable by default. If you have not tainted the server nodes and will be running workloads on them, please ensure you also create the `registries.yaml` file on each server as well.
 
-**Note:** Prior to RKE2 v1.20, containerd registry configuration is not honored for the initial RKE2 node bootstrapping, only for Kubernetes workloads that are launched after the node is joined to the cluster. Consult the [airgap installation documentation](./airgap.md) if you plan on using this containerd registry feature to bootstrap nodes.
-
 Configuration in containerd can be used to connect to a private registry with a TLS connection and with registries that enable authentication as well. The following section will explain the `registries.yaml` file and give different examples of using private registry configuration in RKE2.
 
 ## Registries Configuration File
