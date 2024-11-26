@@ -2,7 +2,7 @@
 title: External DB
 ---
 
-# Datastore options
+## Datastore options
 
 :::warning Experimental
 RKE2 officially supports Embedded etcd, other external datastores are experimental.
@@ -43,7 +43,7 @@ As mentioned, the format of the value passed to the `datastore-endpoint` paramet
 <TabItem value="PostgreSQL">
 
 
-  A typical `datastore-endpoint` datastore-endpoint option for PostgreSQL has the following format:
+  A typical `datastore-endpoint` option for PostgreSQL has the following format:
 
   `postgres://username:password@hostname:port/database-name`
 
@@ -115,7 +115,7 @@ You can follow the server starting by `kubectl get nodes` to see the server get 
 
 ### 1. Create an External Datastore
 
-You will first need to create an external datastore for the cluster. See the [Datastore options](external.md#datastore-options) documentation for more details.
+You will first need to create an external datastore for the cluster. See the [Datastore options](#datastore-options) section for more details.
 
 ### 2. Launch Server Nodes
 
@@ -134,9 +134,9 @@ datastore-endpoint: "mysql://username:password@tcp(hostname:3306)/database-name"
 token: SECRET
 ```
 
-The datastore endpoint format differs based on the database type. For details, refer to the section on [datastore endpoint formats.](external.md#datastore-endpoint-format-and-functionality)
+The datastore endpoint format differs based on the database type. For details, refer to the section on [datastore endpoint formats.](#datastore-endpoint-format-and-functionality)
 
-To configure TLS certificates when launching server nodes, refer to the [datastore configuration guide.](external.md#external-datastore-configuration-parameters)
+To configure TLS certificates when launching server nodes, refer to the [datastore configuration section.](#external-datastore-configuration-parameters)
 
 By default, server nodes will be schedulable and thus your workloads can get launched on them. If you wish to have a dedicated control plane where no user workloads will run, you can use [taints](../advanced.md#node-labels-and-taints).
 
