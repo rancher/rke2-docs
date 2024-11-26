@@ -42,9 +42,6 @@ It is also possible to use both a configuration file and CLI arguments.  In thes
 Finally, the location of the config file can be changed either through the cli argument `--config FILE, -c FILE`, or the environment variable `$RKE2_CONFIG_FILE`.
 
 ### Multiple Config Files
-:::info Version Gate
-Available as of [v1.21.2+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.2%2Brke2r1)
-:::
 
 Multiple configuration files are supported. By default, configuration files are read from `/etc/rancher/rke2/config.yaml` and `/etc/rancher/rke2/config.yaml.d/*.yaml` in alphabetical order. 
 

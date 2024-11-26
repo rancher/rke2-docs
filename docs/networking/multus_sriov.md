@@ -107,8 +107,6 @@ NOTE: You should write this file before starting rke2.
 
 ## Using Multus with SR-IOV
 
-**SR-IOV experimental support was added in v1.21.2+rke2r1, and is fully supported starting with the April 2023 releases: v1.26.4+rke2r1, v1.25.9+rke2r1, and v1.24.13+rke2r1**
-
 Using the SR-IOV CNI with Multus can help with data-plane acceleration use cases, providing an extra interface in the pod that can achieve very high throughput. SR-IOV will not work in all environments, and there are several requirements
 that must be fulfilled to consider the node as SR-IOV capable:
 

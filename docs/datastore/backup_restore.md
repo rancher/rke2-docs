@@ -69,31 +69,27 @@ When rke2 resets the cluster, it creates an empty file at `/var/lib/rancher/rke2
 
 ### Restoring a Snapshot to New Nodes
 
-**Warning:** For all versions of rke2 v.1.20.9 and prior, you will need to back up and restore certificates first due to a known issue in which bootstrap data might not save on restore (Steps 1 - 3 below assume this scenario). See [note](#other-notes-on-restoring-a-snapshot) below for an additional version-specific restore caveat on restore.
+1. Back up the token server: `/var/lib/rancher/rke2/server/token` in case you will not use the same one. Token server is used to decrypt the bootstrap data inside the snapshot
 
-1. Back up the following: `/var/lib/rancher/rke2/server/cred`, `/var/lib/rancher/rke2/server/tls`, `/var/lib/rancher/rke2/server/token`, `/etc/rancher`
-
-2. Restore the certs in Step 1 above to the first new server node.
-
-3. Install rke2 v1.20.8+rke2r1 on the first new server node as in the following example:
-```
-curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION="v1.20.8+rke2r1" sh -
-```
-
-4. Stop RKE2 service on all server nodes if it is enabled and initiate the restore from snapshot on the first server node with the following commands:
+2. Stop RKE2 service on all server nodes if it is enabled and initiate the restore from snapshot on the first server node with the following commands:
 ```
 systemctl stop rke2-server
 rke2 server \
   --cluster-reset \
   --cluster-reset-restore-path=<PATH-TO-SNAPSHOT>
+  --token=<BACKED-UP-TOKEN-VALUE>
 ```
 
-5. Once the restore process is complete, start the rke2-server service on the first server node as follows:
+3. Once the restore process is complete, start the rke2-server service on the first server node as follows:
 ```
 systemctl start rke2-server
 ```
+:::warning
+The node where the snapshot was taken will appear as NotReady
+:::
 
-6. You can continue to add new server and worker nodes to cluster per standard [RKE2 HA installation documentation](../install/ha.md#3-launch-additional-server-nodes).
+
+4. You can continue to add new server and worker nodes to cluster per standard [RKE2 HA installation documentation](../install/ha.md#3-launch-additional-server-nodes).
 
 
 ### Other Notes on Restoring a Snapshot
@@ -101,24 +97,6 @@ systemctl start rke2-server
 * When performing a restore from backup, users do not need to restore a snapshot using the same version of RKE2 with which the snapshot was created. Users may restore using a more recent version. Be aware when changing versions at restore which etcd version is in use.
 
 * By default, snapshots are enabled and are scheduled to be taken every 12 hours. The snapshots are written to `${data-dir}/server/db/snapshots` with the default `${data-dir}` being `/var/lib/rancher/rke2`.
-
-#### Version-specific requirement for rke2 v1.20.11+rke2r1
-
-* When restoring RKE2 from backup to a new node in rke2 v1.20.11+rke2r1, you should ensure that all pods are stopped following the initial restore by running `rke2-killall.sh` as follows:
-
-  ```bash
-  curl -sfL https://get.rke2.io | sudo INSTALL_RKE2_VERSION=v1.20.11+rke2r1
-  rke2 server \
-  --cluster-reset \
-  --cluster-reset-restore-path=<PATH-TO-SNAPSHOT> \
-  --token=<token used in the original cluster>
-  rke2-killall.sh
-  ```
-* Once the restore process is complete, enable and start the rke2-server service on the first server node as follows:    
-  ```
-  systemctl enable rke2-server
-  systemctl start rke2-server
-  ```
 
 ## S3 Compatible API Support
 

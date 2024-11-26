@@ -45,11 +45,11 @@ To ensure that all aspects of the system architecture are using FIPS 140-2 compl
 
 ## CNI
 
-As of v1.21.2, RKE2 supports selecting a different CNI via the `--cni` flag and comes bundled with several CNIs including Canal (default), Calico, Cilium, and Multus. Of these, only Canal (the default) is rebuilt for FIPS compliance.
+RKE2 supports selecting a different CNI via the `--cni` flag and comes bundled with several CNIs including Canal (default), Calico, Cilium, and Multus. Of these, only Canal (the default) is rebuilt for FIPS compliance.
 
 ## Ingress
 
-RKE2 ships with NGINX as its default ingress provider. As of v1.21+, this component is FIPS compliant. There are two primary sub-components for NGINX ingress:
+RKE2 ships with FIPS compliant NGINX as its default ingress provider. There are two primary sub-components for NGINX ingress:
 
 - controller - responsible for monitoring/updating Kubernetes resources and configuring the server accordingly
 - server - responsible for accepting and routing traffic
