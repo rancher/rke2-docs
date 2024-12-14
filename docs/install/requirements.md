@@ -130,7 +130,7 @@ If you wish to utilize the metrics server, you will need to open port 10250 on e
 | 8/0         | ICMP     | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
 | 4240        | TCP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
 | 8472        | UDP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI with VXLAN
-| 51871       | UDP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI with WireGuard Transparent Encryption
+| 51871       | UDP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI with WireGuard
 
 </TabItem>
 <TabItem value="Calico">
