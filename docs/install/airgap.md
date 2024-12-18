@@ -2,7 +2,7 @@
 title: Air-Gap Install
 ---
 
-RKE2 can be installed in an air-gapped environment with two different methods. You can either deploy via the `rke2-airgap-images` tarball release artifact, or by using a private registry.
+RKE2 can be installed in an air-gapped environment with two different methods. You can either deploy via the [rke2-airgap-images tarball release artifact](#tarball-method), by using a [private registry](#private-registry-method). It is also possible to install using the [embedded registry mirror](#embedded-registry-mirror) as long as there is another cluster member that includes the required images.
 
 ## Prerequisites
 
@@ -49,10 +49,23 @@ If your nodes do not have an interface with a default route, a default route mus
 4. [Install RKE2](#install-rke2)
 
 ## Private Registry Method
-Private registry support honors all settings from the [containerd registry configuration](containerd_registry_configuration.md). This includes endpoint override and transport protocol (HTTP/HTTPS), authentication, certificate verification, etc.
+Private registry support honors all settings from the [containerd registry configuration](private_registry.md). This includes endpoint override and transport protocol (HTTP/HTTPS), authentication, certificate verification, etc.
 
 1. Add all the required system images to your private registry. A list of images can be obtained from the `.txt` file corresponding to each tarball referenced above, or you may `docker load` the airgap image tarballs, then tag and push the loaded images.
-2. [Install RKE2](#install-rke2) using the `system-default-registry` parameter, or use the [containerd registry configuration](containerd_registry_configuration.md) to use your registry as a mirror for docker.io.
+2. [Install RKE2](#install-rke2) using the `system-default-registry` parameter, or use the [containerd registry configuration](private_registry.md) to use your registry as a mirror for docker.io.
+
+## Embedded Registry Mirror
+
+:::info Version Gate
+The Embedded Registry Mirror is available as an experimental feature as of January 2024 releases: v1.26.13+rke2r1, v1.27.10+rke2r1, v1.28.6+rke2r1, v1.29.1+rke2r1 and GA as of December 2024 releases: v1.29.12+rke2r1,v1.30.8+rke2r1, v1.31.4+rke2r1
+:::
+
+RKE2 includes an embedded distributed OCI-compliant registry mirror.
+When enabled and properly configured, images available in the containerd image store on any node
+can be pulled by other cluster members without access to an external image registry.
+
+The mirrored images may be sourced from an upstream registry, registry mirror, or airgap image tarball.
+For more information on enabling the embedded distributed registry mirror, see the [Embedded Registry Mirror](./registry_mirror.md) documentation.
 
 ## Install RKE2
 The following options to install RKE2 should only be performed after completing one of either the [Tarball Method](#tarball-method) or [Private Registry Method](#private-registry-method).

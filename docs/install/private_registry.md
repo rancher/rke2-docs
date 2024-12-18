@@ -1,5 +1,5 @@
 ---
-title: "Containerd Registry Configuration"
+title: "Private Registry Configuration"
 ---
 
 Containerd can be configured to connect to private registries and use them to pull private images on each node.
@@ -9,6 +9,33 @@ Upon startup, RKE2 will check to see if a `registries.yaml` file exists at `/etc
 Note that server nodes are schedulable by default. If you have not tainted the server nodes and will be running workloads on them, please ensure you also create the `registries.yaml` file on each server as well.
 
 Configuration in containerd can be used to connect to a private registry with a TLS connection and with registries that enable authentication as well. The following section will explain the `registries.yaml` file and give different examples of using private registry configuration in RKE2.
+
+## Default Endpoint Fallback
+
+Containerd has an implicit "default endpoint" for all registries.
+The default endpoint is always tried as a last resort, even if there are other endpoints listed for that registry in `registries.yaml`.
+Rewrites are not applied to pulls against the default endpoint.
+For example, when pulling `registry.example.com:5000/rancher/mirrored-pause:3.6`, containerd will use a default endpoint of `https://registry.example.com:5000/v2`.
+* The default endpoint for `docker.io` is `https://index.docker.io/v2`.  
+* The default endpoint for all other registries is `https://<REGISTRY>/v2`, where `<REGISTRY>` is the registry hostname and optional port.  
+
+In order to be recognized as a registry, the first component of the image name must contain at least one period or colon.
+For historical reasons, images without a registry specified in their name are implicitly identified as being from `docker.io`.
+
+:::info Version Gate
+The `disable-default-registry-endpoint` option is available as an experimental feature as of February 2024 releases: v1.26.13+rke2r1, v1.27.10+rke2r1, v1.28.6+rke2r1, v1.29.1+rke2r1
+:::
+
+Nodes may be configured with the `disable-default-registry-endpoint: true` option.
+When this is set, containerd will not fall back to the default registry endpoint, and will only pull from configured mirror endpoints,
+along with the distributed registry if it is enabled.
+
+This may be desired if your cluster is in a true air-gapped environment where the upstream registry is not available,
+or if you wish to have only some nodes pull from the upstream registry.
+
+Disabling the default registry endpoint applies only to registries configured via `registries.yaml`.
+If the registry is not explicitly configured via mirror entry in `registries.yaml`, the default fallback behavior will still be used.
+
 
 ## Registries Configuration File
 
@@ -39,7 +66,7 @@ Each mirror must have a name and set of endpoints. When pulling an image from a 
 
 #### Rewrites
 
-Each mirror can have a set of rewrites. Rewrites can change the tag of an image based on a regular expression. This is useful if the organization/project structure in the mirror registry is different to the upstream one.
+Each mirror can have a set of rewrites, which use regular expressions to match and transform the name of an image when it is pulled from that mirror. This is useful if the organization/project structure in the mirror registry is different to the upstream one.
 
 For example, the following configuration would transparently pull the image `rancher/rke2-runtime:v1.23.5-rke2r1` from `registry.example.com:5000/mirrorproject/rancher-images/rke2-runtime:v1.23.5-rke2r1`:
 
@@ -51,6 +78,15 @@ mirrors:
     rewrite:
       "^rancher/(.*)": "mirrorproject/rancher-images/$1"
 ```
+
+
+Note that when using mirrors and rewrites, images will still be stored under the original name.
+For example, `crictl image ls` will show `docker.io/rancher/rke2-runtime:v1.23.5-rke2r1` as available on the node, even if the image was pulled from a mirror with a different name.
+
+:::info Version Gate
+Rewrites are no longer applied to the Default Endpoint as of the February 2024 releases: v1.26.13+rke2r1, v1.27.10+rke2r1, v1.28.6+rke2r1, v1.29.1+rke2r1
+Prior to these releases, rewrites were also applied to the default endpoint, which would prevent RKE2 from pulling from the upstream registry if the image could not be pulled from a mirror endpoint, and the image was not available under the modified name in the upstream.
+:::
 
 ### Configs
 
