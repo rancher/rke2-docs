@@ -21,9 +21,9 @@ module.exports = {
       type: 'category',
       label: 'Upgrades',
       items:[
-        'upgrade/upgrade',
-        'upgrade/manual_upgrade',
-        'upgrade/automated_upgrade',
+        'upgrades/upgrade',
+        'upgrades/manual_upgrade',
+        'upgrades/automated_upgrade',
       ],
     },
     {
