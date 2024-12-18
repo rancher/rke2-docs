@@ -65,8 +65,8 @@ Or to manually upgrade rke2:
 
 1. Download the desired version of the rke2 binary from [releases](https://github.com/rancher/rke2/releases)
 2. Copy the downloaded binary to `/usr/local/bin/rke2` for tarball installed rke2, and `/usr/bin` for rpm installed rke2
-3. Stop the old rke2 binary
-4. Launch the new rke2 binary
+3. Stop the old rke2 process
+4. Launch the new rke2 process
 
 ### Upgrade rke2 Using the RPM upgrades
 
