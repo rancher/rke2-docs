@@ -1,19 +1,17 @@
 ---
-title: External DB
+title: External datastore
 ---
+
+Using an external datastore means leveraging a database that resides outside the Kubernetes cluster. Instead of being contained within the cluster, Kubernetes access the external datastore over the network. This approach could be common for organizations with existing database infrastructure or those who have more experience operating an enterprise-grade SQL database like MySQL or PostgreSQL. The project [kine](https://github.com/k3s-io/kine) is used for SQL databases. The alternative to external datastore is [embedded datastore](embedded.md).
 
 ## Datastore options
 
 :::warning Experimental
-RKE2 officially supports Embedded etcd, other external datastores are experimental.
+RKE2 external datastores support is experimental.
 :::
 
-* **Embedded [Etcd](https://etcd.io/)**  
-  Embedded Etcd is the default datastore, and will be used if no other datastore configuration is present.
-* **Embedded [SQLite](https://www.sqlite.org/index.html)**  
-  SQLite cannot be used on clusters with multiple servers.
+
 * **External Database**  
-  The following external datastores:
   * [etcd](https://etcd.io/) (certified against version 3.5.4)
   * [MySQL](https://www.mysql.com) (certified against versions 5.7 and 8.0)
   * [MariaDB](https://mariadb.org/) (certified against version 10.6.8)
@@ -23,8 +21,6 @@ RKE2 officially supports Embedded etcd, other external datastores are experiment
 RKE2 requires prepared statements support from the DB. This means that connection poolers such as [PgBouncer](https://www.pgbouncer.org/faq.html#how-to-use-prepared-statements-with-transaction-pooling) may require additional configuration to work with RKE2.
 :::
 
-### SQLite Configuration Parameters
-If you wish to use SQLite as the database for your RKE2 server, you must set `disable-etcd` option without a `server` option for RKE2 to knows that it needs to disable etcd and run with SQLite.
 
 ### External Datastore Configuration Parameters
 If you wish to use an external datastore such as PostgreSQL, MySQL, or etcd you must set the `datastore-endpoint` config so that RKE2 knows how to connect to it. You may also specify parameters to configure the authentication and encryption of the connection. The below table summarizes these options:
@@ -85,31 +81,6 @@ As mentioned, the format of the value passed to the `datastore-endpoint` paramet
 </TabItem>
 </Tabs>
 
-## Single Server with SQLite
-
-### 1. Set `disable-etcd` without the `server` parameter in the config file
-
-```yaml
-disable-etcd: true
-```
-
-### 2. Install RKE2 
-```bash
-curl -sfL https://get.rke2.io | sh -
-```
-
-### 3. Enable rke2-server service
-```sh
-systemctl enable rke2-server.service
-```
-
-### 4. start the rke2-server service
-
-```sh
-systemctl start rke2-server.service
-```
-
-You can follow the server starting by `kubectl get nodes` to see the server get the `Ready` status. See [Cluster access](../cluster_access.md) for more info about how to access RKE2.
 
 ## External database
 
