@@ -1,0 +1,5 @@
+[codespell]
+skip = ./docs/release-notes
+check-filenames = true
+ignore-words-list = aks,ec2,eks,gce,gcp,ro,shouldnot,pullrequest,readd,reenable,te,NotIn
+

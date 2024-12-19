@@ -77,7 +77,7 @@ This will require a reboot for the `Containers` feature to properly function.
 
     ``` powershell
     $ProgressPreference = 'SilentlyContinue'
-    Invoke-WebRequest hhttps://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-20H2-amd64-images.tar.zst -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-20H2-amd64-images.tar.zst
+    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-20H2-amd64-images.tar.zst -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-20H2-amd64-images.tar.zst
     ```
 
     - Use `rke2-windows-<BUILD_VERSION>-amd64.tar.gz` or `rke2-windows-<BUILD_VERSION>-amd64.tar.zst`. Zstandard offers better compression ratios and faster decompression speeds compared to pigz.

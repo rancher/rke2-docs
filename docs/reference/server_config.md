@@ -19,7 +19,7 @@ The following options must be set to the same value on all servers in the cluste
 
 
 ### Common
-| Flag | Description | Default | Enviroment Variable |
+| Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | config | Path to config file | /etc/rancher/rke2/config.yaml | RKE2_CONFIG_FILE |
 | debug | Turn on debug logs  |  | RKE2_DEBUG |
@@ -32,7 +32,7 @@ The following options must be set to the same value on all servers in the cluste
 | tls-san | Add additional hostnames or IPv4/IPv6 addresses as Subject Alternative Names on the server TLS cert |  |
 | tls-san-security | Protect the server TLS cert by refusing to add Subject Alternative Names not associated with the kubernetes apiserver service, server nodes, or values of the tls-san option  | true |
 ### Networking
-| Flag | Description | Default | Enviroment Variable |
+| Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | cluster-cidr | IPv4/IPv6 network CIDRs to use for pod IPs  | 10.42.0.0/16 |  |
 | service-cidr | IPv4/IPv6 network CIDRs to use for service IPs  | 10.43.0.0/16 |  |
@@ -43,7 +43,7 @@ The following options must be set to the same value on all servers in the cluste
 | servicelb-namespace | Namespace of the pods for the servicelb component  | "kube-system" |  |
 | cni | CNI Plugins to deploy, one of none, calico, canal, cilium; optionally with multus as the first value to enable the multus meta-plugin  | canal | RKE2_CNI |
 ### Client
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | write-kubeconfig | Write kubeconfig for admin client to this file  | RKE2_KUBECONFIG_OUTPUT |
 | write-kubeconfig-mode | Write kubeconfig with this mode  | RKE2_KUBECONFIG_MODE |
@@ -52,7 +52,7 @@ The following options must be set to the same value on all servers in the cluste
 | --- | --- |
 | helm-job-image | Default image to use for helm jobs |
 ### Cluster
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | token | Shared secret used to join a server or agent to a cluster  | RKE2_TOKEN |
 | token-file | File containing the token  | RKE2_TOKEN_FILE |
@@ -61,7 +61,7 @@ The following options must be set to the same value on all servers in the cluste
 | server | Server to connect to, used to join a cluster  | RKE2_URL |
 | cluster-reset | Forget all peers and become sole member of a new cluster  | RKE2_CLUSTER_RESET |
 ### Database
-| Flag | Description | Default | Enviroment Variable |
+| Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | cluster-reset-restore-path | Path to snapshot file to be restored |  |  |
 | etcd-expose-metrics | Expose etcd metrics to client interface.  | false |  |
@@ -91,7 +91,7 @@ The following options must be set to the same value on all servers in the cluste
 | kube-scheduler-arg | Customized flag for kube-scheduler process |
 | kube-cloud-controller-manager-arg | Customized flag for kube-cloud-controller-manager process |
 ### Components
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | disable | Do not deploy packaged components and delete any deployed components (valid items: rke2-coredns, rke2-ingress-nginx, rke2-metrics-server) |  |
 | disable-scheduler | Disable Kubernetes default scheduler |  |
@@ -114,7 +114,7 @@ The following options must be set to the same value on all servers in the cluste
 | etcd-extra-env | etcd extra environment variables  | RKE2_ETCD_EXTRA_ENV |
 | cloud-controller-manager-extra-env | cloud-controller-manager extra environment variables  | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV |
 ### Image
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | kube-apiserver-image | Override image to use for kube-apiserver  | RKE2_KUBE_APISERVER_IMAGE |
 | kube-controller-manager-image | Override image to use for kube-controller-manager  | RKE2_KUBE_CONTROLLER_MANAGER_IMAGE |
@@ -125,24 +125,24 @@ The following options must be set to the same value on all servers in the cluste
 | runtime-image | Override image to use for runtime binaries (containerd, kubectl, crictl, etc)  | RKE2_RUNTIME_IMAGE |
 | etcd-image | Override image to use for etcd  | RKE2_ETCD_IMAGE |
 ### Cloud Provider
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | cloud-provider-name | Cloud provider name  | RKE2_CLOUD_PROVIDER_NAME |
 | cloud-provider-config | Cloud provider configuration file path  | RKE2_CLOUD_PROVIDER_CONFIG |
 ### Security
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | profile | Validate system configuration against the selected benchmark (valid items: cis, cis-1.23 (deprecated))  | RKE2_CIS_PROFILE |
 | audit-policy-file | Path to the file that defines the audit policy configuration  | RKE2_AUDIT_POLICY_FILE |
 | pod-security-admission-config-file | Path to the file that defines Pod Security Admission configuration  | RKE2_POD_SECURITY_ADMISSION_CONFIG_FILE |
 ### Experimental
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | embedded-registry | Enable embedded distributed container registry; requires use of embedded containerd |  |
 | enable-pprof | Enable pprof endpoint on supervisor port |  |
 | kubelet-path | Override kubelet binary path  | RKE2_KUBELET_PATH |
 ### Agent/Node
-| Flag | Description | Default | Enviroment Variable |
+| Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | node-name | Node name  |  | RKE2_NODE_NAME |
 | with-node-id | Append id to node name |  |  |
@@ -154,7 +154,7 @@ The following options must be set to the same value on all servers in the cluste
 | selinux | Enable SELinux in containerd  |  | RKE2_SELINUX |
 | lb-server-port | Local port for supervisor client load-balancer. If the supervisor and apiserver are not colocated an additional port 1 less than this port will also be used for the apiserver client load-balancer.  | 6444 | RKE2_LB_SERVER_PORT |
 ### Agent/Runtime
-| Flag | Description | Default | Enviroment Variable |
+| Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | container-runtime-endpoint | Disable embedded containerd and use the CRI socket at the given path; when used with --docker this sets the docker socket path |  |  |
 | default-runtime | Set the default runtime in containerd |  |  |
@@ -166,7 +166,7 @@ The following options must be set to the same value on all servers in the cluste
 | --- | --- |
 | disable-default-registry-endpoint | Disables containerd's fallback default registry endpoint when a mirror is configured for that registry |
 ### Agent/Networking
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | node-ip | IPv4/IPv6 addresses to advertise for node |  |
 | node-external-ip | IPv4/IPv6 external IP addresses to advertise for node |  |

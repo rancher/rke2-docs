@@ -4,7 +4,7 @@ title: FIPS 140-2 Enablement
 
 FIPS 140-2 is a U.S. Federal Government security standard used to approve cryptographic modules. This document explains how RKE2 is built with FIPS validated cryptographic libraries.
 
-Verification of compliance is avaliable in: [FIPS 140-2 Verifed pdf](/RKE2_FIPS_Verified.pdf).
+Verification of compliance is available in: [FIPS 140-2 Verified pdf](/RKE2_FIPS_Verified.pdf).
 
 ## Use of FIPS Compatible Go compiler.
 

@@ -5,19 +5,19 @@ title: Agent Configuration Reference
 This is a reference to all parameters that can be used to configure the rke2 agent. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](../install/configuration.md#configuration-file).
 
 ### Common
-| Flag | Description | Default | Enviroment Variable |
+| Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | config | Path to config file | /etc/rancher/rke2/config.yaml | RKE2_CONFIG_FILE |
 | debug | Turn on debug logs  |  | RKE2_DEBUG |
 | data-dir | Folder to hold state  | "/var/lib/rancher/rke2" |  |
 ### Cluster
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | token | Token to use for authentication  | RKE2_TOKEN |
 | token-file | Token file to use for authentication  | RKE2_TOKEN_FILE |
 | server | Server to connect to  | RKE2_URL |
 ### Node
-| Flag | Description | Default | Enviroment Variable |
+| Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | node-name | Node name  |  | RKE2_NODE_NAME |
 | with-node-id | Append id to node name |  |  |
@@ -40,13 +40,13 @@ This is a reference to all parameters that can be used to configure the rke2 age
 | --- | --- |
 | disable-default-registry-endpoint | Disables containerd's fallback default registry endpoint when a mirror is configured for that registry |
 ### Networking
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | node-ip | IPv4/IPv6 addresses to advertise for node |  |
 | node-external-ip | IPv4/IPv6 external IP addresses to advertise for node |  |
 | resolv-conf | Kubelet resolv.conf file  | RKE2_RESOLV_CONF |
 ### Components
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | kubelet-arg | Customized flag for kubelet process |  |
 | kube-proxy-arg | Customized flag for kube-proxy process |  |
@@ -66,7 +66,7 @@ This is a reference to all parameters that can be used to configure the rke2 age
 | etcd-extra-env | etcd extra environment variables  | RKE2_ETCD_EXTRA_ENV |
 | cloud-controller-manager-extra-env | cloud-controller-manager extra environment variables  | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV |
 ### Image
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | kube-apiserver-image | Override image to use for kube-apiserver  | RKE2_KUBE_APISERVER_IMAGE |
 | kube-controller-manager-image | Override image to use for kube-controller-manager  | RKE2_KUBE_CONTROLLER_MANAGER_IMAGE |
@@ -77,17 +77,17 @@ This is a reference to all parameters that can be used to configure the rke2 age
 | runtime-image | Override image to use for runtime binaries (containerd, kubectl, crictl, etc)  | RKE2_RUNTIME_IMAGE |
 | etcd-image | Override image to use for etcd  | RKE2_ETCD_IMAGE |
 ### Cloud Provider
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | cloud-provider-name | Cloud provider name  | RKE2_CLOUD_PROVIDER_NAME |
 | cloud-provider-config | Cloud provider configuration file path  | RKE2_CLOUD_PROVIDER_CONFIG |
 ### Security
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | profile | Validate system configuration against the selected benchmark (valid items: cis, cis-1.23 (deprecated))  | RKE2_CIS_PROFILE |
 | audit-policy-file | Path to the file that defines the audit policy configuration  | RKE2_AUDIT_POLICY_FILE |
 | pod-security-admission-config-file | Path to the file that defines Pod Security Admission configuration  | RKE2_POD_SECURITY_ADMISSION_CONFIG_FILE |
 ### Experimental
-| Flag | Description | Enviroment Variable |
+| Flag | Description | Environment Variable |
 | --- | --- | --- |
 | kubelet-path | Override kubelet binary path  | RKE2_KUBELET_PATH |

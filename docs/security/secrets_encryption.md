@@ -60,7 +60,7 @@ Failure to follow proper procedure when rotating secrets encryption keys can cau
 
 <!-- ### New Encryption Key Rotation
 
-:::warning Expiremental Version Gate
+:::warning Experimental Version Gate
 Available as of [v1.28.1+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.28.1%2Brke2r1). This new version of the tool utilizes K8s [automatic config reloading](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#configure-automatic-reloading) which is currently in beta. GA is expected in v1.29.0
 
 For older releases, see [Encryption Key Rotation Classic](#encryption-key-rotation-classic)

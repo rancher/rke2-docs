@@ -78,7 +78,7 @@ Enable-WindowsOptionalFeature -Online -FeatureName containers –All
 
    ```powershell
    $ProgressPreference = 'SilentlyContinue'
-   Invoke-WebRequest hhttps://github.com/rancher/rke2/releases/download/v1.21.4%2Brke2r2/rke2-windows-20H2-amd64-images.tar.zst -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-20H2-amd64-images.tar.zst
+   Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.21.4%2Brke2r2/rke2-windows-20H2-amd64-images.tar.zst -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-20H2-amd64-images.tar.zst
    ```
 
    - 使用 `rke2-windows-<BUILD_VERSION>-amd64.tar.gz` 或 `rke2-windows-<BUILD_VERSION>-amd64.tar.zst`。与 pigz 相比，Zstandard 支持更好的压缩比和更快的解压缩速度。
