@@ -95,13 +95,13 @@ Enable-WindowsOptionalFeature -Online -FeatureName containers –All
 4. [安装 RKE2](#安装-windows-rke2)
 
 ## 私有镜像仓库方法
-从 RKE2 v1.20 开始，私有镜像仓库支持遵循 [containerd 镜像仓库配置](./containerd_registry_configuration.md)中的所有设置。其中包括端点覆盖和传输协议（HTTP/HTTPS）、身份验证、证书验证等。
+从 RKE2 v1.20 开始，私有镜像仓库支持遵循 [containerd 镜像仓库配置](./private_registry.md)中的所有设置。其中包括端点覆盖和传输协议（HTTP/HTTPS）、身份验证、证书验证等。
 
 在 RKE2 v1.20 之前，私有镜像仓库必须使用 TLS，并使用主机 CA 捆绑包信任的证书。如果镜像仓库使用的是自签名证书，你可以使用 `update-ca-certificates` 将证书添加到主机 CA 捆绑包。镜像仓库还必须允许匿名（未经身份验证）访问。
 
 1. 将所有必需的系统镜像添加到你的私有镜像仓库。你可以从与上述每个压缩包对应的 `.txt` 文件中获取镜像列表，也可以对离线镜像压缩包使用 `docker load`，然后标记并推送加载的镜像。
 2. 如果在镜像仓库上使用私有或自签名证书，请将镜像仓库的 CA 证书添加到 containerd 镜像仓库配置中，如果使用 v1.20 之前的版本，则添加到操作系统的受信任证书中。
-3. 使用 `system-default-registry` 参数[安装 RKE2](#安装-windows-rke2)，或使用 [containerd 镜像仓库配置](./containerd_registry_configuration.md)将你的镜像仓库用作 docker.io 的 mirror。
+3. 使用 `system-default-registry` 参数[安装 RKE2](#安装-windows-rke2)，或使用 [containerd 镜像仓库配置](./private_registry.md)将你的镜像仓库用作 docker.io 的 mirror。
 
 ## 安装 Windows RKE2
 
