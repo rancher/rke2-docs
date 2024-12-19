@@ -94,10 +94,10 @@ This will require a reboot for the `Containers` feature to properly function.
 4. [Install RKE2](#install-windows-rke2)
 
 ## Private Registry Method
-Private registry support honors all settings from the [containerd registry configuration](./containerd_registry_configuration.md). This includes endpoint override and transport protocol (HTTP/HTTPS), authentication, certificate verification, etc.
+Private registry support honors all settings from the [containerd registry configuration](./private_registry.md). This includes endpoint override and transport protocol (HTTP/HTTPS), authentication, certificate verification, etc.
 
 1. Add all the required system images to your private registry. A list of images can be obtained from the `.txt` file corresponding to each tarball referenced above, or you may `docker load` the airgap image tarballs, then tag and push the loaded images.
-2. [Install RKE2](#install-windows-rke2) using the `system-default-registry` parameter, or use the [containerd registry configuration](./containerd_registry_configuration.md) to use your registry as a mirror for docker.io.
+2. [Install RKE2](#install-windows-rke2) using the `system-default-registry` parameter, or use the [containerd registry configuration](./private_registry.md) to use your registry as a mirror for docker.io.
 
 ## Install Windows RKE2
 
