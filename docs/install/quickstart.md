@@ -125,7 +125,7 @@ powershell -Command "Start-Process PowerShell -Verb RunAs"
 
 In the new Powershell window, run the following command to install the containers feature.
 ```powershell
-Enable-WindowsOptionalFeature -Online -FeatureName containers –All
+Enable-WindowsOptionalFeature -Online -FeatureName containers -All
 ```
 This will require a reboot for the `Containers` feature to properly function.
 

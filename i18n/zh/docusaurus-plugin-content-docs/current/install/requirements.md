@@ -58,7 +58,7 @@ powershell -Command "Start-Process PowerShell -Verb RunAs"
 
 在新的 Powershell 窗口中，运行以下命令：
 ```powershell
-Enable-WindowsOptionalFeature -Online -FeatureName Containers –All
+Enable-WindowsOptionalFeature -Online -FeatureName Containers -All
 ```
 
 需要重启才能使 `Containers` 功能正常运行。

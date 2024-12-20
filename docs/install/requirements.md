@@ -46,7 +46,7 @@ powershell -Command "Start-Process PowerShell -Verb RunAs"
 
 In the new Powershell window, run the following command.
 ```powershell
-Enable-WindowsOptionalFeature -Online -FeatureName Containers –All
+Enable-WindowsOptionalFeature -Online -FeatureName Containers -All
 ```
 
 This will require a reboot for the `Containers` feature to properly function.
