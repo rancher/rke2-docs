@@ -48,6 +48,7 @@ module.exports = {
       type: 'category',
       label: 'Datastore',
       items: [
+        'datastore/embedded',
         'datastore/external',
         'datastore/backup_restore',
       ],
