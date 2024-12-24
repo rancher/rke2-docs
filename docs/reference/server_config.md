@@ -37,7 +37,7 @@ The following options must be set to the same value on all servers in the cluste
 | cluster-cidr | IPv4/IPv6 network CIDRs to use for pod IPs  | 10.42.0.0/16 |  |
 | service-cidr | IPv4/IPv6 network CIDRs to use for service IPs  | 10.43.0.0/16 |  |
 | service-node-port-range | Port range to reserve for services with NodePort visibility  | "30000-32767" |  |
-| cluster-dns | IPv4 Cluster IP for coredns service. Should be in your service-cidr range  | 10.43.0.10 |  |
+| cluster-dns | IPv4/IPv6 Cluster IP for coredns service. Should be in your service-cidr range  | 10.43.0.10 |  |
 | cluster-domain | Cluster Domain  | "cluster.local" |  |
 | egress-selector-mode | One of 'agent', 'cluster', 'pod', 'disabled'  | "agent" |  |
 | servicelb-namespace | Namespace of the pods for the servicelb component  | "kube-system" |  |
