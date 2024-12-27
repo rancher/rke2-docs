@@ -19,7 +19,7 @@ RKE2 officially supports Embedded etcd, embedded SQLite is considered experiment
 
 ## Embedded [Etcd](https://etcd.io/)
 
-Embedded Etcd is the default datastore, and will be used if no other datastore configuration is present.  It is the only embedded option that allows to deploy RKE2 in [HA mode](../install/ha.md). Unless explicitely unset, one etcd pod will be deployed per RKE2 server and all the etcd instances will maintain a quorum. RKE2 includes tools to easily create snapshots when using this datastore as explained in the [backup/restore](backup_restore.md).
+Embedded Etcd is the default datastore, and will be used if no other datastore configuration is present.  It is the only embedded option that allows to deploy RKE2 in [HA mode](../install/ha.md). Unless explicitly unset, one etcd pod will be deployed per RKE2 server and all the etcd instances will maintain a quorum. RKE2 includes tools to easily create snapshots when using this datastore as explained in the [backup/restore](backup_restore.md).
 
 
 ## Embedded [SQLite](https://www.sqlite.org/index.html)
