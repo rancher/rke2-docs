@@ -124,4 +124,4 @@ Kubernetes Services can be of type LoadBalancer but it requires an external load
 When looking at the K3s documentation, use the label `svccontroller.rke2.cattle.io` instead of `svccontroller.k3s.cattle.io` where applicable.
 :::
 
-To enable serviceLB, use the flag `--serviceLB` when deploying RKE2.
+To enable serviceLB, use the flag `--enable-servicelb` when deploying RKE2.
