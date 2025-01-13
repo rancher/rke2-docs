@@ -88,6 +88,21 @@ Rewrites are no longer applied to the Default Endpoint as of the February 2024 r
 Prior to these releases, rewrites were also applied to the default endpoint, which would prevent RKE2 from pulling from the upstream registry if the image could not be pulled from a mirror endpoint, and the image was not available under the modified name in the upstream.
 :::
 
+If you want to apply rewrites when pulling directly from a registry - when it is not being used as a mirror for a different upstream registry - you must provide a mirror endpoint that does not match the default endpoint.
+Mirror endpoints in `registries.yaml` that match the default endpoint are ignored; the default endpoint is always tried last with no rewrites, if fallback has not been disabled.
+
+For example, if you have a registry at `https://registry.example.com/`, and want to apply rewrites when explicitly pulling `registry.example.com/rancher/rke2-runtime:v1.23.5-rke2r1`, you can add a mirror endpoint with the port listed.
+Because the mirror endpoint does not match the default endpoint - **`"https://registry.example.com:443/v2" != "https://registry.example.com/v2"`** - the endpoint is accepted as a mirror and rewrites are applied, despite it being effectively the same as the default.
+
+```yaml
+mirrors:
+ registry.example.com
+   endpoint:
+     - "https://registry.example.com:443"
+   rewrites:
+     "^rancher/(.*)": "mirrorproject/rancher-images/$1"
+```
+
 ### Configs
 
 The configs section defines the TLS and credential configuration for each mirror. For each mirror you can define `auth` and/or `tls`. The TLS part consists of:
