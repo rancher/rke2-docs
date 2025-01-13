@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MINORS=${MINORS:-"v1.28 v1.29 v1.30 v1.31"}
+MINORS=${MINORS:-"v1.29 v1.30 v1.31 v1.32"}
 
 function gen_md_link()
 {
