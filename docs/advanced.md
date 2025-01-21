@@ -220,12 +220,12 @@ The following options are available under the `server` sub-command for RKE2. The
 
 | Flag | ENV VAR | 
 | --- | --- |
-| `--kube-apiserver-extra-mount` | RKE2_KUBE_APISERVER_EXTRA_MOUNT | kube-apiserver extra volume mounts |
-| `--kube-scheduler-extra-mount` | RKE2_KUBE_SCHEDULER_EXTRA_MOUNT | kube-scheduler extra volume mounts |
-| `--kube-controller-manager-extra-mount` | RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_MOUNT |
-| `--kube-proxy-extra-mount` | RKE2_KUBE_PROXY_EXTRA_MOUNT |
-| `--etcd-extra-mount` | RKE2_ETCD_EXTRA_MOUNT |
-| `--cloud-controller-manager-extra-mount` | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_MOUNT |
+| kube-apiserver-extra-mount | RKE2_KUBE_APISERVER_EXTRA_MOUNT | kube-apiserver extra volume mounts |
+| kube-scheduler-extra-mount | RKE2_KUBE_SCHEDULER_EXTRA_MOUNT | kube-scheduler extra volume mounts |
+| kube-controller-manager-extra-mount | RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_MOUNT |
+| kube-proxy-extra-mount | RKE2_KUBE_PROXY_EXTRA_MOUNT |
+| etcd-extra-mount | RKE2_ETCD_EXTRA_MOUNT |
+| cloud-controller-manager-extra-mount | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_MOUNT |
 
 
 ### RW Host Path Volume Mount
@@ -250,16 +250,16 @@ kube-apiserver-extra-mount:
 
 ## Extra Control Plane Component Environment Variables
 
-The following options are available under the `server` sub-command for RKE2. These options specify additional environment variables in standard format i.e. `KEY=VALUE` for the static pod component that corresponds to the prefixed name.
+The following configuration options are available to the `server` sub-command for RKE2. These options specify additional environment variables in standard format i.e. `KEY=VALUE` for the static pod component that corresponds to the prefixed name.
 
 | Flag | ENV VAR |
 | --- | --- |
-| `--kube-apiserver-extra-env` | RKE2_KUBE_APISERVER_EXTRA_ENV |
-| `--kube-scheduler-extra-env` | RKE2_KUBE_SCHEDULER_EXTRA_ENV |
-| `--kube-controller-manager-extra-env` | RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_ENV |
-| `--kube-proxy-extra-env` | RKE2_KUBE_PROXY_EXTRA_ENV |
-| `--etcd-extra-env` | RKE2_ETCD_EXTRA_ENV |
-| `--cloud-controller-manager-extra-env` | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV |
+| kube-apiserver-extra-env | RKE2_KUBE_APISERVER_EXTRA_ENV |
+| kube-scheduler-extra-env | RKE2_KUBE_SCHEDULER_EXTRA_ENV |
+| kube-controller-manager-extra-env | RKE2_KUBE_CONTROLLER_MANAGER_EXTRA_ENV |
+| kube-proxy-extra-env | RKE2_KUBE_PROXY_EXTRA_ENV |
+| etcd-extra-env | RKE2_ETCD_EXTRA_ENV |
+| cloud-controller-manager-extra-env | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV |
 
 Multiple environment variables can be specified for the same component by passing the flag values as an array in the config file.
 

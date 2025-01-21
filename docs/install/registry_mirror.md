@@ -10,7 +10,7 @@ RKE2 embeds [Spegel](https://github.com/spegel-org/spegel), a stateless distribu
 
 ## Enabling The Distributed OCI Registry Mirror
 
-In order to enable the embedded registry mirror, server nodes must be started with the `--embedded-registry` flag, or with `embedded-registry: true` in the configuration file.
+In order to enable the embedded registry mirror, server nodes must be configured with `embedded-registry: true`.
 This option enables the embedded mirror for use on all nodes in the cluster.
 
 When enabled at a cluster level, all nodes will host a local OCI registry on port 6443,
@@ -23,6 +23,16 @@ ensure that they remain available and are not pruned by Kubelet garbage collecti
 
 When the embedded registry mirror is enabled, all nodes must be able to reach each other via their internal IP addresses, on TCP ports 5001 and 9345.
 If nodes cannot reach each other, it may take longer for images to be pulled, as the distributed registry will be tried first by containerd, before it falls back to other endpoints.
+
+### Metrics
+
+Spegel provides a few metrics that can be helpful to track its activity and can be queried in the supervisor. However, the supervisor metrics are disabled by default. To enable them, server nodes must be started with `supervisor-metrics: true` in the configuration file.
+
+Once enabled, query:
+
+```
+kubectl get --server https://$SERVER_NAME:9345 --raw /metrics | grep spegel
+```
 
 ## Enabling Registry Mirroring
 
@@ -75,7 +85,7 @@ By default, containerd will fall back to the default endpoint when pulling from 
 and only pull images from the configured mirrors and/or the embedded mirror, see the [Default Endpoint Fallback](./private_registry.md#default-endpoint-fallback)
 section of the Private Registry Configuration documentation.
 
-Note that if you are using the `--disable-default-endpoint` option and want to allow pulling directly from a particular registry, while disallowing the rest,
+Note that if you are using the `disable-default-endpoint` option and want to allow pulling directly from a particular registry, while disallowing the rest,
 you can explicitly provide an endpoint in order to allow the image pull to fall back to the registry itself:
 ```yaml
 mirrors:
@@ -139,12 +149,4 @@ Images can be manually made available via the embedded registry by running `ctr 
 or by loading image archives created by `docker save` via the `ctr -n k8s.io image import` command.
 Note that the `k8s.io` namespace must be specified when managing images via `ctr` in order for them to be visible to the kubelet.
 
-## Metrics
 
-Spegel provides a few metrics that can be helpful to track its activity and can be queried in the supervisor. However, the supervisor metrics are disabled by default. To enable them, server nodes must be started with the `--supervisor-metrics` flag, or with `supervisor-metrics: true` in the configuration file.
-
-Once enabled, query:
-
-```
-kubectl get --server https://$SERVER_NAME:9345 --raw /metrics | grep spegel
-```
