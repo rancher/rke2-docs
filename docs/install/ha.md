@@ -75,8 +75,8 @@ Note: The NGINX Ingress and Metrics Server addons will **not** be deployed when 
 ### 3. Launch additional server nodes
 Additional server nodes are launched much like the first, except that you must specify the `server` and `token` parameters so that they can successfully connect to the initial server node.
 
-:::info Matching Flags
-It is important to match critical flags on your server nodes. For example, if you use the flag `--cluster-cidr=10.200.0.0/16` on your first server node, but don't set it on other server nodes, the nodes will fail to join. They will print errors such as: `failed to validate server configuration: critical configuration value mismatch.`
+:::info Matching Configuration
+It is important to match critical flags on your server nodes. For example, if you use the flag `cluster-cidr: 10.200.0.0/16` on your first server node, but don't set it on other server nodes, the nodes will fail to join. They will print errors such as: `failed to validate server configuration: critical configuration value mismatch.`
 See [Server Configuration](../reference/server_config.md#critical-configuration-values) for more information on which flags must be set identically on server nodes.
 :::
 
@@ -93,7 +93,7 @@ tls-san:
 
 As mentioned previously, you must have an odd number of server nodes in total.
 
-If an etcd datastore is found on disk either because that node has either initialized or joined a cluster already, the argument `--server` is ignored.
+If an etcd datastore is found on disk either because that node has either initialized or joined a cluster already, the configuration `server: <XXX>` is ignored.
 
 ### 4. Confirm cluster is functional
 Once you've launched the `rke2 server` process on all server nodes, ensure that the cluster has come up properly with
