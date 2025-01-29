@@ -15,6 +15,7 @@ module.exports = {
         'install/ha',
         'install/windows_airgap',
         'install/server_roles',
+        'install/packaged_components',
         'install/uninstall',
       ],
     },
