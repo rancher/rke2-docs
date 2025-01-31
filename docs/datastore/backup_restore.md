@@ -52,9 +52,13 @@ rke2 server \
 systemctl start rke2-server
 ```
 
-4. Remove the rke2 db directory on the other server nodes as follows:
+4. Move the rke2 db directory on the other server nodes as follows (you want to keep a copy to avoid ending up with only an old or corrupt backup to chose for):
 ```
-rm -rf /var/lib/rancher/rke2/server/db
+mv /var/lib/rancher/rke2/server/db /var/lib/rancher/rke2/server/backups
+```
+Clean them out after this operation:
+```
+rm -rf /var/lib/rancher/rke2/server/backups
 ```
 
 5. Start the rke2-server service on other server nodes with the following command:
