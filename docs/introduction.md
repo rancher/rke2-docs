@@ -6,13 +6,13 @@ title: "Introduction"
 
 ![](/img/logo-horizontal-rke2.svg#gh-light-mode-only)![](/img/logo-horizontal-rke2-dark.svg#gh-dark-mode-only)
 
-RKE2, also known as RKE Government, is Rancher's next-generation Kubernetes distribution.
+RKE2 is Rancher's enterprise-ready next-generation Kubernetes distribution. It has also been known as RKE Government.
 
 It is a fully [conformant Kubernetes distribution](https://landscape.cncf.io/?group=projects-and-products&view-mode=card&item=platform--certified-kubernetes-distribution--rke-government#app-definition-and-development--application-definition-image-build) that focuses on security and compliance within the U.S. Federal Government sector.
 
 To meet these goals, RKE2 does the following:
 
-- Provides [defaults and configuration options](security/hardening_guide.md) that allow clusters to pass the CIS Kubernetes Benchmark [v1.6](security/cis_self_assessment16.md) or [v1.23](security/cis_self_assessment123.md) with minimal operator intervention
+- Provides [defaults and configuration options](security/hardening_guide.md) that allow clusters to pass the CIS Kubernetes Benchmark [v1.7](security/cis_self_assessment17.md) or [v1.8](security/cis_self_assessment18.md) with minimal operator intervention
 - Enables [FIPS 140-2 compliance](security/fips_support.md)
 - Regularly scans components for CVEs using [trivy](https://github.com/aquasecurity/trivy) in our build pipeline
 
@@ -29,8 +29,7 @@ Importantly, RKE2 does not rely on Docker as RKE1 does. RKE1 leveraged Docker fo
 ## Why two names?
 It is known as RKE2 as it is the next iteration of the Rancher Kubernetes Engine for datacenter use cases. The distribution runs standalone or integrated into Rancher. Automated provisioning of new RKE2 clusters is available in Rancher v2.6+.
 
-It is also known as RKE Government in order to convey another use case and sector it currently targets.
-
+It has also been known as RKE Government as it was designed to target sectors with heightened security requirements.
 
 
 ## Security
