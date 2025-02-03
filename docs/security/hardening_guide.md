@@ -74,6 +74,10 @@ On some Linux distributions, the `useradd` command will not create a group. The 
 sudo useradd -r -c "etcd user" -s /sbin/nologin -M etcd -U
 ```
 
+:::note
+The `etcd` user and group must be defined in the traditional database files at /etc/passwd and /etc/group. Golang's stdlib `os/user` package does not support external user databases such as NSS or systemd userdb (varlink).
+:::
+
 ## RKE2 configuration
 
 
