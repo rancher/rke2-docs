@@ -8,7 +8,7 @@ RKE2 client and server certificates are valid for 365 days from their date of is
 
 ### Rotating Client and Server Certificates Manually
 
-To rotate client and server certificates manually, use the `rke2 certificate rotate` subcommand:
+To rotate client and server certificates manually, use the `rke2 certificate rotate` subcommand on each node where you wish to rotate certs:
 
 ```bash
 # Stop RKE2
