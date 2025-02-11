@@ -20,6 +20,10 @@ The `with-node-id` parameter is available starting with the 2023-05 releases (v1
 
 :::
 
+## Architecture
+
+RKE2 is available for x86_64 and arm64/aarch64
+
 ## Operating Systems
 
 ### Linux
