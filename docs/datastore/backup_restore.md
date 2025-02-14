@@ -96,6 +96,8 @@ The node where the snapshot was taken will appear as NotReady
 
 * When performing a restore from backup, users do not need to restore a snapshot using the same version of RKE2 with which the snapshot was created. Users may restore using a more recent version. Be aware when changing versions at restore which etcd version is in use.
 
+* If an etcd-s3 backup configuration is defined within the RKE2 [config file](../install/configuration.md), the rke2 restore will attempt to pull the snapshot file from the configured S3 bucket. In this instance only the snapshot filename should be passed in the argument `--cluster-reset-restore-path`. If wish to restore from a local snapshot file, where an etcd-s3 backup configuration is present, you can add the argument `--etcd-s3=false` and pass the full path to the local snapshot file in the argument `--cluster-reset-restore-path`.
+
 * By default, snapshots are enabled and are scheduled to be taken every 12 hours. The snapshots are written to `${data-dir}/server/db/snapshots` with the default `${data-dir}` being `/var/lib/rancher/rke2`.
 
 ## S3 Compatible API Support
