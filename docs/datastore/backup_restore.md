@@ -2,7 +2,7 @@
 title: Backup and Restore
 ---
 
-:::warning Backup and restore for external databases or sqlite
+:::warning If using external databases or sqlite
 Snapshots are for embedded etcd only, if you use another datastore with `datastore-endpoint` config go to [Experimental](backup_restore.md#external-db-backups-experimental)
 :::
 
