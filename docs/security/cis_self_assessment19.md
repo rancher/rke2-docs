@@ -2896,7 +2896,9 @@ to the Kubernetes API server.
 Modify the configuration of each default service account to include this value
 automountServiceAccountToken: false
 Or using kubectl:
-kubectl patch serviceaccount --namespace <NAMESPACE> default --patch '{"automountServiceAccountToken": false}'
+```
+kubectl patch serviceaccount --namespace &lt;NAMESPACE&gt; default --patch '{"automountServiceAccountToken": false}'
+```
 </details>
 
 #### 5.1.6 Ensure that Service Account Tokens are only mounted where necessary (Automated)

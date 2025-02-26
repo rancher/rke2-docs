@@ -64,6 +64,7 @@ jq -c '.Controls[].tests[].results[]' "$1" | while read -r result; do
 
     # fix html special characters and misspellings
     remediation=${remediation//<file>/&lt;file&gt;}
+    remediation=${remediation//<NAMESPACE>/&lt;NAMESPACE&gt;}
     remediation=$(perl -pe 's/(--kube.*?=)<(.*?)>/\1&lt;\2&gt;/g' <<< "$remediation")
     remediation=${remediation/capabilites/capabilities}
     remediation=${remediation/applicaions/applications}
