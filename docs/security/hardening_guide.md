@@ -101,7 +101,7 @@ A rough mapping of RKE2 versions to CIS benchmark versions is as follows:
 
 | RKE2 Minors | Applicable CIS Benchmark | Profile Flag |
 | - | - | - |
-| 1.27+ | 1.8 | `cis` |
+| 1.27+ | 1.9 | `cis` |
 | 1.26 | 1.8 | `cis-1.23`, `cis` |
 | 1.25 | 1.7 | `cis-1.23`, `cis` |
 | 1.24 | 1.24 | `cis-1.23` |
@@ -113,7 +113,7 @@ A rough mapping of RKE2 versions to CIS benchmark versions is as follows:
 <TabItem value='v1.24 and Older'>
 
 ```yaml
-profile: "cis-1.6"
+profile: "cis-1.23"
 ```
 
 </TabItem>
@@ -130,7 +130,9 @@ When the `profile` flag is set it does the following:
 
 2. Applies network policies that allow the cluster to pass associated controls.
 
-3. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces.
+3. Apply more restrictive file permissions (600 vs 644) to agent manifests and other configurations files. 
+
+4. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces.
    These namespaces are exempted to allow system pods to run without restrictions, which is required for proper operation of the cluster.  
    For more information about the PSA configuration, see the default [Pod Security Admission configurations](pod_security_standards.md#pod-security-standards).  
    For more information about Pod Security Standards, please refer to the [official documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
