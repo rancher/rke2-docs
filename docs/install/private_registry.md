@@ -2,13 +2,15 @@
 title: "Private Registry Configuration"
 ---
 
-Containerd can be configured to connect to private registries and use them to pull private images on each node.
+Containerd can be configured to connect to private registries and use them to pull images as needed by the kubelet.
 
-Upon startup, RKE2 will check to see if a `registries.yaml` file exists at `/etc/rancher/rke2/` and instruct containerd to use any registries defined in the file. If you wish to use a private registry, then you will need to create this file as root on each node that will be using the registry.
+Upon startup, RKE2 will check to see if `/etc/rancher/rke2/registries.yaml` exists. If so, the registry configuration contained in this file is used when generating the containerd configuration.
 
-Note that server nodes are schedulable by default. If you have not tainted the server nodes and will be running workloads on them, please ensure you also create the `registries.yaml` file on each server as well.
+* If you want to use a private registry as a mirror for a public registry such as docker.io, then you will need to configure `registries.yaml` on each node that you want to use the mirror.
+* If your private registry requires authentication, uses custom TLS certificates, or does not use TLS, you will need to configure `registries.yaml` on each node that will pull images from your registry.
 
-Configuration in containerd can be used to connect to a private registry with a TLS connection and with registries that enable authentication as well. The following section will explain the `registries.yaml` file and give different examples of using private registry configuration in RKE2.
+Note that server nodes are schedulable by default. If you have not tainted the server nodes and will be running workloads on them,
+please ensure you also create the `registries.yaml` file on each server as well.
 
 ## Default Endpoint Fallback
 
@@ -36,39 +38,66 @@ or if you wish to have only some nodes pull from the upstream registry.
 Disabling the default registry endpoint applies only to registries configured via `registries.yaml`.
 If the registry is not explicitly configured via mirror entry in `registries.yaml`, the default fallback behavior will still be used.
 
-
 ## Registries Configuration File
 
-The file consists of two main sections:
+The file consists of two top-level keys, with subkeys for each registry:
 
-- mirrors
-- configs
+```yaml
+mirrors:
+  <REGISTRY>:
+    endpoint:
+      - https://<REGISTRY>/v2
+configs:
+  <REGISTRY>:
+    auth:
+      username: <BASIC AUTH USERNAME>
+      password: <BASIC AUTH PASSWORD>
+      token: <BEARER TOKEN>
+    tls:
+      ca_file: <PATH TO SERVER CA>
+      cert_file: <PATH TO CLIENT CERT>
+      key_file: <PATH TO CLIENT KEY>
+      insecure_skip_verify: <SKIP TLS CERT VERIFICATION BOOLEAN>
+```
 
 ### Mirrors
 
-Mirrors is a directive that defines the names and endpoints of the private registries. Private registries can be used as a local mirror for the default docker.io registry, or for images where the registry is explicitly specified in the name.
+The mirrors section defines the names and endpoints of registries, for example:
 
-For example, the following configuration would pull from the private registry at `https://registry.example.com:5000` for both `library/busybox:latest` and `registry.example.com/library/busybox:latest`:
+```yaml
+mirrors:
+  registry.example.com:
+    endpoint:
+      - "https://registry.example.com:5000"
+```
+
+Each mirror must have a name and set of endpoints. When pulling an image from a registry, containerd will try these endpoint URLs, plus the default endpoint, and use the first working one.
+
+**Note:** If no endpoint is configured, containerd assumes that the registry can be accessed anonymously via HTTPS on port 443, and is using a certificate trusted by the host operating system. For more information, you may [consult the containerd documentation](https://github.com/containerd/containerd/blob/master/docs/cri/registry.md#configure-registry-endpoint).
+
+
+#### Redirects
+
+If the private registry is used as a mirror for another registry, such as when configuring a [pull through cache](https://docs.docker.com/registry/recipes/mirror/),
+images pulls are transparently redirected to the listed endpoints. The original registry name is passed to the mirror endpoint via the `ns` query parameter.
+
+For example, if you have a mirror configured for `docker.io`:
 
 ```yaml
 mirrors:
   docker.io:
     endpoint:
       - "https://registry.example.com:5000"
-  registry.example.com:
-    endpoint:
-      - "https://registry.example.com:5000"
 ```
 
-Each mirror must have a name and set of endpoints. When pulling an image from a registry, containerd will try these endpoint URLs one by one, and use the first working one.
+Then pulling `docker.io/rancher/mirrored-pause:3.6` will transparently pull the image as `registry.example.com:5000/rancher/mirrored-pause:3.6`.
 
-**Note:** If no endpoint is configured, containerd assumes that the registry can be accessed anonymously via HTTPS on port 443, and is using a certificate trusted by the host operating system. For more information, you may [consult the containerd documentation](https://github.com/containerd/containerd/blob/master/docs/cri/registry.md#configure-registry-endpoint).
 
 #### Rewrites
 
-Each mirror can have a set of rewrites, which use regular expressions to match and transform the name of an image when it is pulled from that mirror. This is useful if the organization/project structure in the mirror registry is different to the upstream one.
+Each mirror can have a set of rewrites, which use regular expressions to match and transform the name of an image when it is pulled from that mirror. This is useful if the organization/project structure in the private registry is different than the registry it is mirroring. Rewrites match and transform only the image name, NOT the tag.
 
-For example, the following configuration would transparently pull the image `rancher/rke2-runtime:v1.23.5-rke2r1` from `registry.example.com:5000/mirrorproject/rancher-images/rke2-runtime:v1.23.5-rke2r1`:
+For example, the following configuration would transparently pull the image `rancher/rke2-runtime:v1.30.1-rke2r1` from `registry.example.com:5000/mirrorproject/rancher-images/rke2-runtime:v1.30.1-rke2r1`:
 
 ```yaml
 mirrors:
@@ -79,10 +108,6 @@ mirrors:
       "^rancher/(.*)": "mirrorproject/rancher-images/$1"
 ```
 
-
-Note that when using mirrors and rewrites, images will still be stored under the original name.
-For example, `crictl image ls` will show `docker.io/rancher/rke2-runtime:v1.23.5-rke2r1` as available on the node, even if the image was pulled from a mirror with a different name.
-
 :::info Version Gate
 Rewrites are no longer applied to the Default Endpoint as of the February 2024 releases: v1.26.13+rke2r1, v1.27.10+rke2r1, v1.28.6+rke2r1, v1.29.1+rke2r1
 Prior to these releases, rewrites were also applied to the default endpoint, which would prevent RKE2 from pulling from the upstream registry if the image could not be pulled from a mirror endpoint, and the image was not available under the modified name in the upstream.
@@ -91,7 +116,7 @@ Prior to these releases, rewrites were also applied to the default endpoint, whi
 If you want to apply rewrites when pulling directly from a registry - when it is not being used as a mirror for a different upstream registry - you must provide a mirror endpoint that does not match the default endpoint.
 Mirror endpoints in `registries.yaml` that match the default endpoint are ignored; the default endpoint is always tried last with no rewrites, if fallback has not been disabled.
 
-For example, if you have a registry at `https://registry.example.com/`, and want to apply rewrites when explicitly pulling `registry.example.com/rancher/rke2-runtime:v1.23.5-rke2r1`, you can add a mirror endpoint with the port listed.
+For example, if you have a registry at `https://registry.example.com/`, and want to apply rewrites when explicitly pulling `registry.example.com/rancher/rke2-runtime:v1.30.1-rke2r1`, you can add a mirror endpoint with the port listed.
 Because the mirror endpoint does not match the default endpoint - **`"https://registry.example.com:443/v2" != "https://registry.example.com/v2"`** - the endpoint is accepted as a mirror and rewrites are applied, despite it being effectively the same as the default.
 
 ```yaml
@@ -103,9 +128,15 @@ mirrors:
      "^rancher/(.*)": "mirrorproject/rancher-images/$1"
 ```
 
+Note that when using mirrors and rewrites, images will still be stored under the original name.
+For example, `crictl image ls` will show `docker.io/rancher/rke2-runtime:v1.30.1-rke2r1` as available on the node, even if the image was pulled from a mirror with a different name.
+
+
 ### Configs
 
-The configs section defines the TLS and credential configuration for each mirror. For each mirror you can define `auth` and/or `tls`. The TLS part consists of:
+The configs section defines the TLS and credential configuration for each mirror. For each mirror you can define `auth` and/or `tls`. 
+
+The `tls` part consists of:
 
 Directive | Description
 ----------|------------
@@ -114,19 +145,44 @@ Directive | Description
 `ca_file` | Defines the CA certificate path to be used to verify the registry's server cert file
 `insecure_skip_verify` | Boolean that defines if TLS verification should be skipped for the registry
 
-The credentials consist of either username/password or authentication token:
+The `auth` part consists of either username/password or authentication token:
 
-- username: user name of the private registry basic auth
-- password: user password of the private registry basic auth
-- auth: authentication token of the private registry basic auth
+| Directive  | Description                                             |
+|------------|---------------------------------------------------------|
+| `username` | user name of the private registry basic auth            |
+| `password` | user password of the private registry basic auth        |
+| `auth`     | authentication token of the private registry basic auth |
 
 Below are basic examples of using private registries in different modes:
+
+### Wildcard Support
+
+:::info Version Gate
+Wildcard support is available as of the March 2024 releases: v1.26.15+rke2r1, v1.27.12+rke2r1, v1.28.8+rke2r1, v1.29.3+rke2r1
+:::
+
+The `"*"` wildcard entry can be used in the `mirrors` and `configs` sections to provide default configuration for all registries.
+The default configuration will only be used if there is no specific entry for that registry. Note that the asterisk MUST be quoted.
+
+In the following example, a local registry mirror will be used for all registries. TLS verification will be disabled for all registries, except `docker.io`.
+```yaml
+mirrors:
+  "*":
+    endpoint:
+      - "https://registry.example.com:5000"
+configs:
+  "docker.io":
+  "*":
+    tls:
+      insecure_skip_verify: true
+```
 
 ### With TLS
 
 Below are examples showing how you may configure `/etc/rancher/rke2/registries.yaml` on each node when using TLS.
 
-*With Authentication:*
+<Tabs>
+<TabItem value="With Authentication">
 
 ```yaml
 mirrors:
@@ -144,8 +200,8 @@ configs:
       ca_file:              # path to the ca file used to verify the registry's certificate
       insecure_skip_verify: # may be set to true to skip verifying the registry's certificate
 ```
-
-*Without Authentication:*
+</TabItem>
+<TabItem value="Without Authentication">
 
 ```yaml
 mirrors:
@@ -160,12 +216,15 @@ configs:
       ca_file:              # path to the ca file used to verify the registry's certificate
       insecure_skip_verify: # may be set to true to skip verifying the registry's certificate
 ```
+</TabItem>
+</Tabs>
 
 ### Without TLS
 
 Below are examples showing how you may configure `/etc/rancher/rke2/registries.yaml` on each node when _not_ using TLS.
 
-*Plaintext HTTP With Authentication:*
+<Tabs>
+<TabItem value="With Authentication">
 
 ```yaml
 mirrors:
@@ -178,8 +237,8 @@ configs:
       username: xxxxxx # this is the registry username
       password: xxxxxx # this is the registry password
 ```
-
-*Plaintext HTTP Without Authentication:*
+</TabItem>
+<TabItem value="Without Authentication">
 
 ```yaml
 mirrors:
@@ -187,7 +246,16 @@ mirrors:
     endpoint:
       - "http://registry.example.com:5000"
 ```
+</TabItem>
+</Tabs>
 
 > If using a registry using plaintext HTTP without TLS, you need to specify `http://` as the endpoint URI scheme, otherwise it will default to `https://`.
 
 In order for the registry changes to take effect, you need to either configure this file before starting RKE2 on the node, or restart RKE2 on each configured node.
+
+## Troubleshooting Image Pulls
+
+When Kubernetes experiences problems pulling an image, the error displayed by the kubelet may only reflect the terminal error returned
+by the pull attempt made against the default endpoint, making it appear that the configured endpoints are not being used.
+
+Check the containerd log on the node at `/var/lib/rancher/rke2/agent/containerd/containerd.log` for detailed information on the root cause of the failure.
