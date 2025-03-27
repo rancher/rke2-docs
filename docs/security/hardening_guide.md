@@ -128,11 +128,13 @@ When the `profile` flag is set it does the following:
 
 1. Checks that host-level requirements have been met. If they haven't, RKE2 will exit with a fatal error describing the unmet requirements.
 
-2. Applies network policies that allow the cluster to pass associated controls.
+2. Configures the etcd static pod to run as the etcd user and group, as explained in the [etcd hardedning guide](https://docs.rke2.io/security/hardening_guide#etcd-is-configured-properly)
 
-3. Apply more restrictive file permissions (600 vs 644) to agent manifests and other configurations files. 
+3. Applies network policies that allow the cluster to pass associated controls.
 
-4. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces.
+4. Applies more restrictive file permissions (600 vs 644) to agent manifests and other configurations files. 
+
+5. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces.
    These namespaces are exempted to allow system pods to run without restrictions, which is required for proper operation of the cluster.  
    For more information about the PSA configuration, see the default [Pod Security Admission configurations](pod_security_standards.md#pod-security-standards).  
    For more information about Pod Security Standards, please refer to the [official documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
