@@ -8,6 +8,7 @@ This section contains current known issues and limitations with rke2. If you com
 ## Firewalld conflicts with default networking
 
 Firewalld conflicts with RKE2's default Canal (Calico + Flannel) networking stack. To avoid unexpected behavior, firewalld should be disabled on systems running RKE2.
+Disabling firewalld does not remove the kernel's firewall (iptables/nftables) which Canal uses to manage necessary rules. Custom firewall rules can be implemented through Calico resources.
 
 ## NetworkManager
 
