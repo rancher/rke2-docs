@@ -273,11 +273,11 @@ kube-scheduler-extra-env: "TZ=America/Los_Angeles"
 
 ## Deploy NVIDIA operator
 
-The [NVIDIA operator](https://github.com/NVIDIA/gpu-operator) allows administrators of Kubernetes clusters to manage GPUs just like CPUs. It includes everything needed for pods to be able to operate GPUs.
+The [NVIDIA operator](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/index.html) allows administrators of Kubernetes clusters to manage GPUs just like CPUs. It includes everything needed for pods to be able to operate GPUs.
 
 ### Host OS requirements ###
 
-To expose the GPU to the pod correctly, the nvidia kernel drivers and the `libnvidia-ml` library must be correctly installed in the host OS. The installation of the drivers and library is out of the scope of this document and we recommend to use the official documentation of each distribution. The NVIDIA operator can automatically install the kernel drivers but this is limited to specific OS distributions and versions. Therefore, we recommend installing the driver before deploying the NVIDIA operator.
+To expose the GPU to the pod correctly, the NVIDIA kernel drivers and the `libnvidia-ml` library must be correctly installed in the host OS. The NVIDIA Operator can automatically install drivers and libraries on some operating systems; check the NVIDIA documentation for information on [supported operating system releases](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms). Installation of the NVIDIA components on your host OS is out of the scope of this document; reference the NVIDIA documentation for instructions.
 
 The following three commands should return a correct output if the kernel driver was correctly installed:
 
@@ -346,7 +346,7 @@ kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' | grep "nvidia.com/g
 ```
 You should see the value `pre-installed`. If you see `true`, the drivers were not correctly installed. If the [pre-requirements](#host-os-requirements) were correct, it is possible that you forgot to reboot the node after installing all packages.
 
-You can also check other driver laberls with:
+You can also check other driver labels with:
 ```
 kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' | jq | grep "nvidia.com"
 ```
