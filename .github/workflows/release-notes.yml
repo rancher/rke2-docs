@@ -35,7 +35,7 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout -b update-release-notes
           git add docs/release-notes/*
-          git commit -s -m "update release-notes/v1.XX.X.md"
+          git commit -s -m "update release-notes/v1.XX.X.md $month_year"
           git push -f --set-upstream origin update-release-notes
       - name: Create pull request
         env:
