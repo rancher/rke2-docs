@@ -273,66 +273,48 @@ kube-scheduler-extra-env: "TZ=America/Los_Angeles"
 
 ## Deploy NVIDIA operator
 
-The [NVIDIA operator](https://github.com/NVIDIA/gpu-operator) allows administrators of Kubernetes clusters to manage GPUs just like CPUs. It includes everything needed for pods to be able to operate GPUs.
+The [NVIDIA operator](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/index.html) allows administrators of Kubernetes clusters to manage GPUs just like CPUs. It includes everything needed for pods to be able to operate GPUs.
 
-Depending on the underlying OS, some steps need to be fulfilled
+### Host OS requirements ###
 
-<Tabs groupId = "GPU Operating System">
-<TabItem value="SLES" default>
+To expose the GPU to the pod correctly, the NVIDIA kernel drivers and the `libnvidia-ml` library must be correctly installed in the host OS. The NVIDIA Operator can automatically install drivers and libraries on some operating systems; check the NVIDIA documentation for information on [supported operating system releases](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms). Installation of the NVIDIA components on your host OS is out of the scope of this document; reference the NVIDIA documentation for instructions.
 
-The NVIDIA operator cannot automatically install kernel drivers on SLES. NVIDIA drivers must be manually installed on all GPU nodes before deploying the operator in the cluster.
+The following three commands should return a correct output if the kernel driver was correctly installed:
 
-The SLES repositories have the nvidia-open packages, which include the open gpu kernel drivers. If your GPU supports the open drivers, you can check that in this [list](https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus), you can install the drivers by executing:
-```
-sudo zypper install -y nvidia-open
-```
+1 - `lsmod | grep nvidia`
 
-If the GPU does not support gpu kernel drivers, you will need to download the proprietary drivers from an NVIDIA repo. In that case, follow these steps:
+Returns a list of nvidia kernel modules, for example:
 
 ```
-sudo zypper addrepo --refresh https://developer.download.nvidia.com/compute/cuda/repos/sles15/x86_64/ cuda-sles15
-sudo zypper --gpg-auto-import-keys refresh
-sudo zypper install -y –-auto-agree-with-licenses nvidia-gl-G06 nvidia-video-G06 nvidia-compute-utils-G06
-```
-Then reboot.
-
-If everything worked correctly, after the reboot, you should see the NVRM and GCC version of the driver when executing the command:
-
-```
-cat /proc/driver/nvidia/version
+nvidia_uvm           2129920  0
+nvidia_drm            131072  0
+nvidia_modeset       1572864  1 nvidia_drm
+video                  77824  1 nvidia_modeset
+nvidia               9965568  2 nvidia_uvm,nvidia_modeset
+ecc                    45056  1 nvidia
 ```
 
-Finally, create the symlink:
-```
-sudo ln -s /sbin/ldconfig /sbin/ldconfig.real
-```
+2 - `cat /proc/driver/nvidia/version`
 
-</TabItem>
-<TabItem value="Ubuntu" default>
-
-The NVIDIA operator can automatically install kernel drivers on Ubuntu using the `nvidia-driver-daemonset`, although not all versions are supported. You can also pre-install them manually and the operator will detect them: 
+returns the NVRM and GCC version of the driver. For example:
 
 ```
-sudo apt install nvidia-driver-550-server
-```
-Then reboot.
-
-If everything worked correctly, after the reboot, you should see a correct output when executing the command:
-
-```
-cat /proc/driver/nvidia/version
+NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  555.42.06  Release Build  (abuild@host)  Thu Jul 11 12:00:00 UTC 2024
+GCC version:  gcc version 7.5.0 (SUSE Linux) 
 ```
 
-</TabItem>
-<TabItem value="RHEL" default>
+3 - `find /usr/ -iname libnvidia-ml.so`
 
-The NVIDIA operator can automatically install kernel drivers on RHEL using the `nvidia-driver-daemonset`. You would only need to create the symlink:
+returns a path to the `libnvidia-ml.so` library. For example:
+
 ```
-sudo ln -s /sbin/ldconfig /sbin/ldconfig.real
+/usr/lib64/libnvidia-ml.so
 ```
 
-</TabItem>
-</Tabs>
+This library is used by Kubernetes components to interact with the kernel driver.
+
+
+### Operator installation ###
 
 Once the OS is ready and RKE2 is running, install the GPU Operator with the following yaml manifest:
 ```yaml
@@ -358,7 +340,13 @@ The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
 
 After one minute approximately, you can make the following checks to verify that everything worked as expected:
 
-1 - Check if the operator detected the driver and GPU correctly:
+1 - Assuming the drivers and `libnvidia-ml.so` library were previously installed, check if the operator detects them correctly:
+```
+kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' | grep "nvidia.com/gpu.deploy.driver"
+```
+You should see the value `pre-installed`. If you see `true`, the drivers were not correctly installed. If the [pre-requirements](#host-os-requirements) were correct, it is possible that you forgot to reboot the node after installing all packages.
+
+You can also check other driver labels with:
 ```
 kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' | jq | grep "nvidia.com"
 ```
@@ -401,7 +389,7 @@ spec:
     - name: NVIDIA_VISIBLE_DEVICES
       value: all
     - name: NVIDIA_DRIVER_CAPABILITIES
-      value: all
+      value: compute,utility
 ```
 
 :::info Version Gate
