@@ -128,7 +128,7 @@ When the `profile` flag is set it does the following:
 
 1. Checks that host-level requirements have been met. If they haven't, RKE2 will exit with a fatal error describing the unmet requirements.
 
-2. Configures the etcd static pod to run as the etcd user and group, as explained in the [etcd hardedning guide](https://docs.rke2.io/security/hardening_guide#etcd-is-configured-properly)
+2. Configures the etcd static pod to run as the etcd user and group, as explained in the [etcd hardening guide](https://docs.rke2.io/security/hardening_guide#etcd-is-configured-properly)
 
 3. Applies network policies that allow the cluster to pass associated controls.
 
