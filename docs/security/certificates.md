@@ -6,6 +6,35 @@ title: Certificate Management
 
 RKE2 client and server certificates are valid for 365 days from their date of issuance. Any certificates that are expired, or within 90 days of expiring, are automatically renewed every time RKE2 starts.
 
+:::info CERTIFICATE EXPIRATION WARNING
+When a certificate is within 90 days of expiring a Kubernetes Warning event with reason: `CertificateExpirationWarning` is created
+:::
+
+
+### Checking expiration dates
+
+To check the node certificates and their expiration date use the `rke2 certificate check --output table`:
+
+```bash
+CERTIFICATE                 SUBJECT                                            STATUS  EXPIRES
+-----------                 -------                                            ------  -------
+client-kube-proxy.crt       CN=system:kube-proxy                               OK      2026-04-03T10:50:43Z
+client-kube-proxy.crt       CN=rke2-client-ca@1743677343                       OK      2035-04-01T10:49:03Z
+client-kubelet.crt          CN=system:node:vm1,O=system:nodes                  OK      2026-04-03T10:50:43Z
+client-kubelet.crt          CN=rke2-client-ca@1743677343                       OK      2035-04-01T10:49:03Z
+serving-kubelet.crt         CN=vm1                                             OK      2026-04-03T10:50:43Z
+serving-kubelet.crt         CN=rke2-server-ca@1743677343                       OK      2035-04-01T10:49:03Z
+client-rke2-controller.crt  CN=system:rke2-controller                          OK      2026-04-03T10:50:43Z
+client-rke2-controller.crt  CN=rke2-client-ca@1743677343                       OK      2035-04-01T10:49:03Z
+```
+
+:::info SAME CERTIFICATE TWICE
+Each certificate file (CERTIFICATE column) contains two certificates, including the certificate itself and its issuing Certificate Authority (CA)
+:::
+
+In case of unexpected output, please use `--debug` flag to get more information or configure the correct data directory with `--data-dir` flag.
+
+
 ### Rotating Client and Server Certificates Manually
 
 To rotate client and server certificates manually, use the `rke2 certificate rotate` subcommand:
