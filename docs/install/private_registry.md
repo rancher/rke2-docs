@@ -124,7 +124,7 @@ mirrors:
  registry.example.com
    endpoint:
      - "https://registry.example.com:443"
-   rewrites:
+   rewrite:
      "^rancher/(.*)": "mirrorproject/rancher-images/$1"
 ```
 
