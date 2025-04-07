@@ -89,11 +89,14 @@ spec:
   concurrency: 2
   nodeSelector:
     matchExpressions:
-      - {key: beta.kubernetes.io/os, operator: In, values: ["linux"]}
-      - {key: rke2-upgrade, operator: Exists}
-      - {key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"]}
+      - {key: kubernetes.io/os, operator: In, values: ["linux"]}
       # When using k8s version 1.19 or older, swap control-plane with master
       - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
+      # Optionally limit the upgrade to nodes that have an "rke2-upgrade" label, and
+      # exclude nodes where the label value is "disabled" or "false". To upgrade all
+      # agent nodes, remove the following two items.
+      - {key: rke2-upgrade, operator: Exists}
+      - {key: rke2-upgrade, operator: NotIn, values: ["disabled", "false"]}
   prepare:
     args:
     - prepare
