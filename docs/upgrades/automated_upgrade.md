@@ -89,7 +89,7 @@ spec:
   concurrency: 2
   nodeSelector:
     matchExpressions:
-      - {key: beta.kubernetes.io/os, operator: In, values: ["linux"]}
+      - {key: kubernetes.io/os, operator: In, values: ["linux"]}
       # When using k8s version 1.19 or older, swap control-plane with master
       - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
       # Optionally limit the upgrade to nodes that have an "rke2-upgrade" label, and
