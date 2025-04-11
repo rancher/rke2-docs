@@ -37,7 +37,7 @@ In case of unexpected output, please use `--debug` flag to get more information 
 
 ### Rotating Client and Server Certificates Manually
 
-To rotate client and server certificates manually, use the `rke2 certificate rotate` subcommand:
+To rotate client and server certificates manually, use the `rke2 certificate rotate` subcommand on each node where you wish to rotate certs:
 
 ```bash
 # Stop RKE2
