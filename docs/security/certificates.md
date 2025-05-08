@@ -7,8 +7,12 @@ title: Certificate Management
 RKE2 client and server certificates are valid for 365 days from their date of issuance. Any certificates that are expired, or within 90 days of expiring, are automatically renewed every time RKE2 starts.
 
 ### Rotating Client and Server Certificates Manually
+When rotating client and server certificates manually, rotate certs on each node in the following order:
+1. etcd servers
+2. control-plane servers
+3. agents
 
-To rotate client and server certificates manually, use the `rke2 certificate rotate` subcommand on each node where you wish to rotate certs:
+For each node, stop the server, use the `rke2 certificate rotate` subcommand to rotate the certs, then start the server once more; as in the following example:  
 
 ```bash
 # Stop RKE2
