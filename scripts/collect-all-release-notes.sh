@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MINORS=${MINORS:-"v1.29 v1.30 v1.31 v1.32"}
+MINORS=${MINORS:-"v1.30 v1.31 v1.32 v1.33"}
 
 function gen_md_link()
 {
@@ -106,6 +106,13 @@ ITER=1
 echo "Reordering release notes in sidebar"
 for file in $(ls -r docs/release-notes/v1.*.X.md); do
    # Add sidebar_position: $ITER to each release notes
+    sed -i "s/^sidebar_position:.*/sidebar_position: $ITER/" "${file}"
+    ITER=$((ITER+1))
+done
+
+ITER=1
+echo "Reordering release notes in sidebar"
+for file in $(ls -r docs/release-notes-old/v1.*.X.md); do
     sed -i "s/^sidebar_position:.*/sidebar_position: $ITER/" "${file}"
     ITER=$((ITER+1))
 done
