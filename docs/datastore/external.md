@@ -6,11 +6,6 @@ Using an external datastore means leveraging a database that resides outside the
 
 ## Datastore options
 
-:::warning Experimental
-RKE2 external datastores support is experimental.
-:::
-
-
 * **External Database**  
   * [etcd](https://etcd.io/) (certified against version 3.5.4)
   * [MySQL](https://www.mysql.com) (certified against versions 5.7 and 8.0)
