@@ -49,3 +49,10 @@ selinux: true
 
 This is equivalent to passing the `--selinux` flag to `rke2 server` or `rke2 agent` command-line or setting the
 `RKE2_SELINUX=true` environment variable.
+
+#### Calico support
+If you choose to use Calico as your CNI with SELinux enabled, you will also need to install specific policies.
+
+The package to install is provided by Tigera [here](https://downloads.tigera.io/ee/archives/calico-selinux-1.0-1.el9.noarch.rpm).
+
+See Calico's [documentation](https://docs.tigera.io/calico-enterprise/latest/getting-started/install-on-clusters/requirements) for more details.
