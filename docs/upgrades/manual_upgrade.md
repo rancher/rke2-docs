@@ -21,7 +21,7 @@ Upgrades performed via the installation script or using our [automated upgrades]
 
 For an exhaustive and up-to-date list of channels, you can visit the [rke2 channel service API](https://update.rke2.io/v1-release/channels). For more technical details on how channels work, you can see the [channelserver project](https://github.com/rancher/channelserver).
 
-:::important
+:::warning
 When attempting to upgrade to a new version of RKE2, the [Kubernetes version skew policy](https://kubernetes.io/docs/setup/release/version-skew-policy/) applies. Ensure that your plan does not skip intermediate minor versions when upgrading. Nothing in the upgrade process will protect against unsupported changes to the Kubernetes version.
 :::
 
@@ -105,11 +105,12 @@ systemctl restart rke2-server
 systemctl restart rke2-agent
 ```
 
-**Note**: in case you enabled `rke2-selinux` you should also be able to upgrade rke2-selinux to the latest version using:
-
+:::note
+In case you enabled `rke2-selinux` you should also be able to upgrade rke2-selinux to the latest version using:
 ```sh
 yum update rke2-selinux
 ```
+:::
 
 ## Restarting rke2
 

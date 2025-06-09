@@ -77,7 +77,7 @@ RKE2 的性能取决于数据库的性能。由于 RKE2 嵌入式运行 etcd 并
 
 ## 网络
 
-:::tip 重要提示
+:::tip
 如果你的节点安装并启用了 NetworkManager，请[确保将其配置为忽略 CNI 管理的接口](../known_issues.md#networkmanager)。如果你的节点安装并启用了 Wicked，请[确保转发 sysctl 配置已启用](../known_issues.md#wicked)。
 :::
 

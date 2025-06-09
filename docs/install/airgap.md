@@ -24,7 +24,7 @@ If you have not yet set up a private Docker registry, refer to the [official Reg
 4. Follow the [Private Registry Configuration](private_registry.md) guide to create and configure the `registries.yaml` file.
 5. Proceed to the [Install RKE2](#2-install-rke2) section below.
 
-::: Info CNI plugins and vsphere extra images
+:::info CNI plugins and vsphere extra images
 `rke2-images.linux-amd64.tar.zst` includes images for all CNI plugin options. As an alternative, you can load `rke2-images-core.linux-amd64.tar.zst` and the CNI plugin specific tarball, e.g. `rke2-images-canal.linux-amd64.tar.zst` for canal. If enabling the vSphere CPI/CSI charts (--cloud-provider-name=rancher-vsphere), you must also load the `rke2-images-vsphere.linux-amd64.tar.zst` archive.
 :::
 
@@ -45,7 +45,7 @@ This method requires you to manually deploy the necessary images to each node, a
   ```
 3. Proceed to the [Install RKE2](#2-install-rke2) section below.
 
-::: Info CNI plugins and vsphere extra images
+:::info CNI plugins and vsphere extra images
 `rke2-images.linux-amd64.tar.zst` includes images for all CNI plugin options. As an alternative, you can load `rke2-images-core.linux-amd64.tar.zst` and the CNI plugin specific tarball, e.g. `rke2-images-canal.linux-amd64.tar.zst` for canal. If enabling the vSphere CPI/CSI charts (--cloud-provider-name=rancher-vsphere), you must also load the `rke2-images-vsphere.linux-amd64.tar.zst` archive.
 :::
 

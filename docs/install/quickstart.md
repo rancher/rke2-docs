@@ -108,7 +108,9 @@ systemctl start rke2-agent.service
 journalctl -u rke2-agent -f
 ```
 
-**Note:** Each machine must have a unique hostname. If your machines do not have unique hostnames, set the `node-name` parameter in the `config.yaml` file and provide a value with a valid and unique hostname for each node.
+:::note
+Each machine must have a unique hostname. If your machines do not have unique hostnames, set the `node-name` parameter in the `config.yaml` file and provide a value with a valid and unique hostname for each node.
+:::
 
 To read more about the config.yaml file, see the [Install Options documentation.](configuration.md#configuration-file)
 
@@ -116,7 +118,10 @@ To read more about the config.yaml file, see the [Install Options documentation.
 **Windows Support works with Calico or Flannel as the CNI for the RKE2 cluster**
 
 #### 0. Prepare the Windows Agent Node
-**Note** The Windows Server Containers feature needs to be enabled for the RKE2 agent to work.
+
+:::note
+The Windows Server Containers feature needs to be enabled for the RKE2 agent to work.
+:::
 
 Open a new Powershell window with Administrator privileges
 ```powershell
