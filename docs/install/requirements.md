@@ -36,12 +36,14 @@ See the [RKE2 Support Matrix](https://www.suse.com/suse-rke2/support-matrix/all-
 Windows Support requires choosing Calico or Flannel as the CNI for the RKE2 cluster
 :::
 
+:::note
+The Windows Server Containers feature needs to be enabled for the RKE2 Windows agent to work.
+:::
+
 The RKE2 Windows Node (Worker) agent has been tested and validated on the following operating systems, and their subsequent non-major releases:
 
 * Windows Server 2019 LTSC (amd64) (OS Build 17763.2061)
 * Windows Server 2022 LTSC (amd64) (OS Build 20348.169)
-
-**Note** The Windows Server Containers feature needs to be enabled for the RKE2 Windows agent to work.
 
 Open a new Powershell window with Administrator privileges
 ```powershell
@@ -89,7 +91,7 @@ RKE2 performance depends on the performance of the database, and since RKE2 runs
 
 ## Networking
 
-:::tip Important
+:::tip
 If your node has NetworkManager installed and enabled, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager). If your node has Wicked installed and enabled, [ensure that the forwarding sysctl config is enabled](../known_issues.md#wicked)
 :::
 
@@ -99,7 +101,9 @@ All nodes need to be able to reach other nodes over UDP port 8472 when Flannel V
 
 If you wish to utilize the metrics server, you will need to open port 10250 on each node.
 
-**Important:** The VXLAN port on nodes should not be exposed to the world as it opens up your cluster network to be accessed by anyone. Run your nodes behind a firewall/security group that disables access to port 8472.
+:::warning
+The VXLAN port on nodes should not be exposed to the world as it opens up your cluster network to be accessed by anyone. Run your nodes behind a firewall/security group that disables access to port 8472.
+:::
 
 ### Inbound Network Rules
 

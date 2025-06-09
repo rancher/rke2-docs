@@ -15,7 +15,10 @@ You can either deploy using the `rke2-windows-<BUILD_VERSION>-amd64-images.tar.g
 All files mentioned in the steps can be obtained from the assets of the desired released rke2 version [here](https://github.com/rancher/rke2/releases).
 
 ## Prepare the Windows Agent Node
-**Note** The Windows Server Containers feature needs to be enabled for the RKE2 agent to work.
+
+:::note
+The Windows Server Containers feature needs to be enabled for the RKE2 agent to work.
+:::
 
 Open a new Powershell window with Administrator privileges
 ```powershell
