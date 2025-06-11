@@ -32,6 +32,7 @@ jq -c '.Controls[].tests[].results[]' "$1" | while read -r result; do
     id=$(echo "$result" | jq -r '.test_number')
     title=$(echo "$result" | jq -r '.test_desc')
     audit=$(echo "$result" | jq -r '.audit')
+    audit_config=$(echo "$result" | jq -r '.AuditConfig')
     expected_result=$(echo "$result" | jq -r '.expected_result')
     actual_value=$(echo "$result" | jq -r '.actual_value')
     remediation=$(echo "$result" | jq -r '.remediation')
@@ -93,7 +94,11 @@ jq -c '.Controls[].tests[].results[]' "$1" | while read -r result; do
             echo 
             echo "**Audit:**"
             echo "\`\`\`bash"
-            echo "$audit"
+            if [[ -n "$audit_config" ]]; then
+                echo "$audit_config"
+            else
+                echo "$audit"
+            fi
             echo "\`\`\`"
             echo
             echo "**Expected Result:** $expected_result"
