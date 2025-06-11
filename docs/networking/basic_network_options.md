@@ -176,6 +176,9 @@ For more information about values available for the Calico chart, please refer t
 Calico requires the iptables or xtables-nft package  to be installed on the node.
 :::
 
+:::warning
+If you install Calico with SELinux enabled, please read this [section](../security/selinux.md#calico-support)
+:::
 </TabItem>
 <TabItem value="Flannel CNI Plugin" default>
 :::note
