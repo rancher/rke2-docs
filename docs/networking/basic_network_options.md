@@ -251,6 +251,20 @@ In case of IPv6 only configuration RKE2 needs to use `localhost` to access the l
 ::1       localhost
 ```
 
+In IPv6-only mode, Cilium does not support encapsulation of IPv6 traffic between nodes. Communication between pods on different nodes relies on the host's network to properly route packets to pod IPs. Cilium can be configured to automatically manage static routes between nodes with the following configuration::
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+---
+kind: HelmChartConfig
+metadata:
+  name: rke2-cilium
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    autoDirectNodeRoutes: true
+```
+
 ## Nodes Without a Hostname
 
 Some cloud providers, such as Linode, will create machines with "localhost" as the hostname and others may not have a hostname set at all. This can cause problems with domain name resolution. You can run RKE2 with the `node-name` parameter and this will pass the node name to resolve this issue.
