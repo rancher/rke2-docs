@@ -1742,7 +1742,7 @@ kube-scheduler-arg:
 
 **Audit:**
 ```bash
-
+cat /var/lib/rancher/rke2/server/db/etcd/config
 ```
 
 **Expected Result:** '.client-transport-security.cert-file' is equal to '/var/lib/rancher/rke2/server/tls/etcd/server-client.crt' AND '.client-transport-security.key-file' is equal to '/var/lib/rancher/rke2/server/tls/etcd/server-client.key'
@@ -1797,7 +1797,7 @@ has not been modified to use custom cert and key files.
 
 **Audit:**
 ```bash
-/bin/ps -fC etcd
+cat /var/lib/rancher/rke2/server/db/etcd/config
 ```
 
 **Expected Result:** 'ETCD_CLIENT_CERT_AUTH' is present OR '.client-transport-security.client-cert-auth' is equal to 'true'
@@ -1806,12 +1806,34 @@ has not been modified to use custom cert and key files.
 <summary><b>Returned Value:</b></summary>
 
 ```console
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-HOSTNAME=server-0
-ETCD_UNSUPPORTED_ARCH=
-FILE_HASH=d5609f0ec831c97c1e0961fde38f97c80853b0fb9bbe0c62db34c5829ac578c7
-NO_PROXY=.svc,.cluster.local,10.42.0.0/16,10.43.0.0/16
-HOME=/
+advertise-client-urls: https://10.10.10.100:2379
+client-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/server-ca.crt
+data-dir: /var/lib/rancher/rke2/server/db/etcd
+election-timeout: 5000
+experimental-initial-corrupt-check: true
+experimental-watch-progress-notify-interval: 5000000000
+heartbeat-interval: 500
+initial-advertise-peer-urls: https://10.10.10.100:2380
+initial-cluster: server-0-a6fd4758=https://10.10.10.100:2380
+initial-cluster-state: new
+listen-client-http-urls: https://127.0.0.1:2382
+listen-client-urls: https://127.0.0.1:2379,https://10.10.10.100:2379
+listen-metrics-urls: http://127.0.0.1:2381
+listen-peer-urls: https://127.0.0.1:2380,https://10.10.10.100:2380
+log-outputs:
+- stderr
+logger: zap
+name: server-0-a6fd4758
+peer-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/peer-ca.crt
+snapshot-count: 10000
 ```
 </details>
 
@@ -1829,7 +1851,7 @@ has not been modified to disable client certificate authentication.
 
 **Audit:**
 ```bash
-/bin/ps -fC etcd
+cat /var/lib/rancher/rke2/server/db/etcd/config
 ```
 
 **Expected Result:** 'ETCD_AUTO_TLS' is not present OR 'ETCD_AUTO_TLS' is present OR '.client-transport-security.auto-tls' is present
@@ -1838,12 +1860,34 @@ has not been modified to disable client certificate authentication.
 <summary><b>Returned Value:</b></summary>
 
 ```console
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-HOSTNAME=server-0
-ETCD_UNSUPPORTED_ARCH=
-FILE_HASH=d5609f0ec831c97c1e0961fde38f97c80853b0fb9bbe0c62db34c5829ac578c7
-NO_PROXY=.svc,.cluster.local,10.42.0.0/16,10.43.0.0/16
-HOME=/
+advertise-client-urls: https://10.10.10.100:2379
+client-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/server-ca.crt
+data-dir: /var/lib/rancher/rke2/server/db/etcd
+election-timeout: 5000
+experimental-initial-corrupt-check: true
+experimental-watch-progress-notify-interval: 5000000000
+heartbeat-interval: 500
+initial-advertise-peer-urls: https://10.10.10.100:2380
+initial-cluster: server-0-a6fd4758=https://10.10.10.100:2380
+initial-cluster-state: new
+listen-client-http-urls: https://127.0.0.1:2382
+listen-client-urls: https://127.0.0.1:2379,https://10.10.10.100:2379
+listen-metrics-urls: http://127.0.0.1:2381
+listen-peer-urls: https://127.0.0.1:2380,https://10.10.10.100:2380
+log-outputs:
+- stderr
+logger: zap
+name: server-0-a6fd4758
+peer-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/peer-ca.crt
+snapshot-count: 10000
 ```
 </details>
 
@@ -1863,7 +1907,7 @@ client-transport-security:
 
 **Audit:**
 ```bash
-
+cat /var/lib/rancher/rke2/server/db/etcd/config
 ```
 
 **Expected Result:** '.peer-transport-security.cert-file' is equal to '/var/lib/rancher/rke2/server/tls/etcd/peer-server-client.crt' AND '.peer-transport-security.key-file' is equal to '/var/lib/rancher/rke2/server/tls/etcd/peer-server-client.key'
@@ -1918,7 +1962,7 @@ has not been modified to use custom peer cert and key files.
 
 **Audit:**
 ```bash
-/bin/ps -fC etcd
+cat /var/lib/rancher/rke2/server/db/etcd/config
 ```
 
 **Expected Result:** 'ETCD_PEER_CLIENT_CERT_AUTH' is present OR '.peer-transport-security.client-cert-auth' is equal to 'true'
@@ -1927,12 +1971,34 @@ has not been modified to use custom peer cert and key files.
 <summary><b>Returned Value:</b></summary>
 
 ```console
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-HOSTNAME=server-0
-ETCD_UNSUPPORTED_ARCH=
-FILE_HASH=d5609f0ec831c97c1e0961fde38f97c80853b0fb9bbe0c62db34c5829ac578c7
-NO_PROXY=.svc,.cluster.local,10.42.0.0/16,10.43.0.0/16
-HOME=/
+advertise-client-urls: https://10.10.10.100:2379
+client-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/server-ca.crt
+data-dir: /var/lib/rancher/rke2/server/db/etcd
+election-timeout: 5000
+experimental-initial-corrupt-check: true
+experimental-watch-progress-notify-interval: 5000000000
+heartbeat-interval: 500
+initial-advertise-peer-urls: https://10.10.10.100:2380
+initial-cluster: server-0-a6fd4758=https://10.10.10.100:2380
+initial-cluster-state: new
+listen-client-http-urls: https://127.0.0.1:2382
+listen-client-urls: https://127.0.0.1:2379,https://10.10.10.100:2379
+listen-metrics-urls: http://127.0.0.1:2381
+listen-peer-urls: https://127.0.0.1:2380,https://10.10.10.100:2380
+log-outputs:
+- stderr
+logger: zap
+name: server-0-a6fd4758
+peer-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/peer-ca.crt
+snapshot-count: 10000
 ```
 </details>
 
@@ -1950,7 +2016,7 @@ has not been modified to disable peer client certificate authentication.
 
 **Audit:**
 ```bash
-/bin/ps -fC etcd
+cat /var/lib/rancher/rke2/server/db/etcd/config
 ```
 
 **Expected Result:** 'ETCD_PEER_AUTO_TLS' is not present OR 'ETCD_PEER_AUTO_TLS' is present OR '.peer-transport-security.auto-tls' is present
@@ -1959,12 +2025,34 @@ has not been modified to disable peer client certificate authentication.
 <summary><b>Returned Value:</b></summary>
 
 ```console
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-HOSTNAME=server-0
-ETCD_UNSUPPORTED_ARCH=
-FILE_HASH=d5609f0ec831c97c1e0961fde38f97c80853b0fb9bbe0c62db34c5829ac578c7
-NO_PROXY=.svc,.cluster.local,10.42.0.0/16,10.43.0.0/16
-HOME=/
+advertise-client-urls: https://10.10.10.100:2379
+client-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/server-ca.crt
+data-dir: /var/lib/rancher/rke2/server/db/etcd
+election-timeout: 5000
+experimental-initial-corrupt-check: true
+experimental-watch-progress-notify-interval: 5000000000
+heartbeat-interval: 500
+initial-advertise-peer-urls: https://10.10.10.100:2380
+initial-cluster: server-0-a6fd4758=https://10.10.10.100:2380
+initial-cluster-state: new
+listen-client-http-urls: https://127.0.0.1:2382
+listen-client-urls: https://127.0.0.1:2379,https://10.10.10.100:2379
+listen-metrics-urls: http://127.0.0.1:2381
+listen-peer-urls: https://127.0.0.1:2380,https://10.10.10.100:2380
+log-outputs:
+- stderr
+logger: zap
+name: server-0-a6fd4758
+peer-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/peer-ca.crt
+snapshot-count: 10000
 ```
 </details>
 
@@ -1984,7 +2072,7 @@ peer-transport-security:
 
 **Audit:**
 ```bash
-/bin/ps -fC etcd
+cat /var/lib/rancher/rke2/server/db/etcd/config
 ```
 
 **Expected Result:** 'ETCD_TRUSTED_CA_FILE' is present OR '.peer-transport-security.trusted-ca-file' is equal to '/var/lib/rancher/rke2/server/tls/etcd/peer-ca.crt'
@@ -1993,12 +2081,34 @@ peer-transport-security:
 <summary><b>Returned Value:</b></summary>
 
 ```console
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-HOSTNAME=server-0
-ETCD_UNSUPPORTED_ARCH=
-FILE_HASH=d5609f0ec831c97c1e0961fde38f97c80853b0fb9bbe0c62db34c5829ac578c7
-NO_PROXY=.svc,.cluster.local,10.42.0.0/16,10.43.0.0/16
-HOME=/
+advertise-client-urls: https://10.10.10.100:2379
+client-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/server-ca.crt
+data-dir: /var/lib/rancher/rke2/server/db/etcd
+election-timeout: 5000
+experimental-initial-corrupt-check: true
+experimental-watch-progress-notify-interval: 5000000000
+heartbeat-interval: 500
+initial-advertise-peer-urls: https://10.10.10.100:2380
+initial-cluster: server-0-a6fd4758=https://10.10.10.100:2380
+initial-cluster-state: new
+listen-client-http-urls: https://127.0.0.1:2382
+listen-client-urls: https://127.0.0.1:2379,https://10.10.10.100:2379
+listen-metrics-urls: http://127.0.0.1:2381
+listen-peer-urls: https://127.0.0.1:2380,https://10.10.10.100:2380
+log-outputs:
+- stderr
+logger: zap
+name: server-0-a6fd4758
+peer-transport-security:
+  cert-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/rke2/server/tls/etcd/peer-server-client.key
+  trusted-ca-file: /var/lib/rancher/rke2/server/tls/etcd/peer-ca.crt
+snapshot-count: 10000
 ```
 </details>
 
