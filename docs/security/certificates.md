@@ -4,32 +4,43 @@ title: Certificate Management
 
 ## Client and Server Certificates
 
-RKE2 client and server certificates are valid for 365 days from their date of issuance. Any certificates that are expired, or within 90 days of expiring, are automatically renewed every time RKE2 starts.
+RKE2 client and server certificates are valid for 365 days from their date of issuance.  Any certificates that are expired or within 120 days to expire are automatically renewed every time RKE2 starts. This renewal extends the lifetime of the existing certs. If you require new certificates and keys, use the [rke2 CLI](#rotating-client-and-server-certificates-manually)
 
 :::info CERTIFICATE EXPIRATION WARNING
-When a certificate is within 90 days of expiring a Kubernetes Warning event with reason: `CertificateExpirationWarning` is created
+When a certificate is within 120 days of expiring a Kubernetes Warning event with reason: `CertificateExpirationWarning` is created
+:::
+
+:::info Version Gate
+Output format is configurable as of the January 2025 releases: v1.32.0+rke2r1, v1.31.5+rke2r1, v1.30.9+rke2r1, v1.30.13+rke2r1
+
+Prior to the May 2025 releases: v1.33.1+rke2r1, v1.32.5+rke2r1, v1.31.9+rke2r1, v1.30.13+rke2r1, alerts and rotation were triggered at 90 days, instead of 120 days.
 :::
 
 
 ### Checking expiration dates
 
+:::info Version Gate
+A new format with more information is available as of the May 2025 releases: v1.33.1+rke2r1, v1.32.5+rke2r1, v1.31.9+rke2r1, v1.30.13+rke2r1
+:::
+
 To check the node certificates and their expiration date use the `rke2 certificate check --output table`:
 
 ```bash
-CERTIFICATE                 SUBJECT                                            STATUS  EXPIRES
------------                 -------                                            ------  -------
-client-kube-proxy.crt       CN=system:kube-proxy                               OK      2026-04-03T10:50:43Z
-client-kube-proxy.crt       CN=rke2-client-ca@1743677343                       OK      2035-04-01T10:49:03Z
-client-kubelet.crt          CN=system:node:vm1,O=system:nodes                  OK      2026-04-03T10:50:43Z
-client-kubelet.crt          CN=rke2-client-ca@1743677343                       OK      2035-04-01T10:49:03Z
-serving-kubelet.crt         CN=vm1                                             OK      2026-04-03T10:50:43Z
-serving-kubelet.crt         CN=rke2-server-ca@1743677343                       OK      2035-04-01T10:49:03Z
-client-rke2-controller.crt  CN=system:rke2-controller                          OK      2026-04-03T10:50:43Z
-client-rke2-controller.crt  CN=rke2-client-ca@1743677343                       OK      2035-04-01T10:49:03Z
+FILENAME                     SUBJECT                     USAGES       EXPIRES                  RESIDUAL TIME   STATUS
+--------                     -------                     ------       -------                  -------------   ------
+client-kube-proxy.crt        system:kube-proxy           ClientAuth   Jun 12, 2026 11:12 UTC   1 year          OK
+client-kube-proxy.crt        rke2-client-ca@1749726675   CertSign     Jun 10, 2035 11:11 UTC   10 years        OK
+client-kubelet.crt           system:node:ip-10-11-0-14   ClientAuth   Jun 12, 2026 11:12 UTC   1 year          OK
+client-kubelet.crt           rke2-client-ca@1749726675   CertSign     Jun 10, 2035 11:11 UTC   10 years        OK
+serving-kubelet.crt          ip-10-11-0-14               ServerAuth   Jun 12, 2026 11:12 UTC   1 year          OK
+serving-kubelet.crt          rke2-server-ca@1749726675   CertSign     Jun 10, 2035 11:11 UTC   10 years        OK
+client-rke2-controller.crt   system:rke2-controller      ClientAuth   Jun 12, 2026 11:12 UTC   1 year          OK
+client-rke2-controller.crt   rke2-client-ca@1749726675   CertSign     Jun 10, 2035 11:11 UTC   10 years        OK
+
 ```
 
 :::info SAME CERTIFICATE TWICE
-Each certificate file (CERTIFICATE column) contains two certificates, including the certificate itself and its issuing Certificate Authority (CA)
+Each certificate file (FILENAME column) contains at least two certificates - the leaf (or end entity) client/server certificate, any intermediate Certificate Authority certificates, and the root Certificate Authority certificate.
 :::
 
 In case of unexpected output, please use `--debug` flag to get more information or configure the correct data directory with `--data-dir` flag.
