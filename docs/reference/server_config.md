@@ -135,6 +135,7 @@ The following options must be set to the same value on all servers in the cluste
 | profile | Validate system configuration against the selected benchmark (valid items: cis, cis-1.23 (deprecated))  | RKE2_CIS_PROFILE |
 | audit-policy-file | Path to the file that defines the audit policy configuration  | RKE2_AUDIT_POLICY_FILE |
 | pod-security-admission-config-file | Path to the file that defines Pod Security Admission configuration  | RKE2_POD_SECURITY_ADMISSION_CONFIG_FILE |
+| secrets-encryption-provider | Encryption provider to use | N/A |
 ### Experimental
 | Flag | Description | Environment Variable |
 | --- | --- | --- |

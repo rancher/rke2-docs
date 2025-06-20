@@ -7,9 +7,38 @@ title: Secrets Encryption
 RKE2 supports [encrypting secrets at rest](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/), and will do the following automatically:
 
 - Generate an AES-CBC key
-- Generate an encryption config file with the generated key:
+- Generate an encryption config file with the generated key
+- Pass the config to the Kubernetes APIServer as encryption-provider-config
 
-```yaml
+### Choosing Encryption Provider
+
+:::info Version Gate
+Available as of the April 2025 releases: v1.30.12+rke2r1, v1.31.8+rke2r1, v1.32.4+rke2r1, v1.33.0+rke2r1
+:::
+
+:::danger FIPS Compliance
+FIPS 140-2 compliance is only available with the `aescbc` provider.
+:::
+
+Using the `--secrets-encryption-provider` flag, you can choose which encryption provider to use. The default is `aescbc`. 
+
+RKE2 supports the following [encryption providers](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#providers):
+- `aescbc`: AES-CBC with PKCS#7 padding
+- `secretbox`: XSalsa20 and Poly1305
+
+
+
+#### Migrating Providers
+You can migrate from the `aescbc` provider to the `secretbox` provider by following these steps:
+1. Ensure that the `secretbox` provider is supported by your RKE2 version.
+2. Update/Add the `secrets-encryption-provider` flag in your RKE2 configuration file to `secretbox`.
+3. Rotate the encryption keys, following the [Encryption Key Rotation](#encryption-key-rotation) section below.
+
+### Generated encryption config file
+
+Below is an example of the encryption config file that RKE2 generates with the default `aescbc` provider:
+```json
+#/var/lib/rancher/rke2/server/cred/encryption-config.json
 {
   "kind": "EncryptionConfiguration",
   "apiVersion": "apiserver.config.k8s.io/v1",
@@ -38,15 +67,9 @@ RKE2 supports [encrypting secrets at rest](https://kubernetes.io/docs/tasks/admi
 }
 ```
 
-- Pass the config to the Kubernetes APIServer as encryption-provider-config
-
-Once enabled any created secret will be encrypted with this key. Note that if you disable encryption then any encrypted secrets will not be readable until you enable encryption again using the same key.
+### 
 
 ## Secrets Encryption Tool
-
-:::info Version Gate
-Available as of [v1.21.8+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.21.8%2Brke2r1)
-:::
 
 RKE2 contains a subcommand `secrets-encrypt`, which allows administrators to perform the following tasks:
 
@@ -58,10 +81,10 @@ RKE2 contains a subcommand `secrets-encrypt`, which allows administrators to per
 Failure to follow proper procedure when rotating secrets encryption keys can cause permanent data loss. [Creating a snapshot](../datastore/backup_restore.md) before rotating is recommended. Proceed with caution.
 :::
 
-<!-- ### New Encryption Key Rotation
+### Encryption Key Rotation
 
-:::warning Experimental Version Gate
-Available as of [v1.28.1+rke2r1](https://github.com/rancher/rke2/releases/tag/v1.28.1%2Brke2r1). This new version of the tool utilizes K8s [automatic config reloading](https://kubernetes.io/docs/tasks/administer-cluster/encrypt-data/#configure-automatic-reloading) which is currently in beta. GA is expected in v1.29.0
+:::info Version Gate
+Available as of the September 2024 releases: v1.29.9+rke2r1, v1.30.5+rke2r1, v1.31.1+rke2r1
 
 For older releases, see [Encryption Key Rotation Classic](#encryption-key-rotation-classic)
 :::
@@ -104,9 +127,6 @@ In this example, 3 servers are used to for a HA cluster, referred to as S1, S2, 
     Encryption Status: Enabled
     Current Rotation Stage: reencrypt_finished
     ```
-    :::info
-    RKE2 will reencrypt ~5 secrets per second. Clusters with large # of secrets can take several minutes to reencrypt. You can track progress in the server logs.
-    ::: 
 
 3. Sequentially Restart RKE2 on S1, S2, S3
     ```
@@ -116,9 +136,13 @@ In this example, 3 servers are used to for a HA cluster, referred to as S1, S2, 
 
 
 </TabItem>
-</Tabs> -->
+</Tabs>
 
 ### Encryption Key Rotation Classic
+
+:::tip New Procedure
+If using RKE2 versions newer than v1.30.1+rke2r1, we recommend using the [Encryption Key Rotation](#encryption-key-rotation) instead.
+:::
 
 <Tabs groupId="se" queryString>
 <TabItem value="Single-Server" default>
