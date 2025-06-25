@@ -84,6 +84,21 @@ node-taint:
   - charlie=delta:NoSchedule
 ```
 
+## Kubelet configuration
+:::info Version Gate
+The drop-in directory for kubelet configuration files or the config file (options 1 and 2 below) are only available in v1.32 and above. For lower minors, you should use the kubelet args directly (option number 3 below)
+:::
+
+Following on from upstream behavior, kubelet configuration can be changed in different ways with a specific [order of precedence](https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/#kubelet-configuration-merging-order). 
+
+RKE2 uses a default kubelet configuration which is stored under `/var/lib/rancher/rke2/agent/etc/kubelet.conf.d/00-rke2-defaults.conf`. If you would like to change the default configuration parameters, there are three ways to do so:
+
+1. (Recommended) Drop a config file in `/var/lib/rancher/rke2/agent/etc/kubelet.conf.d/`
+2. By using the flag `--kubelet-arg=config=$PATHTOFILE`, where `$PATHTOFILE` is the path to a file that includes kubelet config parameters (e.g. `/etc/rancher/rke2/kubelet.conf`) or the flag `--kubelet-arg=config-dir=$PATHTODIR`, where `$PATHTODIR` is the path to a directory which can include files that contain kubelet config parameters (e.g. `/etc/rancher/rke2/kubelet.conf.d`)
+3. By using the flag `--kubelet-arg=$FLAG`, where `$FLAG` is a kubelet configuration parameter (e.g. `image-gc-high-threshold=100`). 
+
+
+
 ## Configuring the Linux Installation Script
 
 As mentioned in the [Quick-Start Guide](quickstart.md), you can use the installation script available at https://get.rke2.io to install RKE2 as a service.
