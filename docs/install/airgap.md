@@ -172,7 +172,7 @@ You will also need the versions of system-upgrade-controller and kubectl that ar
 
 ```
 rancher/system-upgrade-controller:v0.15.2
-rancher/kubectl:vv1.30.3
+rancher/kubectl:v1.30.3
 ```
 
 Once you have added the necessary rancher/rke2-upgrade, rancher/system-upgrade-controller, and rancher/kubectl images to your private registry, follow the [automated upgrades](../upgrades/automated_upgrade.md) guide.

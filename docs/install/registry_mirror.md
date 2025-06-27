@@ -16,7 +16,7 @@ This option enables the embedded mirror for use on all nodes in the cluster.
 When enabled at a cluster level, all nodes will host a local OCI registry on port 6443,
 and publish a list of available images via a peer to peer network on port 5001.
 Any image available in the containerd image store on any node, can be pulled by other cluster members without access to an external registry.
-Images imported via [air-gap image tar files](./airgap.md#prepare-the-images-directory-and-airgap-image-tarball) are pinned in containerd to
+Images imported via [air-gap image tar files](airgap.md?airgap-load-images=Manually+Deploy+Images#prepare-the-images-directory-and-airgap-image-tarball) are pinned in containerd to
 ensure that they remain available and are not pruned by Kubelet garbage collection.
 
 ### Requirements
