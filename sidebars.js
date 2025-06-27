@@ -56,6 +56,7 @@ module.exports = {
     },
     'architecture',
     'cluster_access',
+    'import-images',
     {
       type: 'category',
       label: 'Networking',
