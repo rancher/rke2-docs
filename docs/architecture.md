@@ -1,10 +1,9 @@
 ---
 title: Anatomy of a Next Generation Kubernetes Distribution
 sidebar_label: Architecture
-weight: 204
 ---
 
-### Architecture Overview
+## Architecture Overview
 
 With RKE2 we take lessons learned from developing and maintaining our lightweight [Kubernetes][io-kubernetes]
 distribution, [K3s][io-k3s], and apply them to build an enterprise-ready distribution with [K3s][io-k3s] ease-of-use.
@@ -35,9 +34,9 @@ RKE2 brings together a number of Open Source technologies to make this all work:
 
 All of these, except the NGINX Ingress Controller, are compiled and statically linked with [Go+BoringCrypto][gh-goboring].
 
-### Process Lifecycle
+## Process Lifecycle
 
-#### Content Bootstrap
+### Content Bootstrap
 
 RKE2 sources binaries and manifests to run both _server_ and _agent_ nodes from the RKE2 Runtime image.
 This means RKE2 scans `/var/lib/rancher/rke2/agent/images/*.tar` for the [`rancher/rke2-runtime`](https://hub.docker.com/r/rancher/rke2-runtime/tags)
@@ -65,61 +64,61 @@ The following ops tooling is also provided by the runtime image:
 After the binaries have been extracted RKE2 will then extract charts from the image
 into the `/var/lib/rancher/rke2/server/manifests` directory.
 
-#### Initialize Server
+### Initialize Server
 
 In the embedded K3s engine servers are specialized agent processes which means that the following startup will be
 deferred until the node container runtime has started.
 
-##### Prepare Components
+#### Prepare Components
 
-###### `kube-apiserver`
+##### `kube-apiserver`
 
 Pull the `kube-apiserver` image, if not present already, and spin up a goroutine to wait for `etcd`
 and then write the static pod definition in `/var/lib/rancher/rke2/agent/pod-manifests/`.
 
-###### `kube-controller-manager`
+##### `kube-controller-manager`
 
 Pull the `kube-controller-manager` image, if not present already, and spin up a goroutine to wait for `kube-apiserver`
 and then write the static pod definition in `/var/lib/rancher/rke2/agent/pod-manifests/`.
 
-###### `kube-scheduler`
+##### `kube-scheduler`
 
 Pull the `kube-scheduler` image, if not present already, and spin up a goroutine to wait for `kube-apiserver`
 and then write the static pod definition in `/var/lib/rancher/rke2/agent/pod-manifests/`.
 
-##### Start Cluster
+#### Start Cluster
 
 Spin up an HTTP server in a goroutine to listen for other cluster servers/agents then initialize/join the cluster.
 
-###### `etcd`
+##### `etcd`
 
 Pull the `etcd` image, if not present already, and spin up a goroutine to wait for the `kubelet`
 and then write the static pod definition in `/var/lib/rancher/rke2/agent/pod-manifests/`.
 
-###### `helm-controller`
+##### `helm-controller`
 
 Spin up the goroutine to start the embedded `helm-controller` after waiting for `kube-apiserver` to be ready.
 
-#### Initialize Agent
+### Initialize Agent
 
 The agent process entry point. For server processes the embedded K3s engine invokes this directly.
 
-##### Container Runtime
+#### Container Runtime
 
-###### `containerd`
+##### `containerd`
 
 Spawn the `containerd` process and listen for termination. If `containerd` exits then the `rke2` process will also exit.
 
-##### Node Agent
+#### Node Agent
 
-###### `kubelet`
+##### `kubelet`
 
 Spawn and supervise the `kubelet` process. If `kubelet` exits then `rke2` will attempt to restart it.
 Once the `kubelet` is running it will start any available static pods. For servers this means that `etcd`
 and `kube-apiserver` will start, in succession, allowing the remaining components started via static pod
 to connect to the `kube-apiserver` and begin their processing.
 
-##### Server Charts
+#### Server Charts
 
 On server nodes, the `helm-controller` can now apply to the cluster any charts found in `/var/lib/rancher/rke2/server/manifests`.
 
@@ -130,7 +129,7 @@ On server nodes, the `helm-controller` can now apply to the cluster any charts f
 - rke2-metrics-server.yaml (deployment)
 
 
-#### Daemon Process
+### Daemon Process
 
 The RKE2 process will now run indefinitely until it receives a SIGTERM or SIGKILL or if the `containerd` process exits.
 

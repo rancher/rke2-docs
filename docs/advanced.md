@@ -1,6 +1,5 @@
 ---
-# sidebar_label: 
-title: "Advanced Options and Configuration"
+title: Advanced Options and Configuration
 ---
 
 
@@ -102,7 +101,7 @@ RKE2 agents can be configured with the options `node-label` and `node-taint` whi
 
 If you want to change node labels and taints after node registration you should use `kubectl`. Refer to the official Kubernetes documentation for details on how to add [taints](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/) and [node labels](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/#add-a-label-to-a-node).
 
-# How Agent Node Registration Works
+## How Agent Node Registration Works
 
 Agent nodes are registered via a websocket connection initiated by the `rke2 agent` process, and the connection is maintained by a client-side load balancer running as part of the agent process.
 
@@ -293,7 +292,7 @@ kube-scheduler-extra-env: "TZ=America/Los_Angeles"
 
 The [NVIDIA operator](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/index.html) allows administrators of Kubernetes clusters to manage GPUs just like CPUs. It includes everything needed for pods to be able to operate GPUs.
 
-### Host OS requirements ###
+### Host OS requirements
 
 To expose the GPU to the pod correctly, the NVIDIA kernel drivers and the `libnvidia-ml` library must be correctly installed in the host OS. The NVIDIA Operator can automatically install drivers and libraries on some operating systems; check the NVIDIA documentation for information on [supported operating system releases](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms). Installation of the NVIDIA components on your host OS is out of the scope of this document; reference the NVIDIA documentation for instructions.
 

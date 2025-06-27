@@ -1,5 +1,5 @@
 ---
-title: "Import images"
+title: Import images
 ---
 
 Container images are cached locally on each node by the containerd image store. Images can be pulled from the registry as needed by pods, preloaded via image pull, or imported from an image tarball.

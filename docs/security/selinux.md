@@ -9,7 +9,7 @@ for the non-standard location(s) which containerd is installed and places persis
 
 Note: In some circumstances, a reboot of the node may be required after installing the rke2-selinux package and before starting the rke2 service. If you encounter denials in your selinux audit log despite installation of the rke2-selinux and container-selinux packages, please reboot the node.
 
-### Custom Context Labels
+## Custom Context Labels
 
 RKE2 runs control-plane services as static pods which require access to multiple
 [`container_var_lib_t`](https://github.com/containers/container-selinux/blob/RHEL7.5/container.te#L59)
@@ -21,7 +21,7 @@ introduces the [`rke2_service_db_t`](https://github.com/rancher/rke2-selinux/blo
 [`rke2_service_t`](https://github.com/rancher/rke2-selinux/blob/v0.3.latest.1/rke2.te#L9-L13) context labels for
 read-write and read-only access, respectively. These labels will only be applied to the RKE2 control-plane static pods.  
 
-### Specific OS Requirements
+## Specific OS Requirements
 
 <Tabs groupId="os-reqs" queryString>
 <TabItem value="Amazon Linux 2">
@@ -35,7 +35,7 @@ sudo amazon-linux-extras enable selinux-ng; sudo yum install selinux-policy-targ
 </Tabs>
 
 
-### Configuration
+## Configuration
 
 RKE2 support for SELinux amounts to a single configuration item, the `--selinux` boolean flag. This is a pass-through
 to the [`enable_selinux` boolean in the cri section of the containerd/cri toml](https://github.com/containerd/cri/blob/release/1.4/docs/config.md).

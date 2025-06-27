@@ -5,7 +5,7 @@ title: Air-Gap Install
 This guide walks you through installing RKE2 in an air-gapped environment using a three-step process.
 
 
-# 1. Load Images
+## 1. Load Images
 
 Each image loading method has different requirements and is suited for different air-gapped scenarios. Choose the method that best fits your infrastructure and security requirements.
 

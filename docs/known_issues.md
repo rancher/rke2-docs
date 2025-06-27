@@ -1,6 +1,6 @@
 ---
-sidebar_label: "Known Issues and Limits"
-title: "Known Issues and Limitations"
+sidebar_label: Known Issues and Limits
+title: Known Issues and Limitations
 ---
 
 This section contains current known issues and limitations with rke2. If you come across issues with rke2 not documented here, please open a new issue [here](https://github.com/rancher/rke2/issues).

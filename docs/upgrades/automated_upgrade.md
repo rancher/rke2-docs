@@ -2,7 +2,7 @@
 title: Automated Upgrades
 ---
 
-### Overview
+## Overview
 
 You can manage rke2 cluster upgrades using Rancher's system-upgrade-controller. This is a Kubernetes-native approach to cluster upgrades. It leverages a [custom resource definition (CRD)](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#custom-resources), the `plan`, and a [controller](https://kubernetes.io/docs/concepts/architecture/controller/) that schedules upgrades based on the configured plans.
 
@@ -34,7 +34,7 @@ When attempting to upgrade to a new version of RKE2, the [Kubernetes version ske
 Automated upgrades are currently not supported on Windows nodes
 :::
 
-### Install the system-upgrade-controller
+## Install the system-upgrade-controller
 The system-upgrade-controller can be installed as a deployment into your cluster. The deployment requires a service-account, clusterRoleBinding, and a configmap. To install these components, run the following command:
 ```
 kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/latest/download/system-upgrade-controller.yaml
@@ -47,7 +47,7 @@ kubectl apply -f https://github.com/rancher/system-upgrade-controller/releases/l
 ```
 
 
-### Configure plans
+## Configure plans
 It is recommended that you minimally create two plans: a plan for upgrading server (master / control-plane) nodes and a plan for upgrading agent (worker) nodes. As needed, you can create additional plans to control the rollout of the upgrade across nodes. The following two example plans will upgrade your cluster to rke2 v1.30.1+rke2r1. Once the plans are created, the controller will pick them up and begin to upgrade your cluster.
 ```
 # Server plan

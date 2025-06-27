@@ -1,5 +1,5 @@
 ---
-title: "Logging"
+title: Logging
 ---
 
 When running with systemd, logs are sent to journald and can be viewed using `journalctl -u rke2-server` or `journalctl -u rke2-agent`. Some systemd configurations may also write combined logs to `/var/log/syslog`, in which case the rke2 logs will also be available there.

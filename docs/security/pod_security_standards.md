@@ -8,7 +8,7 @@ This document describes how RKE2 configures `PodSecurityStandards` and `NetworkP
 This document applies to RKE2 v1.25 and newer, please refer to the [Pod Security Policies Documentation](./pod_security_policies.md) for the default policy information for RKE2 v1.24 and older.
 :::
 
-#### Pod Security Standards
+## Pod Security Standards
 
 Starting from Kubernetes version v1.25.0, Pod Security Policies (PSP) are totally removed from Kubernetes, and replaced by [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/). A default Pod Security Admission config file will be added to the cluster upon startup as follows:
 
@@ -20,8 +20,8 @@ If running without a `profile` configuration:
 
 RKE2 will put this configuration file at `/etc/rancher/rke2/rke2-pss.yaml`, the content of the configuration file varies according to the cis mode which you started rke2:
 
-**CIS Mode**
-
+<Tabs>
+<TabItem value="CIS Mode">
 ```yaml
 apiVersion: apiserver.config.k8s.io/v1
 kind: AdmissionConfiguration
@@ -42,8 +42,8 @@ plugins:
       runtimeClasses: []
       namespaces: [kube-system, cis-operator-system, tigera-operator]
 ```
-
-**Non CIS Mode**
+</TabItem>
+<TabItem value="Non CIS Mode">
 
 ```yaml
 apiVersion: apiserver.config.k8s.io/v1
@@ -61,12 +61,14 @@ plugins:
       runtimeClasses: []
       namespaces: []
 ```
+</TabItem>
+</Tabs>
 
 After placing this configuration file, rke2 will start the kube-apiserver with the following flag `--admission-control-config-file` which will be set to the path of the PSA config file.
 
 If you want to override the default pod security standard configuration file, you can pass `pod-security-admission-config-file: <path-to-custom-psa-config-file>` to the RKE2 config file.
 
-#### Network Policies
+## Network Policies
 
 When RKE2 is run with the `profile: cis-1.23` parameter, it will apply 2 network policies to the `kube-system`, `kube-public`, and `default` namespaces and applies associated annotations. The same logic applies to these policies and annotations as the PSPs. On start, the annotations for each namespace are checked for existence and if they exist, RKE2 takes no action. If the annotation doesn't exist, RKE2 checks to see if the policy exists and if it does, recreates it.
 

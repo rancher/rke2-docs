@@ -8,7 +8,7 @@ RKE2 can be installed to a system in a number of ways, two of which are the pref
 
 This document explains these installation methods in greater detail.
 
-### Tarball
+## Tarball
 
 To install RKE2 via install you first need to get the install script. This can be done in a number of ways.
 
@@ -46,7 +46,7 @@ Tarball structure / contents
 
 To configure the system any further, you'll want to reference either the [server](../reference/server_config.md) or [agent](../reference/linux_agent_config.md) documentation.
 
-### RPM
+## RPM
 
 To start the RPM install process, you need to get the installation script which is covered above. The script will check your system for `rpm`, `yum`, or `dnf` and if any of those exist, it determines that the system is Redhat based and starts the RPM install process.
 
@@ -100,6 +100,6 @@ yum -y install rke2-agent
 
 The RPM will install a corresponding `rke2-server.service` or `rke2-agent.service` systemd unit that can be invoked like: `systemctl start rke2-server`. Make sure that you configure `rke2` before you start it, by following the `Configuration File` instructions below.
 
-### Manual
+## Manual
 
 The RKE2 binary is statically compiled and linked which allows for the RKE2 binary to be portable across Linux distributions without the concern for dependency issues. The simplest installation is to download the binary, make sure it's executable, and copy it into the `${PATH}`, generally `/usr/local/bin`. After first execution, RKE2 will create all necessary directories and files. To configure the system any further, you'll want to reference the [config file](configuration.md) documentation.
