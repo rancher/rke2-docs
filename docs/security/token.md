@@ -2,8 +2,6 @@
 title: Token Management
 ---
 
-# RKE2 token
-
 RKE2 uses tokens to secure the node join process and to encrypt confidential information that is persisted to the datastore. Tokens authenticate the cluster to the joining node, and the node to the cluster.
 
 ## Token Format

@@ -5,9 +5,11 @@ title: Manual Upgrades
 
 You can upgrade rke2 by using the installation script, by manually installing the binary of the desired version, or by using rpm upgrades in case of rpm installation.
 
->**Note:** Upgrade the server nodes first, one at a time. Once all servers have been upgraded, you may then upgrade agent nodes.
+:::tip
+Upgrade the server nodes first, one at a time. Once all servers have been upgraded, you may then upgrade agent nodes.
+:::
 
-### Release Channels
+## Release Channels
 
 Upgrades performed via the installation script or using our [automated upgrades](automated_upgrade.md) feature can be tied to different release channels. The following channels are available:
 
@@ -19,12 +21,12 @@ Upgrades performed via the installation script or using our [automated upgrades]
 
 For an exhaustive and up-to-date list of channels, you can visit the [rke2 channel service API](https://update.rke2.io/v1-release/channels). For more technical details on how channels work, you can see the [channelserver project](https://github.com/rancher/channelserver).
 
-:::tip
+:::important
 When attempting to upgrade to a new version of RKE2, the [Kubernetes version skew policy](https://kubernetes.io/docs/setup/release/version-skew-policy/) applies. Ensure that your plan does not skip intermediate minor versions when upgrading. Nothing in the upgrade process will protect against unsupported changes to the Kubernetes version.
 :::
 
 
-### Upgrade rke2 Using the Installation Script
+## Upgrade rke2 Using the Installation Script
 
 To upgrade rke2 from an older version you can re-run the installation script using the same flags, for example:
 
@@ -59,7 +61,7 @@ systemctl restart rke2-server
 systemctl restart rke2-agent
 ```
 
-### Manually Upgrade rke2 Using the Binary
+## Manually Upgrade rke2 Using the Binary
 
 Or to manually upgrade rke2:
 
@@ -67,7 +69,7 @@ Or to manually upgrade rke2:
 2. Copy the downloaded binary to `/usr/local/bin/rke2` for tarball installed rke2, and `/usr/bin` for rpm installed rke2
 3. Restart the rke2-server or rke2-agent service
 
-### Upgrade rke2 Using the RPM upgrades
+## Upgrade rke2 Using the RPM upgrades
 
 In case of RPM installation, its expected to upgrade rke2 from an older version using rpm upgrades, for example:
 
@@ -109,7 +111,7 @@ systemctl restart rke2-agent
 yum update rke2-selinux
 ```
 
-### Restarting rke2
+## Restarting rke2
 
 Restarting rke2 is supported by the installation script for systemd.
 

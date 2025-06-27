@@ -1,10 +1,11 @@
 ---
 slug: "/"
 sidebar_position: 1
-title: "Introduction"
+title: Introduction
 ---
 
-![](/img/logo-horizontal-rke2.svg#gh-light-mode-only)![](/img/logo-horizontal-rke2-dark.svg#gh-dark-mode-only)
+![](/img/logo-horizontal-rke2.svg#gh-light-mode-only)
+![](/img/logo-horizontal-rke2-dark.svg#gh-dark-mode-only)
 
 RKE2 is Rancher's enterprise-ready next-generation Kubernetes distribution. It has also been known as RKE Government.
 
@@ -12,8 +13,8 @@ It is a fully [conformant Kubernetes distribution](https://landscape.cncf.io/?gr
 
 To meet these goals, RKE2 does the following:
 
-- Provides [defaults and configuration options](security/hardening_guide.md) that allow clusters to pass the CIS Kubernetes Benchmark [v1.7](security/cis_self_assessment17.md) or [v1.8](security/cis_self_assessment18.md) with minimal operator intervention
-- Enables [FIPS 140-2 compliance](security/fips_support.md)
+- Provides [defaults and configuration options](./security/hardening_guide.md) that allow clusters to pass the CIS Kubernetes Benchmark [v1.7](security/cis_self_assessment17.md) or [v1.8](./security/cis_self_assessment18.md) with minimal operator intervention
+- Enables [FIPS 140-2 compliance](./security/fips_support.md)
 - Regularly scans components for CVEs using [trivy](https://github.com/aquasecurity/trivy) in our build pipeline
 
 ## How is this different from RKE or K3s?

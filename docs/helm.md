@@ -1,12 +1,12 @@
 ---
-title: "Helm Integration"
+title: Helm Integration
 ---
 
 Helm is the package management tool of choice for Kubernetes. Helm charts provide templating syntax for Kubernetes YAML manifest documents. With Helm we can create configurable deployments instead of just using static files. For more information about creating your own catalog of deployments, check out the docs at [https://helm.sh/docs/intro/quickstart/](https://helm.sh/docs/intro/quickstart/).
 
 RKE2 does not require any special configuration to use with Helm command-line tools. Just be sure you have properly set up your kubeconfig as per the section about [cluster access](./cluster_access.md). RKE2 does include some extra functionality to make deploying both traditional Kubernetes resource manifests and Helm Charts even easier with the [rancher/helm-release CRD.](#using-the-helm-crd)
 
-### Automatically Deploying Manifests and Helm Charts
+## Automatically Deploying Manifests and Helm Charts
 
 Any Kubernetes manifests found in `/var/lib/rancher/rke2/server/manifests` will automatically be deployed to RKE2 in a manner similar to `kubectl apply`, both on startup and when the file is changed on disk. Deleting files out of this directory will not delete the corresponding resources from the cluster.
 
@@ -26,7 +26,7 @@ An example of an error that would be reported if the file name contains undersco
    a lowercase RFC 1123 subdomain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character
    (e.g. 'example.com', regex used for validation is '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*')`
 
-### Disabling AddOns
+## Disabling AddOns
 
 The AddOns for packaged components listed above, in addition to AddOns for any additional manifests placed in the manifests directory, can be disabled with the --disable flag. Disabled AddOns are actively uninstalled from the cluster, and the source files deleted from the manifests directory.
 
@@ -39,7 +39,7 @@ disable:
   - rke2-metrics-server
 ```
 
-### Using the Helm CRD
+## Using the Helm CRD
 
 The [HelmChart resource definition](https://github.com/k3s-io/helm-controller#helm-controller) captures most of the options you would normally pass to the `helm` command-line tool. Here's an example of how you might deploy Grafana from the default chart repository, overriding some of the default chart values. Note that the HelmChart resource itself is in the `kube-system` namespace, but the chart's resources will be deployed to the `monitoring` namespace.
 

@@ -1,5 +1,5 @@
 ---
-title: "Requirements"
+title: Requirements
 ---
 
 RKE2 is very lightweight, but has some minimum requirements as outlined below.

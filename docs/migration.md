@@ -1,7 +1,8 @@
+---
+title: Migration from RKE1 to RKE2
+---
 # THIS IS A WORK IN PROGRESS PAGE, EVERYTHING BELOW IS SUBJECT TO CHANGE.
 # DO NOT RELY ON THIS DOCUMENTATION UNTIL THIS WARNING IS REMOVED.
-
-# Migration from RKE1 to RKE2
 
 In order to migrate from Rancher Kubernetes Engine (RKE1) to RKE2, you need two things:
 

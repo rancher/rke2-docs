@@ -1,5 +1,6 @@
 ---
-title: "Cluster Access"
+title: Cluster Access
+hide_table_of_contents: true
 ---
 
 The kubeconfig file stored at `/etc/rancher/rke2/rke2.yaml` is used to configure access to the Kubernetes cluster. 
@@ -24,6 +25,6 @@ kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml get pods --all-namespaces
 helm --kubeconfig /etc/rancher/rke2/rke2.yaml ls --all-namespaces
 ```
 
-### Accessing the Cluster from Outside with kubectl
+## Accessing the Cluster from Outside with kubectl
 
 Copy `/etc/rancher/rke2/rke2.yaml` on your machine located outside the cluster as `~/.kube/config`. Then replace `127.0.0.1` with the IP or hostname of your RKE2 server. `kubectl` can now manage your RKE2 cluster.

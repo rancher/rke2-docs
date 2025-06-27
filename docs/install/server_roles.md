@@ -1,5 +1,5 @@
 ---
-title: "Managing Server Roles"
+title: Managing Server Roles
 ---
 
 By default, starting the RKE2 will run all control-plane components, including the apiserver, controller-manager, scheduler, and etcd. It is possible to disable specific components in order to split the control-plane and etcd roles on to separate nodes.

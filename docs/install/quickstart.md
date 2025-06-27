@@ -6,7 +6,7 @@ This guide will help you quickly launch a cluster with default options.
 
 > New to Kubernetes? The official Kubernetes docs already have some great tutorials outlining the basics [here](https://kubernetes.io/docs/tutorials/kubernetes-basics/).
 
-### Prerequisites
+## Prerequisites
 
 - Make sure your environment fulfills the [requirements.](requirements.md)
 If NetworkManager is installed and enabled on your hosts, [ensure that it is configured to ignore CNI-managed interfaces.](../known_issues.md#networkmanager)
@@ -15,7 +15,7 @@ If NetworkManager is installed and enabled on your hosts, [ensure that it is con
 
 - The RKE2 installation process must be run as the root user or through `sudo`.
 
-### Server Node Installation
+## Server Node Installation
 --------------
 RKE2 provides an installation script that is a convenient way to install it as a service on systemd based systems. This script is available at https://get.rke2.io. To install RKE2 using this method do the following:
 
@@ -60,7 +60,7 @@ After running this installation:
 If you are adding additional server nodes, you must have an odd number in total. An odd number is needed to maintain quorum. See the [High Availability documentation](ha.md) for more details.
 :::
 
-### Linux Agent (Worker) Node Installation
+## Linux Agent (Worker) Node Installation
 
 The steps on this section requires root level access or `sudo` to work.
 
@@ -112,7 +112,7 @@ journalctl -u rke2-agent -f
 
 To read more about the config.yaml file, see the [Install Options documentation.](configuration.md#configuration-file)
 
-### Windows Agent (Worker) Node Installation
+## Windows Agent (Worker) Node Installation
 **Windows Support works with Calico or Flannel as the CNI for the RKE2 cluster**
 
 #### 0. Prepare the Windows Agent Node

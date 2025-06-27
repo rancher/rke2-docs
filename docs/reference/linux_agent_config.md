@@ -4,19 +4,19 @@ title: Agent Configuration Reference
 
 This is a reference to all parameters that can be used to configure the rke2 agent. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](../install/configuration.md#configuration-file).
 
-### Common
+## Common
 | Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | config | Path to config file | /etc/rancher/rke2/config.yaml | RKE2_CONFIG_FILE |
 | debug | Turn on debug logs  |  | RKE2_DEBUG |
 | data-dir | Folder to hold state  | "/var/lib/rancher/rke2" |  |
-### Cluster
+## Cluster
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
 | token | Token to use for authentication  | RKE2_TOKEN |
 | token-file | Token file to use for authentication  | RKE2_TOKEN_FILE |
 | server | Server to connect to  | RKE2_URL |
-### Node
+## Node
 | Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | node-name | Node name  |  | RKE2_NODE_NAME |
@@ -28,24 +28,24 @@ This is a reference to all parameters that can be used to configure the rke2 age
 | selinux | Enable SELinux in containerd  |  | RKE2_SELINUX |
 | lb-server-port | Local port for supervisor client load-balancer. If the supervisor and apiserver are not colocated an additional port 1 less than this port will also be used for the apiserver client load-balancer.  | 6444 | RKE2_LB_SERVER_PORT |
 | protect-kernel-defaults | Kernel tuning behavior. If set, error if kernel tunables are different than kubelet defaults. |  |  |
-### Runtime
+## Runtime
 | Flag | Description | Default |
 | --- | --- | --- |
 | container-runtime-endpoint | Disable embedded containerd and use the CRI socket at the given path; when used with --docker this sets the docker socket path |  |
 | default-runtime | Set the default runtime in containerd |  |
 | snapshotter | Override default containerd snapshotter  | "overlayfs" |
 | private-registry | Private registry configuration file  | "/etc/rancher/rke2/registries.yaml" |
-### Containerd
+## Containerd
 | Flag | Description |
 | --- | --- |
 | disable-default-registry-endpoint | Disables containerd's fallback default registry endpoint when a mirror is configured for that registry |
-### Networking
+## Networking
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
 | node-ip | IPv4/IPv6 addresses to advertise for node |  |
 | node-external-ip | IPv4/IPv6 external IP addresses to advertise for node |  |
 | resolv-conf | Kubelet resolv.conf file  | RKE2_RESOLV_CONF |
-### Components
+## Components
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
 | kubelet-arg | Customized flag for kubelet process |  |
@@ -65,7 +65,7 @@ This is a reference to all parameters that can be used to configure the rke2 age
 | kube-proxy-extra-env | kube-proxy extra environment variables  | RKE2_KUBE_PROXY_EXTRA_ENV |
 | etcd-extra-env | etcd extra environment variables  | RKE2_ETCD_EXTRA_ENV |
 | cloud-controller-manager-extra-env | cloud-controller-manager extra environment variables  | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV |
-### Image
+## Image
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
 | kube-apiserver-image | Override image to use for kube-apiserver  | RKE2_KUBE_APISERVER_IMAGE |
@@ -76,18 +76,18 @@ This is a reference to all parameters that can be used to configure the rke2 age
 | pause-image | Override image to use for pause  | RKE2_PAUSE_IMAGE |
 | runtime-image | Override image to use for runtime binaries (containerd, kubectl, crictl, etc)  | RKE2_RUNTIME_IMAGE |
 | etcd-image | Override image to use for etcd  | RKE2_ETCD_IMAGE |
-### Cloud Provider
+## Cloud Provider
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
 | cloud-provider-name | Cloud provider name  | RKE2_CLOUD_PROVIDER_NAME |
 | cloud-provider-config | Cloud provider configuration file path  | RKE2_CLOUD_PROVIDER_CONFIG |
-### Security
+## Security
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
 | profile | Validate system configuration against the selected benchmark (valid items: cis, cis-1.23 (deprecated))  | RKE2_CIS_PROFILE |
 | audit-policy-file | Path to the file that defines the audit policy configuration  | RKE2_AUDIT_POLICY_FILE |
 | pod-security-admission-config-file | Path to the file that defines Pod Security Admission configuration  | RKE2_POD_SECURITY_ADMISSION_CONFIG_FILE |
-### Experimental
+## Experimental
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
 | kubelet-path | Override kubelet binary path  | RKE2_KUBELET_PATH |

@@ -10,7 +10,7 @@ module.exports = {
         'install/configuration',
         'install/methods',
         'install/private_registry',
-	'install/registry_mirror',
+        'install/registry_mirror',
         'install/airgap',
         'install/ha',
         'install/windows_airgap',

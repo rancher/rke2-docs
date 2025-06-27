@@ -6,7 +6,7 @@ This is a reference to all parameters that can be used to configure the Windows 
 
 **Windows Support requires choosing Calico or Flannel as the CNI for the RKE2 cluster**
 
-### Windows RKE2 Agent CLI Help
+## Windows RKE2 Agent CLI Help
 
 ```console
 NAME:
@@ -78,7 +78,7 @@ rke2-windows-amd64.exe version v1.22.5+rke2r2 (b61d4b3cb989b0380aae97fceb9a3e45a
 go version go1.16.10b7
 ```
 
-### Windows RKE2 Agent Calico env variables
+## Windows RKE2 Agent Calico env variables
 
 Calico installation on Windows can be customized using env variables. You can specify these variables by:
 

@@ -1,5 +1,5 @@
 ---
-title: "Networking Services"
+title: Networking Services
 ---
 
 This page explains how CoreDNS and the Nginx-Ingress controller work within RKE2.
