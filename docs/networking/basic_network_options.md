@@ -21,7 +21,7 @@ To customize the Helm chart values for a bundled CNI Plugin chart, you must crea
 
 Default chart values can be found by browsing the [RKE2 charts repository](https://github.com/rancher/rke2-charts/tree/main/charts), and referencing `values.yaml` for the version of the chart bundled with your RKE2 version.
 
-<Tabs groupId = "CNIplugin" queryString>
+<Tabs groupId="CNIplugin" queryString>
 <TabItem value="Canal CNI Plugin" default>
 
 Canal uses Flannel for inter-node traffic and Calico for intra-node traffic and network policies. By default, it will use vxlan encapsulation to create an overlay network among nodes. For example, to override the flannel interface, you can apply the following chart values:
@@ -221,7 +221,7 @@ service-cidr: "10.43.0.0/16,2001:cafe:43::/112"
 
 Each CNI Plugin may require a different configuration for dual-stack:
 
-<Tabs groupId = "CNIplugin" queryString>
+<Tabs groupId="CNIplugin" queryString>
 <TabItem value="Canal CNI Plugin" default>
 
 Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.

@@ -19,7 +19,7 @@ Pre-importing images onto the node is essential if you configure Kubernetes' `im
 
 RKE2 includes two mechanisms to pre-import images into the containerd image store:
 
-<Tabs groupId = "import images" queryString>
+<Tabs groupId="import-images" queryString>
 <TabItem value="Online image importing" default>
 
 Users can trigger a pull of images into the containerd image store by placing a text file containing the image names, one per line, in the `/var/lib/rancher/k3s/agent/images` directory. The text file can be placed before RKE2 is started, or created/modified while RKE2 is running. RKE2 will sequentially pull the images via the CRI API, optionally using the [registries.yaml](install/private_registry.md) configuration.
