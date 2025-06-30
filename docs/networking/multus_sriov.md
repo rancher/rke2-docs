@@ -47,7 +47,7 @@ To use any of these plugins, a proper NetworkAttachmentDefinition object will ne
 
 ## Multus IPAM plugin options
 
-<Tabs groupId = "MultusIPAMplugins">
+<Tabs groupId="MultusIPAMplugins">
 <TabItem value="host-local" default>
 host-local IPAM plugin allocates ip addresses out of a set of address ranges. It stores the state locally on the host filesystem, therefore ensuring uniqueness of IP addresses on a single host. Therefore, we don't recommend it for multi-node clusters. This IPAM plugin does not require any extra deployment. For more information: https://www.cni.dev/plugins/current/ipam/host-local/.
 </TabItem>
