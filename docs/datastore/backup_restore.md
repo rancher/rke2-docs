@@ -29,7 +29,7 @@ systemctl stop rke2-server
 rke2 server --cluster-reset
 ```
 
-**Result:**  A message in the logs say that RKE2 can be restarted without the flags. Start rke2 again and it should start rke2 as a 1 member cluster.
+**Result:**  A message in the logs say that RKE2 can be restarted without the flags. Start RKE2 again and it should start RKE2 as a 1 member cluster.
 
 ### Restoring a Snapshot to Existing Nodes
 
@@ -64,7 +64,7 @@ systemctl start rke2-server
 
 **Result:**  After a successful restore, a message in the logs says that etcd is running, and RKE2 can be restarted without the flags. Start RKE2 again, and it should run successfully and be restored from the specified snapshot.
 
-When rke2 resets the cluster, it creates an empty file at `/var/lib/rancher/rke2/server/db/reset-flag`. This file is harmless to leave in place, but must be removed in order to perform subsequent resets or restores. This file is deleted when rke2 starts normally.
+When RKE2 resets the cluster, it creates an empty file at `/var/lib/rancher/rke2/server/db/reset-flag`. This file is harmless to leave in place, but must be removed in order to perform subsequent resets or restores. This file is deleted when RKE2 starts normally.
 
 
 ### Restoring a Snapshot to New Nodes

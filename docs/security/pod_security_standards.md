@@ -64,7 +64,7 @@ plugins:
 </TabItem>
 </Tabs>
 
-After placing this configuration file, rke2 will start the kube-apiserver with the following flag `--admission-control-config-file` which will be set to the path of the PSA config file.
+After placing this configuration file, RKE2 will start the kube-apiserver with the following flag `--admission-control-config-file` which will be set to the path of the PSA config file.
 
 If you want to override the default pod security standard configuration file, you can pass `pod-security-admission-config-file: <path-to-custom-psa-config-file>` to the RKE2 config file.
 

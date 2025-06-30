@@ -3,7 +3,7 @@ sidebar_label: Known Issues and Limits
 title: Known Issues and Limitations
 ---
 
-This section contains current known issues and limitations with rke2. If you come across issues with rke2 not documented here, please open a new issue [here](https://github.com/rancher/rke2/issues).
+This section contains current known issues and limitations with RKE2. If you come across issues with RKE2 not documented here, please open a new issue [here](https://github.com/rancher/rke2/issues).
 
 ## Firewalld conflicts with default networking
 
@@ -74,7 +74,7 @@ This issue has been observed in Ubuntu 18.04, Ubuntu 20.04 and openSUSE Leap 15.
 
 ## Wicked
 
-Wicked configures the networking settings of the host based on the sysctl configuration files (e.g. under /etc/sysctl.d/ directory). Even though rke2 is setting parameters such as `/net/ipv4/conf/all/forwarding` to 1, that configuration could be reverted by Wicked whenever it reapplies the network configuration (there are several events that result in reapplying the network configuration as well as rcwicked restart during updates). Consequently, it is very important to enable ipv4 (and ipv6 in case of dual-stack) forwarding in sysctl configuration files. For example, it is recommended to create a file with the name `/etc/sysctl.d/90-rke2.conf` containing these parameters (ipv6 only needed in case of dual-stack):
+Wicked configures the networking settings of the host based on the sysctl configuration files (e.g. under /etc/sysctl.d/ directory). Even though RKE2 is setting parameters such as `/net/ipv4/conf/all/forwarding` to 1, that configuration could be reverted by Wicked whenever it reapplies the network configuration (there are several events that result in reapplying the network configuration as well as rcwicked restart during updates). Consequently, it is very important to enable ipv4 (and ipv6 in case of dual-stack) forwarding in sysctl configuration files. For example, it is recommended to create a file with the name `/etc/sysctl.d/90-rke2.conf` containing these parameters (ipv6 only needed in case of dual-stack):
 
 ```bash
 net.ipv4.conf.all.forwarding=1

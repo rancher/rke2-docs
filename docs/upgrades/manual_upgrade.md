@@ -3,7 +3,7 @@ title: Manual Upgrades
 ---
 
 
-You can upgrade rke2 by using the installation script, by manually installing the binary of the desired version, or by using rpm upgrades in case of rpm installation.
+You can upgrade RKE2 by using the installation script, by manually installing the binary of the desired version, or by using rpm upgrades in case of rpm installation.
 
 :::tip
 Upgrade the server nodes first, one at a time. Once all servers have been upgraded, you may then upgrade agent nodes.
@@ -26,9 +26,9 @@ When attempting to upgrade to a new version of RKE2, the [Kubernetes version ske
 :::
 
 
-## Upgrade rke2 Using the Installation Script
+## Upgrade RKE2 Using the Installation Script
 
-To upgrade rke2 from an older version you can re-run the installation script using the same flags, for example:
+To upgrade RKE2 from an older version you can re-run the installation script using the same flags, for example:
 
 ```sh
 curl -sfL https://get.rke2.io | sh -
@@ -61,17 +61,17 @@ systemctl restart rke2-server
 systemctl restart rke2-agent
 ```
 
-## Manually Upgrade rke2 Using the Binary
+## Manually Upgrade RKE2 Using the Binary
 
-Or to manually upgrade rke2:
+Or to manually upgrade RKE2:
 
 1. Download the desired version of the rke2 binary from [releases](https://github.com/rancher/rke2/releases)
 2. Copy the downloaded binary to `/usr/local/bin/rke2` for tarball installed rke2, and `/usr/bin` for rpm installed rke2
 3. Restart the rke2-server or rke2-agent service
 
-## Upgrade rke2 Using the RPM upgrades
+## Upgrade RKE2 Using the RPM upgrades
 
-In case of RPM installation, its expected to upgrade rke2 from an older version using rpm upgrades, for example:
+In case of RPM installation, its expected to upgrade RKE2 from an older version using rpm upgrades, for example:
 
 ```sh
 # zypper upgrade
@@ -112,9 +112,9 @@ yum update rke2-selinux
 ```
 :::
 
-## Restarting rke2
+## Restarting RKE2
 
-Restarting rke2 is supported by the installation script for systemd.
+Restarting RKE2 is supported by the installation script for systemd.
 
 **systemd**
 
