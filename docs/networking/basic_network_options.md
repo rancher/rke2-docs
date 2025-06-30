@@ -91,7 +91,7 @@ spec:
 
 For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.14.400/values.yaml)
 
-Cilium includes advanced features to fully replace kube-proxy and implement the routing of services using eBPF instead of iptables. It is not recommended to replace kube-proxy by Cilium if your kernel is not v5.8 or newer, as important bug fixes and features will be missing. To activate this mode, deploy rke2 with `disable-kube-proxy: true` in the configuration file, and the following chart values:
+Cilium includes advanced features to fully replace kube-proxy and implement the routing of services using eBPF instead of iptables. It is not recommended to replace kube-proxy by Cilium if your kernel is not v5.8 or newer, as important bug fixes and features will be missing. To activate this mode, deploy RKE2 with `disable-kube-proxy: true` in the configuration file, and the following chart values:
 
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
