@@ -12,13 +12,13 @@ Etcd and the Kubernetes control-plane components run as static Pods in the `kube
 
 Logs from each Kubernetes Pod can be accessed with `kubectl`:
 
-```
+```bash
 /var/lib/rancher/rke2/bin/kubectl --kubeconfig /etc/rancher/rke2/rke2.yaml logs -n kube-system -l component=kube-apiserver
 ```
 
 Logs from each container are written to `/var/log/pods` or can be accessed with `crictl`:
 
-```
+```bash
 export CONTAINER_RUNTIME_ENDPOINT=unix:///run/k3s/containerd/containerd.sock
 # list running containers
 /var/lib/rancher/rke2/bin/crictl ps

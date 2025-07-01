@@ -57,38 +57,38 @@ If your choice of CNI is [Cilium in kube-proxy replacement mode](https://docs.rk
 
 This is done in 2 steps:
 1. Activate the Local Redirect Policy feature in Cilium by setting the `localRedirectPolicy` flag to true in the Cilium HelmChartConfig.
-This would look like this:
-```yaml
----
-# /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
----
-apiVersion: helm.cattle.io/v1
-kind: HelmChartConfig
-metadata:
-  name: rke2-cilium
-  namespace: kube-system
-spec:
-  valuesContent: |-
-    kubeProxyReplacement: true
-    k8sServiceHost: <KUBE_API_SERVER_IP>
-    k8sServicePort: <KUBE_API_SERVER_PORT>
-    localRedirectPolicy: true
+  This would look like this:
+  ```yaml
+  ---
+  # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
+  ---
+  apiVersion: helm.cattle.io/v1
+  kind: HelmChartConfig
+  metadata:
+    name: rke2-cilium
+    namespace: kube-system
+  spec:
+    valuesContent: |-
+      kubeProxyReplacement: true
+      k8sServiceHost: <KUBE_API_SERVER_IP>
+      k8sServicePort: <KUBE_API_SERVER_PORT>
+      localRedirectPolicy: true
 
-```
+  ```
 2. Configure the `rke2-coredns` chart to setup its LRP by applying the following HelmChartConfig:
-```yaml
----
-apiVersion: helm.cattle.io/v1
-kind: HelmChartConfig
-metadata:
-  name: rke2-coredns
-  namespace: kube-system
-spec:
-  valuesContent: |-
-    nodelocal:
-      enabled: true
-      use_cilium_lrp: true
-```
+  ```yaml
+  ---
+  apiVersion: helm.cattle.io/v1
+  kind: HelmChartConfig
+  metadata:
+    name: rke2-coredns
+    namespace: kube-system
+  spec:
+    valuesContent: |-
+      nodelocal:
+        enabled: true
+        use_cilium_lrp: true
+  ```
 
 
 ## Nginx Ingress Controller
