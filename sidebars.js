@@ -23,7 +23,11 @@ module.exports = {
       type: 'category',
       label: 'Upgrades',
       items:[
-        'upgrades/upgrade',
+        {
+          type: 'doc',
+          id: 'upgrades/upgrade',
+          label: 'Overview',
+        },
         'upgrades/manual_upgrade',
         'upgrades/automated_upgrade',
       ],
@@ -54,7 +58,11 @@ module.exports = {
         'datastore/backup_restore',
       ],
     },
-    'architecture',
+    {
+      type: 'doc',
+      id: 'architecture',
+      label: 'Architecture',
+    },
     'cluster_access',
     'import-images',
     {
@@ -98,6 +106,10 @@ module.exports = {
         },
       ],
     },
-    'known_issues',
+    {
+      type: 'doc',
+      id: 'known_issues',
+      label: 'Known Issues',
+    }
   ],
 };

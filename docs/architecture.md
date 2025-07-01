@@ -1,6 +1,5 @@
 ---
 title: Anatomy of a Next Generation Kubernetes Distribution
-sidebar_label: Architecture
 ---
 
 ## Architecture Overview
