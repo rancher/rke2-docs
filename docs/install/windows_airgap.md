@@ -107,46 +107,46 @@ Private registry support honors all settings from the [containerd registry confi
 These steps should only be performed after completing one of either the [Tarball Method](#windows-tarball-method) or [Private Registry Method](#private-registry-method).
 
 1. Obtain the Windows RKE2 binary file `rke2-windows-amd64.exe`. Ensure the binary is named `rke2.exe` and place it in `c:/usr/local/bin`. 
-```powershell
-Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-amd64.exe -OutFile c:/usr/local/bin/rke2.exe
-```
+    ```powershell
+    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-amd64.exe -OutFile c:/usr/local/bin/rke2.exe
+    ```
 
 2. Configure the rke2-agent for Windows
-```powershell
-New-Item -Type Directory c:/etc/rancher/rke2 -Force
-Set-Content -Path c:/etc/rancher/rke2/config.yaml -Value @"
-server: https://<server>:9345
-token: <token from server node>
-"@
-```
+    ```powershell
+    New-Item -Type Directory c:/etc/rancher/rke2 -Force
+    Set-Content -Path c:/etc/rancher/rke2/config.yaml -Value @"
+    server: https://<server>:9345
+    token: <token from server node>
+    "@
+    ```
 
-To read more about the config.yaml file, see the [Install Options documentation.](configuration.md#configuration-file)
+    To read more about the config.yaml file, see the [Install Options documentation.](configuration.md#configuration-file)
 
 3. Configure your PATH
-```powershell
-$env:PATH+=";c:\var\lib\rancher\rke2\bin;c:\usr\local\bin"
+    ```powershell
+    $env:PATH+=";c:\var\lib\rancher\rke2\bin;c:\usr\local\bin"
 
-[Environment]::SetEnvironmentVariable(
+    [Environment]::SetEnvironmentVariable(
     "Path",
     [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine) + ";c:\var\lib\rancher\rke2\bin;c:\usr\local\bin",
     [EnvironmentVariableTarget]::Machine)
-```
+    ```
 
 4. Start the RKE2 Windows service by running the binary with the desired parameters. Please see the [Windows Agent Configuration reference](../reference/windows_agent_config.md) for additional parameters.  
 
-```powershell
-c:\usr\local\bin\rke2.exe agent service --add
-```
+    ```powershell
+    c:\usr\local\bin\rke2.exe agent service --add
+    ```
 
-For example, if using the Private Registry Method, your config file would have the following:
-```yaml
-system-default-registry: "registry.example.com:5000"
-```
+    For example, if using the Private Registry Method, your config file would have the following:
+    ```yaml
+    system-default-registry: "registry.example.com:5000"
+    ```
 
-**Note:** The `system-default-registry` parameter must specify only valid RFC 3986 URI authorities, i.e. a host and optional port.
+    **Note:** The `system-default-registry` parameter must specify only valid RFC 3986 URI authorities, i.e. a host and optional port.
 
-If you would prefer to use CLI parameters only instead, run the binary with the desired parameters. 
+    If you would prefer to use CLI parameters only instead, run the binary with the desired parameters. 
 
-```powershell
-c:/usr/local/bin/rke2.exe agent --token <> --server <>
-```
+    ```powershell
+    c:/usr/local/bin/rke2.exe agent --token <> --server <>
+    ```
