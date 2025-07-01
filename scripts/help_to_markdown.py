@@ -48,7 +48,7 @@ def constructHeader(value):
         header += " Default |"
         columns += " --- |"
     if has_env_var:
-        header += " Enviroment Variable |"
+        header += " Environment Variable |"
         columns += " --- |"
     return header + "\n" + columns, has_default, has_env_var
 

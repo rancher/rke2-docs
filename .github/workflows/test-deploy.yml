@@ -22,3 +22,10 @@ jobs:
         run: yarn run remark --use remark-validate-links --use remark-lint-no-dead-urls  --frail ./docs
       - name: Test build website
         run: yarn build
+
+  check-rules:
+    name: Check rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./scripts/linter.sh
