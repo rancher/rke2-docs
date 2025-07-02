@@ -1,0 +1,71 @@
+name: Update AsciiDocs
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 1' # Runs weekly on Mondays at midnight
+
+jobs:
+  update-asciidocs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Install Node.js version 18
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+
+      - name: Install kramdown-asciidoc
+        run: gem install kramdown-asciidoc
+
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main_branch
+
+      - name: Run conversion script
+        run: |
+          ls
+          chmod +x ./scripts/markdown_to_asciidoc.sh
+          ./scripts/markdown_to_asciidoc.sh
+        working-directory: main_branch
+
+      - name: Generate navbar
+        run: node ./scripts/sidebar_to_nav.js
+        working-directory: main_branch
+
+      - name: Checkout orphan branch main-ascii
+        uses: actions/checkout@v4
+        with:
+          ref: main-ascii
+          path: ascii_branch
+
+      - name: Configure Git credentials
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Copy converted AsciiDocs to pages folder
+        run: |
+          rsync -av --delete ./main_branch/asciidoc/ ./ascii_branch/pages/
+          rsync -av --delete ./main_branch/nav.adoc ./ascii_branch/nav.adoc
+
+      - name: Stage changes
+        run: |
+          cd ascii_branch
+          git add ./pages/ ./nav.adoc
+      
+      - name: Commit and push changes
+        run: |
+          cd ascii_branch
+          if ! git diff --cached --quiet; then
+            git commit -m "Update AsciiDocs from main branch"
+            git push origin main-ascii
+          else
+            echo "No changes to commit."
+          fi
