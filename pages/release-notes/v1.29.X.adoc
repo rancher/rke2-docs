@@ -1,0 +1,1268 @@
+= v1.29.X
+
+[CAUTION]
+.Upgrade Notice
+====
+,Before upgrading from earlier releases, be sure to read the Kubernetes https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#urgent-upgrade-notes[Urgent Upgrade Notes].
+====
+
+|===
+| Version | Release date | Kubernetes | Etcd | Containerd | Runc | Metrics-server | CoreDNS | Ingress-Nginx | Helm-controller | Canal (Default) | Calico | Cilium | Multus |
+
+| link:v1.29.X.md#release-v12915rke2r1[v1.29.15+rke2r1]
+| Mar 26 2025
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v12915[v1.29.15]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.19-k3s1[v3.5.19-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.26-k3s1[v1.7.26-k3s1]
+| https://github.com/opencontainers/runc/releases/tag/v1.2.5[v1.2.5]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.2[v0.7.2]
+| https://github.com/coredns/coredns/releases/tag/v1.12.0[v1.12.0]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.12.1-hardened1[v1.12.1-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.16[v0.15.16]
+| https://github.com/flannel-io/flannel/releases/tag/v0.26.5[Flannel v0.26.5] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.29[Calico v3.29.2]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.29[v3.29.2]
+| https://github.com/cilium/cilium/releases/tag/v1.17.1[v1.17.1]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.1.4[v4.1.4]
+|
+
+| link:v1.29.X.md#release-v12914rke2r1[v1.29.14+rke2r1]
+| Feb 27 2025
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v12914[v1.29.14]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.18-k3s1[v3.5.18-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.23-k3s2[v1.7.23-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.2.4[v1.2.4]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.2[v0.7.2]
+| https://github.com/coredns/coredns/releases/tag/v1.12.0[v1.12.0]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.12.0-hardened6[v1.12.0-hardened6]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.16[v0.15.16]
+| https://github.com/flannel-io/flannel/releases/tag/v0.26.4[Flannel v0.26.4] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.29[Calico v3.29.2]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.29[v3.29.2]
+| https://github.com/cilium/cilium/releases/tag/v1.17.0[v1.17.0]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.1.4[v4.1.4]
+|
+
+| link:v1.29.X.md#release-v12913rke2r1[v1.29.13+rke2r1]
+| Jan 27 2025
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v12913[v1.29.13]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.16-k3s1[v3.5.16-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.23-k3s2[v1.7.23-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.2.4[v1.2.4]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.2[v0.7.2]
+| https://github.com/coredns/coredns/releases/tag/v1.12.0[v1.12.0]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.12.0-hardened2[v1.12.0-hardened2]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.15[v0.15.15]
+| https://github.com/flannel-io/flannel/releases/tag/v0.26.3[Flannel v0.26.3] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.29[Calico v3.29.1]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.29[v3.29.1]
+| https://github.com/cilium/cilium/releases/tag/v1.16.5[v1.16.5]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.1.4[v4.1.4]
+|
+
+| link:v1.29.X.md#release-v12912rke2r1[v1.29.12+rke2r1]
+| Dec 18 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v12912[v1.29.12]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.16-k3s1[v3.5.16-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.23-k3s2[v1.7.23-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.14[v1.1.14]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.12.0[v1.12.0]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.10.5-hardened6[v1.10.5-hardened6]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.15[v0.15.15]
+| https://github.com/flannel-io/flannel/releases/tag/v0.26.1[Flannel v0.26.1] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.29[Calico v3.29.1]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.29[v3.29.1]
+| https://github.com/cilium/cilium/releases/tag/v1.16.4[v1.16.4]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.1.3[v4.1.3]
+|
+
+| link:v1.29.X.md#release-v12911rke2r1[v1.29.11+rke2r1]
+| Dec 06 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v12911[v1.29.11]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.16-k3s1[v3.5.16-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.23-k3s2[v1.7.23-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.14[v1.1.14]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.11.3[v1.11.3]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.10.5-hardened4[v1.10.5-hardened4]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.15[v0.15.15]
+| https://github.com/flannel-io/flannel/releases/tag/v0.26.0[Flannel v0.26.0] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.29[Calico v3.29.0]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.29[v3.29.0]
+| https://github.com/cilium/cilium/releases/tag/v1.16.3[v1.16.3]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.1.3[v4.1.3]
+|
+
+| link:v1.29.X.md#release-v12910rke2r1[v1.29.10+rke2r1]
+| Oct 30 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v12910[v1.29.10]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.13-k3s1[v3.5.13-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.22-k3s1[v1.7.22-k3s1]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.14[v1.1.14]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.11.3[v1.11.3]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.10.5-hardened3[v1.10.5-hardened3]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.15[v0.15.15]
+| https://github.com/flannel-io/flannel/releases/tag/v0.25.7[Flannel v0.25.7] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.28[Calico v3.28.2]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.28[v3.28.2]
+| https://github.com/cilium/cilium/releases/tag/v1.16.2[v1.16.2]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.1.2[v4.1.2]
+|
+
+| link:v1.29.X.md#release-v1299rke2r1[v1.29.9+rke2r1]
+| Sep 23 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1299[v1.29.9]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.13-k3s1[v3.5.13-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.21-k3s2[v1.7.21-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.14[v1.1.14]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.11.1[v1.11.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.10.4-hardened3[v1.10.4-hardened3]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.13[v0.15.13]
+| https://github.com/flannel-io/flannel/releases/tag/v0.25.6[Flannel v0.25.6] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.28[Calico v3.28.1]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.28[v3.28.1]
+| https://github.com/cilium/cilium/releases/tag/v1.16.1[v1.16.1]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.1.0[v4.1.0]
+|
+
+| link:v1.29.X.md#release-v1298rke2r1[v1.29.8+rke2r1]
+| Aug 26 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1298[v1.29.8]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.13-k3s1[v3.5.13-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.20-k3s1[v1.7.20-k3s1]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.12[v1.1.12]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.11.1[v1.11.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.10.4-hardened2[v1.10.4-hardened2]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.10[v0.15.10]
+| https://github.com/flannel-io/flannel/releases/tag/v0.25.5[Flannel v0.25.5] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.28[Calico v3.28.1]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.28[v3.28.1]
+| https://github.com/cilium/cilium/releases/tag/v1.16.0[v1.16.0]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+|
+
+| link:v1.29.X.md#release-v1297rke2r1[v1.29.7+rke2r1]
+| Aug 01 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1297[v1.29.7]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.13-k3s1[v3.5.13-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.17-k3s1[v1.7.17-k3s1]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.12[v1.1.12]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.11.1[v1.11.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.10.1-hardened1[v1.10.1-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.10[v0.15.10]
+| https://github.com/flannel-io/flannel/releases/tag/v0.25.4[Flannel v0.25.4] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.28[Calico v3.28.0]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.27[v3.27.3]
+| https://github.com/cilium/cilium/releases/tag/v1.15.5[v1.15.5]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+|
+
+| link:v1.29.X.md#release-v1296rke2r1[v1.29.6+rke2r1]
+| Jul 01 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1296[v1.29.6]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.13-k3s1[v3.5.13-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.17-k3s1[v1.7.17-k3s1]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.12[v1.1.12]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.11.1[v1.11.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.10.1-hardened1[v1.10.1-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.10[v0.15.10]
+| https://github.com/flannel-io/flannel/releases/tag/v0.25.4[Flannel v0.25.4] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.28[Calico v3.28.0]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.27[v3.27.3]
+| https://github.com/cilium/cilium/releases/tag/v1.15.5[v1.15.5]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+|
+
+| link:v1.29.X.md#release-v1295rke2r1[v1.29.5+rke2r1]
+| May 22 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1295[v1.29.5]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.9-k3s1[v3.5.9-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.11-k3s2[v1.7.11-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.12[v1.1.12]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.11.1[v1.11.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/nginx-1.9.6-hardened1[nginx-1.9.6-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.9[v0.15.9]
+| https://github.com/flannel-io/flannel/releases/tag/v0.25.1[Flannel v0.25.1] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.27[Calico v3.27.3]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.27[v3.27.3]
+| https://github.com/cilium/cilium/releases/tag/v1.15.5[v1.15.5]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+|
+
+| link:v1.29.X.md#release-v1294rke2r1[v1.29.4+rke2r1]
+| Apr 29 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1294[v1.29.4]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.9-k3s1[v3.5.9-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.11-k3s2[v1.7.11-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.12[v1.1.12]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.7.1[v0.7.1]
+| https://github.com/coredns/coredns/releases/tag/v1.11.1[v1.11.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/nginx-1.9.6-hardened1[nginx-1.9.6-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.9[v0.15.9]
+| https://github.com/flannel-io/flannel/releases/tag/v0.25.1[Flannel v0.25.1] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.27[Calico v3.27.3]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.27[v3.27.3]
+| https://github.com/cilium/cilium/releases/tag/v1.15.4[v1.15.4]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+|
+
+| link:v1.29.X.md#release-v1293rke2r1[v1.29.3+rke2r1]
+| Mar 20 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1293[v1.29.3]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.9-k3s1[v3.5.9-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.11-k3s2[v1.7.11-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.[v1.1.]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.6.3[v0.6.3]
+| https://github.com/coredns/coredns/releases/tag/v1.11.1[v1.11.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/nginx-1.9.3-hardened1[nginx-1.9.3-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.9[v0.15.9]
+| https://github.com/flannel-io/flannel/releases/tag/v0.24.3[Flannel v0.24.3] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.27[Calico v3.27.2]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.27[v3.27.2]
+| https://github.com/cilium/cilium/releases/tag/v1.15.1[v1.15.1]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+| https://github.com/flannel-io/flannel/releases/tag/v0.24.4[v0.24.4]
+
+| link:v1.29.X.md#release-v1292rke2r1[v1.29.2+rke2r1]
+| Feb 29 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1292[v1.29.2]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.9-k3s1[v3.5.9-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.11-k3s2[v1.7.11-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.12[v1.1.12]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.6.3[v0.6.3]
+| https://github.com/coredns/coredns/releases/tag/v1.11.1[v1.11.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/nginx-1.9.3-hardened1[nginx-1.9.3-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.8[v0.15.8]
+| https://github.com/flannel-io/flannel/releases/tag/v0.24.2[Flannel v0.24.2] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.27[Calico v3.27.0]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.27[v3.27.0]
+| https://github.com/cilium/cilium/releases/tag/v1.15.1[v1.15.1]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+|
+
+| link:v1.29.X.md#release-v1291rke2r1[v1.29.1+rke2r1]
+| Feb 06 2024
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1291[v1.29.1]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.9-k3s1[v3.5.9-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.11-k3s2[v1.7.11-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.12[v1.1.12]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.6.3[v0.6.3]
+| https://github.com/coredns/coredns/releases/tag/v1.10.1[v1.10.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/nginx-1.9.3-hardened1[nginx-1.9.3-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.8[v0.15.8]
+| https://github.com/flannel-io/flannel/releases/tag/v0.23.0[Flannel v0.23.0] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.26[Calico v3.26.3]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.26[v3.26.3]
+| https://github.com/cilium/cilium/releases/tag/v1.14.4[v1.14.4]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+|
+
+| link:v1.29.X.md#release-v1290rke2r1[v1.29.0+rke2r1]
+| Dec 22 2023
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#v1290[v1.29.0]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.9-k3s1[v3.5.9-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v1.7.11-k3s1[v1.7.11-k3s1]
+| https://github.com/opencontainers/runc/releases/tag/v1.1.10[v1.1.10]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.6.3[v0.6.3]
+| https://github.com/coredns/coredns/releases/tag/v1.10.1[v1.10.1]
+| https://github.com/rancher/ingress-nginx/releases/tag/nginx-1.9.3-hardened1[nginx-1.9.3-hardened1]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.15.4[v0.15.4]
+| https://github.com/flannel-io/flannel/releases/tag/v0.23.0[Flannel v0.23.0] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.26[Calico v3.26.3]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.26[v3.26.3]
+| https://github.com/cilium/cilium/releases/tag/v1.14.4[v1.14.4]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.0.2[v4.0.2]
+|
+|===
+
+{blank} +
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.15+rke2r1[v1.29.15+rke2r1]
+
+// v1.29.15+rke2r1
+
+This release updates Kubernetes to v1.29.15, and upgrades rke2-ingress-nginx to controller v1.12.1-hardened1 (chart version 4.12.1). This addresses https://github.com/advisories/GHSA-mgvx-rpfc-9mpv[CVE-2025-1974] as well as all other https://groups.google.com/g/kubernetes-security-announce/c/2qa9DFtN0cQ[recently announced] vulnerabilities in ingress-nginx.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.14+rke2r1:
+
+* Bump ingress-nginx to hardened10 https://github.com/rancher/rke2/pull/7888[(#7888)]
+* Backports for 2025-03 https://github.com/rancher/rke2/pull/7893[(#7893)]
+* Chart update backport for 1.29 https://github.com/rancher/rke2/pull/7902[(#7902)]
+* Bump K3s for apiserver addresses fix https://github.com/rancher/rke2/pull/7915[(#7915)]
+* Update k8s https://github.com/rancher/rke2/pull/7924[(#7924)]
+* Bump ingress-nginx to v1.12.1-hardened1, chart to 4.12.1 https://github.com/rancher/rke2/pull/7962[(#7962)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.17.100.tgz[1.17.100] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.29.2-build2025030601.tgz[v3.29.2-build2025030601] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.29.200.tgz[v3.29.200] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.29.101.tgz[v3.29.101] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.39.100.tgz[1.39.100] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.12.100.tgz[4.12.100] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.200.tgz[3.12.200] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.1-rancher900.tgz[3.3.1-rancher900] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.9.100.tgz[1.9.100] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.900.tgz[0.2.900] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.2300.tgz[0.1.2300] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-4.0.002.tgz[4.0.002] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-4.0.002.tgz[4.0.002] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-0.0.0.tgz[0.0.0] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.14+rke2r1[v1.29.14+rke2r1]
+
+// v1.29.14+rke2r1
+
+This release updates Kubernetes to v1.29.14.
+
+*Important Note*
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.13+rke2r1:
+
+* Update to cilium `v1.16.6` https://github.com/rancher/rke2/pull/7683[(#7683)]
+* Charts: bump Harvester CSI Driver v0.1.23 https://github.com/rancher/rke2/pull/7670[(#7670)]
+ ** Enhance the Harvester CSI controller affinity/anti-affinity
+* Update cilium to v1.17.0 https://github.com/rancher/rke2/pull/7711[(#7711)]
+* Bump canal, flannel and multus charts https://github.com/rancher/rke2/pull/7715[(#7715)]
+* Update Calico and Canal to v3.29.2 https://github.com/rancher/rke2/pull/7727[(#7727)]
+* Bump vsphere CSI to v3.3.1-rancher9 https://github.com/rancher/rke2/pull/7733[(#7733)]
+* Bump k3s, traefik, etcd, crictl https://github.com/rancher/rke2/pull/7741[(#7741)]
+ ** Update k3s to fix registry auth in containerd config template
+ ** Update etcd to v3.5.18
+ ** Update crictl to v1.32.0
+ ** Update rke2-ingress-nginx chart to fix typo in default backend image template
+* Update to v1.29.14 and Go to 1.22.12 https://github.com/rancher/rke2/pull/7757[(#7757)]
+* Bump ingress-nginx to v1.12.0-hardened6 https://github.com/rancher/rke2/pull/7776[(#7776)]
+* Bump canal and flannel images to build20250218 https://github.com/rancher/rke2/pull/7790[(#7790)]
+* Sync images to Prime registry https://github.com/rancher/rke2/pull/7802[(#7802)]
+* Bump K3s version for release-1.29 https://github.com/rancher/rke2/pull/7807[(#7807)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.17.000.tgz[1.17.000] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.29.2-build2025021800.tgz[v3.29.2-build2025021800] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.29.200.tgz[v3.29.200] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.29.101.tgz[v3.29.101] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.36.102.tgz[1.36.102] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.12.005.tgz[4.12.005] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.200.tgz[3.12.200] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.1-rancher900.tgz[3.3.1-rancher900] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.9.100.tgz[1.9.100] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.900.tgz[0.2.900] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.2300.tgz[0.1.2300] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-4.0.002.tgz[4.0.002] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-4.0.002.tgz[4.0.002] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-0.0.0.tgz[0.0.0] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.13+rke2r1[v1.29.13+rke2r1]
+
+// v1.29.13+rke2r1
+
+This release updates Kubernetes to v1.29.13.
+
+*Important Note*
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.12+rke2r1:
+
+* Charts: bump Harvester CSI Driver v0.1.22 https://github.com/rancher/rke2/pull/7473[(#7473)]
+ ** Bump Harvester-csi-driver v0.1.22
+* Bump flannel, canal and multus charts https://github.com/rancher/rke2/pull/7505[(#7505)]
+* Update to Cilium `v1.16.5` https://github.com/rancher/rke2/pull/7529[(#7529)]
+* Feat: bump harvester-cloud-provider to v0.2.9 https://github.com/rancher/rke2/pull/7490[(#7490)]
+ ** Bump Harvester-cloud-provider v0.2.9
+* Updated calico chart to fix IP autodetect in case of IPv6 only https://github.com/rancher/rke2/pull/7538[(#7538)]
+* Update metrics-server to `3.2.12` https://github.com/rancher/rke2/pull/7553[(#7553)]
+* Update canal to `v3.29.1-build2025011000` https://github.com/rancher/rke2/pull/7569[(#7569)]
+* Add runtime classes hook and runtimes chart https://github.com/rancher/rke2/pull/7581[(#7581)]
+* Bump ingress-nginx v1.12.0 https://github.com/rancher/rke2/pull/7558[(#7558)]
+* Backports for 2025-01 https://github.com/rancher/rke2/pull/7593[(#7593)]
+* Add Release downstream components in release workflow https://github.com/rancher/rke2/pull/7599[(#7599)]
+* Bump k3s version for master and add/enhance tests https://github.com/rancher/rke2/pull/7608[(#7608)]
+* Update k8s and go https://github.com/rancher/rke2/pull/7618[(#7618)]
+* Bump ingress-nginx to v1.12.0-hardened2 https://github.com/rancher/rke2/pull/7622[(#7622)]
+* Bump K3s version for split-role fix https://github.com/rancher/rke2/pull/7638[(#7638)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.16.501.tgz[1.16.501] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.29.1-build2025011000.tgz[v3.29.1-build2025011000] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.29.101.tgz[v3.29.101] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.29.101.tgz[v3.29.101] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.36.102.tgz[1.36.102] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.12.003.tgz[4.12.003] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.200.tgz[3.12.200] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.1-rancher700.tgz[3.3.1-rancher700] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.9.100.tgz[1.9.100] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.900.tgz[0.2.900] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.2200.tgz[0.1.2200] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-4.0.002.tgz[4.0.002] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-4.0.002.tgz[4.0.002] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-0.0.0.tgz[0.0.0] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.12+rke2r1[v1.29.12+rke2r1]
+
+// v1.29.12+rke2r1
+
+This release updates Kubernetes to v1.29.12.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.11+rke2r1:
+
+* Update to Cilium v1.16.4 https://github.com/rancher/rke2/pull/7327[(#7327)]
+* Updated Calico version to `v3.29.1` https://github.com/rancher/rke2/pull/7353[(#7353)]
+* Bump harvester csi driver v0.1.21 https://github.com/rancher/rke2/pull/7285[(#7285)]
+ ** Bump Harvester-csi-driver v0.1.21
+* Update k3s for loadbalancer improvements https://github.com/rancher/rke2/pull/7399[(#7399)]
+* Update Flannel and Canal version https://github.com/rancher/rke2/pull/7408[(#7408)]
+* Bump ingress-nginx to hardened6 https://github.com/rancher/rke2/pull/7414[(#7414)]
+* Bump dns-node-cache to 1.24.0 https://github.com/rancher/rke2/pull/7420[(#7420)]
+* Bump hardened k8s and build base https://github.com/rancher/rke2/pull/7426[(#7426)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.16.400.tgz[1.16.400] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.29.1-build2024121100.tgz[v3.29.1-build2024121100] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.29.100.tgz[v3.29.100] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.29.100.tgz[v3.29.100] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.36.102.tgz[1.36.102] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.10.503.tgz[4.10.503] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.004.tgz[3.12.004] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.1-rancher700.tgz[3.3.1-rancher700] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.9.100.tgz[1.9.100] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.600.tgz[0.2.600] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.2100.tgz[0.1.2100] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-3.0.601.tgz[3.0.601] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-3.0.601.tgz[3.0.601] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.9.001.tgz[1.9.001] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.11+rke2r1[v1.29.11+rke2r1]
+
+// v1.29.11+rke2r1
+
+This release updates Kubernetes to v1.29.11.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.10+rke2r1:
+
+* Backport E2E GHA fixes https://github.com/rancher/rke2/pull/7178[(#7178)]
+* Bump multus, cilium and flannel charts https://github.com/rancher/rke2/pull/7200[(#7200)]
+* Bump ingress-nginx to v1.10.5-hardened4 https://github.com/rancher/rke2/pull/7187[(#7187)]
+* Bump canal chart to v3.29.0 https://github.com/rancher/rke2/pull/7219[(#7219)]
+* Bump rke2-calico to v3.29.0 https://github.com/rancher/rke2/pull/7237[(#7237)]
+* Backport missing E2E PRs https://github.com/rancher/rke2/pull/7205[(#7205)]
+ ** Refactor run_tests.sh script
+ ** Update to newer OS images for install testing
+ ** Add cleanup to e2e tests in vagrant env
+ ** Add e2e validation test for kine
+* Bump vSphere CSI/CPI charts to 1.9.1 and 3.3.1-rancher700 https://github.com/rancher/rke2/pull/7250[(#7250)]
+* Update Flannel to v0.26.1 https://github.com/rancher/rke2/pull/7259[(#7259)]
+* Fix e2e ci by ignoring FOG warnings https://github.com/rancher/rke2/pull/7270[(#7270)]
+* Bump rke2-coredns to 1.33.005 https://github.com/rancher/rke2/pull/7275[(#7275)]
+* Backports for 2024-11 https://github.com/rancher/rke2/pull/7291[(#7291)]
+ ** Bump etcd to 3.5.16
+ ** Bump containerd to v1.7.23
+ ** Fix issue on nodes with large datastores and slow disk that would cause RKE2 to fail to start due to the etcd defrag timing out after 30 seconds.
+ ** Fix issue where RKE2 killall script could remove data from pod volumes that failed to unmount correctly
+* Restore AWS node-name support and add IMDSv2 support https://github.com/rancher/rke2/pull/7356[(#7356)]
+* Update upstream and go versions https://github.com/rancher/rke2/pull/7318[(#7318)]
+* Bump containerd for image rewrite fix https://github.com/rancher/rke2/pull/7379[(#7379)]
+ ** Bump containerd to v1.7.23-k3s2
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.16.303.tgz[1.16.303] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.29.0-build2024110400.tgz[v3.29.0-build2024110400] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.29.000.tgz[v3.29.000] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.29.000.tgz[v3.29.000] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.33.005.tgz[1.33.005] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.10.502.tgz[4.10.502] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.004.tgz[3.12.004] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.1-rancher700.tgz[3.3.1-rancher700] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.9.100.tgz[1.9.100] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.600.tgz[0.2.600] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.2000.tgz[0.1.2000] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-3.0.601.tgz[3.0.601] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-3.0.601.tgz[3.0.601] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.9.001.tgz[1.9.001] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.10+rke2r1[v1.29.10+rke2r1]
+
+// v1.29.10+rke2r1
+
+This release updates Kubernetes to v1.29.10.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.9+rke2r1:
+
+* Fixed windows CNI setup in case cni none is configured https://github.com/rancher/rke2/pull/6833[(#6833)]
+* Fix e2e test bug in mixedosbgp https://github.com/rancher/rke2/pull/6845[(#6845)]
+* Bump Calico v3.28.2 https://github.com/rancher/rke2/pull/6880[(#6880)]
+* Add trivy scanning to PR reports https://github.com/rancher/rke2/pull/6836[(#6836)]
+* Fix typo in dispatch workflow https://github.com/rancher/rke2/pull/6896[(#6896)]
+* Bump coredns chart https://github.com/rancher/rke2/pull/6902[(#6902)]
+* Fix uninstall for amazon linux 2 https://github.com/rancher/rke2/pull/6920[(#6920)]
+* Update to Cilium v1.16.2 https://github.com/rancher/rke2/pull/6939[(#6939)]
+* Update Canal to v3.28.2-build2024100300 and Flannel to v0.25.7 https://github.com/rancher/rke2/pull/6973[(#6973)]
+* Bump containerd to v1.7.22 https://github.com/rancher/rke2/pull/7003[(#7003)]
+* Ingress-nginx and rke2-cloud-provider bumps https://github.com/rancher/rke2/pull/6993[(#6993)]
+* Bump csi snapshot charts https://github.com/rancher/rke2/pull/7025[(#7025)]
+* Update multus to v4.1.2 https://github.com/rancher/rke2/pull/7020[(#7020)]
+* Bump k3s https://github.com/rancher/rke2/pull/7034[(#7034)]
+* Bump Harvester CSI driver v0.1.20 https://github.com/rancher/rke2/pull/7047[(#7047)]
+ ** Bump Harvester-csi-driver v0.1.20
+* Bump K3s/CCM version https://github.com/rancher/rke2/pull/7058[(#7058)]
+* Add org.opencontainers.image url and source labels to dockerfiles https://github.com/rancher/rke2/pull/7064[(#7064)]
+* Bump CSI snapshot controller chart for CRD updates https://github.com/rancher/rke2/pull/7070[(#7070)]
+* Rke2-runtime signing and manifests (#7089) https://github.com/rancher/rke2/pull/7100[(#7100)]
+* Update hardened chart images https://github.com/rancher/rke2/pull/7096[(#7096)]
+* October K8s patch https://github.com/rancher/rke2/pull/7106[(#7106)]
+* Update crictl source image for CVE bump https://github.com/rancher/rke2/pull/7116[(#7116)]
+* Bump coredns chart and image https://github.com/rancher/rke2/pull/7086[(#7086)]
+* Fix hardened-flannel airgap image for rke2-flannel https://github.com/rancher/rke2/pull/7119[(#7119)]
+* Fix release workflow https://github.com/rancher/rke2/pull/7126[(#7126)]
+* Use buildkit https://github.com/rancher/rke2/pull/7131[(#7131)]
+* Fix publish windows runtime https://github.com/rancher/rke2/pull/7145[(#7145)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.16.201.tgz[1.16.201] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.28.2-build2024101601.tgz[v3.28.2-build2024101601] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.28.200.tgz[v3.28.200] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.28.200.tgz[v3.28.200] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.33.002.tgz[1.33.002] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.10.501.tgz[4.10.501] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.004.tgz[3.12.004] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.0-rancher100.tgz[3.3.0-rancher100] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.8.000.tgz[1.8.000] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.600.tgz[0.2.600] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.2000.tgz[0.1.2000] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-3.0.601.tgz[3.0.601] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-3.0.601.tgz[3.0.601] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.9.001.tgz[1.9.001] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.9+rke2r1[v1.29.9+rke2r1]
+
+// v1.29.9+rke2r1
+
+This release updates Kubernetes to v1.29.9.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.8+rke2r1:
+
+* Update cilium v1.16.1 https://github.com/rancher/rke2/pull/6652[(#6652)]
+* Bump canal to v3.28.1-build20240827 https://github.com/rancher/rke2/pull/6672[(#6672)]
+* Bump canal to v3.28.1-build20240830 https://github.com/rancher/rke2/pull/6689[(#6689)]
+* Feat: bump harvester-cloud-provider to v0.2.6 https://github.com/rancher/rke2/pull/6630[(#6630)]
+* Update chart with CNI plugins on Flannel and Cilium https://github.com/rancher/rke2/pull/6702[(#6702)]
+* Update cilium chart to `1.16.103` https://github.com/rancher/rke2/pull/6716[(#6716)]
+* Bump multus chart to v4.1.000 https://github.com/rancher/rke2/pull/6741[(#6741)]
+* Remove sriov images from airgap tarball https://github.com/rancher/rke2/pull/6755[(#6755)]
+* Add ctr to shell completion https://github.com/rancher/rke2/pull/6732[(#6732)]
+* Bump k3s/containerd/runc/ccm versions https://github.com/rancher/rke2/pull/6764[(#6764)]
+* Bump charts and images to fix go CVE https://github.com/rancher/rke2/pull/6784[(#6784)]
+* Bump hardened images https://github.com/rancher/rke2/pull/6777[(#6777)]
+* Update Calico image for Canal with updated CNI plugins https://github.com/rancher/rke2/pull/6795[(#6795)]
+* Bump ingress-nginx to v1.10.4-hardened3 https://github.com/rancher/rke2/pull/6800[(#6800)]
+* Bump etcd and CCM builds https://github.com/rancher/rke2/pull/6804[(#6804)]
+* September K8s patch https://github.com/rancher/rke2/pull/6810[(#6810)]
+* Update cilium e2e test https://github.com/rancher/rke2/pull/6816[(#6816)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.16.104.tgz[1.16.104] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.28.1-build2024091100.tgz[v3.28.1-build2024091100] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.28.100.tgz[v3.28.100] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.28.100.tgz[v3.28.100] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.29.006.tgz[1.29.006] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.10.402.tgz[4.10.402] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.003.tgz[3.12.003] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.0-rancher100.tgz[3.3.0-rancher100] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.8.000.tgz[1.8.000] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.600.tgz[0.2.600] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1800.tgz[0.1.1800] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.8+rke2r1[v1.29.8+rke2r1]
+
+// v1.29.8+rke2r1
+
+This release updates Kubernetes to v1.29.8.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.7+rke2r1:
+
+* Bump rke2-coredns to add option to use nodelocal dns cache with cilium https://github.com/rancher/rke2/pull/6434[(#6434)]
+* Bump rke2-calico chart to v3.28.100 https://github.com/rancher/rke2/pull/6487[(#6487)]
+* Bump nginx to hardened2 https://github.com/rancher/rke2/pull/6481[(#6481)]
+* Update for CNI flannel, Cilium and Canal https://github.com/rancher/rke2/pull/6516[(#6516)]
+* Fix external etcd connection https://github.com/rancher/rke2/pull/6464[(#6464)]
+* Rke2 shell completion https://github.com/rancher/rke2/pull/6461[(#6461)]
+* Bump k3s and containerd https://github.com/rancher/rke2/pull/6525[(#6525)]
+* Bump Harvester CSI driver v0.1.18 https://github.com/rancher/rke2/pull/6394[(#6394)]
+ ** Bump Harvester-csi-driver v0.1.18
+* Fixed hns clean only in case of reboot https://github.com/rancher/rke2/pull/6539[(#6539)]
+* Bump containerd/crictl/runc versions https://github.com/rancher/rke2/pull/6553[(#6553)]
+* Fix for kill all to not delete the data dir https://github.com/rancher/rke2/pull/6562[(#6562)]
+* Update Kubernetes to v1.29.8 https://github.com/rancher/rke2/pull/6573[(#6573)]
+* Fix windows airgap image packaging https://github.com/rancher/rke2/pull/6586[(#6586)]
+* Fixed Flannel chart to rightly disable nft https://github.com/rancher/rke2/pull/6608[(#6608)]
+* Bump ingress-nginx to v1.10.4-hardened2 https://github.com/rancher/rke2/pull/6612[(#6612)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.16.000.tgz[1.16.000] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.28.1-build2024080600.tgz[v3.28.1-build2024080600] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.28.100.tgz[v3.28.100] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.28.100.tgz[v3.28.100] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.29.004.tgz[1.29.004] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.10.401.tgz[4.10.401] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.002.tgz[3.12.002] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.0-rancher100.tgz[3.3.0-rancher100] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.8.000.tgz[1.8.000] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.400.tgz[0.2.400] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1800.tgz[0.1.1800] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.7+rke2r1[v1.29.7+rke2r1]
+
+// v1.29.7+rke2r1
+
+This release updates Kubernetes to v1.29.7.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.6+rke2r1:
+
+* GHA Migration https://github.com/rancher/rke2/pull/6293[(#6293)]
+* Bump multus to v4.0.206 https://github.com/rancher/rke2/pull/6351[(#6351)]
+* Version bumps and backports for 2024-07 release cycle https://github.com/rancher/rke2/pull/6318[(#6318)]
+* Bump vsphere csi chart to 3.3.0-rancher100 and cpi to 1.8.000 https://github.com/rancher/rke2/pull/6342[(#6342)]
+* Fix secrets for commit id uploads https://github.com/rancher/rke2/pull/6367[(#6367)]
+* Update Kubernetes to v1.29.7 https://github.com/rancher/rke2/pull/6363[(#6363)]
+* Publish binaries in dapper https://github.com/rancher/rke2/pull/6380[(#6380)]
+* Add missing package windows step in release https://github.com/rancher/rke2/pull/6389[(#6389)]
+* Add manifest pipeline for rke2-runtime docker image https://github.com/rancher/rke2/pull/6399[(#6399)]
+* Fix dispatch script https://github.com/rancher/rke2/pull/6407[(#6407)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.15.500.tgz[1.15.500] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.28.0-build2024062503.tgz[v3.28.0-build2024062503] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.27.300.tgz[v3.27.300] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.27.002.tgz[v3.27.002] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.29.002.tgz[1.29.002] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.10.102.tgz[4.10.102] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.002.tgz[3.12.002] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.0-rancher100.tgz[3.3.0-rancher100] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.8.000.tgz[1.8.000] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.400.tgz[0.2.400] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1700.tgz[0.1.1700] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.6+rke2r1[v1.29.6+rke2r1]
+
+// v1.29.6+rke2r1
+
+This release updates Kubernetes to v1.29.6.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.5+rke2r1:
+
+* Improve rke2-uninstall.ps1 script https://github.com/rancher/rke2/pull/5961[(#5961)]
+* Update flannel chart to fix vni error (#5953) https://github.com/rancher/rke2/pull/5996[(#5996)]
+* Update cloud-provider image which now uses scratch as base (#5933) https://github.com/rancher/rke2/pull/5987[(#5987)]
+* Add cilium no proxy e2e test (#5885) https://github.com/rancher/rke2/pull/5967[(#5967)]
+* Add extra log in e2e tests https://github.com/rancher/rke2/pull/6019[(#6019)]
+* Bump flannel to v0.25.201 and canal to v3.28.0-build2024052800 https://github.com/rancher/rke2/pull/6045[(#6045)]
+* Add a Kine fix when rke2 restart apiserver https://github.com/rancher/rke2/pull/6004[(#6004)]
+* Bump multus and whereabouts version (#6015) https://github.com/rancher/rke2/pull/6035[(#6035)]
+* Bump harvester-cloud-provider v0.2.4 https://github.com/rancher/rke2/pull/5981[(#5981)]
+* Version bumps and backports for 2024-06 release cycle https://github.com/rancher/rke2/pull/6081[(#6081)]
+* Add easy support for single node sqlite with kine https://github.com/rancher/rke2/pull/6072[(#6072)]
+* Bump nginx to 1.10.1 https://github.com/rancher/rke2/pull/6055[(#6055)]
+* Bump K3s version for v1.29 https://github.com/rancher/rke2/pull/6111[(#6111)]
+* Bump containerd to correctly built tag https://github.com/rancher/rke2/pull/6127[(#6127)]
+* Bump flannel version https://github.com/rancher/rke2/pull/6123[(#6123)]
+* Update to the latest SR-IOV image versions https://github.com/rancher/rke2/pull/6151[(#6151)]
+* Bump flannel image in rke2-canal https://github.com/rancher/rke2/pull/6152[(#6152)]
+* Use `rancher/permissions` dependency https://github.com/rancher/rke2/pull/6139[(#6139)]
+* Bump K3s version for v1.29 https://github.com/rancher/rke2/pull/6165[(#6165)]
+* Improve rke2-uninstall.ps1 https://github.com/rancher/rke2/pull/6132[(#6132)]
+* June Testing Backports https://github.com/rancher/rke2/pull/6155[(#6155)]
+ ** Fix loadManifests function
+ ** Slim down E2E artifacts
+ ** Support MixedOS E2E local testing
+ ** Add custom golang setup action for better caching
+* Update flannel version to v0.25.4 https://github.com/rancher/rke2/pull/6177[(#6177)]
+* Update go to 1.21.11 and kubernetes to v1.29.6 https://github.com/rancher/rke2/pull/6190[(#6190)]
+* Fix drone pipeline https://github.com/rancher/rke2/pull/6198[(#6198)]
+* Update drone build base image https://github.com/rancher/rke2/pull/6205[(#6205)]
+* Bump K3s version for v1.29 to fix regression in agent's supervisor port https://github.com/rancher/rke2/pull/6201[(#6201)]
+* Bump rke2-ingress-nginx chart to revert watchIngressWithoutClass default https://github.com/rancher/rke2/pull/6217[(#6217)]
+* Update hardened kubernetes https://github.com/rancher/rke2/pull/6224[(#6224)]
+* Bump K3s version for snapshot fix https://github.com/rancher/rke2/pull/6231[(#6231)]
+ ** Fix issue that allowed multiple simultaneous snapshots to be allowed
+* Revert rke2-ingress-nginx bump back to v1.9.6 https://github.com/rancher/rke2/pull/6244[(#6244)]
+* Reinstate newest rke2-ingress-nginx https://github.com/rancher/rke2/pull/6254[(#6254)]
+* Update calico image to v3.28.0-build20240625 https://github.com/rancher/rke2/pull/6258[(#6258)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.15.500.tgz[1.15.500] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.28.0-build2024062503.tgz[v3.28.0-build2024062503] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.27.300.tgz[v3.27.300] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.27.002.tgz[v3.27.002] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.29.002.tgz[1.29.002] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.10.101.tgz[4.10.101] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.002.tgz[3.12.002] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.1.2-rancher400.tgz[3.1.2-rancher400] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.7.001.tgz[1.7.001] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.400.tgz[0.2.400] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1700.tgz[0.1.1700] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.5+rke2r1[v1.29.5+rke2r1]
+
+// v1.29.5+rke2r1
+
+This release updates Kubernetes to v1.29.5.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.4+rke2r1:
+
+* Update stable channel to v1.28.9+rke2r1 https://github.com/rancher/rke2/pull/5870[(#5870)]
+* Add mixedos BGP e2e test https://github.com/rancher/rke2/pull/5859[(#5859)]
+* Remove flannel-v6.4096 when rke2-killall.sh https://github.com/rancher/rke2/pull/5795[(#5795)]
+* Update e2e test https://github.com/rancher/rke2/pull/5880[(#5880)]
+* Remove cni parameter from agent config https://github.com/rancher/rke2/pull/5892[(#5892)]
+* Add script to validate flannel versions https://github.com/rancher/rke2/pull/5898[(#5898)]
+* Fix mixedosbgp e2e test https://github.com/rancher/rke2/pull/5902[(#5902)]
+* E2E GH Action Test https://github.com/rancher/rke2/pull/5908[(#5908)]
+* Update k8s v1.29.5 and Go https://github.com/rancher/rke2/pull/5915[(#5915)]
+* Windows changes https://github.com/rancher/rke2/pull/5919[(#5919)]
+* Cilium version bump to 1.15.5 https://github.com/rancher/rke2/pull/5940[(#5940)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.15.500.tgz[1.15.500] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.27.3-build2024042301.tgz[v3.27.3-build2024042301] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.27.300.tgz[v3.27.300] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.27.002.tgz[v3.27.002] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.29.002.tgz[1.29.002] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.9.100.tgz[4.9.100] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.002.tgz[3.12.002] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.1.2-rancher400.tgz[3.1.2-rancher400] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.7.001.tgz[1.7.001] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.300.tgz[0.2.300] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1700.tgz[0.1.1700] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.4+rke2r1[v1.29.4+rke2r1]
+
+// v1.29.4+rke2r1
+
+This release updates Kubernetes to v1.29.4.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.29.3+rke2r1:
+
+* Update channel server https://github.com/rancher/rke2/pull/5631[(#5631)]
+* Enable apiserver to access updated encryption-config.json https://github.com/rancher/rke2/pull/5604[(#5604)]
+* Delete epic github action https://github.com/rancher/rke2/pull/5626[(#5626)]
+* Remove kube-proxy static pod manifest during agent bootstrap https://github.com/rancher/rke2/pull/5619[(#5619)]
+* Properly handle files and sockets in extra mounts https://github.com/rancher/rke2/pull/5621[(#5621)]
+* Bump flannel version https://github.com/rancher/rke2/pull/5638[(#5638)]
+ ** Fix flannel bug to work in cluster with taints
+* Improve how flannel-windows reserves an IP for kube-proxy vip https://github.com/rancher/rke2/pull/5661[(#5661)]
+* Add doc on building multi-arch images https://github.com/rancher/rke2/pull/5670[(#5670)]
+* Add kine support https://github.com/rancher/rke2/pull/5540[(#5540)]
+* Reenable Unit Testing in GitHub Actions https://github.com/rancher/rke2/pull/5676[(#5676)]
+* Overhaul integration testing https://github.com/rancher/rke2/pull/5679[(#5679)]
+* Bump ingress-nginx to 1.9.6 https://github.com/rancher/rke2/pull/5671[(#5671)]
+* Rework and fix nightly install tests https://github.com/rancher/rke2/pull/5692[(#5692)]
+* Update flannel to v0.25.0 https://github.com/rancher/rke2/pull/5708[(#5708)]
+* Fix Windows path setting https://github.com/rancher/rke2/pull/5698[(#5698)]
+* Update to Cilium v1.15.3 https://github.com/rancher/rke2/pull/5713[(#5713)]
+* Bump K3s version for 2024-04 release cycle https://github.com/rancher/rke2/pull/5714[(#5714)]
+* Calico and canal update https://github.com/rancher/rke2/pull/5712[(#5712)]
+* Check if the kube-proxy VIP was already reserved https://github.com/rancher/rke2/pull/5705[(#5705)]
+ ** Flannel in windows checks if a VIP was already reserved
+* Update flannel to v0.25.1 https://github.com/rancher/rke2/pull/5747[(#5747)]
+* Fix subcommand mapping for `rke2 certificate` https://github.com/rancher/rke2/pull/5750[(#5750)]
+* Bump harvester-cloud-provider v0.2.3 https://github.com/rancher/rke2/pull/5694[(#5694)]
+* Bump RKE2 CCM image tag https://github.com/rancher/rke2/pull/5751[(#5751)]
+* Bump metrics-server version https://github.com/rancher/rke2/pull/5660[(#5660)]
+ ** Bump metrics server version to v0.7.1 and start using scratch as its base image
+* Update to Cilium v1.15.4 https://github.com/rancher/rke2/pull/5764[(#5764)]
+* Bump vsphere csi chart to 3.1.2-rancher300 and add snapshotter image https://github.com/rancher/rke2/pull/5755[(#5755)]
+* Vsphere csi bump https://github.com/rancher/rke2/pull/5801[(#5801)]
+* Update Kubernetes to v1.29.4 https://github.com/rancher/rke2/pull/5799[(#5799)]
+* Bump K3s version for v1.29 to pull through etcd-snapshot save fixes https://github.com/rancher/rke2/pull/5816[(#5816)]
+* Bump K3s version for dbinfo fix https://github.com/rancher/rke2/pull/5822[(#5822)]
+* Updated Calico and Flannel to fix ARM64 build https://github.com/rancher/rke2/pull/5825[(#5825)]
+* Update rke2-canal to v3.27.3-build2024042301 https://github.com/rancher/rke2/pull/5834[(#5834)]
+* Use the newer Flannel chart https://github.com/rancher/rke2/pull/5842[(#5842)]
+* Bump metrics-server chart to restore legacy label https://github.com/rancher/rke2/pull/5849[(#5849)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.15.400.tgz[1.15.400] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.27.3-build2024042301.tgz[v3.27.3-build2024042301] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.27.300.tgz[v3.27.300] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.27.002.tgz[v3.27.002] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.29.002.tgz[1.29.002] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.9.100.tgz[4.9.100] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.12.002.tgz[3.12.002] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.1.2-rancher400.tgz[3.1.2-rancher400] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.7.001.tgz[1.7.001] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.300.tgz[0.2.300] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1700.tgz[0.1.1700] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.3+rke2r1[v1.29.3+rke2r1]
+
+// v1.29.3+rke2r1
+
+This release updates Kubernetes to v1.29.3.
+
+[CAUTION]
+.Important Notes
+====
+,
+
+Canal uses flannel 0.24.3 which includes a bug: every 5 seconds it tries to add ipv6 iptables rules and fails if the node does not have an ipv6 address. The consequence is the log "Failed to ensure iptables rules: error setting up rules: failed to apply partial iptables-restore unable to run iptables-restore (, ): exit status 4" appears every 5 seconds in the flannel container of the canal pod.
+
+Flannel daemonset is not tolerating node taints: "node-role.kubernetes.io/etcd:NoExecute", "node-role.kubernetes.io/control-plane:NoSchedule" and "node.cloudprovider.kubernetes.io/uninitialized:NoSchedule" which can create problems when deploying with Rancher in certain cloud-providers (e.g. vShpere or DigitalOcean).
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+====
+
+=== Changes since v1.29.2+rke2r1:
+
+* Update latest to 1.27.11 https://github.com/rancher/rke2/pull/5542[(#5542)]
+* Remove old docs website action https://github.com/rancher/rke2/pull/5465[(#5465)]
+* Add a multus e2e test https://github.com/rancher/rke2/pull/5483[(#5483)]
+* Bump vsphere csi chart to 3.1.2-rancher101 and cpi to 1.7.001 https://github.com/rancher/rke2/pull/5553[(#5553)]
+* Fix DNS over TLS bug https://github.com/rancher/rke2/pull/5552[(#5552)]
+* Bump multus chart version https://github.com/rancher/rke2/pull/5575[(#5575)]
+* Update Calico and Canal to v3.27.2 https://github.com/rancher/rke2/pull/5582[(#5582)]
+* Bump K3s version for v1.29 https://github.com/rancher/rke2/pull/5587[(#5587)]
+ ** Fix: use correct wasm shims names
+ ** Bump spegel to v0.0.18-k3s3
+ ** Adds wildcard registry support
+ ** Fixes issue with excessive CPU utilization while waiting for containerd to start
+ ** Add env var to allow spegel mirroring of latest tag
+ ** Bump helm-controller/klipper-helm versions
+ ** Fix snapshot prune
+ ** Fix issue with etcd node name missing hostname
+ ** Fix additional corner cases in registries handling
+ ** RKE2 will now warn and suppress duplicate entries in the mirror endpoint list for a registry. Containerd does not support listing the same endpoint multiple times as a mirror for a single upstream registry.
+* Bump K3s version for v1.29 https://github.com/rancher/rke2/pull/5605[(#5605)]
+* Update k8s to 1.29.3 and Go https://github.com/rancher/rke2/pull/5624[(#5624)]
+* Actually bump k8s https://github.com/rancher/rke2/pull/5627[(#5627)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.15.100.tgz[1.15.100] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.27.2-build2024030800.tgz[v3.27.2-build2024030800] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.27.200.tgz[v3.27.200] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.27.002.tgz[v3.27.002] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.29.002.tgz[1.29.002] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.8.200.tgz[4.8.200] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-2.11.100-build2023051513.tgz[2.11.100-build2023051513] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.1.2-rancher101.tgz[3.1.2-rancher101] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.7.001.tgz[1.7.001] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.200.tgz[0.2.200] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1700.tgz[0.1.1700] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.2+rke2r1[v1.29.2+rke2r1]
+
+// v1.29.2+rke2r1
+
+This release updates Kubernetes to v1.29.2.
+
+[CAUTION]
+.Important Notes
+====
+,
+
+Experimental command rke2 secrets-encrypt rotate-keys is currently broken and should not be used. Use the classic secrets encryption commands detailed https://docs.rke2.io/security/secrets_encryption#encryption-key-rotation-classic[here].
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+====
+
+=== Changes since v1.29.1+rke2r1:
+
+* Fix validate-chart scripts https://github.com/rancher/rke2/pull/5160[(#5160)]
+* Adding yml for new stale action https://github.com/rancher/rke2/pull/5311[(#5311)]
+* Secrets Encryption test https://github.com/rancher/rke2/pull/5234[(#5234)]
+* Bump actions/cache from 3 to 4 https://github.com/rancher/rke2/pull/5312[(#5312)]
+* Update channels for January 2024 patch https://github.com/rancher/rke2/pull/5357[(#5357)]
+* Only run flannel host-network CIS netpol controller when using canal CNI https://github.com/rancher/rke2/pull/5318[(#5318)]
+* Create a common CNI interface and config struct https://github.com/rancher/rke2/pull/5276[(#5276)]
+* Avoid race condition when deleting HNS networks https://github.com/rancher/rke2/pull/5336[(#5336)]
+* Add flannel CNI plugin https://github.com/rancher/rke2/pull/5322[(#5322)]
+ ** Flannel added as CNI plugin option
+* Bump coredns and multus/whereabouts versions https://github.com/rancher/rke2/pull/5379[(#5379)]
+ ** Coredns, multus and whereabouts using minimal base images
+* Fix: missing 'ip link delete cilium_wg0' in rke2-killall.sh https://github.com/rancher/rke2/pull/5274[(#5274)]
+* Add adr about rke2-flannel https://github.com/rancher/rke2/pull/5145[(#5145)]
+* Update canal version https://github.com/rancher/rke2/pull/5414[(#5414)]
+* Update Cilium to 1.15.0 https://github.com/rancher/rke2/pull/5420[(#5420)]
+* Improve cni windows code https://github.com/rancher/rke2/pull/5421[(#5421)]
+* Bump alpine from 3.18 to 3.19 https://github.com/rancher/rke2/pull/5123[(#5123)]
+* Bump harvester-csi-driver to 0.1.17 https://github.com/rancher/rke2/pull/5332[(#5332)]
+* Implement custom `containerd` behavior for Windows Agents, ensure supporting processes exit https://github.com/rancher/rke2/pull/5419[(#5419)]
+* Update Calico to v3.27.0 https://github.com/rancher/rke2/pull/5423[(#5423)]
+* Bump K3s version for v1.29 https://github.com/rancher/rke2/pull/5458[(#5458)]
+* Update k8s and Go https://github.com/rancher/rke2/pull/5470[(#5470)]
+* Update Cilium to v1.15.1 https://github.com/rancher/rke2/pull/5473[(#5473)]
+* Bump rke2-coredns chart https://github.com/rancher/rke2/pull/5493[(#5493)]
+* Bump K3s for etcd-only fix https://github.com/rancher/rke2/pull/5501[(#5501)]
+* Add new network policy for ingress controller webhook https://github.com/rancher/rke2/pull/5500[(#5500)]
+* Refactor netpol creation and add two new netpols for metrics-server and snapshot-validation-webhook https://github.com/rancher/rke2/pull/5521[(#5521)]
+* Bump wharfie to v0.6.6 https://github.com/rancher/rke2/pull/5517[(#5517)]
+ ** Bump wharfie to v0.6.6 to add support for bare hostname as endpoint, fix unnecessary namespace param inclusion
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.15.100.tgz[1.15.100] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.27.0-build2024020601.tgz[v3.27.0-build2024020601] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.27.002.tgz[v3.27.002] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.27.002.tgz[v3.27.002] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.29.001.tgz[1.29.001] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.8.200.tgz[4.8.200] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-2.11.100-build2023051513.tgz[2.11.100-build2023051513] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.0.1-rancher101.tgz[3.0.1-rancher101] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.5.100.tgz[1.5.100] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.200.tgz[0.2.200] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1700.tgz[0.1.1700] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.1+rke2r1[v1.29.1+rke2r1]
+
+// v1.29.1+rke2r1
+
+This release updates Kubernetes to v1.29.1.
+
+[CAUTION]
+.Important Notes
+====
+,
+
+Addresses the runc CVE: https://nvd.nist.gov/vuln/detail/CVE-2024-21626[CVE-2024-21626] by updating runc to v1.1.12.
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+====
+
+=== Changes since v1.29.0+rke2r1:
+
+* Update channels https://github.com/rancher/rke2/pull/5172[(#5172)]
+* Bump actions/setup-go from 4 to 5 https://github.com/rancher/rke2/pull/5125[(#5125)]
+* Use dl.k8s.io for getting kubectl https://github.com/rancher/rke2/pull/4952[(#4952)]
+* Bump actions/setup-python from 4 to 5 https://github.com/rancher/rke2/pull/5124[(#5124)]
+* Address Repetitive Windows Bootstrapping https://github.com/rancher/rke2/pull/5159[(#5159)]
+* Unload selinux module only if container-selinux is updated from a bre... https://github.com/rancher/rke2/pull/5157[(#5157)]
+* Add v1.29 to channels list https://github.com/rancher/rke2/pull/5194[(#5194)]
+* Version bump of coredns chart to fix bug https://github.com/rancher/rke2/pull/5189[(#5189)]
+ ** Fix coredns local cache when in dual stack clusters
+* Update multus chart to add optional dhcp daemonset https://github.com/rancher/rke2/pull/5146[(#5146)]
+* Add e2e test for dnscache https://github.com/rancher/rke2/pull/5190[(#5190)]
+* Update rke2-whereabouts to v0.6.3 and bump rke2-multus parent chart https://github.com/rancher/rke2/pull/5232[(#5232)]
+* Bump sriov image build versions https://github.com/rancher/rke2/pull/5237[(#5237)]
+* Enable arm64 based images for calico, multus and harvester https://github.com/rancher/rke2/pull/5154[(#5154)]
+* Improve kube-proxy logging and move calico logs to a better path https://github.com/rancher/rke2/pull/5248[(#5248)]
+* Bump k3s for v1.29 https://github.com/rancher/rke2/pull/5268[(#5268)]
+* Update to 1.29.1 https://github.com/rancher/rke2/pull/5296[(#5296)]
+* Update base image https://github.com/rancher/rke2/pull/5305[(#5305)]
+* Bump K3s and runc versions for v1.29 https://github.com/rancher/rke2/pull/5349[(#5349)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.14.400.tgz[1.14.400] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.26.3-build2023110900.tgz[v3.26.3-build2023110900] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.26.300.tgz[v3.26.300] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.26.300.tgz[v3.26.300] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.24.008.tgz[1.24.008] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.8.200.tgz[4.8.200] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-2.11.100-build2023051511.tgz[2.11.100-build2023051511] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.0.1-rancher101.tgz[3.0.1-rancher101] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.5.100.tgz[1.5.100] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.200.tgz[0.2.200] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1600.tgz[0.1.1600] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302] |
+
+'''
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.29.0+rke2r1[v1.29.0+rke2r1]
+
+// v1.29.0+rke2r1
+
+This release is RKE2's first in the v1.29 line. This release updates Kubernetes to v1.29.0.
+
+Before upgrading from earlier releases, be sure to read the Kubernetes https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.29.md#urgent-upgrade-notes[Urgent Upgrade Notes].
+
+[CAUTION]
+.Important Notes
+====
+,
+
+* The experimental `secrets-encrypt rotate-keys` command, used to perform an abbreviated rotation of secrets
+encryptions keys, has been removed from this release due to changes in the upstream implementation of
+configuration reloading. It will return in a subsequent release; see https://github.com/rancher/rke2/issues/5152
+for more information.
+
+====
+
+=== Changes since v1.28.4+rke2r1:
+
+* Bump k3s version for v1.29 (https://github.com/rancher/rke2/pull/5153[#5153])
+* Bump k3s and kubernetes versions for v1.29.0 (https://github.com/rancher/rke2/pull/5144[#5144])
+* ⚠️ added support for amazon linux 2023 (#4973) (https://github.com/rancher/rke2/pull/4973[#4973])
+* Bump containerd to v1.7.11 (https://github.com/rancher/rke2/pull/5129[#5129])
+* Bumped containerd/runc to v1.7.10/v1.1.10 (https://github.com/rancher/rke2/pull/5117[#5117])
+* Update stable channel to v1.26.11+rke2r1 (https://github.com/rancher/rke2/pull/5099[#5099])
+
+== Charts Versions
+
+| Component                        | Version                                                                                                                                                 |
+| ---------------------- | ----------------------------------------------------------------------------------------------------- |
+| rke2-cilium                      | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.14.400.tgz[1.14.400]                                                 |
+| rke2-canal                       | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.26.3-build2023110900.tgz[v3.26.3-build2023110900]                     |
+| rke2-calico                      | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.26.300.tgz[v3.26.300]                                               |
+| rke2-calico-crd                  | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.26.300.tgz[v3.26.300]                                           |
+| rke2-coredns                     | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.24.007.tgz[1.24.007]                                               |
+| rke2-ingress-nginx               | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.8.200.tgz[4.8.200]                                     |
+| rke2-metrics-server              | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-2.11.100-build2023051511.tgz[2.11.100-build2023051511] |
+| rancher-vsphere-csi              | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.0.1-rancher101.tgz[3.0.1-rancher101]                 |
+| rancher-vsphere-cpi              | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.5.100.tgz[1.5.100]                                   |
+| harvester-cloud-provider         | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.200.tgz[0.2.200]                         |
+| harvester-csi-driver             | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.1600.tgz[0.1.1600]                           |
+| rke2-snapshot-controller         | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-1.7.202.tgz[1.7.202]                         |
+| rke2-snapshot-controller-crd     | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-1.7.202.tgz[1.7.202]                     |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-1.7.302.tgz[1.7.302]         |
+
+'''
