@@ -54,7 +54,8 @@ function process_cni_table {
     done
 }
 
-for minor in $MINORS; do
+function process_minor() {
+    local minor=$1
     product=rke2
     global_table=$(mktemp)
     previous=""
@@ -70,7 +71,7 @@ for minor in $MINORS; do
         # Extract from each release notes the component table, building a single table with all the components
         process_cni_table "$body"
         if [ -z "${previous}" ]; then
-            title="---\nhide_table_of_contents: true\nsidebar_position: 0\n---\n\n# ${minor}.X\n"
+            title="---\nhide_table_of_contents: true\nsidebar_position: 0\ntitle: ${minor}.X\n---\n\n"
             echo -e "${title}" >> $global_table
             upgrade_link="[Urgent Upgrade Notes](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-${minor:1}.md#urgent-upgrade-notes)"
             upgrade_warning=":::warning Upgrade Notice\nBefore upgrading from earlier releases, be sure to read the Kubernetes ${upgrade_link}.\n:::\n"
@@ -99,7 +100,13 @@ for minor in $MINORS; do
     rke2tmp=$(mktemp)
     cat $global_table "${file}" > $rke2tmp && mv $rke2tmp "${file}"
     echo "Collected release notes for ${product} ${minor}"
+}
+
+for minor in $MINORS; do
+    process_minor "${minor}" &
 done
+
+wait
 
 # For all the releases, order the release notes in reverse numerical order
 ITER=1
