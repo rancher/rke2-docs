@@ -46,7 +46,13 @@
   --ifm-color-primary-darker: #2b83bc;
   --ifm-color-primary-darkest: #236c9b;
   --ifm-code-font-size: 95%;
+  --label-color: #d5d5d5ff;
 }
+
+[data-theme='dark'] {
+  --label-color: rgb(67, 67, 67);
+}
+
 @media (max-width: 768px) {
   #theme-main h1 {
     font-size: 50px !important;
