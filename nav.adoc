@@ -51,6 +51,7 @@
 ** xref:reference/cli_tools.adoc[]
 ** xref:reference/linux_agent_config.adoc[]
 ** xref:reference/logging.adoc[]
+** xref:reference/metrics.adoc[]
 ** xref:reference/resource_profiling.adoc[]
 ** xref:reference/server_config.adoc[]
 ** xref:reference/windows_agent_config.adoc[]

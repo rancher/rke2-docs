@@ -285,6 +285,12 @@ In case of IPv6 only configuration RKE2 needs to use `localhost` to access the l
 ::1       localhost
 ----
 
+[CAUTION]
+.Known Issue
+====
+,If your IPv6 default route is set by a router advertisement (RA), you will need to set the sysctl `net.ipv6.conf.all.accept_ra=2`; otherwise, the node will drop the default route once it expires. Be aware that accepting RAs could increase the risk of https://github.com/kubernetes/kubernetes/issues/91507[man-in-the-middle attacks].
+====
+
 In IPv6-only mode, Cilium does not support encapsulation of IPv6 traffic between nodes. Communication between pods on different nodes relies on the host's network to properly route packets to pod IPs. Cilium can be configured to automatically manage static routes between nodes with the following configuration::
 
 [,yaml]
