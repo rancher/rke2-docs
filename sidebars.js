@@ -30,6 +30,7 @@ module.exports = {
         },
         'upgrades/manual_upgrade',
         'upgrades/automated_upgrade',
+        'upgrades/roll-back',
       ],
     },
     {
