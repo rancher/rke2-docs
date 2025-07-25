@@ -103,6 +103,50 @@ NOTE: You should write this file before starting rke2.
 </TabItem>
 </Tabs>
 
+## Using Multus with the "thick plugin" option (Experimental)
+:::info Version Gate
+This feature is available starting with versions v1.31.11+rke2r1, v1.32.7+rke2r1 and v1.33.3+rke2r1.
+:::
+
+rke2 now supports deploying Multus with a new architecture called ["thick plugin"](https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/thick-plugin.md).
+
+You can enable with this HelmChartConfig:
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-multus
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    thickPlugin:
+      enabled: true
+```
+
+### Enabling Multus Dynamic Networks Controller
+One use case for using Multus "thick plugin" is to deploy the [Dynamic Networks Controller](https://github.com/k8snetworkplumbingwg/multus-dynamic-networks-controller). This is done through the following HelmChartConfig:
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-multus
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    thickPlugin:
+      enabled: true
+    dynamicNetworksController:
+      enabled: true
+```
+:::note
+The Dynamic Networks Controller can be deployed only with Multus in "thick plugin" mode. 
+:::
+
 ## Using Multus with SR-IOV
 
 Using the SR-IOV CNI with Multus can help with data-plane acceleration use cases, providing an extra interface in the pod that can achieve very high throughput. SR-IOV will not work in all environments, and there are several requirements
