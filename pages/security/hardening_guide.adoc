@@ -4,7 +4,7 @@ This document provides prescriptive guidance for hardening a production installa
 
 For more details about evaluating a hardened cluster against the official CIS benchmark, refer to the appropriate CIS Self-Assessment Guide:
 
-* xref:./cis_self_assessment18.adoc[CIS Self-Assessment Guide v1.8] for RKE2 v1.27 and newer
+* xref:./cis_self_assessment19.adoc[CIS Self-Assessment Guide v1.9] for RKE2 v1.27 and newer
 * xref:./cis_self_assessment18.adoc[CIS Self-Assessment Guide v1.8] for RKE2 v1.26
 * xref:./cis_self_assessment17.adoc[CIS Self-Assessment Guide v1.7] for RKE2 v1.25
 

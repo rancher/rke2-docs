@@ -18,6 +18,7 @@
 ** xref:upgrades/upgrade.adoc[Overview]
 ** xref:upgrades/manual_upgrade.adoc[]
 ** xref:upgrades/automated_upgrade.adoc[]
+** xref:upgrades/roll-back.adoc[]
 
 * Security
 ** xref:security/about_hardened_images.adoc[]
