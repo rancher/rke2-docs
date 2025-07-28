@@ -109,8 +109,8 @@ The VXLAN port on nodes should not be exposed to the world as it opens up your c
 
 | Port        | Protocol | Source            | Destination       | Description
 |-------------|----------|-------------------|-------------------|------------
-| 6443        | TCP      | RKE2 agent nodes  | RKE2 server nodes | Kubernetes API
-| 9345        | TCP      | RKE2 agent nodes  | RKE2 server nodes | RKE2 supervisor API
+| 6443        | TCP      | All RKE2 nodes    | RKE2 server nodes | Kubernetes API
+| 9345        | TCP      | All RKE2 nodes    | RKE2 server nodes | RKE2 supervisor API
 | 10250       | TCP      | All RKE2 nodes    | All RKE2 nodes    | kubelet metrics
 | 2379        | TCP      | RKE2 server nodes | RKE2 server nodes | etcd client port
 | 2380        | TCP      | RKE2 server nodes | RKE2 server nodes | etcd peer port
