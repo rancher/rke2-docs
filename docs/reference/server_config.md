@@ -113,6 +113,8 @@ The following options must be set to the same value on all servers in the cluste
 | kube-proxy-extra-env | kube-proxy extra environment variables  | RKE2_KUBE_PROXY_EXTRA_ENV |
 | etcd-extra-env | etcd extra environment variables  | RKE2_ETCD_EXTRA_ENV |
 | cloud-controller-manager-extra-env | cloud-controller-manager extra environment variables  | RKE2_CLOUD_CONTROLLER_MANAGER_EXTRA_ENV |
+| ingress-controller | Ingress Controller to deploy one of, none, ingress-nginx, traefik  |  |
+
 ### Image
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
