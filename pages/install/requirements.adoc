@@ -136,13 +136,13 @@ The VXLAN port on nodes should not be exposed to the world as it opens up your c
 
 | 6443
 | TCP
-| RKE2 agent nodes
+| All RKE2 nodes
 | RKE2 server nodes
 | Kubernetes API
 
 | 9345
 | TCP
-| RKE2 agent nodes
+| All RKE2 nodes
 | RKE2 server nodes
 | RKE2 supervisor API
 
