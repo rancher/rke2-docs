@@ -25,13 +25,13 @@ RKE2 brings together a number of Open Source technologies to make this all work:
 - [etcd][io-etcd]
 - [runc][gh-runc]
 - [containerd][io-containerd]/[cri][gh-cri-api]
-- [CNI][gh-cni]: Canal ([Calico][org-projectcalico] &amp; [Flannel][gh-flannel]), [Cilium][io-cilium] or [Calico][org-projectcalico]
+- [CNI][gh-cni]: Canal ([Calico][org-projectcalico] &amp; [Flannel][gh-flannel]), [Cilium][io-cilium], [Calico][org-projectcalico] or [Flannel][gh-flannel]. Additionally: [Multus][gh-multus]
 - [CoreDNS][io-coredns]
-- [Ingress NGINX Controller][io-ingress-nginx]
+- [Ingress NGINX Controller][io-ingress-nginx] and/or [Traefik][io-traefik]
 - [Metrics Server][gh-metrics-server]
 - [Helm][sh-helm]
 
-All of these, except the NGINX Ingress Controller, are compiled and statically linked with [Go+BoringCrypto][gh-goboring].
+All of these, except Traefik, are compiled and statically linked with [Go+BoringCrypto][gh-goboring].
 
 ## Process Lifecycle
 
@@ -121,11 +121,12 @@ to connect to the `kube-apiserver` and begin their processing.
 
 On server nodes, the `helm-controller` can now apply to the cluster any charts found in `/var/lib/rancher/rke2/server/manifests`.
 
-- rke2-canal.yaml or rke2-cilium.yaml (daemonset, bootstrap)
+- rke2-canal.yaml or rke2-cilium.yaml or rke2-calico.yaml or rke2-flannel.yaml or rke2-multus.yaml (daemonset, bootstrap)
 - rke2-coredns.yaml (deployment, bootstrap)
-- rke2-ingress-nginx.yaml (deployment)
-- rke2-kube-proxy.yaml (daemonset, bootstrap)
+- rke2-ingress-nginx.yaml and/or rke2-traefik.yaml and rke2-traefik-crd.yaml (deployment)
 - rke2-metrics-server.yaml (deployment)
+- rke2-runtimeclasses.yaml (deployment)
+- rke2-snapshot-controller-crd.yaml, rke2-snapshot-controller.yaml and rke2-snapshot-validation-webhook.yaml (deployment)
 
 
 ### Daemon Process
@@ -150,7 +151,7 @@ The RKE2 process will now run indefinitely until it receives a SIGTERM or SIGKIL
 [io-ingress-nginx]: <https://kubernetes.github.io/ingress-nginx> "NGINX Ingress Controller for Kubernetes"
 [gh-metrics-server]: <https://github.com/kubernetes-sigs/metrics-server> "Cluster-wide aggregator of resource usage data"
 [org-projectcalico]: <https://docs.tigera.io/calico/latest/about> "Project Calico"
-[gh-flannel]: <https://github.com/coreos/flannel> "A network fabric for containers, designed for Kubernetes"
+[gh-flannel]: <https://github.com/flannel-io/flannel> "A network fabric for containers, designed for Kubernetes"
 [io-cilium]: <https://cilium.io> "eBPF-based Networking, Observability, and Security"
 [io-etcd]: <https://etcd.io> "A distributed, reliable key-value store for the most critical data of a distributed system"
 [gh-helm]: <https://github.com/helm/helm> "The Kubernetes Package Manager"
@@ -159,3 +160,5 @@ The RKE2 process will now run indefinitely until it receives a SIGTERM or SIGKIL
 [gh-cni]: <https://github.com/containernetworking/cni> "Container Network Interface"
 [gh-runc]: <https://github.com/opencontainers/runc> "CLI tool for spawning and running containers according to the OCI specification"
 [gh-goboring]: <https://github.com/golang/go/tree/dev.boringcrypto/misc/boring> "Go+BoringCrypto"
+[io-traefik]: <https://traefik.io/traefik> "Ingress controller that manages and routes external traffic to services within a Kubernetes cluster"
+[gh-multus]: <https://github.com/k8snetworkplumbingwg/multus-cni> "CNI multiplexer which enables multiple NICs in Kubernetes pods"
