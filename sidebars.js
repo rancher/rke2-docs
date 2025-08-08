@@ -73,6 +73,7 @@ module.exports = {
         'networking/basic_network_options',
         'networking/multus_sriov',
         'networking/networking_services',
+        'networking/windows_bgp',
       ],
     },
     'helm',
