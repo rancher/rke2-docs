@@ -59,7 +59,7 @@ To roll back an RKE2 cluster when using an embedded etcd (default), follow these
 
       - Download the artifacts and run the [install script](../install/airgap.md#2-install-rke2) locally.
 
-4. On the first server node or the node without a `server:` entry in its [RKE2 config file](../install/configuration.md), initiate the cluster restore. Refer to the [Snapshot Restore Steps](../datastore/backup_restore.md#restoring-a-snapshot-to-existing-nodes) for more information:
+4. On the first server node or the node without a `server:` entry in its [RKE2 config file](../install/configuration.md), initiate the cluster restore. Refer to the [Snapshot Restore Steps](../datastore/backup_restore.md#snapshot-restore-steps) for more information:
 
     ```bash
     rke2 server --cluster-reset --cluster-reset-restore-path=<PATH-TO-SNAPSHOT>
