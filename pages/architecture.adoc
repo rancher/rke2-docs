@@ -23,13 +23,13 @@ RKE2 brings together a number of Open Source technologies to make this all work:
 * https://etcd.io[etcd]
 * https://github.com/opencontainers/runc[runc]
 * https://containerd.io[containerd]/https://github.com/kubernetes/cri-api[cri]
-* https://github.com/containernetworking/cni[CNI]: Canal (https://docs.tigera.io/calico/latest/about[Calico] & https://github.com/coreos/flannel[Flannel]), https://cilium.io[Cilium] or https://docs.tigera.io/calico/latest/about[Calico]
+* https://github.com/containernetworking/cni[CNI]: Canal (https://docs.tigera.io/calico/latest/about[Calico] & https://github.com/flannel-io/flannel[Flannel]), https://cilium.io[Cilium], https://docs.tigera.io/calico/latest/about[Calico] or https://github.com/flannel-io/flannel[Flannel]. Additionally: https://github.com/k8snetworkplumbingwg/multus-cni[Multus]
 * https://coredns.io[CoreDNS]
-* https://kubernetes.github.io/ingress-nginx[Ingress NGINX Controller]
+* https://kubernetes.github.io/ingress-nginx[Ingress NGINX Controller] and/or https://traefik.io/traefik[Traefik]
 * https://github.com/kubernetes-sigs/metrics-server[Metrics Server]
 * https://helm.sh[Helm]
 
-All of these, except the NGINX Ingress Controller, are compiled and statically linked with https://github.com/golang/go/tree/dev.boringcrypto/misc/boring[Go+BoringCrypto].
+All of these, except Traefik, are compiled and statically linked with https://github.com/golang/go/tree/dev.boringcrypto/misc/boring[Go+BoringCrypto].
 
 == Process Lifecycle
 
@@ -119,11 +119,12 @@ to connect to the `kube-apiserver` and begin their processing.
 
 On server nodes, the `helm-controller` can now apply to the cluster any charts found in `/var/lib/rancher/rke2/server/manifests`.
 
-* rke2-canal.yaml or rke2-cilium.yaml (daemonset, bootstrap)
+* rke2-canal.yaml or rke2-cilium.yaml or rke2-calico.yaml or rke2-flannel.yaml or rke2-multus.yaml (daemonset, bootstrap)
 * rke2-coredns.yaml (deployment, bootstrap)
-* rke2-ingress-nginx.yaml (deployment)
-* rke2-kube-proxy.yaml (daemonset, bootstrap)
+* rke2-ingress-nginx.yaml and/or rke2-traefik.yaml and rke2-traefik-crd.yaml (deployment)
 * rke2-metrics-server.yaml (deployment)
+* rke2-runtimeclasses.yaml (deployment)
+* rke2-snapshot-controller-crd.yaml, rke2-snapshot-controller.yaml and rke2-snapshot-validation-webhook.yaml (deployment)
 
 === Daemon Process
 
