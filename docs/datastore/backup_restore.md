@@ -120,6 +120,16 @@ $ rke2 etcd-snapshot --s3 --s3-bucket=test-bucket --s3-access-key=test --s3-secr
 Name                              Location                                                                          Size    Created
 ```
 
+### S3 Retention
+
+:::info Version Gate
+Starting in versions v1.34.0+rke2r1, v1.33.4+rke2r1, v1.32.8+rke2r1, v1.31.12+rke2r1, RKE2 includes a new flag for S3 retention. It has the same default value as the local snapshot retention.
+:::
+
+| Flag | Description |
+| ----------- | --------------- |
+| `--etcd-s3-retention` | Number of snapshots in S3 to retain (default: `5`) |
+
 
 ### S3 Configuration Secret Support
 
