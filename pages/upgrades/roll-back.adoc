@@ -62,7 +62,7 @@ curl -sfL https://get.rke2.io | INSTALL_RKE2_VERSION=vX.Y.Zrke2r1 INSTALL_RKE2_T
 ----
  ** Air-gapped Clusters:
   *** Download the artifacts and run the link:../install/airgap.md#2-install-rke2[install script] locally.
-. On the first server node or the node without a `server:` entry in its xref:../install/configuration.adoc[RKE2 config file], initiate the cluster restore. Refer to the link:../datastore/backup_restore.md#restoring-a-snapshot-to-existing-nodes[Snapshot Restore Steps] for more information:
+. On the first server node or the node without a `server:` entry in its xref:../install/configuration.adoc[RKE2 config file], initiate the cluster restore. Refer to the link:../datastore/backup_restore.md#snapshot-restore-steps[Snapshot Restore Steps] for more information:
 +
 [,bash]
 ----

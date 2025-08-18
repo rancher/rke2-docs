@@ -93,6 +93,20 @@ The following options must be set to the same value on all servers in the cluste
 | etcd-s3-insecure | Disables S3 over HTTPS |  |  |
 | etcd-s3-timeout | S3 timeout  | 5m0s |  |
 
+[IMPORTANT]
+.Version Gate
+====
+Starting in versions v1.34.0+rke2r1, v1.33.4+rke2r1, v1.32.8+rke2r1, v1.31.12+rke2r1, RKE2 includes a new flag for S3 retention. It has the same default value as the local snapshot retention.
+====
+
+|===
+| Flag | Description | Default
+
+| etcd-s3-retention
+| Number of snapshots in S3 to retain
+| 5
+|===
+
 === Flags
 
 | Flag | Description |
