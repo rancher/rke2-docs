@@ -72,7 +72,7 @@ For best results, do NOT simply copy a prerendered `config.toml` into the templa
 
 ## Configuring an HTTP proxy
 
-If you are running RKE2 in an environment, which only has external connectivity through an HTTP proxy, you can configure your proxy settings on the RKE2 systemd service. These proxy settings will then be used in RKE2 and passed down to the embedded containerd and kubelet.
+If you are running RKE2 in an environment, which only has external connectivity through an HTTP proxy, you can configure your proxy settings on the RKE2 systemd service. These proxy settings will then be used in RKE2 and passed down to the embedded containerd and kubelet, as well as the control-plane, etcd, and kube-proxy static pods.
 
 Add the necessary `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` variables to the environment file of your systemd service, usually:
 
