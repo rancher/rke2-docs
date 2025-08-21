@@ -73,7 +73,7 @@ Please check [Known issues and Limitations](../known_issues.md) if you experienc
 </TabItem>
 <TabItem value="Cilium CNI Plugin" default>
 
-When using Cilium, you must ensure that nodes have a supported kernel version (>= 4.9.17) and they meet the [requirements](https://docs.cilium.io/en/stable/operations/system_requirements/). To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
+When using Cilium, you must ensure that nodes have a supported kernel version (>= 4.9.17) and they meet the [requirements](https://docs.cilium.io/en/stable/operations/system_requirements/). To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable wireguard:
 
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-cilium-config.yaml
@@ -85,11 +85,16 @@ metadata:
   namespace: kube-system
 spec:
   valuesContent: |-
-    eni:
+    encryption:
       enabled: true
+      type: wireguard
 ```
 
-For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.14.400/values.yaml)
+For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.17.601/values.yaml)
+
+
+<details>
+<summary>**Kube-proxy replacement**</summary>
 
 Cilium includes advanced features to fully replace kube-proxy and implement the routing of services using eBPF instead of iptables. It is not recommended to replace kube-proxy by Cilium if your kernel is not v5.8 or newer, as important bug fixes and features will be missing. To activate this mode, deploy RKE2 with `disable-kube-proxy: true` in the configuration file, and the following chart values:
 
@@ -109,6 +114,10 @@ spec:
 ```
 
 For more information, please check the [upstream docs](https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/)
+</details>
+
+<details>
+<summary>**Cilium Hubble**</summary>
 
 Cilium includes also an observability platform called [Hubble](https://docs.cilium.io/en/stable/overview/intro/#what-is-hubble)
 To enable Hubble, use the following chart values:
@@ -130,6 +139,7 @@ spec:
       ui:
         enabled: true
 ```
+</details>
 
 :::warning
 Cilium is currently not supported on Windows.
