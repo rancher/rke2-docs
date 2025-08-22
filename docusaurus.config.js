@@ -120,8 +120,9 @@ module.exports = {
         theme: {
           customCss: [require.resolve("./src/css/custom.css")],
         },
-        googleTagManager: {
-          containerId: 'GTM-57KS2MW',
+        gtag: {
+          trackingID: "GTM-57KS2MW", // Global site tag for Google Analytics
+          anonymizeIP: true,
         },
       },
     ],
