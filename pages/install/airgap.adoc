@@ -28,7 +28,7 @@ If you have not yet set up a private Docker registry, refer to the https://distr
 [IMPORTANT]
 .CNI plugins and vsphere extra images
 ====
-`rke2-images.linux-amd64.tar.zst` includes images for all CNI plugin options. As an alternative, you can load `rke2-images-core.linux-amd64.tar.zst` and the CNI plugin specific tarball, e.g. `rke2-images-canal.linux-amd64.tar.zst` for canal. If enabling the vSphere CPI/CSI charts (--cloud-provider-name=rancher-vsphere), you must also load the `rke2-images-vsphere.linux-amd64.tar.zst` archive.
+`rke2-images.linux-amd64.tar.zst` includes images for Canal CNI plugin. As an alternative, you can load `rke2-images-core.linux-amd64.tar.zst` and the CNI plugin specific tarball, e.g. `rke2-images-cilium.linux-amd64.tar.zst` for Cilium. If enabling the vSphere CPI/CSI charts (--cloud-provider-name=rancher-vsphere), you must also load the `rke2-images-vsphere.linux-amd64.tar.zst` archive.
 ====
 
 --
@@ -44,13 +44,19 @@ This method requires you to manually deploy the necessary images to each node, a
 [discrete]
 ==== Prepare the Images Directory and Airgap Image Tarball
 
-. Obtain the images archive for your architecture from the https://github.com/rancher/rke2/releases[releases] page for the version of RKE2 you will be running.
-. Download the images archive to the agent's images directory, for example and assuming amd64:
+. On internet accessible machine, download the images archive for your architecture from the https://github.com/rancher/rke2/releases[releases] page for the version of RKE2 you will be running.
++
+[,bash]
+----
+  sudo curl -LO "https://github.com/rancher/rke2/releases/download/v1.33.1%2Brke2r1/rke2-images.linux-amd64.tar.zst"
+----
+
+. Transfer the images tarball to the airgap nodes. Place them in the agent's image directory, for example and assuming amd64:
 +
 [,bash]
 ----
   sudo mkdir -p /var/lib/rancher/rke2/agent/images/
-  sudo curl -L -o /var/lib/rancher/rke2/agent/images/rke2-airgap-images-amd64.tar.zst "https://github.com/rancher/rke2/releases/download/v1.33.1%2Brke2r1/rke2-images.linux-amd64.tar.zst"
+  sudo cp rke2-images.linux-amd64.tar.zst /var/lib/rancher/rke2/agent/images/rke2-images.linux-amd64.tar.zst"
 ----
 
 . Proceed to the <<_2_install_rke2,Install RKE2>> section below.
@@ -58,7 +64,7 @@ This method requires you to manually deploy the necessary images to each node, a
 [IMPORTANT]
 .CNI plugins and vsphere extra images
 ====
-`rke2-images.linux-amd64.tar.zst` includes images for all CNI plugin options. As an alternative, you can load `rke2-images-core.linux-amd64.tar.zst` and the CNI plugin specific tarball, e.g. `rke2-images-canal.linux-amd64.tar.zst` for canal. If enabling the vSphere CPI/CSI charts (--cloud-provider-name=rancher-vsphere), you must also load the `rke2-images-vsphere.linux-amd64.tar.zst` archive.
+`rke2-images.linux-amd64.tar.zst` includes images for Canal CNI plugin. As an alternative, you can load `rke2-images-core.linux-amd64.tar.zst` and the CNI plugin specific tarball, e.g. `rke2-images-cilium.linux-amd64.tar.zst` for Cilium. If enabling the vSphere CPI/CSI charts (--cloud-provider-name=rancher-vsphere), you must also load the `rke2-images-vsphere.linux-amd64.tar.zst` archive.
 ====
 
 [discrete]
@@ -112,6 +118,10 @@ For more information on enabling the embedded distributed registry mirror, see t
 
 Before installing RKE2, choose one of the <<_1_load_images,Load Images>> options above to prepopulate the images that RKE2 needs to install.
 
+[%collapsible]
+.*Default Network Route* - required for nodes without a default route
+======
+
 ==== Default Network Route
 
 If your nodes do not have an interface with a default route, a default route must be configured; even a black-hole route via a dummy interface will suffice. RKE2 requires a default route in order to auto-detect the node's primary IP, and for kube-proxy ClusterIP routing to function properly. To add a dummy route, do the following:
@@ -123,6 +133,12 @@ If your nodes do not have an interface with a default route, a default route mus
   ip route add default via 203.0.113.255 dev dummy0 metric 1000
 ----
 
+======
+
+[%collapsible]
+.*SELinux RPM* - required for airgapped nodes with SELinux enabled
+======
+
 ==== SELinux RPM
 
 If running on an air-gapped node with SELinux enabled, you must manually install the rke2-selinux RPM before installing RKE2. This RPM includes the necessary SELinux policies for RKE2 to run properly. See our https://docs.rke2.io/install/methods#rpm[RPM Documentation] to learn how to obtain the rpm. The rke2-selinux RPM installation requires the following dependencies to be available in the OS: +
@@ -131,6 +147,8 @@ If running on an air-gapped node with SELinux enabled, you must manually install
     * libnftnl
     * policycoreutils
     * selinux-policy
+
+======
 
 === Installation
 

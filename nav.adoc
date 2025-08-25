@@ -45,6 +45,7 @@
 ** xref:networking/basic_network_options.adoc[]
 ** xref:networking/multus_sriov.adoc[]
 ** xref:networking/networking_services.adoc[]
+** xref:networking/windows_bgp.adoc[]
 * xref:helm.adoc[]
 * xref:advanced.adoc[]
 

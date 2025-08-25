@@ -80,7 +80,7 @@ Cilium CNI Plugin::
 +
 --
 
-When using Cilium, you must ensure that nodes have a supported kernel version (>= 4.9.17) and they meet the https://docs.cilium.io/en/stable/operations/system_requirements/[requirements]. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable eni:
+When using Cilium, you must ensure that nodes have a supported kernel version (>= 4.9.17) and they meet the https://docs.cilium.io/en/stable/operations/system_requirements/[requirements]. To override the default options, please use a HelmChartConfig resource. The HelmChartConfig resource must match the name and namespace of its corresponding HelmChart. For example, to enable wireguard:
 
 [,yaml]
 ----
@@ -92,11 +92,16 @@ metadata:
   namespace: kube-system
 spec:
   valuesContent: |-
-    eni:
+    encryption:
       enabled: true
+      type: wireguard
 ----
 
-For more information about values available in the Cilium chart, please refer to the https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.14.400/values.yaml[rke2-charts repository]
+For more information about values available in the Cilium chart, please refer to the https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.17.601/values.yaml[rke2-charts repository]
+
+[%collapsible]
+.*Kube-proxy replacement*
+======
 
 Cilium includes advanced features to fully replace kube-proxy and implement the routing of services using eBPF instead of iptables. It is not recommended to replace kube-proxy by Cilium if your kernel is not v5.8 or newer, as important bug fixes and features will be missing. To activate this mode, deploy RKE2 with `disable-kube-proxy: true` in the configuration file, and the following chart values:
 
@@ -116,6 +121,11 @@ spec:
 ----
 
 For more information, please check the https://docs.cilium.io/en/stable/network/kubernetes/kubeproxy-free/[upstream docs]
+======
+
+[%collapsible]
+.*Cilium Hubble*
+======
 
 Cilium includes also an observability platform called https://docs.cilium.io/en/stable/overview/intro/#what-is-hubble[Hubble]
 To enable Hubble, use the following chart values:
@@ -137,6 +147,8 @@ spec:
       ui:
         enabled: true
 ----
+
+======
 
 [CAUTION]
 ====
