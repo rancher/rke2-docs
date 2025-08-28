@@ -40,7 +40,7 @@ docker.io/library/mysql:latest
 
 After a few seconds, the `redis` and the `mysql` images will be available in the containerd image store of the node. 
 
-Use `sudo ctr images list` to query the containerd image store.
+Use `ctr -a /run/k3s/containerd/containerd.sock -n k8s.io images list` to query the containerd image store.
 
 </TabItem>
 <TabItem value="Offline image importing">
@@ -56,7 +56,7 @@ curl https://github.com/rancher/rke2/releases/download/v1.33.1%2Brke2r1/rke2-ima
 
 After a few seconds, the images included in the image tarball will be available in the containerd image store of the node. 
 
-Use `sudo ctr images list` to query the containerd image store.
+Use `ctr -a /run/k3s/containerd/containerd.sock -n k8s.io images list` to query the containerd image store.
 
 This is the method used in Airgap. Please follow the [Airgap install documentation](install/airgap.md) for detailed information.
 
