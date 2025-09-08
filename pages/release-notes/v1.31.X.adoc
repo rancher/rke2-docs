@@ -9,6 +9,22 @@
 |===
 | Version | Release date | Kubernetes | Etcd | Containerd | Runc | Metrics-server | CoreDNS | Ingress-Nginx | Helm-controller | Canal (Default) | Calico | Cilium | Multus
 
+| link:v1.31.X.md#release-v13112rke2r1[v1.31.12+rke2r1]
+| Aug 23 2025
+| https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v13112[v1.31.12]
+| https://github.com/k3s-io/etcd/releases/tag/v3.5.21-k3s1[v3.5.21-k3s1]
+| https://github.com/k3s-io/containerd/releases/tag/v2.0.5-k3s2[v2.0.5-k3s2]
+| https://github.com/opencontainers/runc/releases/tag/v1.2.6[v1.2.6]
+| https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.8.0[v0.8.0]
+| https://github.com/coredns/coredns/releases/tag/v1.12.3[v1.12.3]
+| https://github.com/rancher/ingress-nginx/releases/tag/v1.12.4-hardened7[v1.12.4-hardened7]
+| https://github.com/k3s-io/helm-controller/releases/tag/v0.16.13[v0.16.13]
+| https://github.com/flannel-io/flannel/releases/tag/v0.27.2[Flannel v0.27.2] +
+https://docs.tigera.io/calico/latest/release-notes/#v3.30[Calico v3.30.2]
+| https://docs.tigera.io/calico/latest/release-notes/#v3.30[v3.30.2]
+| https://github.com/cilium/cilium/releases/tag/v1.18.0[v1.18.0]
+| https://github.com/k8snetworkplumbingwg/multus-cni/releases/tag/v4.2.2[v4.2.2]
+
 | link:v1.31.X.md#release-v13111rke2r1[v1.31.11+rke2r1]
 | Jul 25 2025
 | https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v13111[v1.31.11]
@@ -203,6 +219,65 @@ https://docs.tigera.io/calico/latest/release-notes/#v3.28[Calico v3.28.1]
 |===
 
 {blank} +
+
+== Release https://github.com/rancher/rke2/releases/tag/v1.31.12+rke2r1[v1.31.12+rke2r1]
+
+// v1.31.12+rke2r1
+
+This release updates Kubernetes to v1.31.12.
+
+*Important Note*
+
+If your server (control-plane) nodes were not started with the `--token` CLI flag or config file key, a randomized token was generated during initial cluster startup. This key is used both for joining new nodes to the cluster, and for encrypting cluster bootstrap data within the datastore. Ensure that you retain a copy of this token, as is required when restoring from backup.
+
+You may retrieve the token value from any server already joined to the cluster:
+
+[,bash]
+----
+cat /var/lib/rancher/rke2/server/token
+----
+
+=== Changes since v1.31.11+rke2r1:
+
+* Add.utils test (#8651) - backport 1.31 https://github.com/rancher/rke2/pull/8660[(#8660)]
+* CNI Bumps for Aug 25 release https://github.com/rancher/rke2/pull/8691[(#8691)]
+* Bump rancher vsphere csi to 3.3.1-rancher10 https://github.com/rancher/rke2/pull/8679[(#8679)]
+* Bump rke2-coredns to 1.43.100 https://github.com/rancher/rke2/pull/8725[(#8725)]
+* Update to cilium v1.18.000 https://github.com/rancher/rke2/pull/8718[(#8718)]
+* Bump ingress-nginx to v1.12.4-hardened6 https://github.com/rancher/rke2/pull/8734[(#8734)]
+* Update Kubernetes Metrics Server chart 3.13.000 https://github.com/rancher/rke2/pull/8743[(#8743)]
+* Separate pod template generation and static pod execution code https://github.com/rancher/rke2/pull/8748[(#8748)]
+* Bump k3s https://github.com/rancher/rke2/pull/8751[(#8751)]
+* Add prime ribs index upload and cache invalidation https://github.com/rancher/rke2/pull/8709[(#8709)]
+* Bump K3s version for certificate startup check fix https://github.com/rancher/rke2/pull/8764[(#8764)]
+* Update K8s to v1.31.12 and Go 1.23.11 https://github.com/rancher/rke2/pull/8771[(#8771)]
+* Fix missing ECM config https://github.com/rancher/rke2/pull/8776[(#8776)]
+* Fix uploader authentication https://github.com/rancher/rke2/pull/8781[(#8781)]
+* Bump k3s for metric and event fixes https://github.com/rancher/rke2/pull/8787[(#8787)]
+* Bump ingress-nginx to hardened7 https://github.com/rancher/rke2/pull/8791[(#8791)]
+* Bump coredns chart and image (#8736) https://github.com/rancher/rke2/pull/8797[(#8797)]
+* Fix static pod cleanup https://github.com/rancher/rke2/pull/8808[(#8808)]
+
+== Charts Versions
+
+| Component | Version |
+| -- | -- |
+| rke2-cilium | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-cilium/rke2-cilium-1.18.000.tgz[1.18.000] |
+| rke2-canal | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-canal/rke2-canal-v3.30.2-build2025073100.tgz[v3.30.2-build2025073100] |
+| rke2-calico | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-v3.30.200.tgz[v3.30.200] |
+| rke2-calico-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-calico/rke2-calico-crd-v3.30.200.tgz[v3.30.200] |
+| rke2-coredns | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-coredns/rke2-coredns-1.43.101.tgz[1.43.101] |
+| rke2-ingress-nginx | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-ingress-nginx/rke2-ingress-nginx-4.12.404.tgz[4.12.404] |
+| rke2-metrics-server | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-metrics-server/rke2-metrics-server-3.13.000.tgz[3.13.000] |
+| rancher-vsphere-csi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-csi/rancher-vsphere-csi-3.3.1-rancher1000.tgz[3.3.1-rancher1000] |
+| rancher-vsphere-cpi | https://github.com/rancher/rke2-charts/raw/main/assets/rancher-vsphere-cpi/rancher-vsphere-cpi-1.9.100.tgz[1.9.100] |
+| harvester-cloud-provider | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-cloud-provider-0.2.1000.tgz[0.2.1000] |
+| harvester-csi-driver | https://github.com/rancher/rke2-charts/raw/main/assets/harvester-cloud-provider/harvester-csi-driver-0.1.2400.tgz[0.1.2400] |
+| rke2-snapshot-controller | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-4.0.003.tgz[4.0.003] |
+| rke2-snapshot-controller-crd | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-controller/rke2-snapshot-controller-crd-4.0.003.tgz[4.0.003] |
+| rke2-snapshot-validation-webhook | https://github.com/rancher/rke2-charts/raw/main/assets/rke2-snapshot-validation-webhook/rke2-snapshot-validation-webhook-0.0.0.tgz[0.0.0] |
+
+'''
 
 == Release https://github.com/rancher/rke2/releases/tag/v1.31.11+rke2r1[v1.31.11+rke2r1]
 
