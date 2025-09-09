@@ -70,6 +70,12 @@ rke2 certificate rotate --service <SERVICE>,<SERVICE>
 The following certificates can be rotated:  
 `admin`, `api-server`, `controller-manager`, `scheduler`, `rke2-controller`, `rke2-server`, `cloud-controller`, `etcd`, `auth-proxy`, `kubelet`, `kube-proxy`.
 
+:::info Version Gate
+Prior to the January 2025 releases: v1.32.0+rke2r1, v1.31.5+rke2r1, v1.30.9+rke2r1, v1.30.13+rke2r1, the rotation of certificates must be done in the following order: etcd servers, control-plane server, agents
+:::
+
+
+
 ## Certificate Authority (CA) Certificates
 
 Kubernetes requires a number of CA certificates for proper operation. For more information on how Kubernetes uses CA certificates, see the Kubernetes [PKI Certificates and Requirements](https://kubernetes.io/docs/setup/best-practices/certificates/#all-certificates) documentation.
