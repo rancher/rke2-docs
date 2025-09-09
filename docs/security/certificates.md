@@ -47,12 +47,8 @@ In case of unexpected output, please use `--debug` flag to get more information 
 
 
 ### Rotating Client and Server Certificates Manually
-When rotating client and server certificates manually, rotate certs on each node in the following order:
-1. etcd servers
-2. control-plane servers
-3. agents
 
-For each node, stop the server, use the `rke2 certificate rotate` subcommand to rotate the certs, then start the server once more; as in the following example:  
+To rotate client and server certificates manually, use the `rke2 certificate rotate` subcommand:
 
 ```bash
 # Stop RKE2
