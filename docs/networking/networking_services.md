@@ -91,11 +91,13 @@ This is done in 2 steps:
   ```
 
 
-## Nginx Ingress Controller
+## Ingress Controller
 
-[nginx-ingress](https://github.com/kubernetes/ingress-nginx) is an Ingress controller powered by NGINX that uses a ConfigMap to store the NGINX configuration.
+<Tabs>
+<TabItem value="ingress-nginx">
+[ingress-nginx](https://github.com/kubernetes/ingress-nginx) is an Ingress controller powered by NGINX that uses a ConfigMap to store the NGINX configuration.
 
-`nginx-ingress` is deployed by default when starting the server. Ports 80 and 443 will be bound by the ingress controller in its default configuration, making these unusable for HostPort or NodePort services in the cluster.
+`ingress-nginx` is deployed by default when starting the server. Ports 80 and 443 will be bound by the ingress controller in its default configuration, making these unusable for HostPort or NodePort services in the cluster.
 
 Configuration options can be specified by creating a [HelmChartConfig manifest](../helm.md#customizing-packaged-components-with-helmchartconfig) to customize the `rke2-ingress-nginx` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml` with the following contents sets `use-forwarded-headers` to `"true"` in the ConfigMap storing the NGINX config:
 ```yaml
@@ -112,9 +114,41 @@ spec:
       config:
         use-forwarded-headers: "true"
 ```
-For more information, refer to the official [nginx-ingress Helm Configuration Parameters](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#configuration).
+For more information, refer to the official [ingress-nginx Helm configuration parameters](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#configuration).
 
-To disable the NGINX ingress controller, start each server with the `disable: rke2-ingress-nginx` option in your configuration file.
+</TabItem>
+<TabItem value="traefik">
+
+:::info Version Gate
+Traefik support is available as of August 2024 releases: v1.28.12+rke2r1, v1.29.7+rke2r1, v1.30.3+rke2r1
+:::
+
+[traefik](https://doc.traefik.io/traefik/) is a modern HTTP reverse proxy and load balancer made to deploy microservices with ease. It simplifies networking complexity while designing, deploying, and running applications.
+
+To use traefik, start each server with the `ingress-controller: traefik` option in your configuration file.
+
+Configuration options can be specified by creating a [HelmChartConfig manifest](../helm.md#customizing-packaged-components-with-helmchartconfig) to customize the `rke2-traefik` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml` with the following contents enables the kubernetes gateway api:
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    providers:
+      kubernetesGateway:
+        enabled: true
+```
+For more information, refer to the official [traefik Helm configuration parameters](https://github.com/traefik/traefik-helm-chart/blob/master/traefik/VALUES.md).
+
+</TabItem>
+</Tabs>
+
+To disable the ingress controller, start each server with the `ingress-controller: none` option in your configuration file.
 
 ## Service Load Balancer
 
