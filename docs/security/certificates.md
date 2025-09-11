@@ -47,12 +47,8 @@ In case of unexpected output, please use `--debug` flag to get more information 
 
 
 ### Rotating Client and Server Certificates Manually
-When rotating client and server certificates manually, rotate certs on each node in the following order:
-1. etcd servers
-2. control-plane servers
-3. agents
 
-For each node, stop the server, use the `rke2 certificate rotate` subcommand to rotate the certs, then start the server once more; as in the following example:  
+To rotate client and server certificates manually, use the `rke2 certificate rotate` subcommand:
 
 ```bash
 # Stop RKE2
@@ -73,6 +69,12 @@ rke2 certificate rotate --service <SERVICE>,<SERVICE>
 
 The following certificates can be rotated:  
 `admin`, `api-server`, `controller-manager`, `scheduler`, `rke2-controller`, `rke2-server`, `cloud-controller`, `etcd`, `auth-proxy`, `kubelet`, `kube-proxy`.
+
+:::info Version Gate
+Prior to the January 2025 releases: v1.32.0+rke2r1, v1.31.5+rke2r1, v1.30.9+rke2r1, v1.30.13+rke2r1, the rotation of certificates must be done in the following order: etcd servers, control-plane server, agents
+:::
+
+
 
 ## Certificate Authority (CA) Certificates
 
