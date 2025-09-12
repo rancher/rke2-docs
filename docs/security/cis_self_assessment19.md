@@ -6,7 +6,7 @@ title: CIS 1.9 Self-Assessment Guide
 
 This document is a companion to the RKE2 security hardening guide. The hardening guide provides prescriptive guidance for hardening a production installation of RKE2, and this benchmark guide is meant to help you evaluate the level of security of the hardened cluster against each control in the CIS Kubernetes benchmark. It is to be used by RKE2 operators, security teams, auditors, and decision makers.
 
-This guide is specific to the **v1.27** release line of RKE2 and the **v1.9** release of the CIS Kubernetes Benchmark.
+This guide is specific to the **v1.27-v1.29** release line of RKE2 and the **v1.9** release of the CIS Kubernetes Benchmark.
 
 For more information about each control, including detailed rationales and descriptions checks, you can refer to the corresponding section of the CIS Kubernetes Benchmark v1.8. You can download the benchmark, after creating a free account, in [Center for Internet Security (CIS)](https://www.cisecurity.org/benchmark/kubernetes/).
 
