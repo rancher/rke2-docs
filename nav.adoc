@@ -23,9 +23,9 @@
 * Security
 ** xref:security/about_hardened_images.adoc[]
 ** xref:security/hardening_guide.adoc[]
+** xref:security/cis_self_assessment110.adoc[]
 ** xref:security/cis_self_assessment19.adoc[]
 ** xref:security/cis_self_assessment18.adoc[]
-** xref:security/cis_self_assessment17.adoc[]
 ** xref:security/fips_support.adoc[]
 ** xref:security/pod_security_standards.adoc[]
 ** xref:security/selinux.adoc[]
