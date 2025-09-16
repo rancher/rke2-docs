@@ -229,6 +229,8 @@ cluster-cidr: "10.42.0.0/16,2001:cafe:42::/56"
 service-cidr: "10.43.0.0/16,2001:cafe:43::/112"
 ```
 
+Dual-stack networking must be configured when the cluster is first created. It cannot be enabled on an existing cluster once it has been started as IPv4-only.
+
 Each CNI Plugin may require a different configuration for dual-stack:
 
 <Tabs groupId="CNIplugin" queryString>
