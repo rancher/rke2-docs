@@ -1,0 +1,37 @@
+name: Update Browserslist
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '0 6 3 * *' # Every 3rd day of Month at 6:00 AM
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  browserlist:
+    if: github.repository == 'rancher/rke2-docs'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Update Browserlist
+        run: npx update-browserslist-db@latest
+      - name: Get current month and year
+        id: date
+        run: echo "month_year=$(date +'%B %Y')" >> $GITHUB_OUTPUT
+      - name: Commit browserlist update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b update-browserslist-db
+          git commit -s -m "Update Browsers List DB ${{ steps.date.outputs.month_year }}"
+          git push -f --set-upstream origin pdate-browserslist-db
+      - name: Create pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr create --title "Update Browsers List DB ${{ steps.date.outputs.month_year }}" \
+          --body " Automated npx update-browserslist-db@latest" --base main --repo ${{ github.repository }}
