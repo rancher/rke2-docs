@@ -24,8 +24,6 @@ jobs:
         run: scripts/collect-all-release-notes.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Update Browser List
-        run: npx update-browserslist-db@latest
       - name: Get current month and year
         id: date
         run: echo "month_year=$(date +'%B %Y')" >> $GITHUB_ENV
