@@ -65,7 +65,6 @@ module.exports = {
       label: 'Architecture',
     },
     'cluster_access',
-    'import-images',
     {
       type: 'category',
       label: 'Networking',
@@ -76,7 +75,15 @@ module.exports = {
         'networking/windows_bgp',
       ],
     },
-    'helm',
+    {
+      type: 'category',
+      label: 'Add-ons',
+      items: [
+        'add-ons/helm',
+        'add-ons/import-images',
+        'add-ons/gpu_operators',
+      ],
+    },
     'advanced',
     {
       type: 'category',

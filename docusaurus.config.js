@@ -142,6 +142,7 @@ module.exports = {
       {
         redirects: [
           { from: '/install/network_options', to: '/networking/basic_network_options' },
+          { from: '/import-images', to: '/add-ons/import-images' },
         ],
       },
     ],

@@ -4,7 +4,7 @@ title: Network Options
 
 Kubernetes requires installation of one or more CNI Plugins to provide Pod networking. RKE2 bundles four primary CNI Plugins: Canal, Cilium, Calico, and Flannel. Only Calico and Flannel support Microsoft Windows. RKE2 also includes Multus as a secondary CNI Plugin, which must be enabled alongside a primary CNI Plugin. For more information, see the [Multus and SR-IOV](multus_sriov.md) documentation.
 
-Canal is the default CNI Plugin, but all bundled plugins are supported.  Bundled CNI Plugins are installed via Helm chart, and can be customized by deploying a HelmChartConfig with additional chart values. For more information on using HelmChartConfig resources, see the [Helm Integration](../helm.md) documentation, and the CNI-specific examples provided below.
+Canal is the default CNI Plugin, but all bundled plugins are supported.  Bundled CNI Plugins are installed via Helm chart, and can be customized by deploying a HelmChartConfig with additional chart values. For more information on using HelmChartConfig resources, see the [Helm Integration](../add-ons/helm.md) documentation, and the CNI-specific examples provided below.
 
 ## Select a CNI Plugin
 
@@ -15,7 +15,7 @@ Use the `cni` [configuration file key](../install/configuration.md) to select th
 cni: canal
 ```
 
-Bundled CNI Plugins are provided as AddOns that deploy a HelmChart resource, as described in the [Helm Integration](../helm.md) documentation. CNI Plugin charts are named `rke2-<CNI-PLUGIN-NAME>` and can be found in the `kube-system` namespace.
+Bundled CNI Plugins are provided as AddOns that deploy a HelmChart resource, as described in the [Helm Integration](../add-ons/helm.md) documentation. CNI Plugin charts are named `rke2-<CNI-PLUGIN-NAME>` and can be found in the `kube-system` namespace.
 
 To customize the Helm chart values for a bundled CNI Plugin chart, you must create a HelmChartConfig resource that matches the name and namespace of its corresponding HelmChart. See the tabs below for examples of customizing the chart values for each of the bundled CNI Plugins.
 
