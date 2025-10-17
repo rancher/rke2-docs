@@ -44,7 +44,7 @@ For any file under `/var/lib/rancher/rke2/server/manifests`, you can create a `.
 
 ## Helm AddOns
 
-For information about managing Helm charts via auto-deploying manifests, refer to the section about [Helm.](../helm.md)
+For information about managing Helm charts via auto-deploying manifests, refer to the section about [Helm.](../add-ons/helm.md)
 
 
 

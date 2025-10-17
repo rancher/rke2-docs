@@ -55,7 +55,7 @@ host-local IPAM plugin allocates ip addresses out of a set of address ranges. It
 
 Multus provides an optional daemonset to deploy the DHCP daemon required to run the [DHCP IPAM plugin](https://www.cni.dev/plugins/current/ipam/dhcp/).
 
-You can do this by using the following [HelmChartConfig](../helm.md#customizing-packaged-components-with-helmchartconfig):
+You can do this by using the following [HelmChartConfig](../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig):
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-multus-config.yaml
 ---
@@ -79,7 +79,7 @@ NOTE: You should write this file before starting rke2.
 
 [Whereabouts](https://github.com/k8snetworkplumbingwg/whereabouts) is an IP Address Management (IPAM) CNI Plugin that assigns IP addresses cluster-wide.
 RKE2 includes the option to use Whereabouts with Multus to manage the IP addresses of the additional interfaces created through Multus.
-In order to do this, you need to use [HelmChartConfig](../helm.md#customizing-packaged-components-with-helmchartconfig) to configure the Multus CNI to use Whereabouts.
+In order to do this, you need to use [HelmChartConfig](../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig) to configure the Multus CNI to use Whereabouts.
 
 You can do this by using the following HelmChartConfig:
 

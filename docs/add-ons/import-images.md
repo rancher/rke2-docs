@@ -6,7 +6,7 @@ Container images are cached locally on each node by the containerd image store. 
 
 ## On-demand image pulling
 
-Kubernetes, by default, automatically pulls images when a Pod requires them if the image is not already present on the node. This behavior can be changed by using the [image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy) field of the Pod. When using the default `IfNotPresent` policy, containerd will pull the image from either upstream (default) or your [private registry](install/private_registry.md) and store it in its image store. Users do not need to apply any additional configuration for on-demand image pulling to work.
+Kubernetes, by default, automatically pulls images when a Pod requires them if the image is not already present on the node. This behavior can be changed by using the [image pull policy](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy) field of the Pod. When using the default `IfNotPresent` policy, containerd will pull the image from either upstream (default) or your [private registry](../install/private_registry.md) and store it in its image store. Users do not need to apply any additional configuration for on-demand image pulling to work.
 
 
 ## Pre-import images
@@ -22,7 +22,7 @@ RKE2 includes two mechanisms to pre-import images into the containerd image stor
 <Tabs groupId="import-images" queryString>
 <TabItem value="Online image importing" default>
 
-Users can trigger a pull of images into the containerd image store by placing a text file containing the image names, one per line, in the `/var/lib/rancher/k3s/agent/images` directory. The text file can be placed before RKE2 is started, or created/modified while RKE2 is running. RKE2 will sequentially pull the images via the CRI API, optionally using the [registries.yaml](install/private_registry.md) configuration.
+Users can trigger a pull of images into the containerd image store by placing a text file containing the image names, one per line, in the `/var/lib/rancher/k3s/agent/images` directory. The text file can be placed before RKE2 is started, or created/modified while RKE2 is running. RKE2 will sequentially pull the images via the CRI API, optionally using the [registries.yaml](../install/private_registry.md) configuration.
 
 For example:
 
@@ -58,7 +58,7 @@ After a few seconds, the images included in the image tarball will be available 
 
 Use `ctr -a /run/k3s/containerd/containerd.sock -n k8s.io images list` to query the containerd image store.
 
-This is the method used in Airgap. Please follow the [Airgap install documentation](install/airgap.md) for detailed information.
+This is the method used in Airgap. Please follow the [Airgap install documentation](../install/airgap.md) for detailed information.
 
 </TabItem>
 </Tabs>
@@ -67,6 +67,6 @@ This is the method used in Airgap. Please follow the [Airgap install documentati
 
 RKE2 supports two alternatives for image registries:
 
-* [Private Registry Configuration](install/private_registry.md) covers use of `registries.yaml` to configure container image registry authentication and mirroring.
+* [Private Registry Configuration](../install/private_registry.md) covers use of `registries.yaml` to configure container image registry authentication and mirroring.
 
-* [Embedded Registry Mirror](install/registry_mirror.md) shows how to enable the embedded distributed image registry mirror, for peer-to-peer sharing of images between nodes.
+* [Embedded Registry Mirror](../install/registry_mirror.md) shows how to enable the embedded distributed image registry mirror, for peer-to-peer sharing of images between nodes.
