@@ -4,7 +4,7 @@ title: CNCF AI Conformance
 
 The [CNCF Kubernetes AI Conformance](https://docs.google.com/document/d/1hXoSdh9FEs13Yde8DivCYjjXyxa7j4J8erjZPEGWuzc/edit?tab=t.0) defines a set of additional capabilities, APIs, and configurations that a Kubernetes cluster MUST offer, on top of standard CNCF Kubernetes Conformance, to reliably and efficiently run AI/ML workloads.
 
-This document demonstrates how some of these requirements can be met. For the rest, please refer to the SUSE AI document (TBD).
+This document demonstrates how these requirements can be met using RKE2 v1.34.1+rke2r1.
 
 ## Support Dynamic Resource Allocation (DRA) ##
 
@@ -65,6 +65,101 @@ It will say:
 ```json
 "message":"Handled by Traefik controller","observedGeneration":1,"reason":"Handled","status":"True","type":"Accepted"
 ```
+
+## Gang Scheduling ##
+
+A gang scheduling solution, that ensures all-or-nothing scheduling for distributed AI workloads, must be possible to install (e.g. Kueue or Volcano).
+
+We will install Volcano in RKE2 and make a quick test:
+```bash
+helm repo add volcano-sh https://volcano-sh.github.io/helm-charts
+helm repo update
+helm install volcano volcano-sh/volcano -n volcano-system --create-namespace
+```
+That should install three deployments in the volcano-system namespace:
+```
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/volcano-admission     1/1     1            1           130m
+deployment.apps/volcano-controllers   1/1     1            1           130m
+deployment.apps/volcano-scheduler     1/1     1            1           130m
+```
+
+This is enough evidence for the requirement, however, let's test if it is working correctly. In a cluster with two GPUs, we can create a gang job with two tasks which require an nvidia GPU:
+
+```yaml
+apiVersion: batch.volcano.sh/v1alpha1
+kind: Job
+metadata:
+  name: gpu-nbody-gang-job
+  namespace: default
+spec:
+  minAvailable: 2 
+  schedulerName: volcano
+  
+  tasks:
+    - name: nbody-task-1
+      replicas: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          runtimeClassName: nvidia 
+          containers:
+            - name: cuda-container-1
+              image: nvcr.io/nvidia/k8s/cuda-sample:nbody
+              command: ["/bin/bash", "-c"]
+              args:  
+                - "while true; do sleep 5 && cuda-samples/nbody -gpu -benchmark; done"
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+    
+    - name: nbody-task-2
+      replicas: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          runtimeClassName: nvidia
+          containers:
+            - name: cuda-container-2
+              image: nvcr.io/nvidia/k8s/cuda-sample:nbody
+              command: ["/bin/bash", "-c"]
+              args:  
+                - "while true; do sleep 5 && cuda-samples/nbody -gpu -benchmark; done"
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+```
+
+After a few seconds, we should see both pods running. 
+
+If we start again and now modify the manifest and use: `minAvailable: 3` add a third task:
+```yaml
+    - name: nbody-task-3
+      replicas: 1
+      template:
+        spec:
+          restartPolicy: OnFailure
+          runtimeClassName: nvidia
+          containers:
+            - name: cuda-container-3
+              image: nvcr.io/nvidia/k8s/cuda-sample:nbody
+              command: ["/bin/bash", "-c"]
+              args:  
+                - "while true; do sleep 5 && cuda-samples/nbody -gpu -benchmark; done"
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+```
+
+We'll see that the three pods will not run with STATUS Pending:
+```bash
+default          gpu-nbody-gang-job-nbody-task-1-0                             0/1     Pending     0          50s 
+default          gpu-nbody-gang-job-nbody-task-2-0                             0/1     Pending     0          50s
+default          gpu-nbody-gang-job-nbody-task-3-0                             0/1     Pending     0          50s
+```
+
+Demonstrating that gang scheduling is working as expected.
+
 
 ## Cluster autoscaler ##
 
@@ -141,6 +236,65 @@ spec:
 
 When increasing the load on ollama, the gpu utilization will reach 70 and that will trigger the deployment of new ollama pods. 
 
+## Accelerator Performance Metrics ##
+
+The requirement states that it must be possible to allow for the installation and successful operation of at least one accelerator metrics solution that exposes fine-grained performance metrics via a standardized, machine-readable metrics endpoint. This must include a core set of metrics for per-accelerator utilization and memory usage.
+
+If the NVIDIA GPU operator is installed as described in the [docs](../add-ons/gpu_operators.md#deploy-nvidia-operator), a daemonset with the name `nvidia-dcgm-exporter` is deployed together with the service `nvidia-dcgm-exporter`. We can query this service to collect the required GPU metrics: accelerator utilization, memory usage, temperature, power usage, etc.
+
+From within the cluster, for example if we ssh into one cluster node:
+
+```bash
+# Get the clusterIP
+svcIP=$(kubectl get svc nvidia-dcgm-exporter -n gpu-operator -o jsonpath='{.spec.clusterIP}')
+# Get the port
+svcPort=$(kubectl get svc nvidia-dcgm-exporter -n gpu-operator -o jsonpath='{.spec.ports[0].port}')
+# Output the metrics
+curl -sL http://${svcIP}:${svcPort}/metrics
+```
+
+That will show the metrics exposed using the OpenMetrics text format. In the next section, it is explained how to use Prometheus and Grafana to consume those.
+
+
+## AI Job & Inference Service Metrics ##
+
+It is required that there is a system which is capable of discovering and collecting metrics from workloads the expose the in a standard format.
+
+We can use Prometheus/Grafana for that. First we install them:
+
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+helm install prometheus-stack prometheus-community/kube-prometheus-stack \
+>   --namespace monitoring \
+>   --create-namespace
+```
+
+Once everything is running, we must create a ServiceMonitor that will scrape the metrics from any workload. As an example, we will tell Prometheus to collect metrics from the DCGM, a component present in the NVIDIA GPU Operator and described in the previous section:
+
+```yaml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nvidia-dcgm-monitor
+  namespace: monitoring
+  labels:
+    release: prometheus-stack 
+spec:
+  selector:
+    matchLabels:
+      app: nvidia-dcgm-exporter
+  namespaceSelector:
+    matchNames:
+      - gpu-operator
+  endpoints:
+  - port: gpu-metrics
+    path: /metrics
+    interval: 15s
+```
+
+After a few minutes, the Grafana board will show the DCGM metrics, for example: `DCGM_FI_DEV_GPU_UTIL`.
+
 ## Secure accelerator access ##
 
 We must ensure that access to accelerators from within containers is properly isolated and mediated by the Kubernetes. In order to achieve this, we must install the NVIDIA GPU Operator as described in the [docs](../add-ons/gpu_operators.md#deploy-nvidia-operator).
@@ -214,4 +368,64 @@ The first pod will run correctly and in the logs you will see that it is able to
 The second pod will not be scheduled by Kubernetes because the only GPU available in the cluster is already being consumed by the first pod.
 
 The third pod will run but in the logs you will see that it does not find any GPU available. Therefore, the isolation is working.
+
+
+## Robust CRD and Controller Operation ##
+
+The requirement states that at least one complex AI operator with CRD can be installed and functions reliably. To test it, it recommends checking that CRDs are correctly registered and any invalid configuration is rejected by an admission webhook.
+
+We are going to install Kubeflow in RKE2 to verify this requirement.
+
+Unfortunately, kubeflow does not include a helm chart, but there is a workaround we can use to install it:
+
+```bash
+kubectl apply -k "github.com/kubeflow/training-operator/manifests/overlays/standalone?ref=v1.8.0"
+```
+
+After some seconds, everything should be up and running and we should be able to verify that CRDs are installed and the webhook is registered:
+
+```bash
+$> kubectl get crds | grep kubeflow
+mpijobs.kubeflow.org                                       2025-10-24T13:04:27Z
+mxjobs.kubeflow.org                                        2025-10-24T13:04:27Z
+paddlejobs.kubeflow.org                                    2025-10-24T13:04:28Z
+pytorchjobs.kubeflow.org                                   2025-10-24T13:04:28Z
+tfjobs.kubeflow.org                                        2025-10-24T13:04:29Z
+xgboostjobs.kubeflow.org                                   2025-10-24T13:04:29Z
+
+$> kubectl get validatingwebhookconfigurations
+validator.training-operator.kubeflow.org   5          10m
+
+$> kubectl get pods -n kubeflow
+NAME                                READY   STATUS    RESTARTS   AGE
+training-operator-f7d4b59f6-vdnh9   1/1     Running   0          9m54s
+```
+
+If now we try running a TFJob which is missing a field, for example:
+```yaml
+# saved as invalid-tfjob.yaml
+apiVersion: kubeflow.org/v1
+kind: TFJob
+metadata:
+  name: tfjob-invalid-test
+spec:
+  tfReplicaSpecs:
+    Chief:
+      replicas: 1
+      template:
+        spec:
+          containers:
+            - name: tensorflow 
+              # INTENTIONAL ERROR: Missing the 'image' field
+              # image: tensorflow/tensorflow:latest
+              # command: ["/bin/bash", "-c"]
+              # args: ["echo 'Chief running'; sleep 10;"]
+```
+
+We get the expected error from the admission webhook:
+```bash
+Error from server (Forbidden): error when creating "invalid-tfjob.yaml": admission webhook "validator.tfjob.training-operator.kubeflow.org" denied the request: spec.tfReplicaSpecs[Chief].template.spec.containers[0].image: Required value: must be required
+```
+
+If we remove the comments in the previous example and re-try it, we can see how it works
 
