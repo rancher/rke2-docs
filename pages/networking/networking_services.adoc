@@ -12,7 +12,7 @@ CoreDNS is deployed by default when starting the server. To disable, run each se
 
 If you don't install CoreDNS, you will need to install a cluster DNS provider yourself.
 
-CoreDNS is deployed with the https://github.com/kubernetes-incubator/cluster-proportional-autoscaler[autoscaler] by default. To disable it or change its config, use the link:../helm.md#customizing-packaged-components-with-helmchartconfig[HelmChartConfig] resource.
+CoreDNS is deployed with the https://github.com/kubernetes-incubator/cluster-proportional-autoscaler[autoscaler] by default. To disable it or change its config, use the link:../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig[HelmChartConfig] resource.
 
 === NodeLocal DNSCache
 
@@ -100,7 +100,7 @@ https://github.com/kubernetes/ingress-nginx[ingress-nginx] is an Ingress control
 
 `ingress-nginx` is deployed by default when starting the server. Ports 80 and 443 will be bound by the ingress controller in its default configuration, making these unusable for HostPort or NodePort services in the cluster.
 
-Configuration options can be specified by creating a link:../helm.md#customizing-packaged-components-with-helmchartconfig[HelmChartConfig manifest] to customize the `rke2-ingress-nginx` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml` with the following contents sets `use-forwarded-headers` to `"true"` in the ConfigMap storing the NGINX config:
+Configuration options can be specified by creating a link:../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig[HelmChartConfig manifest] to customize the `rke2-ingress-nginx` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml` with the following contents sets `use-forwarded-headers` to `"true"` in the ConfigMap storing the NGINX config:
 
 [,yaml]
 ----
@@ -135,7 +135,7 @@ https://doc.traefik.io/traefik/[traefik] is a modern HTTP reverse proxy and load
 
 To use traefik, start each server with the `ingress-controller: traefik` option in your configuration file.
 
-Configuration options can be specified by creating a link:../helm.md#customizing-packaged-components-with-helmchartconfig[HelmChartConfig manifest] to customize the `rke2-traefik` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml` with the following contents enables the kubernetes gateway api:
+Configuration options can be specified by creating a link:../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig[HelmChartConfig manifest] to customize the `rke2-traefik` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml` with the following contents enables the kubernetes gateway api:
 
 [,yaml]
 ----
