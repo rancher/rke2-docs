@@ -39,9 +39,9 @@ module.exports = {
       items:[
         'security/about_hardened_images',
         'security/hardening_guide',
+        'security/cis_self_assessment111',
         'security/cis_self_assessment110',
         'security/cis_self_assessment19',
-        'security/cis_self_assessment18',
         'security/fips_support',
         'security/pod_security_standards',
         'security/selinux',
