@@ -48,6 +48,10 @@ The following three commands should return a correct output if the kernel driver
 ### Operator installation ###
 
 Once the OS is ready and RKE2 is running, install the GPU Operator with the following yaml manifest:
+
+<Tabs groupId="GPUoperator" queryString>
+<TabItem value="v25.3.x">
+
 ```yaml
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
@@ -74,12 +78,40 @@ spec:
       - name: DEVICE_LIST_STRATEGY
         value: volume-mounts
 ```
-:::warning
-The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
-:::
-
 :::info
 The envvars `ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED`, `ACCEPT_NVIDIA_VISIBLE_DEVICES_AS_VOLUME_MOUNTS` and `DEVICE_LIST_STRATEGY` are required to properly isolate GPU resources as explained in this nvidia [doc](https://docs.google.com/document/d/1zy0key-EL6JH50MZgwg96RPYxxXXnVUdxLZwGiyqLd8/edit?tab=t.0)
+:::
+
+</TabItem>
+<TabItem value="v25.10.x" default>
+
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v25.10.0
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    toolkit:
+      env:
+      - name: CONTAINERD_SOCKET
+        value: /run/k3s/containerd/containerd.sock
+```
+
+:::info
+NVIDIA GPU Operator v25.10.x uses [Container Device Interface (CDI) specification](https://github.com/cncf-tags/container-device-interface/blob/main/SPEC.md) and that simplifies operations: we don't need to pass extra envvars to comply with the security requirements and the workloads don't need to pass the `runtimeClassName: nvidia` anymore
+:::
+</TabItem>
+</Tabs>
+
+:::warning
+The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
 :::
 
 After one minute approximately, you can make the following checks to verify that everything worked as expected:
@@ -121,7 +153,7 @@ After one minute approximately, you can make the following checks to verify that
       namespace: default
     spec:
       restartPolicy: OnFailure
-      runtimeClassName: nvidia
+      # runtimeClassName: nvidia <== Only needed for v25.3.x
       containers:
       - name: cuda-container
         image: nvcr.io/nvidia/k8s/cuda-sample:nbody
