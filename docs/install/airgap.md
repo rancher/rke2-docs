@@ -173,12 +173,12 @@ INSTALL_RKE2_ARTIFACT_PATH=/root/rke2-artifacts sh install.sh
 Upgrading an air-gap environment can be accomplished in the following manner:
 
 1. Download the new air-gap images (tar files) from the [releases](https://github.com/rancher/rke2/releases) page for the version of RKE2 you will be upgrading to. Place the tar in the `/var/lib/rancher/rke2/agent/images/` directory on each node. Delete the old tar files.
-2. Follow the steps of the [manual upgrade method](../upgrades/manual_upgrade.md#manually-upgrade-rke2-using-the-binary)
+2. Follow the steps of the [manual upgrade method](../upgrades/manual.md#manually-upgrade-rke2-using-the-binary)
 
 </TabItem>
 <TabItem value="Automated Upgrade">
 
-RKE2 supports [automated upgrades](../upgrades/automated_upgrade.md). To enable this in air-gapped environments, you must ensure the required images are available in your private registry.
+RKE2 supports [automated upgrades](../upgrades/automated.md). To enable this in air-gapped environments, you must ensure the required images are available in your private registry.
 
 You will need the version of rancher/rke2-upgrade that corresponds to the version of RKE2 you intend to upgrade to. Note, the image tag replaces the `+` in the RKE2 release with a `-` because Docker images do not support `+`.
 
@@ -189,7 +189,7 @@ rancher/system-upgrade-controller:v0.15.2
 rancher/kubectl:v1.30.3
 ```
 
-Once you have added the necessary rancher/rke2-upgrade, rancher/system-upgrade-controller, and rancher/kubectl images to your private registry, follow the [automated upgrades](../upgrades/automated_upgrade.md) guide.
+Once you have added the necessary rancher/rke2-upgrade, rancher/system-upgrade-controller, and rancher/kubectl images to your private registry, follow the [automated upgrades](../upgrades/automated.md) guide.
 
 </TabItem>
 </Tabs>
