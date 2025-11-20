@@ -21,6 +21,9 @@ cni:
 For more information about Multus, refer to the [multus-cni](https://github.com/k8snetworkplumbingwg/multus-cni/tree/master/docs) documentation.
 
 ## Using Multus with Cilium
+:::info Version Gate
+Disabling the `exclusive` flag is not required starting with November 2025 releases: v1.31.14+rke2r1, v1.32.10+rke2r1,v1.33.6+rke2r1 and v1.34.2+rke2r1.
+:::
 
 To use Cilium with Multus the `exclusive` config needs to be disabled.
 You can do this by using the following HelmChartConfig:
