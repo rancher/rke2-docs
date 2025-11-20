@@ -142,6 +142,8 @@ module.exports = {
       {
         redirects: [
           { from: '/install/network_options', to: '/networking/basic_network_options' },
+          { from: '/upgrades/automated_upgrade', to: '/upgrades/automated' },
+          { from: '/upgrades/manual_upgrade', to: '/upgrades/manual' },
           { from: '/import-images', to: '/add-ons/import-images' },
           { from: '/helm', to: '/add-ons/helm' },
         ],

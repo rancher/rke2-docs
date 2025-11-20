@@ -11,7 +11,7 @@ Upgrade the server nodes first, one at a time. Once all servers have been upgrad
 
 ## Release Channels
 
-Upgrades performed via the installation script or using our [automated upgrades](automated_upgrade.md) feature can be tied to different release channels. The following channels are available:
+Upgrades performed via the installation script or using our [automated upgrades](automated.md) feature can be tied to different release channels. The following channels are available:
 
 | Channel         |   Description  |
 |-----------------|---------|
