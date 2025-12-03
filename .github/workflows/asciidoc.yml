@@ -13,7 +13,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: '18' # Install Node.js version 18
+          node-version: '22'
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -23,7 +23,7 @@ jobs:
         run: gem install kramdown-asciidoc
 
       - name: Checkout main branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main
           path: main_branch
@@ -40,7 +40,7 @@ jobs:
         working-directory: main_branch
 
       - name: Checkout orphan branch main-ascii
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: main-ascii
           path: ascii_branch
