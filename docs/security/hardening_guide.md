@@ -5,8 +5,8 @@ title: CIS Hardening Guide
 This document provides prescriptive guidance for hardening a production installation of RKE2. It outlines the configurations and controls required to address Kubernetes benchmark controls from the Center for Internet Security (CIS).
 
 For more details about evaluating a hardened cluster against the official CIS benchmark, refer to the appropriate CIS Self-Assessment Guide:
-- [CIS Self-Assessment Guide v1.11](cis_self_assessment19.md) for RKE2 v1.29 and newer
-- [CIS Self-Assessment Guide v1.10](cis_self_assessment19.md) for RKE2 v1.29-v1.31
+- [CIS Self-Assessment Guide v1.11](cis_self_assessment111.md) for RKE2 v1.29 and newer
+- [CIS Self-Assessment Guide v1.10](cis_self_assessment110.md) for RKE2 v1.29-v1.31
 - [CIS Self-Assessment Guide v1.9](cis_self_assessment19.md) for RKE2 v1.27-v1.29
 
 RKE2 is designed to be "hardened by default" and pass the majority of the Kubernetes CIS controls without modification. There are a few notable exceptions to this that require manual intervention to fully pass the CIS Benchmark:
