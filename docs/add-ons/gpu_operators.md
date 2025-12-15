@@ -94,7 +94,7 @@ metadata:
 spec:
   repo: https://helm.ngc.nvidia.com/nvidia
   chart: gpu-operator
-  version: v25.10.0
+  version: v25.10.1
   targetNamespace: gpu-operator
   createNamespace: true
   valuesContent: |-
@@ -134,7 +134,7 @@ After one minute approximately, you can make the following checks to verify that
     ```
     You should see `"nvidia.com/gpu":` followed by the number of gpus in the node
 
-3. Check that the container runtime binary was installed by the operator (in particular by the `nvidia-container-toolkit-daemonset`):
+3. Check that the container runtime binary exists (it gets installed by the `nvidia-container-toolkit-daemonset`):
     ```
     ls /usr/local/nvidia/toolkit/nvidia-container-runtime
     ```
