@@ -28,7 +28,17 @@ RKE2 is available for x86_64 and arm64/aarch64
 
 ### Linux
 
-See the [RKE2 Support Matrix](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-30) for all the OS versions that have been validated with RKE2. In general, RKE2 should work on any Linux distribution that uses systemd and iptables.
+See the [RKE2 Support Matrix](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-34) for all the OS versions that have been validated with RKE2. In general, RKE2 should work on any Linux distribution that uses systemd and iptables.
+
+<Tabs>
+<TabItem value="RHEL 10">
+On RHEL 10 (and its derivates like Rocky Linux) an additional package is required to allow nf_conntrack.
+
+```bash
+sudo dnf install kernel-modules-extra -y
+```
+</TabItem>
+</Tabs>
 
 ### Windows
 
