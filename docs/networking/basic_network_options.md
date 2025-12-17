@@ -182,6 +182,33 @@ spec:
 
 For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.26.300/values.yaml)
 
+<details>
+<summary>**eBPF dataplane**</summary>
+Calico offers an efficient eBPF dataplane that can be enabled in place of the default iptables-based implementation. Calico's dataplane can also be used to replace the default Kubernetes kube-proxy implementation.
+
+To enable Calico's eBPF dataplane, deploy RKE2 with `disable-kube-proxy: true` in the configuration file and use the following HelmChartConfig:
+```yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-calico
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    installation:
+      calicoNetwork:
+        bpfNetworkBootstrap: Enabled
+        kubeProxyManagement: Enabled
+        linuxDataplane: BPF
+    kubernetesServiceEndpoint:
+      host: "localhost"
+      port: "6443"
+```
+
+For more information on Calico's eBPF dataplane, refer to [Calico's documentation](https://docs.tigera.io/calico/latest/operations/ebpf/).
+</details>
+
 :::note
 Calico requires the iptables or xtables-nft package  to be installed on the node.
 :::
