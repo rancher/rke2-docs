@@ -37,18 +37,15 @@ sudo amazon-linux-extras enable selinux-ng; sudo yum install selinux-policy-targ
 
 ## Configuration
 
-RKE2 support for SELinux amounts to a single configuration item, the `--selinux` boolean flag. This is a pass-through
+RKE2 support for SELinux amounts to a single configuration item, the `selinux` boolean entry in RKE2 `config.yaml` or the `RKE2_SELINUX=true` environment variable. This is a pass-through
 to the [`enable_selinux` boolean in the cri section of the containerd/cri toml](https://github.com/containerd/cri/blob/release/1.4/docs/config.md).
-If RKE2 was installed via tarball then SELinux will not be enabled without additional configuration. The recommended
-method to configure such is via an entry in the RKE2 `config.yaml`, e.g.:
+
+SELinux comes as default for rpms installation, but if the install method was tarball then SELinux will not be enabled without the configuration entry or the environment variable, e.g.:
 
 ```yaml
 # /etc/rancher/rke2/config.yaml is the default location
 selinux: true
 ```
-
-This is equivalent to passing the `--selinux` flag to `rke2 server` or `rke2 agent` command-line or setting the
-`RKE2_SELINUX=true` environment variable.
 
 #### Calico support
 If you choose to use Calico as your CNI with SELinux enabled, you will also need to install specific policies.
