@@ -184,6 +184,9 @@ For more information about values available for the Calico chart, please refer t
 
 <details>
 <summary>**eBPF dataplane**</summary>
+:::info Version Gate
+RKE2 supports the Calico eBPF dataplane as of January 2026 releases: v1.33.8+rke2r1, v1.34.4+rke2r1 and v1.35.1+rke2r1.
+:::
 Calico offers an efficient eBPF dataplane that can be enabled in place of the default iptables-based implementation. Calico's dataplane can also be used to replace the default Kubernetes kube-proxy implementation.
 
 To enable Calico's eBPF dataplane, deploy RKE2 with `disable-kube-proxy: true` in the configuration file and use the following HelmChartConfig:
@@ -198,7 +201,6 @@ spec:
   valuesContent: |-
     installation:
       calicoNetwork:
-        bpfNetworkBootstrap: Enabled
         kubeProxyManagement: Enabled
         linuxDataplane: BPF
     kubernetesServiceEndpoint:
