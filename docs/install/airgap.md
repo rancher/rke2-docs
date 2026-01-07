@@ -45,7 +45,7 @@ This method requires you to manually deploy the necessary images to each node, a
 2. Transfer the images tarball to the airgap nodes. Place them in the agent's image directory, for example and assuming amd64:
   ```bash
   sudo mkdir -p /var/lib/rancher/rke2/agent/images/
-  sudo cp rke2-images.linux-amd64.tar.zst /var/lib/rancher/rke2/agent/images/rke2-images.linux-amd64.tar.zst"
+  sudo cp rke2-images.linux-amd64.tar.zst /var/lib/rancher/rke2/agent/images/rke2-images.linux-amd64.tar.zst
   ```
 3. Proceed to the [Install RKE2](#2-install-rke2) section below.
 
