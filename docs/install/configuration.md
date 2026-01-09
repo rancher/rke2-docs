@@ -189,7 +189,7 @@ Alternatives, such as using a HelmChartConfig to customize the system charts via
 
 Specify the values for the system charts installed by RKE2.
 
-For more information about how RKE2 manages packaged components, please refer to [RKE2 documentation](add-ons/helm.md).
+For more information about how RKE2 manages packaged components, please refer to [RKE2 documentation](../add-ons/helm.md).
 
 Example:
 
@@ -201,7 +201,7 @@ chartValues:
 
 ### machineGlobalConfig
 
-Specify RKE2 configurations. Any configuration change made here will apply to every node. The configuration options available in the [standalone version of RKE2](reference/server_config.md) can be applied here.
+Specify RKE2 configurations. Any configuration change made here will apply to every node. The configuration options available in the [standalone version of RKE2](../reference/server_config.md) can be applied here.
 
 Example:
 
