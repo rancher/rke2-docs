@@ -13,7 +13,6 @@ The etcd data set is automatically cleaned up on a five-minute interval by Kuber
 This snippet of the RKE2 `config.yaml` file increases the keyspace size to 5 GB
 
 ```yaml
----
 etcd-arg:
   - "quota-backend-bytes=5368709120"
 ```
@@ -27,7 +26,6 @@ Additionally, to reduce IO contention on the disks for etcd, you can use a dedic
 To implement this solution in an RKE2 cluster, the `/var/lib/etcd/data` and `/var/lib/etcd/wal` directories will need to have disks mounted and formatted on the underlying host. In the `extra_args` directive of the `etcd` service, you must include the `wal_dir` directory. Without specifying the `wal_dir`, etcd process will try to manipulate the underlying `wal` mount with insufficient permissions.
 
 ```yaml
----
 etcd-arg:
   - "data-dir=/var/lib/etcd/data"
   - "wal-dir=/var/lib/etcd/wal"
