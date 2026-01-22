@@ -99,6 +99,8 @@ function process_minor() {
     # Append the global component and version table
     rke2tmp=$(mktemp)
     cat $global_table "${file}" > $rke2tmp && mv $rke2tmp "${file}"
+    # gh release produces crlf line endings, convert to lf
+    dos2unix "${file}"
     echo "Collected release notes for ${product} ${minor}"
 }
 
