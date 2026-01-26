@@ -66,14 +66,14 @@ Signed RPMs are published for RKE2 within the `rpm-testing.rancher.io` and `rpm.
 The RPMs provide `systemd` units for managing `rke2`, but will need to be configured via configuration file before starting the services for the first time.
 
 [discrete]
-==== Enterprise Linux 7/8/9
+==== Enterprise Linux 8/9/10
 
 In order to use the RPM repository, on a CentOS or RHEL system, run the following bash snippet:
 
 [,bash]
 ----
-export RKE2_MINOR=28
-export LINUX_MAJOR=7 # or 8 or 9 etc
+export RKE2_MINOR=33
+export LINUX_MAJOR=8 # or 9 or 10 etc
 cat << EOF > /etc/yum.repos.d/rancher-rke2-1-${RKE2_MINOR}-latest.repo
 [rancher-rke2-common-latest]
 name=Rancher RKE2 Common Latest

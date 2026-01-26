@@ -16,16 +16,16 @@
 
 * Upgrades
 ** xref:upgrades/upgrade.adoc[Overview]
-** xref:upgrades/manual_upgrade.adoc[]
-** xref:upgrades/automated_upgrade.adoc[]
+** xref:upgrades/manual.adoc[]
+** xref:upgrades/automated.adoc[]
 ** xref:upgrades/roll-back.adoc[]
 
 * Security
 ** xref:security/about_hardened_images.adoc[]
 ** xref:security/hardening_guide.adoc[]
+** xref:security/cis_self_assessment111.adoc[]
 ** xref:security/cis_self_assessment110.adoc[]
 ** xref:security/cis_self_assessment19.adoc[]
-** xref:security/cis_self_assessment18.adoc[]
 ** xref:security/fips_support.adoc[]
 ** xref:security/pod_security_standards.adoc[]
 ** xref:security/selinux.adoc[]
@@ -53,7 +53,6 @@
 * xref:advanced.adoc[]
 
 * Reference
-** xref:reference/ai_conformance.adoc[]
 ** xref:reference/cli_tools.adoc[]
 ** xref:reference/linux_agent_config.adoc[]
 ** xref:reference/logging.adoc[]
@@ -63,11 +62,10 @@
 ** xref:reference/windows_agent_config.adoc[]
 
 * Release Notes
-** xref:release-notes/v1.30.X.adoc[]
-** xref:release-notes/v1.31.X.adoc[]
 ** xref:release-notes/v1.32.X.adoc[]
 ** xref:release-notes/v1.33.X.adoc[]
 ** xref:release-notes/v1.34.X.adoc[]
+** xref:release-notes/v1.35.X.adoc[]
 
 ** Older...
 *** xref:release-notes-old/v1.24.X.adoc[]
@@ -76,4 +74,6 @@
 *** xref:release-notes-old/v1.27.X.adoc[]
 *** xref:release-notes-old/v1.28.X.adoc[]
 *** xref:release-notes-old/v1.29.X.adoc[]
+*** xref:release-notes-old/v1.30.X.adoc[]
+*** xref:release-notes-old/v1.31.X.adoc[]
 * xref:known_issues.adoc[Known Issues]

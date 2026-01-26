@@ -56,7 +56,7 @@ This method requires you to manually deploy the necessary images to each node, a
 [,bash]
 ----
   sudo mkdir -p /var/lib/rancher/rke2/agent/images/
-  sudo cp rke2-images.linux-amd64.tar.zst /var/lib/rancher/rke2/agent/images/rke2-images.linux-amd64.tar.zst"
+  sudo cp rke2-images.linux-amd64.tar.zst /var/lib/rancher/rke2/agent/images/rke2-images.linux-amd64.tar.zst
 ----
 
 . Proceed to the <<_2_install_rke2,Install RKE2>> section below.
@@ -215,7 +215,7 @@ Manual Upgrade::
 Upgrading an air-gap environment can be accomplished in the following manner:
 
 . Download the new air-gap images (tar files) from the https://github.com/rancher/rke2/releases[releases] page for the version of RKE2 you will be upgrading to. Place the tar in the `/var/lib/rancher/rke2/agent/images/` directory on each node. Delete the old tar files.
-. Follow the steps of the link:../upgrades/manual_upgrade.md#manually-upgrade-rke2-using-the-binary[manual upgrade method]
+. Follow the steps of the link:../upgrades/manual.md#manually-upgrade-rke2-using-the-binary[manual upgrade method]
 
 --
 
@@ -223,7 +223,7 @@ Automated Upgrade::
 +
 --
 
-RKE2 supports xref:../upgrades/automated_upgrade.adoc[automated upgrades]. To enable this in air-gapped environments, you must ensure the required images are available in your private registry.
+RKE2 supports xref:../upgrades/automated.adoc[automated upgrades]. To enable this in air-gapped environments, you must ensure the required images are available in your private registry.
 
 You will need the version of rancher/rke2-upgrade that corresponds to the version of RKE2 you intend to upgrade to. Note, the image tag replaces the `+` in the RKE2 release with a `-` because Docker images do not support `+`.
 
@@ -234,7 +234,7 @@ rancher/system-upgrade-controller:v0.15.2
 rancher/kubectl:v1.30.3
 ----
 
-Once you have added the necessary rancher/rke2-upgrade, rancher/system-upgrade-controller, and rancher/kubectl images to your private registry, follow the xref:../upgrades/automated_upgrade.adoc[automated upgrades] guide.
+Once you have added the necessary rancher/rke2-upgrade, rancher/system-upgrade-controller, and rancher/kubectl images to your private registry, follow the xref:../upgrades/automated.adoc[automated upgrades] guide.
 
 --
 

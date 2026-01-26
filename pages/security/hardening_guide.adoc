@@ -4,14 +4,14 @@ This document provides prescriptive guidance for hardening a production installa
 
 For more details about evaluating a hardened cluster against the official CIS benchmark, refer to the appropriate CIS Self-Assessment Guide:
 
-* xref:./cis_self_assessment19.adoc[CIS Self-Assessment Guide v1.9] for RKE2 v1.27 and newer
-* xref:./cis_self_assessment18.adoc[CIS Self-Assessment Guide v1.8] for RKE2 v1.26
-* xref:./cis_self_assessment17.adoc[CIS Self-Assessment Guide v1.7] for RKE2 v1.25
+* xref:./cis_self_assessment111.adoc[CIS Self-Assessment Guide v1.11] for RKE2 v1.29 and newer
+* xref:./cis_self_assessment110.adoc[CIS Self-Assessment Guide v1.10] for RKE2 v1.29-v1.31
+* xref:./cis_self_assessment19.adoc[CIS Self-Assessment Guide v1.9] for RKE2 v1.27-v1.29
 
 RKE2 is designed to be "hardened by default" and pass the majority of the Kubernetes CIS controls without modification. There are a few notable exceptions to this that require manual intervention to fully pass the CIS Benchmark:
 
 . RKE2 will not modify the host operating system. Therefore, you, the operator, must make a few host-level modifications.
-. Certain CIS controls for Network Policies and Pod Security Standards (or Pod Security Policies (PSP) on RKE2 versions prior to v1.25) will restrict the functionality of the cluster. You must opt into having RKE2 configure these for you. To help ensure these requirements are met, RKE2 can be started with the `profile` flag set to `cis`, `cis-1.23`, or `cis-1.6` depending on the RKE2 version.
+. Certain CIS controls for Network Policies and Pod Security Standards (or Pod Security Policies (PSP) on RKE2 versions prior to v1.25) will restrict the functionality of the cluster. You must opt into having RKE2 configure these for you. To help ensure these requirements are met, RKE2 can be started with the `profile` flag set to `cis` or `cis-1.23` depending on the RKE2 version.
 
 [NOTE]
 ====
@@ -88,7 +88,21 @@ The `etcd` user and group must be defined in the traditional database files at /
 
 [tabs,sync-group-id=rke2-version]
 =====
-v1.25 and Newer::
+v1.29 and Newer::
++
+--
+
+[,yaml]
+----
+profile: "cis"
+# For cis-1.11 only, not needed on cis-1.9/cis-1.10
+kube-apiserver-arg:
+  - 'service-account-extend-token-expiration=false'
+----
+
+--
+
+v1.25 - v1.28::
 +
 --
 
@@ -114,7 +128,7 @@ A rough mapping of RKE2 versions to CIS benchmark versions is as follows:
 |===
 | RKE2 Minors | Applicable CIS Benchmark | Profile Flag
 
-| 1.27+
+| 1.27-v1.28
 | 1.9
 | `cis`
 

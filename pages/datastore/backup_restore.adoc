@@ -316,16 +316,16 @@ Multiple Servers::
 +
 --
 
-In this example there are 3 servers, `S1`, `S2`, and `S3`. The snapshot is located on `S1`.
+In this example there are 3 server nodes, `N1`, `N2`, and `N3`. The snapshot is located on `N1`.
 
-. Stop RKE2 on all servers:
+. Stop RKE2 on all server nodes:
 +
 [,bash]
 ----
  systemctl stop rke2-server
 ----
 
-. On S1, run `rke2 server` with the `--cluster-reset` option, and `--cluster-reset-restore-path` indicating the path to the snapshot to restore.
+. On N1, run `rke2 server` with the `--cluster-reset` option, and `--cluster-reset-restore-path` indicating the path to the snapshot to restore.
 If the snapshot is stored on S3, provide S3 configuration flags (`--etcd-s3`, `--etcd-s3-bucket`, and so on), and give only the filename name of the snapshot as the restore path.
 +
 :::note
@@ -343,21 +343,21 @@ If the snapshot is stored on S3, provide S3 configuration flags (`--etcd-s3`, `-
  `Managed etcd cluster membership has been reset, restart without --cluster-reset flag now.` +
  `+Backup and delete ${datadir}/server/db on each peer etcd server and rejoin the nodes.+`
 
-. On S1, start RKE2 again:
+. On N1, start RKE2 again:
 +
 [,bash]
 ----
  systemctl start rke2-server
 ----
 
-. On S2 and S3, delete the data directory, `/var/lib/rancher/rke2/server/db/`:
+. On N2 and N3, delete the data directory, `/var/lib/rancher/rke2/server/db/`:
 +
 [,bash]
 ----
  rm -rf /var/lib/rancher/rke2/server/db/
 ----
 
-. On S2 and S3, start RKE2 again to join the restored cluster:
+. On N2 and N3, start RKE2 again to join the restored cluster:
 +
 [,bash]
 ----

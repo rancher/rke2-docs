@@ -138,7 +138,7 @@ For more information, refer to comments on https://github.com/rancher/rke2/issue
 Kubernetes removed PodSecurityPolicy from v1.25 in favor of Pod Security Standards. You can read more about PSS in the https://kubernetes.io/docs/concepts/security/pod-security-standards/[upstream documentation]. For RKE2, there are some manual steps that must be taken if the `profile` flag has been set on the nodes.
 
 . On all nodes, update the `profile` value to `cis-1.23`, but do not restart or upgrade RKE2 yet.
-. Perform the upgrade as normal. If using xref:./upgrades/automated_upgrade.adoc[Automated Upgrades], ensure that the namespace where the `system-upgrade-controller` pod is running in is setup to be privileged in accordance with the https://kubernetes.io/docs/concepts/security/pod-security-admission/#pod-security-levels[Pod Security levels]:
+. Perform the upgrade as normal. If using xref:./upgrades/automated.adoc[Automated Upgrades], ensure that the namespace where the `system-upgrade-controller` pod is running in is setup to be privileged in accordance with the https://kubernetes.io/docs/concepts/security/pod-security-admission/#pod-security-levels[Pod Security levels]:
 +
 [,yaml]
 ----
