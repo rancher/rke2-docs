@@ -72,6 +72,8 @@ The following options must be set to the same value on all servers in the cluste
 | etcd-snapshot-dir | Directory to save db snapshots.  | $&#123;data-dir&#125;/db/snapshots |  |
 | etcd-snapshot-compress | Compress etcd snapshot |  |  |
 ### S3 etcd Snapshot Storage
+| Flag | Description | Default | Environment Variable |
+| --- | --- | --- | --- |
 | etcd-s3 | Enable backup to S3 |  |  |
 | etcd-s3-endpoint | S3 endpoint url  | "s3.amazonaws.com" |  |
 | etcd-s3-endpoint-ca | S3 custom CA cert to connect to S3 endpoint |  |  |
