@@ -86,10 +86,6 @@ Any server may generate leaf certificates for nodes as they join the cluster, an
 
 ### Rotating CA Certificates
 
-:::info Version Gate
-Available as of the 2023-02 releases (v1.26.2+rke2r1, v1.25.7+rke2r1, v1.24.11+rke2r1, v1.23.17+rke2r1).
-:::
-
 To rotate CA certificates and keys, use the `rke2 certificate rotate-ca` command.
 This command performs integrity checks to confirm that the updated certificates and keys are usable.
 If the updated data is acceptable, the datastore's encrypted bootstrap key is updated, and the new certificates and keys will be used the next time RKE2 starts.
