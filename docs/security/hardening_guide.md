@@ -94,9 +94,6 @@ kube-apiserver-arg:
 <TabItem value='v1.25 - v1.28'>
 
 ### Generic CIS configuration
-:::info Version Gate
-Available with October 2023 releases (v1.25.15+rke2r1, v1.26.10+rke2r1, v1.27.7+rke2r1, v1.28.3+rke2r1)
-:::
 
 ```yaml
 profile: "cis"
