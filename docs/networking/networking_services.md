@@ -95,6 +95,11 @@ This is done in 2 steps:
 
 <Tabs>
 <TabItem value="ingress-nginx">
+
+:::warning ingress-nginx EOL
+[ingress-nginx becomes EOL](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/) in March 2026. RKE2 will still include ingress-nginx in v1.36 but with a deprecated status. No new images with fixes should be expected after March 2026. Please switch to Traefik or become a [Rancher Prime user](https://www.suse.com/products/rancher/) for an extended support period. 
+:::
+
 [ingress-nginx](https://github.com/kubernetes/ingress-nginx) is an Ingress controller powered by NGINX that uses a ConfigMap to store the NGINX configuration.
 
 `ingress-nginx` is deployed by default when starting the server. Ports 80 and 443 will be bound by the ingress controller in its default configuration, making these unusable for HostPort or NodePort services in the cluster.
