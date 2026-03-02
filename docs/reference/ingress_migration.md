@@ -8,7 +8,11 @@ To support existing RKE2 clusters, a migration path is available pior to v1.36 t
 
 This guide will provide step-by-step instructions as a general process for converting an RKE2 cluster from using Ingress NGINX to Traefik as the ingress controller.
 
+:::tip Rancher Prime customers 
+If you are a SUSE Rancher Prime customer and need assistance, please contact SUSE support for assistance.
+
 SUSE Rancher Prime LTS customers will receive Ingress NGINX [support through November 2027](https://www.suse.com/c/trade-the-ingress-nginx-retirement-for-up-to-2-years-of-rke2-support-stability/).
+:::
 
 ## Prerequisites
 - A RKE2 cluster that is using Ingress NGINX as the ingress controller. The RKE2 version must be one of the following: 
