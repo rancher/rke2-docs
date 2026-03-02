@@ -33,7 +33,7 @@ module.exports = {
     announcementBar: {
       id: 'support_us',
       content:
-        'Ingress-Nginx is going End-of-Life in <a href="https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/">March 2026</a>. Starting with v1.36, Traefik will be the default for new clusters. For existing clusters, see our <a href="/reference/ingress_migration">Migration Guide</a>.',
+        'Ingress NGINX is going End-of-Life in <a href="https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/">March 2026</a>. Starting with v1.36, Traefik will be the default for new clusters. For existing clusters, see our <a href="/reference/ingress_migration">Migration Guide</a>.',
       backgroundColor: '#f3cf5a',
       textColor: '#091E42',
       isCloseable: true,
