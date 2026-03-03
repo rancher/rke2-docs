@@ -29,6 +29,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
           git checkout -b update-browserslist-db
+          git add yarn.lock
           git commit -s -m "Update Browsers List DB ${{ steps.date.outputs.month_year }}"
           git push -f --set-upstream origin pdate-browserslist-db
       - name: Create pull request
