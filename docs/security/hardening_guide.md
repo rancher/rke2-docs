@@ -139,7 +139,7 @@ When the `profile` flag is set it does the following:
 
 4. Applies more restrictive file permissions (600 vs 644) to agent manifests and other configurations files. 
 
-5. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, and `tigera-operator` namespaces.
+5. Configures the Pod Security Admission Controller to enforce restricted mode in all namespaces, with the exception of the `kube-system`, `cis-operator-system`, `compliance-operator-system`, and `tigera-operator` namespaces.
    These namespaces are exempted to allow system pods to run without restrictions, which is required for proper operation of the cluster.  
    For more information about the PSA configuration, see the default [Pod Security Admission configurations](pod_security_standards.md#pod-security-standards).  
    For more information about Pod Security Standards, please refer to the [official documentation](https://kubernetes.io/docs/concepts/security/pod-security-standards/).
@@ -171,7 +171,7 @@ RKE2 always runs with some amount of pod security.
 On v1.25 and newer, [Pod Security Admission (PSA)](https://kubernetes.io/docs/concepts/security/pod-security-admission/) are used for pod security. A default Pod Security Admission config file will be added to the cluster upon startup as follows:
 
 With the `cis`/`cis-1.23` profile:
-*  RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system`, `cis-operator-system` and `tigera-operator` namespaces to ensure successful operation of system pods.
+*  RKE2 will apply a restricted pod security standard via a configuration file which will enforce `restricted` mode throughout the cluster with an exception to the `kube-system`, `cis-operator-system`, `compliance-operator-system` and `tigera-operator` namespaces to ensure successful operation of system pods.
 
 Without the `cis`/`cis-1.23` profile:
 * RKE2 will apply a nonrestricted pod security standard via a configuration file which will enforce `privileged` mode throughout the cluster which allows a completely unrestricted mode to all pods in the cluster.
@@ -224,7 +224,7 @@ For each namespace including `default` and `kube-system` on a standard RKE2 inst
 automountServiceAccountToken: false
 ```
 
-RKE2 will automatically set the value correctly for kube-system, cis-operator-system, kube-node-lease and tigera-operator namespaces.
+RKE2 will automatically set the value correctly for kube-system, cis-operator-system, compliance-operator-system, kube-node-lease and tigera-operator namespaces.
 
 :::warning Operator Intervention Required
 
