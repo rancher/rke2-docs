@@ -93,16 +93,16 @@ metadata:
     namespace: kube-system
 spec:
     valuesContent: |-
-    ports:
-        web:
-        hostPort: 8000
-        websecure:
-        hostPort: 8443
-    providers:
-        kubernetesIngressNginx:
-        enabled: true
-        ingressClass: "rke2-ingress-nginx-migration"
-        controllerClass: "rke2.​cattle.​io/ingress-nginx-migration"
+        ports:
+            web:
+                hostPort: 8000
+            websecure:
+                hostPort: 8443
+        providers:
+            kubernetesIngressNginx:
+                enabled: true
+                ingressClass: "rke2-ingress-nginx-migration"
+                controllerClass: "rke2.​cattle.​io/ingress-nginx-migration"
 ```
 
 #### 4. Restart RKE2
@@ -238,11 +238,11 @@ metadata:
     namespace: kube-system
 spec:
     valuesContent: |-
-    providers:
-        kubernetesIngressNginx:
-        enabled: true
-        ingressClass: "rke2-ingress-nginx-migration"
-        controllerClass: "rke2.​cattle.​io/ingress-nginx-migration"
+        providers:
+            kubernetesIngressNginx:
+                enabled: true
+                ingressClass: "rke2-ingress-nginx-migration"
+                controllerClass: "rke2.​cattle.​io/ingress-nginx-migration"
 ```
 
 #### 3. Restart RKE2
