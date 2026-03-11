@@ -40,7 +40,7 @@ plugins:
     exemptions:
       usernames: []
       runtimeClasses: []
-      namespaces: [kube-system, cis-operator-system, tigera-operator]
+      namespaces: [kube-system, compliance-operator-system, tigera-operator]
 ```
 </TabItem>
 <TabItem value="Non CIS Mode">
