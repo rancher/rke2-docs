@@ -122,7 +122,7 @@ spec:
 For more information, refer to the official [ingress-nginx Helm configuration parameters](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#configuration).
 
 </TabItem>
-<TabItem value="traefik">
+<TabItem value="traefik" default>
 
 :::info Version Gate
 Traefik support is available as of August 2024 releases: v1.28.12+rke2r1, v1.29.7+rke2r1, v1.30.3+rke2r1
@@ -132,7 +132,34 @@ Traefik support is available as of August 2024 releases: v1.28.12+rke2r1, v1.29.
 
 To use traefik, start each server with the `ingress-controller: traefik` option in your configuration file.
 
-Configuration options can be specified by creating a [HelmChartConfig manifest](../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig) to customize the `rke2-traefik` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml` with the following contents enables the kubernetes gateway api:
+Configuration options can be specified by creating a [HelmChartConfig manifest](../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig) to customize the `rke2-traefik` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml` with the following contents changes the log level to "DEBUG":
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    logs:
+      general:
+        level: "DEBUG"
+```
+For more information, refer to the official [traefik Helm configuration parameters](https://github.com/traefik/traefik-helm-chart/blob/master/traefik/VALUES.md).
+
+</TabItem>
+</Tabs>
+
+To disable the ingress controller, start each server with the `ingress-controller: none` option in your configuration file.
+
+### Gateway API
+
+Gateway API is a family of Kubernetes resources that provide dynamic infrastructure provisioning and advanced traffic routing. While the traditional Ingress API is still supported (and not planned to be deprecated), the Gateway API provides a more expressive, role-oriented, and extensible way to manage service exposure.
+
+In RKE2, to leverage Gateway API you must use Traefik. Please use the following HelmChartConfig to enable GatewayAPI:
 
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml
@@ -147,13 +174,14 @@ spec:
     providers:
       kubernetesGateway:
         enabled: true
+#       experimentalChannel=true (read warning below)
 ```
-For more information, refer to the official [traefik Helm configuration parameters](https://github.com/traefik/traefik-helm-chart/blob/master/traefik/VALUES.md).
+Traefik currently deploys [Gateway API v1.4](https://gateway-api.sigs.k8s.io/reference/1.4/spec/).
 
-</TabItem>
-</Tabs>
+:::warning
+If you need experimental CRDs for Gateway API, e.g. TCPRoute, you must install the `[experimental-install.yaml](https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml)` from the official [gateway-api releases](https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.4.0) and use the option `providers.kubernetesGateway.experimentalChannel=true` in the rke2-traefik chart values.
+:::
 
-To disable the ingress controller, start each server with the `ingress-controller: none` option in your configuration file.
 
 ## Service Load Balancer
 
