@@ -119,7 +119,7 @@ spec:
       config:
         use-forwarded-headers: "true"
 ```
-For more information, refer to the official [ingress-nginx Helm configuration parameters](https://github.com/kubernetes/ingress-nginx/tree/main/charts/ingress-nginx#configuration).
+For more information, refer to the official [ingress-nginx Helm configuration parameters](https://github.com/rancher/rke2-charts/tree/main/charts/rke2-ingress-nginx/rke2-ingress-nginx/4.14.400#configuration).
 
 </TabItem>
 <TabItem value="traefik" default>
@@ -177,6 +177,8 @@ spec:
 #       experimentalChannel: true (read warning below)
 ```
 Traefik is compatible with [Gateway API v1.4](https://gateway-api.sigs.k8s.io/reference/1.4/spec/).
+
+To see all configurable options, visit the chart's [values.yaml](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-traefik/rke2-traefik/39.0.502/values.yaml).
 
 :::warning
 If you need support for experimental Gateway API resources, e.g. TCPRoute, you must install the `[experimental-install.yaml](https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml)` from the official [gateway-api releases](https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.4.0) and use the option `providers.kubernetesGateway.experimentalChannel=true` in the rke2-traefik chart values.
