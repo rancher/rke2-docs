@@ -40,7 +40,7 @@ spec:
       iface: "eth1"
 ```
 
-Starting with RKE2 v1.23 it is possible to use flannel's [wireguard backend](https://github.com/flannel-io/flannel/blob/master/Documentation/backends.md#wireguard) for in-kernel WireGuard encapsulation and encryption ([Users of kernels < 5.6 need to install a module](https://www.wireguard.com/install/)). This can be achieved using the following chart values:
+To use flannel's [wireguard backend](https://github.com/flannel-io/flannel/blob/master/Documentation/backends.md#wireguard) [Users of kernels < 5.6 need to install a module](https://www.wireguard.com/install/) the following chart values must be used:
 
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
@@ -90,7 +90,7 @@ spec:
       type: wireguard
 ```
 
-For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.17.601/values.yaml)
+For more information about values available in the Cilium chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-cilium/rke2-cilium/1.19.101/values.yaml)
 
 
 <details>
@@ -180,7 +180,7 @@ spec:
       featureDetectOverride: "ChecksumOffloadBroken=false"
 ```
 
-For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.26.300/values.yaml)
+For more information about values available for the Calico chart, please refer to the [rke2-charts repository](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-calico/rke2-calico/v3.31.400/values.yaml)
 
 <details>
 <summary>**eBPF dataplane**</summary>
