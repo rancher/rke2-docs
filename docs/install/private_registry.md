@@ -25,7 +25,7 @@ In order to be recognized as a registry, the first component of the image name m
 For historical reasons, images without a registry specified in their name are implicitly identified as being from `docker.io`.
 
 :::info Version Gate
-The `disable-default-registry-endpoint` option is available as an experimental feature as of February 2024 releases: v1.26.13+rke2r1, v1.27.10+rke2r1, v1.28.6+rke2r1, v1.29.1+rke2r1
+The `disable-default-registry-endpoint` option is available as of February 2024 releases: v1.26.13+rke2r1, v1.27.10+rke2r1, v1.28.6+rke2r1, v1.29.1+rke2r1
 :::
 
 Nodes may be configured with the `disable-default-registry-endpoint: true` option.
