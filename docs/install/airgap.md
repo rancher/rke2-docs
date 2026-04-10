@@ -19,7 +19,7 @@ If you have not yet set up a private Docker registry, refer to the [official Reg
 #### Create the Registry YAML and Push Images
 
 1. Obtain the images archive for your architecture from the [releases](https://github.com/rancher/rke2/releases) page for the version of RKE2 you will be running.
-2. Assuming amd64, use `docker image load rke2-images.linux-amd64.tar.zst` to import images from the tar file into docker.
+2. Assuming amd64, use `docker image load -i rke2-images.linux-amd64.tar.zst` to import images from the tar file into docker.
 3. Use `docker tag` and `docker push` to retag and push the loaded images to your private registry.
 4. Follow the [Private Registry Configuration](private_registry.md) guide to create and configure the `registries.yaml` file.
 5. Proceed to the [Install RKE2](#2-install-rke2) section below.
