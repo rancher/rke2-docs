@@ -124,7 +124,7 @@ hauler store copy dir://var/lib/rancher/rke2/agent/images/
 ```bash
 hauler store copy registry://airgap.private.registry`
 ```
-7. Follow the RKE2 [install instructions](#install-rke2).
+7. Follow the RKE2 [install instructions](#2-install-rke2).
 
 </TabItem>
 <TabItem value="Embedded Registry Mirror">
