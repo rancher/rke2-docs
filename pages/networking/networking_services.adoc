@@ -193,7 +193,7 @@ Traefik is compatible with https://gateway-api.sigs.k8s.io/reference/1.4/spec/[G
 
 [CAUTION]
 ====
-If you need support for experimental Gateway API resources, e.g. TCPRoute, you must install the `+[experimental-install.yaml](https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml)+` from the official https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.4.0[gateway-api releases] and use the option `providers.kubernetesGateway.experimentalChannel=true` in the rke2-traefik chart values.
+If you need support for experimental Gateway API resources, e.g. TCPRoute, you must install the https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml[v1.4 experimental-install.yaml] from the official https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.4.0[gateway-api releases] and use the option `providers.kubernetesGateway.experimentalChannel=true` in the rke2-traefik chart values.
 ====
 
 == Service Load Balancer
