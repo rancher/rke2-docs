@@ -81,7 +81,7 @@ When this feature is enabled, it will not be possible to ensure that all images 
 
 ## Hauler 
 
-The airgap tool [Hauler](https://docs.hauler.dev/docs/intro) allows you to aggregate and transport the RKE2 artifacts to disconnected evironments, where you can seed a private registry or serve a registry of the Hauler store. Follow the [Hauler installation instructions](https://docs.hauler.dev/docs/introduction/install), then proceed with the following steps. This pattern is repeatable for other artifacts you may want to bring into your airgapped environment.
+The airgap tool [Hauler](https://docs.hauler.dev/docs/intro) allows you to aggregate and transport the RKE2 artifacts to disconnected environments, where you can seed a private registry or serve a registry of the Hauler store. Follow the [Hauler installation instructions](https://docs.hauler.dev/docs/introduction/install), then proceed with the following steps. This pattern is repeatable for other artifacts you may want to bring into your airgapped environment.
 
 These steps assume you have already created nodes in your airgapped environment, and are using the bundled containerd as the container runtime.
 
