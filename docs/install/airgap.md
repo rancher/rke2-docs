@@ -98,6 +98,8 @@ hauler store add file https://github.com/rancher/rke2/releases/download/v1.34.5%
 2. You may also add other artifacts that will be needed on the airgapped host to the [Hauler store](https://docs.hauler.dev/docs/hauler-usage/store/add/file). For example, you could add the rke2 binary tarball and checksum file, which you will need to verify artifacts when running the install script.
 
 ```bash
+hauler store add file https://get.rke2.io
+
 hauler store add file https://github.com/rancher/rke2/releases/download/v1.34.5%2Brke2r1/rke2.linux-amd64.tar.gz
 
 hauler store add file https://github.com/rancher/rke2/releases/download/v1.34.5%2Brke2r1/sha256sum-amd64.txt
