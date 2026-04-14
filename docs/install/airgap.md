@@ -77,6 +77,58 @@ When this feature is enabled, it will not be possible to ensure that all images 
 
 
 </TabItem>
+<TabItem value="Hauler Method">
+
+## Hauler 
+
+The airgap tool [Hauler](https://docs.hauler.dev/docs/intro) allows you to aggregate and transport the RKE2 artifacts to disconnected environments, where you can seed a private registry or serve a registry of the Hauler store. Follow the [Hauler installation instructions](https://docs.hauler.dev/docs/introduction/install), then proceed with the following steps. This pattern is repeatable for other artifacts you may want to bring into your airgapped environment.
+
+These steps assume you have already created nodes in your airgapped environment, and are using the bundled containerd as the container runtime.
+
+1. On your connected machine, download the tarball and add to your Hauler store. The tarball can be found in the RKE2 release artifacts for your desired version. 
+
+```bash
+hauler store add file rke2-images.linux-amd64.tar.zst
+```
+or 
+```bash
+hauler store add file https://github.com/rancher/rke2/releases/download/v1.34.5%2Brke2r1/rke2-images.linux-amd64.tar.zst
+```
+
+2. You may also add other artifacts that will be needed on the airgapped host to the [Hauler store](https://docs.hauler.dev/docs/hauler-usage/store/add/file). For example, you could add the rke2 binary tarball and checksum file, which you will need to verify artifacts when running the install script.
+
+```bash
+hauler store add file https://get.rke2.io
+
+hauler store add file https://github.com/rancher/rke2/releases/download/v1.34.5%2Brke2r1/rke2.linux-amd64.tar.gz
+
+hauler store add file https://github.com/rancher/rke2/releases/download/v1.34.5%2Brke2r1/sha256sum-amd64.txt
+```
+
+3. Save the Hauler store to a file. The `--containerd` flag ensures the tarball is compatible if copied directly into containerd. 
+
+```bash
+hauler store save --filename haul.tar.zst --containerd
+```
+4. On your airgapped host with the Hauler CLI installed and .tar.zst file available, load the stored content.
+
+```bash
+hauler store load haul.tar.zst
+```
+5. Copy the Hauler store content directly to the images directory. For RKE2, ensure the directory `/var/lib/rancher/rke2/agent/images/` exists on the node, then run:
+
+```bash
+hauler store copy dir://var/lib/rancher/rke2/agent/images/
+```
+
+6. If you have a private registry available, you could also copy the artifacts using Hauler. If the registry is authenticated, login with `hauler store login <airgap.private.registry> -u <username> -p <password>` first.
+
+```bash
+hauler store copy registry://airgap.private.registry`
+```
+7. Follow the RKE2 [install instructions](#2-install-rke2).
+
+</TabItem>
 <TabItem value="Embedded Registry Mirror">
 
 RKE2 includes an embedded distributed OCI-compliant registry mirror. When enabled and properly configured, images available in the containerd image store on any node
