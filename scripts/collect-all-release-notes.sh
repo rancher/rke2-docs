@@ -78,13 +78,13 @@ function process_minor() {
             echo -e "${upgrade_warning}" >> $global_table
             echo -n "| Version | Release date " >> $global_table
             # RKE2 Core Components
-            echo "$body"  | grep "^|" | tail +3 | head -8 | awk -F'|' '{ print $2 }' | while read column; do echo -n "| $column " >> $global_table; done
+            echo "$body"  | grep "^|" | tail +3 | head -9 | awk -F'|' '{ print $2 }' | while read column; do echo -n "| $column " >> $global_table; done
             echo $CNI_HEADERS >> $global_table
-            for i in {0..8}; do echo -n "| ----- " >> $global_table; done
+            for i in {0..9}; do echo -n "| ----- " >> $global_table; done
             echo $CNI_SEPARATORS >> $global_table
         fi
         echo -n "| [${patch}](${minor}.X.md#release-$(gen_md_link $patch)) | $(date +"%b %d %Y" -d "${publish_date}")" >> $global_table
-        echo "$body"  | grep "^|" | tail +3 | head -8 | awk -F'|' '{ print $3 }' | while read column; do echo -n "| $column " >> $global_table; done
+        echo "$body"  | grep "^|" | tail +3 | head -9 | awk -F'|' '{ print $3 }' | while read column; do echo -n "| $column " >> $global_table; done
         echo $CNI_ROWS >> $global_table
         previous=$patch
         # Remove the component table from each individual release notes
