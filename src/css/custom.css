@@ -46,6 +46,8 @@
   --ifm-color-primary-darker: #2b83bc;
   --ifm-color-primary-darkest: #236c9b;
   --ifm-code-font-size: 95%;
+  --ifm-container-width-xl: 1600px;
+  --ifm-container-width: 1400px;
   --label-color: #d5d5d5ff;
 }
 
@@ -100,4 +102,16 @@ hr {
   .navbar-sidebar__back {
     display: none;
   }
+}
+
+.wide-table-container table {
+  display: table;
+  width: 100%;
+}
+
+.wide-table-container table th,
+.wide-table-container table td {
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
