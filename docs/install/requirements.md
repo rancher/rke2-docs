@@ -137,12 +137,12 @@ The VXLAN port on nodes should not be exposed to the world as it opens up your c
 </TabItem>
 <TabItem value="Cilium">
 
-| Port        | Protocol | Source            | Destination       | Description
-|-------------|----------|-------------------|-------------------|------------
-| 8/0         | ICMP     | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
-| 4240        | TCP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
-| 8472        | UDP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI with VXLAN
-| 51871       | UDP      | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI with WireGuard
+| Port        | Protocol  | Source            | Destination       | Description
+|-------------|-----------|-------------------|-------------------|------------
+| N/A         | ICMP (8/0)| All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
+| 4240        | TCP       | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI health checks
+| 8472        | UDP       | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI with VXLAN
+| 51871       | UDP       | All RKE2 nodes    | All RKE2 nodes    | Cilium CNI with WireGuard
 
 </TabItem>
 <TabItem value="Calico">
