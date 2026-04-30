@@ -75,7 +75,9 @@ function process_minor() {
             echo -e "${title}" >> $global_table
             upgrade_link="[Urgent Upgrade Notes](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-${minor:1}.md#urgent-upgrade-notes)"
             upgrade_warning=":::warning Upgrade Notice\nBefore upgrading from earlier releases, be sure to read the Kubernetes ${upgrade_link}.\n:::\n"
+            wide_container_table="<div className=\"wide-table-container\">"
             echo -e "${upgrade_warning}" >> $global_table
+            echo -e "${wide_container_table}\n" >> $global_table
             echo -n "| Version | Release date " >> $global_table
             # RKE2 Core Components
             echo "$body"  | grep "^|" | tail +3 | head -9 | awk -F'|' '{ print $2 }' | while read column; do echo -n "| $column " >> $global_table; done
@@ -95,7 +97,7 @@ function process_minor() {
         # Wrap Important Notes in a Warning block
         perl -i -p0e 's/\*\*Important Notes\*\*(.*?)###/:::warning Important Notes\n$1\n:::\n\n###/s' "${file}"
     done
-    echo -e "\n<br />\n" >> $global_table
+    echo -e "\n</div>\n\n<br />\n" >> $global_table
     # Append the global component and version table
     rke2tmp=$(mktemp)
     cat $global_table "${file}" > $rke2tmp && mv $rke2tmp "${file}"
