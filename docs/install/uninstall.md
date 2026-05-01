@@ -30,6 +30,11 @@ To uninstall RKE2 installed via the Tarball method from your system, simply run 
 /usr/local/bin/rke2-uninstall.sh
 ```
 
+### Nodes with read-only or brtfs root file systems
+
+```bash
+/opt/rke2/bin/rke2-uninstall.sh
+```
 
 ## Windows Uninstall
 
