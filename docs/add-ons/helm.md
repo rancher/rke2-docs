@@ -44,8 +44,11 @@ The `name` field should follow the Helm chart naming conventions, in addition to
 | spec.valuesContent |   | Override complex Chart values via inline YAML content | `--values` |
 | spec.valuesSecrets |   | Override complex Chart values via references to external Secrets | `--values` |
 
+Find the full API in the [auto-generated API docs](https://github.com/k3s-io/helm-controller/blob/master/doc/helmchart.md#HelmChart)
+
+
 :::note 
-We recommend using `failurePolicy=abort` for complex helm charts (e.g. Rancher) or for CNI plugins during upgrades. While the default `reinstall` policy is effective for general applications, it can be disruptive for certain critical infrastructure components. During an upgrade failure, it triggers an automatic uninstallation before attempting a fresh install. This uninstallation can tear down networking or delete critical CRDs, leading to cluster-wide disruption. Using abort ensures the existing version remains in place, allowing for manual troubleshooting without service loss.
+Consider setting `failurePolicy: abort` for complex helm charts (e.g. Rancher) or for CNI plugins during upgrades. While the default `reinstall` policy is effective for general applications, it can be disruptive for certain critical infrastructure components. The default failure policy triggers an automatic uninstall and reinstall of the chart if the Helm upgrade operation is interrupted and the chart release is stuck in a pending state. This uninstallation can tear down networking or delete critical CRDs, leading to cluster-wide disruption. Setting the policy to `abort` ensures the failed chart release is left in place for manual troubleshooting, potentially avoiding further disruption.
 :::
 
 ### Using the Helm CRD
@@ -142,10 +145,6 @@ spec:
 ```
 
 You can find all the packaged Helm charts including their documentation and default values in the [RKE2 charts repository](https://github.com/rancher/rke2-charts/tree/main/charts).
-
-:::warning
-There can only be one `HelmChartConfig` resource per component / namespace tuple. Applying a second `HelmChartConfig` will overwrite the existing one
-:::
 
 
 ## Automatically Deploying Manifests and Helm Charts
