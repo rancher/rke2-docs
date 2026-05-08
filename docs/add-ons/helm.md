@@ -140,8 +140,8 @@ metadata:
   namespace: kube-system
 spec:
   valuesContent: |-
-    image: coredns/coredns
-    imageTag: v1.7.1
+    image:
+      tag: v1.14.3-build20260506
 ```
 
 You can find all the packaged Helm charts including their documentation and default values in the [RKE2 charts repository](https://github.com/rancher/rke2-charts/tree/main/charts).
