@@ -4,7 +4,7 @@ title: Ingress NGINX to Traefik Migration Guide
 
 The Kubernetes Ingress NGINX project has announced its [retirement in March 2026](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/). As a result, RKE2 is transitioning to Traefik as the default ingress controller for new clusters starting with RKE2 v1.36.
 
-To support existing RKE2 clusters, a migration path is available pior to v1.36 to help users transition from Ingress NGINX to Traefik with minimal disruption.
+To support existing RKE2 clusters, a migration path is available prior to v1.36 to help users transition from Ingress NGINX to Traefik with minimal disruption.
 
 This guide will provide step-by-step instructions as a general process for converting an RKE2 cluster from using Ingress NGINX to Traefik as the ingress controller.
 
