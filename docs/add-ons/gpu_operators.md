@@ -44,6 +44,17 @@ The following three commands should return a correct output if the kernel driver
 
     This library is used by Kubernetes components to interact with the kernel driver.
 
+4.  `sysctl fs.inotify.max_user_instances fs.inotify.max_user_watches`
+
+    GPU Operator daemonsets and validators open many fsnotify watchers. On default kernel settings the validator pods fail with `failed to create fsnotify watcher: too many open files`.       Recommended minimum:
+
+    ```
+    fs.inotify.max_user_instances = 512
+    fs.inotify.max_user_watches = 524288
+    ```
+
+    Persist via `/etc/sysctl.d/99-inotify.conf` and apply with `sudo sysctl --system`.
+
 
 ### Operator installation ###
 
@@ -162,6 +173,16 @@ After one minute approximately, you can make the following checks to verify that
           limits:
             nvidia.com/gpu: 1
     ```
+    
+6. Confirm the operator's own CUDA validator job completed successfully:
+
+    ```
+    kubectl get job -n gpu-operator nvidia-cuda-validator
+    ```
+
+   `COMPLETIONS` should be `1/1`. This is the operator's built-in end-to-end check — if it's stuck, inspect with
+   `kubectl logs -n gpu-operator -l app=nvidia-cuda-validator -c cuda-validation`.
+
 
 :::info Version Gate
 Available as of October 2024 releases: v1.28.15+rke2r1, v1.29.10+rke2r1, v1.30.6+rke2r1, v1.31.2+rke2r1.
