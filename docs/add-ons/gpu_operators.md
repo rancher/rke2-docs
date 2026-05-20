@@ -55,6 +55,10 @@ The following three commands should return a correct output if the kernel driver
 
     Persist via `/etc/sysctl.d/99-inotify.conf` and apply with `sudo sysctl --system`.
 
+:::note
+On **NVSwitch-based systems** (DGX/HGX A100, H100, B100/B200, AWS p4d/p5d, etc.), Fabric Manager is **mandatory** — without it, GPUs may appear in `nvidia-smi` but CUDA workloads will not initialize. The host must have `nvidia-fabricmanager` installed and running, and `nvidia-driver-XXX` and `nvidia-fabricmanager-XXX` must be kept at the **exact same version**. A mismatch prevents NVLink from initializing and the `nvidia-operator-validator` pods crash on the `driver-validation` init container — see the NVIDIA GPU Operator [troubleshooting guide](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/troubleshooting.html).
+:::   
+
 
 ### Operator installation ###
 
