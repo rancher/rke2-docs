@@ -168,6 +168,11 @@ If your nodes do not have an interface with a default route, a default route mus
   ip route add default via 203.0.113.255 dev dummy0 metric 1000
   ```
 
+The example uses `203.0.113.0/24`, which is TEST-NET-3 (reserved for documentation by RFC 5737). Any range will work as long as it does not overlap with the cluster CIDR, the service CIDR or any other network reachable from the node.
+ 
+Note that the commands above apply only to the running system and will be lost on reboot. To make the configuration persistent, configure the dummy interface and default route through your distribution's network management system (such as `systemd-networkd`, `NetworkManager`, or `netplan`), or via a `systemd` oneshot unit ordered `Before=rke2-server.service` and `Before=rke2-agent.service`. The default route must be in place before RKE2 starts.
+ 
+Once configured, confirm the default route is present with `ip route show default`. After RKE2 starts, confirm the node's primary IP was detected correctly with `kubectl get nodes -o wide`.
 </details>
 
 <details>
