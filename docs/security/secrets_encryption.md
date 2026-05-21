@@ -31,8 +31,12 @@ RKE2 supports the following [encryption providers](https://kubernetes.io/docs/ta
 #### Migrating Providers
 You can migrate from the `aescbc` provider to the `secretbox` provider by following these steps:
 1. Ensure that the `secretbox` provider is supported by your RKE2 version.
-2. Update/Add the `secrets-encryption-provider` flag in your RKE2 configuration file to `secretbox`.
-3. Rotate the encryption keys, following the [Encryption Key Rotation](#encryption-key-rotation) section below.
+2. Update/Add the `secrets-encryption-provider` flag in the RKE2 configuration file on your server nodes to `secretbox`.
+3. Sequentially restart RKE2 on the server nodes, to load the new configuration:
+    ```
+    systemctl restart rke2-server.service
+    ```
+4. Rotate the encryption keys, following the [Encryption Key Rotation](#encryption-key-rotation) section below.
 
 ### Generated encryption config file
 
