@@ -44,16 +44,16 @@ The following three commands should return a correct output if the kernel driver
 
     This library is used by Kubernetes components to interact with the kernel driver.
 
-4.  `sysctl fs.inotify.max_user_instances fs.inotify.max_user_watches`
+:::note Troubleshooting
+If validator pods fail with `failed to create fsnotify watcher: too many open files`, the node has exhausted its inotify limits. Raise them:
 
-    GPU Operator daemonsets and validators open many fsnotify watchers. On default kernel settings the validator pods fail with `failed to create fsnotify watcher: too many open files`.       Recommended minimum:
+```
+fs.inotify.max_user_instances = 512
+fs.inotify.max_user_watches   = 524288
+```
 
-    ```
-    fs.inotify.max_user_instances = 512
-    fs.inotify.max_user_watches = 524288
-    ```
-
-    Persist via `/etc/sysctl.d/99-inotify.conf` and apply with `sudo sysctl --system`.
+Persist via `/etc/sysctl.d/99-inotify.conf` and apply with `sudo sysctl --system`.
+:::
 
 :::note
 On **NVSwitch-based systems** (DGX/HGX A100, H100, B100/B200, AWS p4d/p5d, etc.), Fabric Manager is **mandatory** — without it, GPUs may appear in `nvidia-smi` but CUDA workloads will not initialize. The host must have `nvidia-fabricmanager` installed and running, and `nvidia-driver-XXX` and `nvidia-fabricmanager-XXX` must be kept at the **exact same version**. A mismatch prevents NVLink from initializing and the `nvidia-operator-validator` pods crash on the `driver-validation` init container — see the NVIDIA GPU Operator [troubleshooting guide](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/troubleshooting.html).
