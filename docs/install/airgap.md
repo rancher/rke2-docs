@@ -115,18 +115,26 @@ hauler store save --filename haul.tar.zst --containerd
 ```bash
 hauler store load haul.tar.zst
 ```
-5. Copy the Hauler store content directly to the images directory. For RKE2, ensure the directory `/var/lib/rancher/rke2/agent/images/` exists on the node, then run:
+5. You can save the Hauler store content directly to the images directory. For RKE2, ensure the directory `/var/lib/rancher/rke2/agent/images/` exists on the node, then save the tarbarll to that path:
 
 ```bash
-hauler store copy dir://var/lib/rancher/rke2/agent/images/
+hauler store save --containerd -f /var/lib/rancher/rke2/agent/images/haul.tar.zst
 ```
 
 6. If you have a private registry available, you could also copy the artifacts using Hauler. If the registry is authenticated, login with `hauler store login <airgap.private.registry> -u <username> -p <password>` first.
 
 ```bash
-hauler store copy registry://airgap.private.registry`
+hauler store copy registry://airgap.private.registry
 ```
-7. Follow the RKE2 [install instructions](#2-install-rke2).
+7. Follow the RKE2 [install instructions](#2-install-rke2). Extract files needed for the install from the Hauler store. Use `hauler store info` to identify the exact artifact names in your store. 
+
+```bash
+hauler store extract install.sh --output /root/rke2-artifacts
+
+hauler store extract sha256sum.txt --output /root/rke2-artifacts
+
+hauler store extract rke2-binary:v1.34.5-rke2r1 --output /usr/local/bin
+```
 
 </TabItem>
 <TabItem value="Embedded Registry Mirror">
