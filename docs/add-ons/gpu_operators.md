@@ -8,7 +8,15 @@ The [NVIDIA operator](https://docs.nvidia.com/datacenter/cloud-native/gpu-operat
 
 ### Host OS requirements
 
-To expose the GPU to the pod correctly, the NVIDIA kernel drivers and the `libnvidia-ml` library must be correctly installed in the host OS. The NVIDIA Operator can automatically install drivers and libraries on some operating systems; check the NVIDIA documentation for information on [supported operating system releases](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms). Installation of the NVIDIA components on your host OS is out of the scope of this document; reference the NVIDIA documentation for instructions.
+To expose the GPU to the pod correctly, the NVIDIA kernel drivers and the `libnvidia-ml` library must be correctly installed in the host OS (Operating System). The NVIDIA Operator can automatically install drivers and libraries on some operating systems; check the NVIDIA documentation for information on [supported operating system releases](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms).
+
+Starting with GPU Operator v26.3.x, the operator can also manage driver and library installation on any operating system, provided the OS vendor or administrator supplies a compatible driver container image. 
+
+Installation of the NVIDIA components on your host OS is out of the scope of this document; reference the NVIDIA documentation for instructions.
+
+<details>
+<summary>**Checks for pre-installed NVIDIA drivers/libraries**</summary>
+
 
 The following three commands should return a correct output if the kernel driver was correctly installed:
 
@@ -49,9 +57,8 @@ If validator pods fail with `failed to create fsnotify watcher: too many open fi
 :::
 
 :::note
-On **NVSwitch-based systems** (DGX/HGX A100, H100, B100/B200, AWS p4d/p5d, etc.), Fabric Manager is **mandatory** — without it, GPUs may appear in `nvidia-smi` but CUDA workloads will not initialize. The host must have `nvidia-fabricmanager` installed and running, and `nvidia-driver-XXX` and `nvidia-fabricmanager-XXX` must be kept at the **exact same version**. A mismatch prevents NVLink from initializing and the `nvidia-operator-validator` pods crash on the `driver-validation` init container — see the NVIDIA GPU Operator [troubleshooting guide](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/troubleshooting.html).
-:::   
-
+On **NVSwitch-based systems** (DGX/HGX A100, H100, B100/B200, AWS p4d/p5d, etc.), Fabric Manager is **mandatory** — without it, GPUs may appear in `nvidia-smi` but CUDA workloads will not initialize. The host must have `nvidia-fabricmanager` installed and running, and `nvidia-driver-XXX` and `nvidia-fabricmanager-XXX` must be kept at the **exact same version**. A mismatch prevents NVLink from initializing and the `nvidia-operator-validator` pods crash on the `driver-validation` init container. See the NVIDIA GPU Operator [troubleshooting guide](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/troubleshooting.html).
+:::
 
 ### Operator installation ###
 
@@ -90,8 +97,12 @@ spec:
 The envvars `ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED`, `ACCEPT_NVIDIA_VISIBLE_DEVICES_AS_VOLUME_MOUNTS` and `DEVICE_LIST_STRATEGY` are required to properly isolate GPU resources as explained in this nvidia [doc](https://docs.google.com/document/d/1zy0key-EL6JH50MZgwg96RPYxxXXnVUdxLZwGiyqLd8/edit?tab=t.0)
 :::
 
+:::warning
+The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
+:::
+
 </TabItem>
-<TabItem value="v25.10.x" default>
+<TabItem value="v25.10.x">
 
 ```yaml
 apiVersion: helm.cattle.io/v1
@@ -113,24 +124,75 @@ spec:
 ```
 
 :::info
-NVIDIA GPU Operator v25.10.x uses [Container Device Interface (CDI) specification](https://github.com/cncf-tags/container-device-interface/blob/main/SPEC.md) and that simplifies operations: we don't need to pass extra envvars to comply with the security requirements and the workloads don't need to pass the `runtimeClassName: nvidia` anymore
+NVIDIA GPU Operator v25.10.x uses [Container Device Interface (CDI) specification](https://github.com/cncf-tags/container-device-interface/blob/main/SPEC.md) and that simplifies operations: we don't need to pass extra envvars to comply with the security requirements and the workloads don't need to pass the `runtimeClassName: nvidia` anymore. It requires containerd 2.0
 :::
-</TabItem>
-</Tabs>
 
 :::warning
 The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
 :::
 
-After one minute approximately, you can make the following checks to verify that everything worked as expected:
+</TabItem>
+
+<TabItem value="v26.3.x" default>
+
+There are two installation options available. 
+
+If drivers and libraries are pre-installed or you are using a [supported operating system by nvidia](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms), please use the following manifest 
+
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.3.1
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    cdi:
+      nriPluginEnabled: true
+```
+
+If your operating system vendor supplies a compatible driver image, you can use the `driver` value field to point to it. For example, in SLES 16.0, you can use the following manifest:
+
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.3.1
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    cdi:
+      nriPluginEnabled: true
+    driver:
+      repository: registry.suse.com/third-party/nvidia
+      usePrecompiled: true
+      version: 595 # This depends on the nvidia driver that works with your GPU architecture
+```
+
+:::info
+NVIDIA GPU Operator v26.3.x recommends using [Node Resource Interface (NRI) specification](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/cdi.html#about-the-node-resource-interface-nri-plugin) and that simplifies operations: we don't need to pass any extra envvar and it does not require changing containerd configuration. It requires containerd 2.1
+:::
+
+:::info Version Gate
+Containerd 2.1 is available as of September 2025 releases: v1.31.13+rke2r1, v1.32.9+rke2r1, v1.33.5+rke2r1, v1.34.1+rke2r1
+:::
+
+</TabItem>
+</Tabs>
+
+After a few minutes, you can make the following checks to verify that everything worked as expected:
 
 1. Assuming the drivers and `libnvidia-ml.so` library were previously installed, check if the operator detects them correctly:
-    ```
-    kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' | grep "nvidia.com/gpu.deploy.driver"
-    ```
-    You should see the value `pre-installed`. If you see `true`, the drivers were not correctly installed. If the [pre-requirements](#host-os-requirements) were correct, it is possible that you forgot to reboot the node after installing all packages.
-
-    You can also check other driver labels with:
     ```
     kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' |  grep "nvidia.com"
     ```
@@ -147,7 +209,7 @@ After one minute approximately, you can make the following checks to verify that
     ls /usr/local/nvidia/toolkit/nvidia-container-runtime
     ```
 
-4. Verify if containerd config was updated to include the nvidia container runtime:
+4. (Only if not using NRI) Verify if containerd config was updated to include the nvidia container runtime:
     ```
     grep nvidia /var/lib/rancher/rke2/agent/etc/containerd/config.toml
     ```

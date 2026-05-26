@@ -115,18 +115,26 @@ hauler store save --filename haul.tar.zst --containerd
 ```bash
 hauler store load haul.tar.zst
 ```
-5. Copy the Hauler store content directly to the images directory. For RKE2, ensure the directory `/var/lib/rancher/rke2/agent/images/` exists on the node, then run:
+5. You can save the Hauler store content directly to the images directory. For RKE2, ensure the directory `/var/lib/rancher/rke2/agent/images/` exists on the node, then save the tarbarll to that path:
 
 ```bash
-hauler store copy dir://var/lib/rancher/rke2/agent/images/
+hauler store save --containerd -f /var/lib/rancher/rke2/agent/images/haul.tar.zst
 ```
 
 6. If you have a private registry available, you could also copy the artifacts using Hauler. If the registry is authenticated, login with `hauler store login <airgap.private.registry> -u <username> -p <password>` first.
 
 ```bash
-hauler store copy registry://airgap.private.registry`
+hauler store copy registry://airgap.private.registry
 ```
-7. Follow the RKE2 [install instructions](#2-install-rke2).
+7. Follow the RKE2 [install instructions](#2-install-rke2). Extract files needed for the install from the Hauler store. Use `hauler store info` to identify the exact artifact names in your store. 
+
+```bash
+hauler store extract install.sh --output /root/rke2-artifacts
+
+hauler store extract sha256sum.txt --output /root/rke2-artifacts
+
+hauler store extract rke2-binary:v1.34.5-rke2r1 --output /usr/local/bin
+```
 
 </TabItem>
 <TabItem value="Embedded Registry Mirror">
@@ -160,6 +168,11 @@ If your nodes do not have an interface with a default route, a default route mus
   ip route add default via 203.0.113.255 dev dummy0 metric 1000
   ```
 
+The example uses `203.0.113.0/24`, which is TEST-NET-3 (reserved for documentation by RFC 5737). Any range will work as long as it does not overlap with the cluster CIDR, the service CIDR or any other network reachable from the node.
+ 
+Note that the commands above apply only to the running system and will be lost on reboot. To make the configuration persistent, configure the dummy interface and default route through your distribution's network management system (such as `systemd-networkd`, `NetworkManager`, or `netplan`), or via a `systemd` oneshot unit ordered `Before=rke2-server.service` and `Before=rke2-agent.service`. The default route must be in place before RKE2 starts.
+ 
+Once configured, confirm the default route is present with `ip route show default`. After RKE2 starts, confirm the node's primary IP was detected correctly with `kubectl get nodes -o wide`.
 </details>
 
 <details>
