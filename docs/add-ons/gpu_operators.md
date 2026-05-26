@@ -44,15 +44,8 @@ The following three commands should return a correct output if the kernel driver
 
     This library is used by Kubernetes components to interact with the kernel driver.
 
-:::note Troubleshooting
-If validator pods fail with `failed to create fsnotify watcher: too many open files`, the node has exhausted its inotify limits. Raise them:
-
-```
-fs.inotify.max_user_instances = 512
-fs.inotify.max_user_watches   = 524288
-```
-
-Persist via `/etc/sysctl.d/99-inotify.conf` and apply with `sudo sysctl --system`.
+:::note
+If validator pods fail with `failed to create fsnotify watcher: too many open files`, the node has exhausted its inotify limits. See [Kernel Parameters](../install/requirements.md#kernel-parameters) in the requirements documentation.
 :::
 
 :::note
