@@ -50,6 +50,14 @@ spec:
       ipvs: true
 ```
 
+Also, when using kube-proxy in IPVS mode, the Kubelet cluster-dns argument must be updated to reference the dedicated node-local address (default 169.254.20.10). Note that this setting will only take effect for newly created pods or if existing pods are restarted.
+
+```yaml
+kubelet-arg:
+    - "cluster-dns=169.254.20.10"
+```
+
+
 ### NodeLocal DNS Cache with Cilium in kube-proxy replacement mode
 This feature is available starting from versions v1.28.13+rke2r1, v1.29.8+rke2r1 and v1.30.4+rke2r1.
 
