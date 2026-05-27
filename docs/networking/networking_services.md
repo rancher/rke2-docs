@@ -57,6 +57,7 @@ kubelet-arg:
     - "cluster-dns=169.254.20.10"
 ```
 
+:::warning `kube-proxy` in IPVS mode is officially [deprecated](https://kubernetes.io/blog/2025/12/17/kubernetes-v1-35-release/#deprecation-of-ipvs-mode-in-kube-proxy) starting in Kubernetes v1.35. While it remains functional in v1.35, it is scheduled for removal in a future release. :::
 
 ### NodeLocal DNS Cache with Cilium in kube-proxy replacement mode
 This feature is available starting from versions v1.28.13+rke2r1, v1.29.8+rke2r1 and v1.30.4+rke2r1.
