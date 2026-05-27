@@ -97,22 +97,22 @@ RKE2 performance depends on the performance of the database, and since RKE2 runs
 
 Some workloads particularly those that run many pods or watch large numbers of files, such as GPU operator validators can exhaust a node's default inotify limits. When this happens, pods fail to start with an error like:
 
-\```
+```
 failed to create fsnotify watcher: too many open files
-\```
+```
 
 If you encounter this, raise the inotify limits on the affected nodes:
 
-\```
+```
 fs.inotify.max_user_instances = 8192
 fs.inotify.max_user_watches = 524288
-\```
+```
 
 To persist the change across reboots, write it to `/etc/sysctl.d/99-inotify.conf` and apply it with:
 
-\```bash
+```bash
 sudo sysctl --system
-\```
+```
 
 ## Networking
 
