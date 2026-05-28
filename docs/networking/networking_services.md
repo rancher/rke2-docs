@@ -34,6 +34,8 @@ spec:
 ```
 The helm controller will redeploy coredns with the new config. Please be aware that nodelocal modifies the iptables of the node to intercept DNS traffic. Therefore, activating and then deactivating this feature without redeploying, will cause the DNS service to stop working.
 
+:::warning `kube-proxy` in IPVS mode is officially [deprecated](https://kubernetes.io/blog/2025/12/17/kubernetes-v1-35-release/#deprecation-of-ipvs-mode-in-kube-proxy) starting in Kubernetes v1.35. While it remains functional in v1.35, it is scheduled for removal in a future release. :::
+
 Note that NodeLocal DNSCache must be deployed in ipvs mode if kube-proxy is using that mode. To deploy it in this mode, apply the following HelmChartConfig:
 
 ```yaml
@@ -50,15 +52,13 @@ spec:
       ipvs: true
 ```
 
-Also, when using kube-proxy in IPVS mode, the Kubelet cluster-dns argument must be updated to reference the dedicated node-local address (default 169.254.20.10). Note that this setting will only take effect for newly created pods or if existing pods are restarted.
+When using kube-proxy in IPVS mode, all nodes must be configured to use the node-local address for cluster DNS, instead of the in-cluster service endpoint. Note that this setting will only take effect after a restart of the RKE2 service and all running pods.
 
 ```yaml
 kubelet-arg:
     - "cluster-dns=169.254.20.10"
-When using kube-proxy in IPVS mode, all nodes must be configured to use the node-local address for cluster DNS, instead of the in-cluster service endpoint. Note that this setting will only take effect after a restart of the RKE2 service and all running pods.
 
-
-:::warning `kube-proxy` in IPVS mode is officially [deprecated](https://kubernetes.io/blog/2025/12/17/kubernetes-v1-35-release/#deprecation-of-ipvs-mode-in-kube-proxy) starting in Kubernetes v1.35. While it remains functional in v1.35, it is scheduled for removal in a future release. :::
+```
 
 ### NodeLocal DNS Cache with Cilium in kube-proxy replacement mode
 This feature is available starting from versions v1.28.13+rke2r1, v1.29.8+rke2r1 and v1.30.4+rke2r1.
