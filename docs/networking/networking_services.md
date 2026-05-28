@@ -55,7 +55,8 @@ Also, when using kube-proxy in IPVS mode, the Kubelet cluster-dns argument must 
 ```yaml
 kubelet-arg:
     - "cluster-dns=169.254.20.10"
-```
+When using kube-proxy in IPVS mode, all nodes must be configured to use the node-local address for cluster DNS, instead of the in-cluster service endpoint. Note that this setting will only take effect after a restart of the RKE2 service and all running pods.
+
 
 :::warning `kube-proxy` in IPVS mode is officially [deprecated](https://kubernetes.io/blog/2025/12/17/kubernetes-v1-35-release/#deprecation-of-ipvs-mode-in-kube-proxy) starting in Kubernetes v1.35. While it remains functional in v1.35, it is scheduled for removal in a future release. :::
 
