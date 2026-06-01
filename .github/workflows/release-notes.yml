@@ -3,8 +3,6 @@ on:
   workflow_dispatch: {}
   schedule:
     - cron: '0 6 * * 1' # every Monday at 6:00 AM
-env:
-  MINORS: "v1.33 v1.34 v1.35 v1.36"
 permissions:
   contents: write
   pull-requests: write
@@ -17,11 +15,6 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Install dos2unix
         run: sudo apt-get update && sudo apt-get install -y dos2unix
-      - name: Remove old release notes
-        run: |
-          for minor in $MINORS; do
-            rm docs/release-notes/$minor*.md
-          done 
       - name: Generate release notes
         run: scripts/collect-all-release-notes.sh
         env:
