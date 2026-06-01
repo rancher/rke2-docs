@@ -55,6 +55,23 @@ function process_cni_table {
     done
 }
 
+function convert_warning_blockquotes() {
+    local file=$1
+    perl -i -p0e 's#^> \[!WARNING\]\r?\n((?:^>.*\r?\n?)*)#
+        do {
+            my $body = $1;
+            $body =~ s/^> ?//mg;
+            $body =~ s/\r//g;
+            $body =~ s/^\s+|\s+$//g;
+            my $title = "Warning";
+            if ($body =~ s/^\*\*(.+?)\*\*\r?\n?//) {
+                $title = $1;
+            }
+            ":::warning $title\n$body\n:::\n";
+        }
+    #gems' "${file}"
+}
+
 function process_minor() {
     local minor=$1
     local directory=$2
@@ -109,6 +126,9 @@ function process_minor() {
         # Add extra levels for Docusaurus Sidebar and link to GH release page
         sed -i 's/^# Release \(.*\)/## Release [\1](https:\/\/github.com\/rancher\/rke2\/releases\/tag\/\1)/' "${release_tmp}"
         sed -i 's/^## Changes since/### Changes since/' "${release_tmp}"
+        # Convert GitHub blockquote warning alert to Docusaurus warning admonition.
+        convert_warning_blockquotes "${release_tmp}"
+
         # Wrap Important Notes in a Warning block
         perl -i -p0e 's/\*\*Important Notes\*\*(.*?)###/:::warning Important Notes\n$1\n:::\n\n###/s' "${release_tmp}"
         cat "${release_tmp}" >> "${new_release_notes}"
