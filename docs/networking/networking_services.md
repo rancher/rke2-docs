@@ -34,7 +34,9 @@ spec:
 ```
 The helm controller will redeploy coredns with the new config. Please be aware that nodelocal modifies the iptables of the node to intercept DNS traffic. Therefore, activating and then deactivating this feature without redeploying, will cause the DNS service to stop working.
 
-:::warning `kube-proxy` in IPVS mode is officially [deprecated](https://kubernetes.io/blog/2025/12/17/kubernetes-v1-35-release/#deprecation-of-ipvs-mode-in-kube-proxy) starting in Kubernetes v1.35. While it remains functional in v1.35, it is scheduled for removal in a future release. :::
+:::warning
+`kube-proxy` in IPVS mode is officially [deprecated](https://kubernetes.io/blog/2025/12/17/kubernetes-v1-35-release/#deprecation-of-ipvs-mode-in-kube-proxy) starting in Kubernetes v1.35. While it remains functional in v1.35, it is scheduled for removal in a future release.
+:::
 
 Note that NodeLocal DNSCache must be deployed in ipvs mode if kube-proxy is using that mode. To deploy it in this mode, apply the following HelmChartConfig:
 
