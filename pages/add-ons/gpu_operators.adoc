@@ -6,7 +6,15 @@ The https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/index.ht
 
 === Host OS requirements
 
-To expose the GPU to the pod correctly, the NVIDIA kernel drivers and the `libnvidia-ml` library must be correctly installed in the host OS. The NVIDIA Operator can automatically install drivers and libraries on some operating systems; check the NVIDIA documentation for information on https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms[supported operating system releases]. Installation of the NVIDIA components on your host OS is out of the scope of this document; reference the NVIDIA documentation for instructions.
+To expose the GPU to the pod correctly, the NVIDIA kernel drivers and the `libnvidia-ml` library must be correctly installed in the host OS (Operating System). The NVIDIA Operator can automatically install drivers and libraries on some operating systems; check the NVIDIA documentation for information on https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms[supported operating system releases].
+
+Starting with GPU Operator v26.3.x, the operator can also manage driver and library installation on any operating system, provided the OS vendor or administrator supplies a compatible driver container image.
+
+Installation of the NVIDIA components on your host OS is out of the scope of this document; reference the NVIDIA documentation for instructions.
+
+[%collapsible]
+.*Checks for pre-installed NVIDIA drivers/libraries*
+======
 
 The following three commands should return a correct output if the kernel driver was correctly installed:
 
@@ -41,6 +49,7 @@ returns a path to the `libnvidia-ml.so` library. For example:
 ----
 +
 This library is used by Kubernetes components to interact with the kernel driver.
+======
 
 === Operator installation
 
@@ -85,6 +94,11 @@ spec:
 The envvars `ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED`, `ACCEPT_NVIDIA_VISIBLE_DEVICES_AS_VOLUME_MOUNTS` and `DEVICE_LIST_STRATEGY` are required to properly isolate GPU resources as explained in this nvidia https://docs.google.com/document/d/1zy0key-EL6JH50MZgwg96RPYxxXXnVUdxLZwGiyqLd8/edit?tab=t.0[doc]
 ====
 
+[CAUTION]
+====
+The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
+====
+
 --
 
 v25.10.x::
@@ -113,28 +127,84 @@ spec:
 
 [IMPORTANT]
 ====
-NVIDIA GPU Operator v25.10.x uses https://github.com/cncf-tags/container-device-interface/blob/main/SPEC.md[Container Device Interface (CDI) specification] and that simplifies operations: we don't need to pass extra envvars to comply with the security requirements and the workloads don't need to pass the `runtimeClassName: nvidia` anymore
+NVIDIA GPU Operator v25.10.x uses https://github.com/cncf-tags/container-device-interface/blob/main/SPEC.md[Container Device Interface (CDI) specification] and that simplifies operations: we don't need to pass extra envvars to comply with the security requirements and the workloads don't need to pass the `runtimeClassName: nvidia` anymore. It requires containerd 2.0
 ====
---
-
-=====
 
 [CAUTION]
 ====
 The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
 ====
 
-After one minute approximately, you can make the following checks to verify that everything worked as expected:
+--
+
+v26.3.x::
++
+--
+
+There are two installation options available.
+
+If drivers and libraries are pre-installed or you are using a https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms[supported operating system by nvidia], please use the following manifest
+
+[,yaml]
+----
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.3.1
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    cdi:
+      nriPluginEnabled: true
+----
+
+If your operating system vendor supplies a compatible driver image, you can use the `driver` value field to point to it. For example, in SLES 16.0, you can use the following manifest:
+
+[,yaml]
+----
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.3.1
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    cdi:
+      nriPluginEnabled: true
+    driver:
+      repository: registry.suse.com/third-party/nvidia
+      usePrecompiled: true
+      version: 595 # This depends on the nvidia driver that works with your GPU architecture
+----
+
+[IMPORTANT]
+====
+NVIDIA GPU Operator v26.3.x recommends using https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/cdi.html#about-the-node-resource-interface-nri-plugin[Node Resource Interface (NRI) specification] and that simplifies operations: we don't need to pass any extra envvar and it does not require changing containerd configuration. It requires containerd 2.1
+====
+
+[IMPORTANT]
+.Version Gate
+====
+Containerd 2.1 is available as of September 2025 releases: v1.31.13+rke2r1, v1.32.9+rke2r1, v1.33.5+rke2r1, v1.34.1+rke2r1
+====
+
+--
+
+=====
+
+After a few minutes, you can make the following checks to verify that everything worked as expected:
 
 . Assuming the drivers and `libnvidia-ml.so` library were previously installed, check if the operator detects them correctly:
-+
-----
- kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' | grep "nvidia.com/gpu.deploy.driver"
-----
-+
-You should see the value `pre-installed`. If you see `true`, the drivers were not correctly installed. If the <<_host_os_requirements,pre-requirements>> were correct, it is possible that you forgot to reboot the node after installing all packages.
-+
-You can also check other driver labels with:
 +
 ----
  kubectl get node $NODENAME -o jsonpath='{.metadata.labels}' |  grep "nvidia.com"
@@ -156,7 +226,7 @@ You should see `"nvidia.com/gpu":` followed by the number of gpus in the node
  ls /usr/local/nvidia/toolkit/nvidia-container-runtime
 ----
 
-. Verify if containerd config was updated to include the nvidia container runtime:
+. (Only if not using NRI) Verify if containerd config was updated to include the nvidia container runtime:
 +
 ----
  grep nvidia /var/lib/rancher/rke2/agent/etc/containerd/config.toml
@@ -180,12 +250,6 @@ resources:
   limits:
     nvidia.com/gpu: 1
  ```
-
-[IMPORTANT]
-.Version Gate
-====
-Available as of October 2024 releases: v1.28.15+rke2r1, v1.29.10+rke2r1, v1.30.6+rke2r1, v1.31.2+rke2r1.
-====
 
 RKE2 will now use `PATH` to find alternative container runtimes, in addition to checking the default paths used by the container runtime packages. In order to use this feature, you must modify the RKE2 service's PATH environment variable to add the directories containing the container runtime binaries.
 

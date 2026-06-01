@@ -5,10 +5,10 @@ Using an external datastore means leveraging a database that resides outside the
 == Datastore options
 
 * *External Database*
- ** https://etcd.io/[etcd] (certified against version 3.5.4)
- ** https://www.mysql.com[MySQL] (certified against versions 5.7 and 8.0)
- ** https://mariadb.org/[MariaDB] (certified against version 10.6.8)
- ** https://www.postgresql.org/[PostgreSQL] (certified against versions 12.16, 13.12, 14.9 and 15.4)
+ ** https://etcd.io/[etcd] (certified against version 3.6.7)
+ ** https://www.mysql.com[MySQL] (certified against versions 8.4.8)
+ ** https://mariadb.org/[MariaDB] (certified against version 11.4.10)
+ ** https://www.postgresql.org/[PostgreSQL] (certified against versions 18.3)
 
 [CAUTION]
 .Prepared Statement Support

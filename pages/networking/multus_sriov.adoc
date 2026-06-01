@@ -1,4 +1,4 @@
-= Multus and SR-IOV
+= Multus
 
 == Using Multus
 
@@ -171,28 +171,6 @@ The Dynamic Networks Controller can be deployed only with Multus in "thick plugi
 
 == Using Multus with SR-IOV
 
-Using the SR-IOV CNI with Multus can help with data-plane acceleration use cases, providing an extra interface in the pod that can achieve very high throughput. SR-IOV will not work in all environments, and there are several requirements
-that must be fulfilled to consider the node as SR-IOV capable:
+Using the SR-IOV CNI with Multus can help with data-plane acceleration use cases, providing an extra interface in the pod that can achieve very high throughput. Complete deployment steps, prerequisites, and hardware compatibility details can be found in the https://github.com/k8snetworkplumbingwg/sriov-network-operator/blob/master/doc/quickstart.md[SR-IOV Network Operator Quickstart Guide]
 
-* Physical NIC must support SR-IOV (e.g. by checking /sys/class/net/$NIC/device/sriov_totalvfs)
-* The host operating system must activate IOMMU virtualization
-* The host operating system includes drivers capable of doing sriov (e.g. i40e, vfio-pci, etc)
-
-The SR-IOV CNI Plugin cannot be used as the default CNI Plugin for Multus; it must be deployed alongside both Multus and a traditional CNI Plugin. The SR-IOV CNI helm chart can be found in the `rancher-charts` Helm repo. For more information see https://ranchermanager.docs.rancher.com/pages-for-subheaders/helm-charts-in-rancher[Rancher Helm Charts documentation].
-
-After installing the SR-IOV CNI chart, the SR-IOV operator will be deployed. Then, the user must specify what nodes in the cluster are SR-IOV capable by labeling them with `feature.node.kubernetes.io/network-sriov.capable=true`:
-
-[,bash]
-----
-kubectl label node $NODE-NAME feature.node.kubernetes.io/network-sriov.capable=true
-----
-
-Once labeled, the sriov-network-config Daemonset will deploy a pod to the node to collect information about the network interfaces. That information is available through the `sriovnetworknodestates` Custom Resource Definition. A couple of
-minutes after the deployment, there will be one `sriovnetworknodestates` resource per node, with the name of the node as the resource name.
-
-NOTE: the SR-IOV CNI chart from `rancher-charts` now includes the `node-feature-discovery` chart as an automatic dependency. This chart deploys a small daemonset that automatically labels each node based on the capabilities detected on that node. This works for both hardware and software features. In particular, `node-feature-discovery` can automatically add the label `feature.node.kubernetes.io/network-sriov.capable=true` when it detects a compatible node.
-For more information, see the https://kubernetes-sigs.github.io/node-feature-discovery/v0.11/get-started/introduction.html[NFD documentation].
-
-However, the latest versions of the sriov-network-operator also include a whitelist of supported hardware so sriov will actually be available only with the NICs on https://github.com/k8snetworkplumbingwg/sriov-network-operator/blob/master/doc/supported-hardware.md[that list]. If you want to use the SR-IOV CNI with a NIC that is not on the list, you will need to update the `supported-nic-ids` configMap yourself.
-
-For more information about how to use the SR-IOV operator, please refer to https://github.com/k8snetworkplumbingwg/sriov-network-operator/blob/master/doc/quickstart.md#configuration[sriov-network-operator]
+For fully validated configurations and enterprise-grade infrastructure support for SR-IOV in RKE2, refer to https://documentation.suse.com/suse-edge/3.5/html/edge/atip-features.html#sriov[SUSE Telco Cloud]
