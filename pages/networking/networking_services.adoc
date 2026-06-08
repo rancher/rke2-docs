@@ -33,6 +33,11 @@ spec:
 
 The helm controller will redeploy coredns with the new config. Please be aware that nodelocal modifies the iptables of the node to intercept DNS traffic. Therefore, activating and then deactivating this feature without redeploying, will cause the DNS service to stop working.
 
+[CAUTION]
+====
+`kube-proxy` in IPVS mode is officially https://kubernetes.io/blog/2025/12/17/kubernetes-v1-35-release/#deprecation-of-ipvs-mode-in-kube-proxy[deprecated] starting in Kubernetes v1.35. While it remains functional in v1.35, it is scheduled for removal in a future release.
+====
+
 Note that NodeLocal DNSCache must be deployed in ipvs mode if kube-proxy is using that mode. To deploy it in this mode, apply the following HelmChartConfig:
 
 [,yaml]
@@ -47,6 +52,14 @@ spec:
     nodelocal:
       enabled: true
       ipvs: true
+----
+
+When using kube-proxy in IPVS mode, all nodes must be configured to use the node-local address for cluster DNS, instead of the in-cluster service endpoint. Note that this setting will only take effect after a restart of the RKE2 service and all running pods.
+
+[,yaml]
+----
+kubelet-arg:
+    - "cluster-dns=169.254.20.10"
 ----
 
 === NodeLocal DNS Cache with Cilium in kube-proxy replacement mode
