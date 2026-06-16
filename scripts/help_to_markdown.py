@@ -118,7 +118,7 @@ for group, value in options_dict.items():
         agent_dict[group] = options_dict[group]
         continue
 
-    print(f"### {group.title()}")
+    print(f"## {group.title()}")
     header, has_default, has_env = constructHeader(value)
     print(header)
 
@@ -134,7 +134,7 @@ for group, value in options_dict.items():
 
 for group, value in agent_dict.items():
 
-    print(f"### {group.title()}")
+    print(f"## {group.title()}")
     header, has_default, has_env = constructHeader(value)
     print(header)
 
