@@ -9,8 +9,7 @@ RKE2 Windows Agent (Worker) Nodes can be used in an air-gapped environment with 
 You can either deploy using the `rke2-windows-<BUILD_VERSION>-amd64-images.tar.gz` tarball release artifact, or by using a private registry. There are currently three tarball artifacts released for Windows in accordance with our validated [Windows versions](requirements.md#windows).
 
 - rke2-windows-1809-amd64-images.tar.gz
-- rke2-windows-2004-amd64-images.tar.gz
-- rke2-windows-20H2-amd64-images.tar.gz
+- rke2-windows-ltsc2022-amd64-images.tar.gz
 
 All files mentioned in the steps can be obtained from the assets of the desired released RKE2 version [here](https://github.com/rancher/rke2/releases).
 
@@ -41,22 +40,14 @@ This will require a reboot for the `Containers` feature to properly function.
 
     ``` powershell
     $ProgressPreference = 'SilentlyContinue'
-    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-1809-amd64-images.tar.gz -OutFile /var/lib/rancher/rke2/agent/images/rke2-windows-1809-amd64-images.tar.gz 
+    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.36.1%2Brke2r2/rke2-windows-1809-amd64-images.tar.gz -OutFile /var/lib/rancher/rke2/agent/images/rke2-windows-1809-amd64-images.tar.gz 
     ```
 
-
-    - **Windows Server SAC 2004 (amd64) (OS Build 19041.1110)**
+    - **Windows Server 2022 LTSC (amd64) (OS Build 20348.169)**
 
     ``` powershell
     $ProgressPreference = 'SilentlyContinue'  
-    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-2004-amd64-images.tar.gz -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-2004-amd64-images.tar.gz
-    ```
-
-    - **Windows Server SAC 20H2 (amd64) (OS Build 19042.1110)**
-
-    ``` powershell
-    $ProgressPreference = 'SilentlyContinue'  
-    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-20H2-amd64-images.tar.gz -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-20H2-amd64-images.tar.gz 
+    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.36.1%2Brke2r2/rke2-windows-ltsc2022-amd64-images.tar.gz -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-ltsc2022-amd64-images.tar.gz 
     ```
 
     #### Using tar.zst image tarballs
@@ -65,25 +56,16 @@ This will require a reboot for the `Containers` feature to properly function.
 
     ``` powershell
     $ProgressPreference = 'SilentlyContinue'  
-    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-1809-amd64-images.tar.zst -OutFile /var/lib/rancher/rke2/agent/images/rke2-windows-1809-amd64-images.tar.zst 
+    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.36.1%2Brke2r2/rke2-windows-1809-amd64-images.tar.zst -OutFile /var/lib/rancher/rke2/agent/images/rke2-windows-1809-amd64-images.tar.zst 
     ```
 
 
-    - **Windows Server SAC 2004 (amd64) (OS Build 19041.1110)**
+    - **Windows Server 2022 LTSC (amd64) (OS Build 20348.169)**
 
     ``` powershell
     $ProgressPreference = 'SilentlyContinue'  
-    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-2004-amd64-images.tar.zst -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-2004-amd64-images.tar.zst 
+    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.36.1%2Brke2r2/rke2-windows-ltsc2022-amd64-images.tar.zst -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-ltsc2022-amd64-images.tar.zst 
     ```
-
-    - **Windows Server SAC 20H2 (amd64) (OS Build 19042.1110)**
-
-    ``` powershell
-    $ProgressPreference = 'SilentlyContinue'
-    Invoke-WebRequest https://github.com/rancher/rke2/releases/download/v1.26.10%2Brke2r2/rke2-windows-20H2-amd64-images.tar.zst -OutFile c:/var/lib/rancher/rke2/agent/images/rke2-windows-20H2-amd64-images.tar.zst
-    ```
-
-    - Use `rke2-windows-<BUILD_VERSION>-amd64.tar.gz` or `rke2-windows-<BUILD_VERSION>-amd64.tar.zst`. Zstandard offers better compression ratios and faster decompression speeds compared to pigz.
 
 2. Ensure that the `/var/lib/rancher/rke2/agent/images/` directory exists on the node.
 
