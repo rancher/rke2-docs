@@ -175,7 +175,7 @@ metadata:
 spec:
   repo: https://helm.ngc.nvidia.com/nvidia
   chart: gpu-operator
-  version: v26.3.1
+  version: v26.3.2
   targetNamespace: gpu-operator
   createNamespace: true
   valuesContent: |-
