@@ -99,11 +99,17 @@ spec:
             websecure:
                 hostPort: 8443
         providers:
-            kubernetesIngressNginx:
+            # Check info Version Gate below
+            kubernetesIngressNGINX:
                 enabled: true
                 ingressClass: "rke2-ingress-nginx-migration"
                 controllerClass: "rke2.​cattle.​io/ingress-nginx-migration"
 ```
+:::info Version Gate
+Starting with the RKE2 June releases: v1.36.2+rke2r1, v1.35.6+rke2r1, v1.34.9+rke2r1, v1.33.13+rke2r1, Traefik chart changes the provider name from `kubernetesIngressNginx` to `kubernetesIngressNGINX`
+:::
+
+
 
 #### 4. Restart RKE2
 
@@ -239,11 +245,16 @@ metadata:
 spec:
     valuesContent: |-
         providers:
-            kubernetesIngressNginx:
+            # Check info Version Gate below
+            kubernetesIngressNGINX:
                 enabled: true
                 ingressClass: "rke2-ingress-nginx-migration"
                 controllerClass: "rke2.​cattle.​io/ingress-nginx-migration"
 ```
+
+:::info Version Gate
+Starting with the RKE2 June releases: v1.36.2+rke2r1, v1.35.6+rke2r1, v1.34.9+rke2r1, v1.33.13+rke2r1, Traefik chart changes the provider name from `kubernetesIngressNginx` to `kubernetesIngressNGINX`
+:::
 
 #### 3. Restart RKE2
 Restart the rke2-server service in all CP nodes:
@@ -281,3 +292,9 @@ done
     2 - The ingressClass nginx gets removed automatically when Ingress NGINX is uninstalled in Phase 3.
 
 - Ingress NGINX might take a long time to be removed.
+
+
+
+::: Info
+For more detailed information, check our [Prime Guide for migration](https://support.scc.suse.com/s/kb/Migrating-from-Ingress-NGINX-to-Traefik-in-a-standalone-RKE2-cluster)
+:::
