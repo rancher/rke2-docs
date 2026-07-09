@@ -272,16 +272,16 @@ Each CNI Plugin may require a different configuration for dual-stack:
 Canal automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. Dual-stack is currently not supported in the windows installations of RKE2.
 
 </TabItem>
-<TabItem value="Cilium CNI Plugin" default>
+<TabItem value="Cilium CNI Plugin">
 
 Cilium automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration.
 
 </TabItem>
-<TabItem value="Calico CNI Plugin" default>
+<TabItem value="Calico CNI Plugin">
 
 Calico automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration. When deployed in dual-stack mode, it creates two different ippool resources. Note that when using dual-stack, calico leverages BGP instead of VXLAN encapsulation. Dual-stack and BGP are currently not supported in the windows installations of RKE2.
 </TabItem>
-<TabItem value="Flannel CNI Plugin" default>
+<TabItem value="Flannel CNI Plugin">
 
 Flannel automatically detects the RKE2 configuration for dual-stack and does not need any extra configuration.
 
@@ -317,3 +317,95 @@ spec:
 ## Nodes Without a Hostname
 
 Some cloud providers, such as Linode, will create machines with "localhost" as the hostname and others may not have a hostname set at all. This can cause problems with domain name resolution. You can run RKE2 with the `node-name` parameter and this will pass the node name to resolve this issue.
+
+## Nftables support
+:::warning Experimental
+nftables support in rke2 is considered experimental.
+:::
+
+:::info Version Gate
+nftables support is available as of the July 2026 releases v1.36.3+rke2r1, v1.35.7+rke2r1, v1.34.10+rke2r1.
+:::
+
+**nftables** is a modern replacement for iptables, introduced in Linux 3.13. It consolidates all rule management into a single
+interface, supports atomic batch updates (all rule changes commit together or not at all), and offers improved
+performance for complex rule sets due to better kernel integration and support for set-based matching.
+
+Using nftables is now supported by kube-proxy and most CNIs currently bundled with rke2.
+
+To use nftables with kube-proxy, set the following parameter in `config.yaml`:
+
+```yaml
+kube-proxy-arg:
+  - proxy-mode=nftables
+```
+
+Each CNI needs to be configured through its HelmChartConfig.
+
+<Tabs groupId="CNIplugin" queryString>
+<TabItem value="Canal CNI Plugin" default>
+
+For Canal, set the following HelmChartConfig:
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-canal
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    flannel:
+      enableNFTables: true
+    calico:
+      felixIptablesBackend: nft
+```
+
+</TabItem>
+<TabItem value="Cilium CNI Plugin">
+
+Cilium uses eBPF as its filtering mechanism instead of iptables/nftables so there is nothing to configure.
+
+</TabItem>
+<TabItem value="Calico CNI Plugin">
+
+For Calico, set the following HelmChartConfig:
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-calico-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-calico
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    installation:
+      calicoNetwork:
+        linuxDataplane: Nftables
+```
+
+</TabItem>
+<TabItem value="Flannel CNI Plugin">
+
+For Flannel, set the following HelmChartConfig:
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-flannel-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-flannel
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    flannel:
+      enableNFTables: true
+```
+
+</TabItem>
+</Tabs>
