@@ -360,3 +360,114 @@ spec:
 == Nodes Without a Hostname
 
 Some cloud providers, such as Linode, will create machines with "localhost" as the hostname and others may not have a hostname set at all. This can cause problems with domain name resolution. You can run RKE2 with the `node-name` parameter and this will pass the node name to resolve this issue.
+
+== Nftables support
+
+[CAUTION]
+.Experimental
+====
+,nftables support in rke2 is considered experimental.
+====
+
+[IMPORTANT]
+.Version Gate
+====
+nftables support is available as of the July 2026 releases v1.36.3+rke2r1, v1.35.7+rke2r1, v1.34.10+rke2r1.
+====
+
+*nftables* is a modern replacement for iptables, introduced in Linux 3.13. It consolidates all rule management into a single
+interface, supports atomic batch updates (all rule changes commit together or not at all), and offers improved
+performance for complex rule sets due to better kernel integration and support for set-based matching.
+
+Using nftables is now supported by kube-proxy and most CNIs currently bundled with rke2.
+
+To use nftables with kube-proxy, set the following parameter in `config.yaml`:
+
+[,yaml]
+----
+kube-proxy-arg:
+  - proxy-mode=nftables
+----
+
+Each CNI needs to be configured through its HelmChartConfig.
+
+[tabs,sync-group-id=CNIplugin]
+=====
+Canal CNI Plugin::
++
+--
+
+For Canal, set the following HelmChartConfig:
+
+[,yaml]
+----
+# /var/lib/rancher/rke2/server/manifests/rke2-canal-config.yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-canal
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    flannel:
+      enableNFTables: true
+    calico:
+      felixIptablesBackend: nft
+----
+
+--
+
+Cilium CNI Plugin::
++
+--
+
+Cilium uses eBPF as its filtering mechanism instead of iptables/nftables so there is nothing to configure.
+
+--
+
+Calico CNI Plugin::
++
+--
+
+For Calico, set the following HelmChartConfig:
+
+[,yaml]
+----
+# /var/lib/rancher/rke2/server/manifests/rke2-calico-config.yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-calico
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    installation:
+      calicoNetwork:
+        linuxDataplane: Nftables
+----
+
+--
+
+Flannel CNI Plugin::
++
+--
+
+For Flannel, set the following HelmChartConfig:
+
+[,yaml]
+----
+# /var/lib/rancher/rke2/server/manifests/rke2-flannel-config.yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-flannel
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    flannel:
+      enableNFTables: true
+----
+
+--
+
+=====
