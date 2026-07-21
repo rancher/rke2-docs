@@ -87,12 +87,6 @@ Failure to follow proper procedure when rotating secrets encryption keys can cau
 
 ### Encryption Key Rotation
 
-:::info Version Gate
-Available as of the September 2024 releases: v1.29.9+rke2r1, v1.30.5+rke2r1, v1.31.1+rke2r1
-
-For older releases, see [Encryption Key Rotation Classic](#encryption-key-rotation-classic)
-:::
-
 <Tabs groupId="se">
 <TabItem value="Single-Server" default>
 

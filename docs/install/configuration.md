@@ -85,10 +85,6 @@ node-taint:
 ```
 
 ## Kubelet configuration
-:::info Version Gate
-The drop-in directory for kubelet configuration files or the config file (options 1 and 2 below) are only available in v1.32 and above. For lower minors, you should use the kubelet args directly (option number 3 below)
-:::
-
 Following on from upstream behavior, kubelet configuration can be changed in different ways with a specific [order of precedence](https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/#kubelet-configuration-merging-order). 
 
 RKE2 uses a default kubelet configuration which is stored under `/var/lib/rancher/rke2/agent/etc/kubelet.conf.d/00-rke2-defaults.conf`. If you would like to change the default configuration parameters, there are three ways to do so:
