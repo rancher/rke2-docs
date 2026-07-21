@@ -52,7 +52,7 @@ The following options must be set to the same value on all servers in the cluste
 ### Helm
 | Flag | Description |
 | --- | --- |
-| helm-job-image | Default image to use for helm jobs |
+| helm-controller-arg | Customized flag for helm-controller process |
 ### Cluster
 | Flag | Description | Environment Variable |
 | --- | --- | --- |
