@@ -128,7 +128,7 @@ The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
 
 <TabItem value="v26.3.x" default>
 
-There are two installation options available. 
+There are two installation options available.
 
 If drivers and libraries are pre-installed or you are using a [supported operating system by nvidia](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms), please use the following manifest 
 
@@ -141,12 +141,14 @@ metadata:
 spec:
   repo: https://helm.ngc.nvidia.com/nvidia
   chart: gpu-operator
-  version: v26.3.1
+  version: v26.3.2
   targetNamespace: gpu-operator
   createNamespace: true
   valuesContent: |-
-    cdi:
-      nriPluginEnabled: true
+    toolkit:
+      env:
+      - name: CONTAINERD_SOCKET
+        value: /run/k3s/containerd/containerd.sock
 ```
 
 If your operating system vendor supplies a compatible driver image, you can use the `driver` value field to point to it. For example, in SLES 16.0, you can use the following manifest:
@@ -164,20 +166,45 @@ spec:
   targetNamespace: gpu-operator
   createNamespace: true
   valuesContent: |-
-    cdi:
-      nriPluginEnabled: true
+    toolkit:
+      env:
+      - name: CONTAINERD_SOCKET
+        value: /run/k3s/containerd/containerd.sock
     driver:
       repository: registry.suse.com/third-party/nvidia
       usePrecompiled: true
       version: 595 # This depends on the nvidia driver that works with your GPU architecture
 ```
+</TabItem>
 
-:::info
-NVIDIA GPU Operator v26.3.x recommends using [Node Resource Interface (NRI) specification](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/cdi.html#about-the-node-resource-interface-nri-plugin) and that simplifies operations: we don't need to pass any extra envvar and it does not require changing containerd configuration. It requires containerd 2.1
+<TabItem value="v26.3.x with NRI">
+
+[Node Resource Interface (NRI) specification](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/cdi.html#about-the-node-resource-interface-nri-plugin) is a pluggable extension mechanism built into container runtimes like containerd and CRI-O that allows custom plugins to intercept container lifecycle events on a node. It is considered the future integration mechanism for GPUs.
+
+:::warning
+NVIDIA considers NRI as experimental
 :::
 
+If you want to try it out, please use the following manifest:
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.3.1
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    cdi:
+      nriPluginEnabled: true
+```
+
 :::info Version Gate
-Containerd 2.1 is available as of September 2025 releases: v1.31.13+rke2r1, v1.32.9+rke2r1, v1.33.5+rke2r1, v1.34.1+rke2r1
+NRI requires containerd 2.1. Containerd 2.1 is available as of September 2025 releases: v1.31.13+rke2r1, v1.32.9+rke2r1, v1.33.5+rke2r1, v1.34.1+rke2r1
 :::
 
 </TabItem>
