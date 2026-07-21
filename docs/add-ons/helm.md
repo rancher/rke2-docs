@@ -10,6 +10,24 @@ RKE2 does not require any special configuration to use with Helm command-line to
 
 The [HelmChart Custom Resource](https://github.com/k3s-io/helm-controller#helm-controller) captures most of the options you would normally pass to the `helm` command-line tool.
 
+RKE2 also supports passing arguments directly to the `helm-controller` process with `helm-controller-arg`.
+This is useful when you want to tune controller behavior globally.
+
+For example, to customize the CPU and memory resources allocated to Helm job pods:
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+helm-controller-arg:
+  - 'job-resources={"requests": {"cpu": "0.2", "memory": "64M"}, "limits": {"cpu": "1", "memory": "256M"}}'
+```
+
+You can specify `helm-controller-arg` multiple times in CLI form, or as a YAML list in the configuration file.
+
+:::info Version Gate
+The  `helm-controller-arg` flag is available since the RKE2 July 2026 releases: v1.36.3+rke2r1, v1.35.7+rke2r1, v1.34.10+rke2r1, v1.33.13+rke2r2
+:::
+
+
 ### HelmChart Field Definitions
 
 :::note
