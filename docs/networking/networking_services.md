@@ -136,10 +136,6 @@ For more information, refer to the official [ingress-nginx Helm configuration pa
 </TabItem>
 <TabItem value="traefik" default>
 
-:::info Version Gate
-Traefik support is available as of August 2024 releases: v1.28.12+rke2r1, v1.29.7+rke2r1, v1.30.3+rke2r1
-:::
-
 [traefik](https://doc.traefik.io/traefik/) is a modern HTTP reverse proxy and load balancer made to deploy microservices with ease. It simplifies networking complexity while designing, deploying, and running applications.
 
 To use traefik, start each server with the `ingress-controller: traefik` option in your configuration file.

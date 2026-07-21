@@ -136,10 +136,6 @@ Starting in versions v1.34.0+rke2r1, v1.33.4+rke2r1, v1.32.8+rke2r1, v1.31.12+rk
 
 ### S3 Configuration Secret Support
 
-:::info Version Gate
-S3 Configuration Secret support is available as of the August 2024 releases: v1.30.4+rke2r1, v1.29.8+rke2r1, v1.28.13+rke2r1
-:::
-
 RKE2 supports reading etcd S3 snapshot configuration from a Kubernetes Secret.
 This may be preferred to hardcoding credentials in RKE2 CLI flags or config files for security reasons, or if credentials need to be rotated without restarting RKE2.
 To pass S3 snapshot configuration via a Secret, start RKE2 with `--etcd-s3` and `--etcd-s3-config-secret=<SECRET-NAME>`.
