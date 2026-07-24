@@ -70,6 +70,18 @@ You can extend the RKE2 base template instead of copy-pasting the complete stock
 For best results, do NOT simply copy a prerendered `config.toml` into the template and make your desired changes. Use the base template, or provide a full template based on the defaults linked above.
 :::
 
+## Configuring DNS Resolution
+
+### Nameserver Viability Checks
+
+On startup, each node checks the files at `/etc/resolv.conf` and `/run/systemd/resolve/resolv.conf` for loopback, multicast, or link-local nameservers.
+If no such entries are found, the Kubelet is configured to use the file as its resolver configuration file, via the `--resolv-conf` flag.
+RKE2 performs these checks because nameserver addresses of these types would not function properly within pods that [inherit name resolution configuration](https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy) from their node.
+If no usable resolv.conf is found, RKE2 will print a warning message to the logs, and generate a stub resolver configuration that uses `8.8.8.8` and `2001:4860:4860::8888` as the nameservers.
+
+If you want to provide RKE2 with an alternative resolver configuration without modifying the system configuration files, you may use the `--resolv-conf` option to specify the path to a suitable file.
+Manually specified resolver configuration files are not subject to viability checks.
+
 ## Configuring an HTTP proxy
 
 If you are running RKE2 in an environment, which only has external connectivity through an HTTP proxy, you can configure your proxy settings on the RKE2 systemd service. These proxy settings will then be used in RKE2 and passed down to the embedded containerd and kubelet, as well as the control-plane, etcd, and kube-proxy static pods.
