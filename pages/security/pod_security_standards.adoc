@@ -2,12 +2,6 @@
 
 This document describes how RKE2 configures `PodSecurityStandards` and `NetworkPolicies` in order to be secure-by-default while also providing operators with maximum configuration flexibility.
 
-[IMPORTANT]
-.Version Gate
-====
-This document applies to RKE2 v1.25 and newer, please refer to the xref:./pod_security_policies.adoc[Pod Security Policies Documentation] for the default policy information for RKE2 v1.24 and older.
-====
-
 == Pod Security Standards
 
 Starting from Kubernetes version v1.25.0, Pod Security Policies (PSP) are totally removed from Kubernetes, and replaced by https://kubernetes.io/docs/concepts/security/pod-security-admission/[Pod Security Admission (PSA)]. A default Pod Security Admission config file will be added to the cluster upon startup as follows:

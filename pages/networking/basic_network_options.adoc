@@ -444,7 +444,15 @@ spec:
     installation:
       calicoNetwork:
         linuxDataplane: Nftables
+        # Set to Disabled if you don't need hostPorts in your cluster.
+        #hostPorts: Disabled
 ----
+
+[NOTE]
+====
+Calico relies on the https://www.cni.dev/plugins/current/meta/portmap/[portmap] plugin to implement Kubernetes `hostPorts` which https://github.com/containernetworking/plugins/issues/1280[always tries] to use `iptables` even when it is not available on the nodes. To remedy this, you can either install `iptables` on your nodes or disable `hostPorts` entirely as shown above.
+
+====
 
 --
 
