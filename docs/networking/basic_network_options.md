@@ -15,6 +15,10 @@ Use the `cni` [configuration file key](../install/configuration.md) to select th
 cni: canal
 ```
 
+:::warning
+RKE2 does not support changing the primary CNI Plugin, CNI backend, or cluster/service CIDRs on a running cluster. Choose the CNI (and any backend-specific HelmChartConfig) before first start, and place that config in the manifests directory so the chart is applied correctly on install. Switching later is untested and may leave stale interfaces or routes behind; rebuild the cluster if you need a different CNI.
+:::
+
 Bundled CNI Plugins are provided as AddOns that deploy a HelmChart resource, as described in the [Helm Integration](../add-ons/helm.md) documentation. CNI Plugin charts are named `rke2-<CNI-PLUGIN-NAME>` and can be found in the `kube-system` namespace.
 
 To customize the Helm chart values for a bundled CNI Plugin chart, you must create a HelmChartConfig resource that matches the name and namespace of its corresponding HelmChart. See the tabs below for examples of customizing the chart values for each of the bundled CNI Plugins.
