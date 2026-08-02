@@ -105,6 +105,34 @@ RKE2 supports replicating etcd snapshots to and restoring etcd snapshots from S3
 | `--etcd-s3-timeout` | S3 timeout (default: `5m0s`) |
 | `--etcd-s3-config-secret` | Name of secret in the kube-system namespace used to configure S3, if etcd-s3 is enabled and no other etcd-s3 options are set |
 
+### S3 IAM / bucket policy
+
+When using AWS S3 (or an S3-compatible store with IAM-style policies), the credentials configured for RKE2 need permission to list the bucket and to read, write, and delete snapshot objects. A minimal bucket policy looks like:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "RKE2EtcdSnapshots",
+      "Effect": "Allow",
+      "Action": [
+        "s3:ListBucket",
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": [
+        "arn:aws:s3:::YOUR_BUCKET_NAME",
+        "arn:aws:s3:::YOUR_BUCKET_NAME/*"
+      ]
+    }
+  ]
+}
+```
+
+Replace `YOUR_BUCKET_NAME` with the bucket passed to `--etcd-s3-bucket`. If you use `--etcd-s3-folder`, objects are written under that prefix, but `ListBucket` still applies to the bucket itself. For non-AWS endpoints the action names may differ; grant the equivalent list/get/put/delete permissions for your provider.
+
 For example, this is how the creation and deletion of on-demand etcd snapshots in S3 would work:
 
 ```shell-session
