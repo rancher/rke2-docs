@@ -210,6 +210,23 @@ cloud-provider-config: "/etc/rancher/rke2/cloud.conf"
 
 5. Validate successful installation by confirming the existence of AWS metadata on cluster node labels with `kubectl get nodes --show-labels`
 
+## Passing Extra Arguments to etcd
+
+Use `etcd-arg` (CLI flag `--etcd-arg`, env `RKE2_ETCD_ARG`) to pass additional flags through to the embedded etcd process. It works like other RKE2 flags: set it on the CLI, as an environment variable, or as a list in the config file. See the [server configuration reference](reference/server_config.md#flags) for the full flag list.
+
+```yaml
+# /etc/rancher/rke2/config.yaml
+etcd-arg:
+  - "heartbeat-interval=500"
+  - "election-timeout=5000"
+```
+
+```sh
+rke2 server --etcd-arg=heartbeat-interval=500 --etcd-arg=election-timeout=5000
+```
+
+Do not change etcd's data directory or WAL directory via extra args; RKE2 manages the data path under `/var/lib/rancher/rke2/server/db`. Pointing etcd elsewhere is unsupported and can break backup, restore, and cluster-reset flows.
+
 ## Control Plane Component Resource Requests/Limits
 
 The following options are available under the `server` sub-command for RKE2. The options allow for specifying CPU requests and limits for the control plane components within RKE2.
