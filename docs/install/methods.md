@@ -90,17 +90,13 @@ gpgkey=https://rpm.rancher.io/public.key
 EOF
 ```
 
-After the repository is configured, you can run either of the following commands:
+After the repository is configured, install the package:
 
 ```sh
 zypper --gpg-auto-import-keys install -y rke2-server
 ```
 
-or
-
-```sh
-zypper --gpg-auto-import-keys install -y rke2-agent
-```
+Replace `rke2-server` with `rke2-agent` on agent nodes.
 
 </TabItem>
 <TabItem value="SLE Micro">
