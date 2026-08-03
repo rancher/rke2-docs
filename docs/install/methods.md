@@ -58,7 +58,7 @@ Files are installed with the prefix of `/usr` rather than `/usr/local`.
 
 #### Repositories
 
-Signed RPMs are published for RKE2 within the `rpm-testing.rancher.io` and `rpm.rancher.io` RPM repositories. If you run the https://get.rke2.io script on nodes supporting RPMs, it will use these RPM repos by default. But you can also install them yourself.
+Signed RPMs are published for RKE2 within the `rpm-testing.rancher.io` and `rpm.rancher.io` RPM repositories. If you run the https://get.rke2.io script on nodes supporting RPMs, it will use these RPM repos by default, depending on the system: SLES 16 and CentOS 8, 9, and 10 use RPM by default, while SLE Micro and MicroOS default to the tarball method and require passing `INSTALL_RKE2_METHOD=rpm` to the script to install via RPM. But you can also install them yourself.
 
 The RPMs provide `systemd` units for managing `rke2`, but will need to be configured via configuration file before starting the services for the first time.
 
@@ -102,10 +102,6 @@ or
 zypper --gpg-auto-import-keys install -y rke2-agent
 ```
 
-:::info
-On SLES 16 server the install script already selects the RPM method by default.
-:::
-
 </TabItem>
 <TabItem value="SLE Micro">
 
@@ -141,10 +137,6 @@ reboot
 
 Replace `rke2-server` with `rke2-agent` on agent nodes.
 
-:::info
-On SUSE based systems the install script defaults to the tarball method to preserve compatibility with existing installations. To install via RPM, pass `INSTALL_RKE2_METHOD=rpm` to the script.
-:::
-
 </TabItem>
 <TabItem value="MicroOS">
 
@@ -179,10 +171,6 @@ reboot
 ```
 
 Replace `rke2-server` with `rke2-agent` on agent nodes.
-
-:::info
-On SUSE based systems the install script defaults to the tarball method to preserve compatibility with existing installations. To install via RPM, pass `INSTALL_RKE2_METHOD=rpm` to the script.
-:::
 
 </TabItem>
 <TabItem value="Enterprise Linux 8/9/10">
