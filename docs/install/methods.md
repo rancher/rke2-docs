@@ -58,7 +58,7 @@ Files are installed with the prefix of `/usr` rather than `/usr/local`.
 
 #### Repositories
 
-Signed RPMs are published for RKE2 within the `rpm-testing.rancher.io` and `rpm.rancher.io` RPM repositories. If you run the https://get.rke2.io script on nodes supporting RPMs, it will use these RPM repos by default, depending on the system: SLES 16 and CentOS 8, 9, and 10 use RPM by default, while SLE Micro and MicroOS default to the tarball method and require passing `INSTALL_RKE2_METHOD=rpm` to the script to install via RPM. But you can also install them yourself.
+RKE2 provides signed RPMs in the `rpm.rancher.io` and `rpm-testing.rancher.io` repositories, which you can install manually or via the https://get.rke2.io/ script. The script automatically uses RPMs on SLES 16 and CentOS 8, 9, and 10. However, SLE Micro and MicroOS default to a tarball installation; to use RPMs on those systems, you must run the script with the `INSTALL_RKE2_METHOD=rpm` flag.
 
 The RPMs provide `systemd` units for managing `rke2`, but will need to be configured via configuration file before starting the services for the first time.
 
@@ -67,7 +67,7 @@ Select your distribution below for the matching repository definition and instal
 <Tabs groupId="rpm-distro" queryString>
 <TabItem value="SLES 16" default>
 
-SUSE Linux Enterprise Server uses the `slemicro` repository:
+SUSE Linux Enterprise Server 16 uses the `slemicro` repository:
 
 ```bash
 export RKE2_MINOR=36
