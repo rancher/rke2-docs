@@ -50,22 +50,131 @@ To configure the system any further, you'll want to reference either the [server
 
 ## RPM
 
-To start the RPM install process, you need to get the installation script which is covered above. The script will check your system for `rpm`, `yum`, or `dnf` and if any of those exist, it determines that the system is Redhat based and starts the RPM install process.
+To start the RPM install process, you need to get the installation script which is covered above. The script will check your system for `zypper` and if it exists, it determines that the system is SUSE based and starts the RPM install process, writing the repository to `/etc/zypp/repos.d` and going through `transactional-update` when the root filesystem is immutable.
+
+On Red Hat based systems, the script will check your system for `rpm`, `yum`, or `dnf` and if any of those exist, it determines that the system is Redhat based and starts the RPM install process from `/etc/yum.repos.d`.
 
 Files are installed with the prefix of `/usr` rather than `/usr/local`.
 
 #### Repositories
 
-Signed RPMs are published for RKE2 within the `rpm-testing.rancher.io` and `rpm.rancher.io` RPM repositories. If you run the https://get.rke2.io script on nodes supporting RPMs, it will use these RPM repos by default. But you can also install them yourself.
+RKE2 provides signed RPMs in the `rpm.rancher.io` and `rpm-testing.rancher.io` repositories, which you can install manually or via the https://get.rke2.io/ script. The script automatically uses RPMs on SLES 16 and CentOS 8, 9, and 10. However, SLE Micro and MicroOS default to a tarball installation; to use RPMs on those systems, you must run the script with the `INSTALL_RKE2_METHOD=rpm` flag.
 
 The RPMs provide `systemd` units for managing `rke2`, but will need to be configured via configuration file before starting the services for the first time.
 
-#### Enterprise Linux 8/9/10
+Select your distribution below for the matching repository definition and install commands.
+
+<Tabs groupId="rpm-distro" queryString>
+<TabItem value="SLES 16" default>
+
+SUSE Linux Enterprise Server 16 uses the `slemicro` repository:
+
+```bash
+export RKE2_MINOR=36
+cat << EOF > /etc/zypp/repos.d/rancher-rke2-1-${RKE2_MINOR}-latest.repo
+[rancher-rke2-common-latest]
+name=Rancher RKE2 Common Latest
+baseurl=https://rpm.rancher.io/rke2/latest/common/slemicro/noarch
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://rpm.rancher.io/public.key
+
+[rancher-rke2-1-${RKE2_MINOR}-latest]
+name=Rancher RKE2 1.${RKE2_MINOR} Latest
+baseurl=https://rpm.rancher.io/rke2/latest/1.${RKE2_MINOR}/slemicro/x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://rpm.rancher.io/public.key
+EOF
+```
+
+After the repository is configured, install the package:
+
+```sh
+zypper --gpg-auto-import-keys install -y rke2-server
+```
+
+Replace `rke2-server` with `rke2-agent` on agent nodes.
+
+</TabItem>
+<TabItem value="SLE Micro">
+
+SLE Micro uses the `slemicro` repository:
+
+```bash
+export RKE2_MINOR=36
+cat << EOF > /etc/zypp/repos.d/rancher-rke2-1-${RKE2_MINOR}-latest.repo
+[rancher-rke2-common-latest]
+name=Rancher RKE2 Common Latest
+baseurl=https://rpm.rancher.io/rke2/latest/common/slemicro/noarch
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://rpm.rancher.io/public.key
+
+[rancher-rke2-1-${RKE2_MINOR}-latest]
+name=Rancher RKE2 1.${RKE2_MINOR} Latest
+baseurl=https://rpm.rancher.io/rke2/latest/1.${RKE2_MINOR}/slemicro/x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://rpm.rancher.io/public.key
+EOF
+```
+
+SLE Micro is an immutable distribution, so the root filesystem is read-only and the install must go through `transactional-update`, requiring a reboot to take effect:
+
+```sh
+transactional-update --no-selfupdate -d run zypper --gpg-auto-import-keys install -y rke2-server
+reboot
+```
+
+Replace `rke2-server` with `rke2-agent` on agent nodes.
+
+</TabItem>
+<TabItem value="MicroOS">
+
+MicroOS uses the `microos` repository:
+
+```bash
+export RKE2_MINOR=36
+cat << EOF > /etc/zypp/repos.d/rancher-rke2-1-${RKE2_MINOR}-latest.repo
+[rancher-rke2-common-latest]
+name=Rancher RKE2 Common Latest
+baseurl=https://rpm.rancher.io/rke2/latest/common/microos/noarch
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://rpm.rancher.io/public.key
+
+[rancher-rke2-1-${RKE2_MINOR}-latest]
+name=Rancher RKE2 1.${RKE2_MINOR} Latest
+baseurl=https://rpm.rancher.io/rke2/latest/1.${RKE2_MINOR}/microos/x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://rpm.rancher.io/public.key
+EOF
+```
+
+MicroOS is an immutable distribution, so the root filesystem is read-only and the install must go through `transactional-update`, requiring a reboot to take effect:
+
+```sh
+transactional-update --no-selfupdate -d run zypper --gpg-auto-import-keys install -y rke2-server
+reboot
+```
+
+Replace `rke2-server` with `rke2-agent` on agent nodes.
+
+</TabItem>
+<TabItem value="Enterprise Linux 8/9/10">
 
 In order to use the RPM repository, on a CentOS or RHEL system, run the following bash snippet:
 
 ```bash
-export RKE2_MINOR=33
+export RKE2_MINOR=36
 export LINUX_MAJOR=8 # or 9 or 10 etc
 cat << EOF > /etc/yum.repos.d/rancher-rke2-1-${RKE2_MINOR}-latest.repo
 [rancher-rke2-common-latest]
@@ -86,8 +195,6 @@ gpgkey=https://rpm.rancher.io/public.key
 EOF
 ```
 
-#### Installation
-
 After the repository is configured, you can run either of the following commands:
 
 ```sh
@@ -99,6 +206,9 @@ or
 ```sh
 yum -y install rke2-agent
 ```
+
+</TabItem>
+</Tabs>
 
 The RPM will install a corresponding `rke2-server.service` or `rke2-agent.service` systemd unit that can be invoked like: `systemctl start rke2-server`. Make sure that you configure `rke2` before you start it, by following the `Configuration File` instructions below.
 
