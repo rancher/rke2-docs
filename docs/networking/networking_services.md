@@ -206,3 +206,21 @@ When looking at the K3s documentation, use the label `svccontroller.rke2.cattle.
 :::
 
 To enable serviceLB, use the flag `--enable-servicelb` when deploying RKE2.
+
+## Deploying an External Cloud Controller Manager
+
+RKE2 ships an embedded Cloud Controller Manager (CCM) that:
+
+- Hosts the [ServiceLB](#service-load-balancer) LoadBalancer controller (when enabled with `--enable-servicelb`).
+- Clears the `node.cloudprovider.kubernetes.io/uninitialized` taint.
+- Sets node address fields from flags such as `--node-ip` and `--node-external-ip`.
+
+To run a cloud provider's own CCM instead (AWS, Azure, GCP, OpenStack, and so on):
+
+1. Start every RKE2 server with `--disable-cloud-controller` so the embedded CCM is not scheduled.
+2. Deploy the external CCM before nodes are expected to become fully schedulable. Prefer an RKE2 [`HelmChart`](../add-ons/helm.md) with `spec.bootstrap: true` so the chart is applied early enough in cluster bootstrap (the same pattern used for other bootstrap-critical components).
+3. Configure the CCM for your cloud according to the provider's documentation. Node addresses and provider IDs then come from the cloud instance metadata APIs rather than the RKE2 flag values.
+
+:::note
+If you disable the built-in CCM without deploying and correctly configuring an external substitute, nodes can remain tainted with `node.cloudprovider.kubernetes.io/uninitialized` and stay unschedulable. Do not set kubelet `cloud-provider=external` unless an external CCM is actually running and able to clear that taint.
+:::
