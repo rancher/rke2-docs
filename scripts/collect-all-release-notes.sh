@@ -57,19 +57,20 @@ function process_cni_table {
 
 function convert_warning_blockquotes() {
     local file=$1
-    perl -i -p0e 's#^> \[!WARNING\]\r?\n((?:^>.*\r?\n?)*)#
-        do {
-            my $body = $1;
-            $body =~ s/^> ?//mg;
-            $body =~ s/\r//g;
-            $body =~ s/^\s+|\s+$//g;
+    dos2unix -q ${file}
+    perl -i -p0e '
+        if(m/^(.*)> \[!WARNING\]\R((?:^>\s?.*?$))^(.*)/gms) {
+            my $pre = $1;
+            my $body = $2;
+            my $post = $3;
             my $title = "Warning";
-            if ($body =~ s/^\*\*(.+?)\*\*\r?\n?//) {
+            $body =~ s/^> ?//mg;
+            $body =~ s/^\s+|\s+$//g;
+            if ($body =~ s/\s?^\*\*(.+?)\*\*\R?//) {
                 $title = $1;
             }
-            ":::warning $title\n$body\n:::\n";
-        }
-    #gems' "${file}"
+            $_ = "$pre\n:::warning $title\n$body\n:::\n$post";
+        }' "${file}"
 }
 
 function process_minor() {
@@ -200,7 +201,6 @@ function process_minor() {
     fi
 
     # gh release produces crlf line endings, convert to lf
-    dos2unix "${file}"
     rm -f "${new_table_rows}" "${new_release_notes}"
     echo "Collected release notes for ${product} ${minor}"
 }
