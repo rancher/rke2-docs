@@ -197,6 +197,8 @@ If you need support for experimental Gateway API resources, you must install the
 :::
 
 
+For more information, refer to [Standalone Gateway API CRD Management](https://github.com/rancher/rke2/blob/master/docs/adrs/011-bundle-gatewayAPI.md#standalone-gateway-api-crd-management)
+
 ## Service Load Balancer
 
 Kubernetes Services can be of type LoadBalancer but it requires an external load balancer controller to implement things correctly and for example, provide the external-ip. RKE2 can optionally deploy a load balancer controller known as [ServiceLB](https://github.com/k3s-io/klipper-lb) that uses available host ports. For more information, please read the following [link](https://docs.k3s.io/networking/networking-services#service-load-balancer).
