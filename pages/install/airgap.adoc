@@ -222,12 +222,17 @@ Once configured, confirm the default route is present with `ip route show defaul
 
 ==== SELinux RPM
 
-If running on an air-gapped node with SELinux enabled, you must manually install the rke2-selinux RPM before installing RKE2. This RPM includes the necessary SELinux policies for RKE2 to run properly. See our https://docs.rke2.io/install/methods#rpm[RPM Documentation] to learn how to obtain the rpm. The rke2-selinux RPM installation requires the following dependencies to be available in the OS: +
-    * container-selinux
-    * iptables-nft
-    * libnftnl
-    * policycoreutils
-    * selinux-policy
+If running on an air-gapped node with SELinux enabled, you must manually install the rke2-selinux RPM before installing RKE2. This RPM includes the necessary SELinux policies for RKE2 to run properly.
+
+The https://docs.rke2.io/install/methods#rpm[RPM install method] assumes network access to the package repository. On an air-gapped host you must obtain the RPM (and its dependencies) on a machine that can reach the internet, copy the packages to the offline node, then install them with `rpm`/`dnf`/`yum` from the local files. The rke2-selinux RPM requires these OS packages to already be available offline:
+
+....
+* container-selinux
+* iptables-nft
+* libnftnl
+* policycoreutils
+* selinux-policy
+....
 
 ======
 
@@ -261,7 +266,9 @@ Script install::
 
 `install.sh` may be used in an offline mode by setting the `INSTALL_RKE2_ARTIFACT_PATH` variable to a path containing pre-downloaded artifacts. This will run though a normal install, including creating systemd units.
 
-. Download the install script, rke2, rke2-images, and sha256sum archives from the release into a directory, as in the example below:
+Run the download steps on a machine with internet access, then copy the whole directory to each air-gapped node before running `install.sh` there. Do not run the `curl` commands on the offline hosts.
+
+. On a networked machine, download the install script, rke2 binary tarball, images archive, and sha256sum into a directory:
 +
 [,bash]
 ----
@@ -272,7 +279,8 @@ curl -OLs https://github.com/rancher/rke2/releases/download/v1.33.1%2Brke2r1/sha
 curl -sfL https://get.rke2.io --output install.sh
 ----
 
-. Next, run install.sh using the directory, as in the example below:
+. Copy `/root/rke2-artifacts` (or your chosen directory) to each air-gapped node, for example with `scp`, USB media, or your approved offline transfer path. Keep the same relative file names.
+. On each air-gapped node, run install.sh against that directory:
 +
 [,bash]
 ----
