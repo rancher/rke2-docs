@@ -4,6 +4,22 @@ title: Server Configuration Reference
 
 This is a reference to all parameters that can be used to configure the rke2 server. Note that while this is a reference to the command line arguments, the best way to configure RKE2 is using the [configuration file](../install/configuration.md#configuration-file).
 
+### Configuration value types
+
+Parameters can be set via CLI flags, the [configuration file](../install/configuration.md#configuration-file), or environment variables (when listed in the tables below).
+
+**Boolean options** have a default of `true` or `false` (for example `debug` / `RKE2_DEBUG`):
+
+| Method | Acceptable values | Example |
+| --- | --- | --- |
+| Config file | `true` or `false` | `debug: true` |
+| CLI | Flag presence enables the option; optional explicit value | `--debug`, `--debug=true`, or `--debug=false` |
+| Environment variable | Boolean strings accepted by Go's `strconv.ParseBool`: `1`, `t`, `T`, `TRUE`, `true`, `True`, `0`, `f`, `F`, `FALSE`, `false`, `False` | `RKE2_DEBUG=true` |
+
+**Enumerated options** list their acceptable values in the Description column (wording such as "one of", "valid items", or "valid values"). Examples include `cni`, `egress-selector-mode`, `ingress-controller`, `profile`, and `secrets-encryption-provider`.
+
+**Other string and list options** accept free-form values as described. List options may be repeated on the CLI or written as YAML lists in the config file (see the [configuration file](../install/configuration.md#configuration-file) docs).
+
 ### Critical Configuration Values
 
 The following options must be set to the same value on all servers in the cluster. Failure to do so will cause new servers to fail to join the cluster.
@@ -22,7 +38,7 @@ The following options must be set to the same value on all servers in the cluste
 | Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
 | config | Path to config file | /etc/rancher/rke2/config.yaml | RKE2_CONFIG_FILE |
-| debug | Turn on debug logs  | false | RKE2_DEBUG |
+| debug | Turn on debug logs (boolean: `true` or `false`)  | false | RKE2_DEBUG |
 | data-dir | Folder to hold state  | "/var/lib/rancher/rke2" | RKE2_DATA_DIR |
 ### Listener
 | Flag | Description | Default |
