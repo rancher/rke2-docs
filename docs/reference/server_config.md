@@ -109,7 +109,7 @@ The following options must be set to the same value on all servers in the cluste
 ### Components
 | Flag | Description | Default | Environment Variable |
 | --- | --- | --- | --- |
-| disable | Do not deploy packaged components and delete any deployed components (valid items: rke2-coredns, rke2-metrics-server, rke2-snapshot-controller, rke2-snapshot-controller-crd, rke2-snapshot-validation-webhook) |  |  |
+| disable | Do not deploy packaged components and delete any deployed components (valid items: rke2-coredns, rke2-metrics-server, rke2-snapshot-controller, rke2-snapshot-controller-crd, rke2-snapshot-validation-webhook, rke2-security-responder, rke2-gateway-api-crd) |  |  |
 | disable-scheduler | Disable Kubernetes default scheduler  | false |  |
 | disable-cloud-controller | Disable rke2 default cloud controller manager  | false |  |
 | disable-kube-proxy | Disable running kube-proxy  | false |  |
