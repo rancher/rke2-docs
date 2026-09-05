@@ -11,7 +11,7 @@ Kubernetes, by default, automatically pulls images when a Pod requires them if t
 
 ## Pre-import images
 :::info Version Gate
-The pre-importing of images while K3s is running feature is available as of January 2025 releases: v1.32.0+rke2r1, v1.31.5+rke2r1, v1.30.9+rke2r1, v1.30.13+rke2r1
+The pre-importing of images while RKE2 is running feature is available as of January 2025 releases: v1.32.0+rke2r1, v1.31.5+rke2r1, v1.30.9+rke2r1, v1.30.13+rke2r1
 Before that, RKE2 pre-imported the images only when booting.
 :::
 
@@ -22,7 +22,7 @@ RKE2 includes two mechanisms to pre-import images into the containerd image stor
 <Tabs groupId="import-images" queryString>
 <TabItem value="Online image importing" default>
 
-Users can trigger a pull of images into the containerd image store by placing a text file containing the image names, one per line, in the `/var/lib/rancher/k3s/agent/images` directory. The text file can be placed before RKE2 is started, or created/modified while RKE2 is running. RKE2 will sequentially pull the images via the CRI API, optionally using the [registries.yaml](../install/private_registry.md) configuration.
+Users can trigger a pull of images into the containerd image store by placing a text file containing the image names, one per line, in the `/var/lib/rancher/rke2/agent/images` directory. The text file can be placed before RKE2 is started, or created/modified while RKE2 is running. RKE2 will sequentially pull the images via the CRI API, optionally using the [registries.yaml](../install/private_registry.md) configuration.
 
 For example:
 
