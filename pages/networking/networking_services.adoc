@@ -62,6 +62,125 @@ kubelet-arg:
     - "cluster-dns=169.254.20.10"
 ----
 
+==== Customizing the NodeLocal DNS Corefile
+
+[IMPORTANT]
+.Version Gate
+====
+This feature is available starting from the September 2026 releases: v1.34.12+rke2r1, v1.35.9+rke2r1, v1.36.5+rke2r1 and v1.37.1+rke2r1.
+====
+
+[CAUTION]
+====
+Using this feature can break DNS resolution in your rke2 cluster. Please be aware that we only test and support the default Corefile. If you customize it, you are responsible for making sure that the resulting configuration is correct.
+====
+
+The Corefile used by the NodeLocal DNS cache is generated from four zones: `cluster` (your cluster domain), `reverse` (`in-addr.arpa`), `ipv6Reverse` (`ip6.arpa`) and `catchAll` (`.`). You can customize it at three increasing levels of control through the `nodelocal.corefile` values.
+
+[NOTE]
+====
+The `bind` and `health` directives are always managed by RKE2 based on the `use_cilium_lrp` setting and cannot be overridden. The `prometheus :9253`, `errors`, `reload` and `loop` directives are also fixed. When using a full `override` together with `use_cilium_lrp: true`, you are responsible for making the `bind`/`health` directives match the DaemonSet networking mode.
+====
+
+[tabs]
+=====
+level1::
++
+--
+
+Add extra CoreDNS plugins to one or more zones. Plugins are appended after the `forward` directive and before `prometheus`. Each entry requires a `name` and accepts optional `parameters` and `configBlock` fields.
+
+[,yaml]
+----
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-coredns
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    nodelocal:
+      enabled: true
+      corefile:
+        customPlugins:
+          cluster:
+            - name: log
+            - name: rewrite
+              configBlock: |
+                name example.com internal.local
+          catchAll:
+            - name: log
+----
+
+--
+
+level2::
++
+--
+
+Replace the `cache` or `forward` plugin configuration for a given zone. Each entry accepts `parameters` (inline) and/or `configBlock` (braced block).
+
+[,yaml]
+----
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-coredns
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    nodelocal:
+      enabled: true
+      corefile:
+        pluginOverrides:
+          cache:
+            cluster:
+              configBlock: |
+                success 9984 60
+                denial 9984 20
+                prefetch 10 60s 30%
+                serve_stale 5s
+                size 10000
+            reverse:
+              parameters: "60"
+          forward:
+            catchAll:
+              parameters: ". 8.8.8.8 8.8.4.4"
+----
+
+--
+
+level3::
++
+--
+
+Provide a complete Corefile verbatim. When `override` is set, all other `corefile` fields are ignored and you own the full config, including `bind`/`health` correctness.
+
+[,yaml]
+----
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-coredns
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    nodelocal:
+      enabled: true
+      corefile:
+        override: |
+          cluster.local:53 {
+            errors
+            cache 30
+            bind 169.254.20.10
+            forward . 10.43.0.10
+          }
+----
+
+--
+
+=====
+
 === NodeLocal DNS Cache with Cilium in kube-proxy replacement mode
 
 This feature is available starting from versions v1.28.13+rke2r1, v1.29.8+rke2r1 and v1.30.4+rke2r1.
@@ -113,12 +232,18 @@ ingress-nginx::
 [CAUTION]
 .ingress-nginx EOL
 ====
-,https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/[ingress-nginx becomes EOL] in March 2026. RKE2 will still include ingress-nginx in v1.36 but with a deprecated status. No new images with fixes should be expected after March 2026. Please switch to Traefik or become a https://www.suse.com/products/rancher/[Rancher Prime user] for an extended support period.
+,https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/[ingress-nginx becomes EOL] in March 2026. RKE2 still includes ingress-nginx in v1.36 but with a deprecated status. In v1.37 ingress-nginx is removed and unavailable for new clusters. No new images with fixes should be expected after March 2026. Please switch to Traefik or become a https://www.suse.com/products/rancher/[Rancher Prime user] for an extended support period.
 ====
 
 https://github.com/kubernetes/ingress-nginx[ingress-nginx] is an Ingress controller powered by NGINX that uses a ConfigMap to store the NGINX configuration.
 
 `ingress-nginx` is deployed by default when starting the server. Ports 80 and 443 will be bound by the ingress controller in its default configuration, making these unusable for HostPort or NodePort services in the cluster.
+
+[IMPORTANT]
+.Version Gate
+====
+In RKE2 v1.36, Traefik is deployed by default. To deploy ingress-nginx use `ingress-controller: ingress-nginx`.
+:::
 
 Configuration options can be specified by creating a link:../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig[HelmChartConfig manifest] to customize the `rke2-ingress-nginx` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml` with the following contents sets `use-forwarded-headers` to `"true"` in the ConfigMap storing the NGINX config:
 
@@ -148,6 +273,12 @@ traefik::
 https://doc.traefik.io/traefik/[traefik] is a modern HTTP reverse proxy and load balancer made to deploy microservices with ease. It simplifies networking complexity while designing, deploying, and running applications.
 
 To use traefik, start each server with the `ingress-controller: traefik` option in your configuration file.
+
+[IMPORTANT]
+.Version Gate
+====
+Starting with RKE2 v1.36 Traefik is deployed by default
+:::
 
 Configuration options can be specified by creating a link:../add-ons/helm.md#customizing-packaged-components-with-helmchartconfig[HelmChartConfig manifest] to customize the `rke2-traefik` HelmChart values. For example, a HelmChartConfig at `/var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml` with the following contents changes the log level to "DEBUG":
 
