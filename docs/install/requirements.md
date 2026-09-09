@@ -22,15 +22,21 @@ RKE2 is available for x86_64 and arm64/aarch64
 
 ### Linux
 
-See the [RKE2 Support Matrix](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-34) for all the OS versions that have been validated with RKE2. In general, RKE2 should work on any Linux distribution that uses systemd and iptables.
+See the [RKE2 Support Matrix](https://www.suse.com/suse-rke2/support-matrix/all-supported-versions/rke2-v1-36) for all the OS versions that have been validated with RKE2. In general, RKE2 should work on any Linux distribution that uses systemd and iptables/nftables.
 
 <Tabs>
+<TabItem value="SLES16">
+Nothing additional is needed
+</TabItem>
 <TabItem value="RHEL 10">
 On RHEL 10 (and its derivates like Rocky Linux) an additional package is required to allow nf_conntrack.
 
 ```bash
 sudo dnf install kernel-modules-extra -y
 ```
+</TabItem>
+<TabItem value="Ubuntu">
+Nothing additional is needed
 </TabItem>
 </Tabs>
 
@@ -46,7 +52,6 @@ The Windows Server Containers feature needs to be enabled for the RKE2 Windows a
 
 The RKE2 Windows Node (Worker) agent has been tested and validated on the following operating systems, and their subsequent non-major releases:
 
-* Windows Server 2019 LTSC (amd64) (OS Build 17763.2061)
 * Windows Server 2022 LTSC (amd64) (OS Build 20348.169)
 
 Open a new Powershell window with Administrator privileges

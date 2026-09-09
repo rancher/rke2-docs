@@ -13,7 +13,7 @@ It is a fully [conformant Kubernetes distribution](https://landscape.cncf.io/?gr
 
 To meet these goals, RKE2 does the following:
 
-- Provides [defaults and configuration options](./security/hardening_guide.md) that allow clusters to pass the CIS Kubernetes Benchmark [v1.7](security/cis_self_assessment17.md) or [v1.8](./security/cis_self_assessment18.md) with minimal operator intervention
+- Provides [defaults and configuration options](./security/hardening_guide.md) that allow clusters to pass the CIS Kubernetes Benchmark [v1.12](security/cis_self_assessment112.md) or [v1.11](./security/cis_self_assessment111.md) with minimal operator intervention
 - Enables [FIPS 140-2 compliance](./security/fips_support.md)
 - Regularly scans components for CVEs using [trivy](https://github.com/aquasecurity/trivy) in our build pipeline
 
