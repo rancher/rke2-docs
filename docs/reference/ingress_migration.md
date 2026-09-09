@@ -103,7 +103,7 @@ spec:
             kubernetesIngressNGINX:
                 enabled: true
                 ingressClass: "rke2-ingress-nginx-migration"
-                controllerClass: "rke2.​cattle.​io/ingress-nginx-migration"
+                controllerClass: "rke2.cattle.io/ingress-nginx-migration"
 ```
 :::info Version Gate
 Starting with the RKE2 June releases: v1.36.2+rke2r1, v1.35.6+rke2r1, v1.34.9+rke2r1, v1.33.13+rke2r1, Traefik chart changes the provider name from `kubernetesIngressNginx` to `kubernetesIngressNGINX`
@@ -131,7 +131,7 @@ kubectl get daemonset -n kube-system
 
 - Verify Traefik DaemonSet manifest: The DaemonSet includes hostPort: 8000, and hostPort: 8443.
 
-- There is a new ingressClass with name “rke2-ingress-nginx-migration”.
+- There is a new ingressClass with name "rke2-ingress-nginx-migration".
 
 - Verify that the Ingressnginx provider is started. In the traefik logs:
     ```
@@ -230,7 +230,7 @@ ingress-controller:
 - traefik
 ```
 
-If downtime is important and you’d like to split this phase, you should restart RKE2 at this point and don’t move to the next step (configure Traefik for Standard Ports) until Ingress NGINX is completely removed.
+If downtime is important and you'd like to split this phase, you should restart RKE2 at this point and don't move to the next step (configure Traefik for Standard Ports) until Ingress NGINX is completely removed.
 
 #### 2. Configure Traefik for Standard Ports
 Update the HelmChartConfig manifest (`/var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml`) to remove the custom port configuration.
@@ -249,7 +249,7 @@ spec:
             kubernetesIngressNGINX:
                 enabled: true
                 ingressClass: "rke2-ingress-nginx-migration"
-                controllerClass: "rke2.​cattle.​io/ingress-nginx-migration"
+                controllerClass: "rke2.cattle.io/ingress-nginx-migration"
 ```
 
 :::info Version Gate
@@ -285,7 +285,7 @@ done
 
 ## Additional Notes
 
-- By default the Ingress NGINX provider reads ingressClassName = nginx. We decided to change this and use a “bridge” ingressClass (rke2-ingress-nginx-migration) to avoid two problems:
+- By default the Ingress NGINX provider reads ingressClassName = nginx. We decided to change this and use a "bridge" ingressClass (rke2-ingress-nginx-migration) to avoid two problems:
 
     1 - Potential race conditions as both ingress controllers would read the same ingress resource and could try to update the status at the same time.
 
