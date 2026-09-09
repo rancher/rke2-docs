@@ -32,9 +32,8 @@ It is known as RKE2 as it is the next iteration of the Rancher Kubernetes Engine
 
 It has also been known as RKE Government as it was designed to target sectors with heightened security requirements.
 
-
 ## Security
 
-SUSE supports responsible disclosure and endeavors to resolve security
-issues in a reasonable timeframe. To report a security vulnerability, email
-[security@rancher.com](mailto:security@rancher.com).
+SUSE supports responsible disclosure and endeavors to resolve security issues in a reasonable
+timeframe. To report a security vulnerability, please refer to our [Security Policy](https://github.com/rancher/rke2/security/policy).
+
