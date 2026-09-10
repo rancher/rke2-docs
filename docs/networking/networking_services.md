@@ -196,8 +196,7 @@ Prior to the April 2026 releases (v1.33.11+rke2r1, v1.34.7+rke2r1 and v1.35.4+rk
 If you need support for experimental Gateway API resources, you must install them separately. For example, for Gateway API v1.4, install the [v1.4 experimental-install.yaml](https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml) from the official [gateway-api releases](https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.4.0) and use the option `providers.kubernetesGateway.experimentalChannel=true` in the rke2-traefik chart values.
 :::
 
-
-For more information, refer to [Standalone Gateway API CRD Management](https://github.com/rancher/rke2/blob/master/docs/adrs/011-bundle-gatewayAPI.md#standalone-gateway-api-crd-management)
+Starting with v1.37, Traefik will stop managing Gateway API CRDs and RKE2 will bundle Gateway API  CRDs natively. For more information check this [document]https://github.com/rancher/rke2/blob/master/docs/adrs/011-bundle-gatewayAPI.md#standalone-gateway-api-crd-management
 
 ## Service Load Balancer
 
