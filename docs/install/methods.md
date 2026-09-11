@@ -40,6 +40,10 @@ When the install script is executed, it makes a determination of what type of sy
 
 Next, the installation script downloads the tarball, verifies it by comparing SHA256 hashes, and lastly, extracts the contents to `/usr/local`. An operator is free to move the files after installation if desired. This operation simply extracts the tarball and no other system modifications are made.
 
+:::warning
+Because no other system modifications are made, the tarball method does not install the `rke2-selinux` policy and does not enable SELinux support in RKE2. On a node running SELinux in `Enforcing` mode, [install `rke2-selinux` first](../security/selinux.md#installing-rke2-selinux-on-its-own), then install RKE2 and set `selinux: true` in the config file.
+:::
+
 Tarball structure / contents
 
 * bin - contains the RKE2 executable as well as the `rke2-killall.sh` and `rke2-uninstall.sh` scripts
@@ -169,7 +173,7 @@ reboot
 Replace `rke2-server` with `rke2-agent` on agent nodes.
 
 </TabItem>
-<TabItem value="Enterprise Linux 8/9/10">
+<TabItem value="RHEL 8/9/10">
 
 In order to use the RPM repository, on a CentOS or RHEL system, run the following bash snippet:
 
@@ -215,3 +219,5 @@ The RPM will install a corresponding `rke2-server.service` or `rke2-agent.servic
 ## Manual
 
 The RKE2 binary is statically compiled and linked which allows for the RKE2 binary to be portable across Linux distributions without the concern for dependency issues. The simplest installation is to download the binary, make sure it's executable, and copy it into the `${PATH}`, generally `/usr/local/bin`. After first execution, RKE2 will create all necessary directories and files. To configure the system any further, you'll want to reference the [config file](configuration.md) documentation.
+
+As with the tarball method, nothing is done for you on SELinux-enabled hosts. See [SELinux](../security/selinux.md) if the node runs in `Enforcing` mode.
