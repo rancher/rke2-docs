@@ -8,7 +8,7 @@ It is a fully https://landscape.cncf.io/?group=projects-and-products&view-mode=c
 
 To meet these goals, RKE2 does the following:
 
-* Provides xref:./security/hardening_guide.adoc[defaults and configuration options] that allow clusters to pass the CIS Kubernetes Benchmark xref:security/cis_self_assessment17.adoc[v1.7] or xref:./security/cis_self_assessment18.adoc[v1.8] with minimal operator intervention
+* Provides xref:./security/hardening_guide.adoc[defaults and configuration options] that allow clusters to pass the CIS Kubernetes Benchmark xref:security/cis_self_assessment112.adoc[v1.12] or xref:./security/cis_self_assessment111.adoc[v1.11] with minimal operator intervention
 * Enables xref:./security/fips_support.adoc[FIPS 140-2 compliance]
 * Regularly scans components for CVEs using https://github.com/aquasecurity/trivy[trivy] in our build pipeline
 
@@ -30,6 +30,5 @@ It has also been known as RKE Government as it was designed to target sectors wi
 
 == Security
 
-SUSE supports responsible disclosure and endeavors to resolve security
-issues in a reasonable timeframe. To report a security vulnerability, email
-link:mailto:security@rancher.com[security@rancher.com].
+SUSE supports responsible disclosure and endeavors to resolve security issues in a reasonable
+timeframe. To report a security vulnerability, please refer to our https://github.com/rancher/rke2/security/policy[Security Policy].

@@ -224,15 +224,24 @@ Once configured, confirm the default route is present with `ip route show defaul
 
 If running on an air-gapped node with SELinux enabled, you must manually install the rke2-selinux RPM before installing RKE2. This RPM includes the necessary SELinux policies for RKE2 to run properly.
 
-The https://docs.rke2.io/install/methods#rpm[RPM install method] assumes network access to the package repository. On an air-gapped host you must obtain the RPM (and its dependencies) on a machine that can reach the internet, copy the packages to the offline node, then install them with `rpm`/`dnf`/`yum` from the local files. The rke2-selinux RPM requires these OS packages to already be available offline:
+The https://docs.rke2.io/install/methods#rpm[RPM install method] assumes network access to the package repository. On an air-gapped host you must obtain the RPM (and its dependencies) on a machine that can reach the internet, copy the packages to the offline node, then install them with `zypper`/`rpm`/`dnf`/`yum` from the local files. The rke2-selinux RPM requires these OS packages to already be available offline:
 
 ....
 * container-selinux
+* selinux-policy-base
+* selinux-policy
+* policycoreutils
+* selinux-tools (SUSE) or libselinux-utils (RHEL)
+....
+
+If you are also installing RKE2 itself from RPM, `rke2-common` requires `iptables`, so stage those packages as well:
+
+....
 * iptables-nft
 * libnftnl
-* policycoreutils
-* selinux-policy
 ....
+
+See link:../security/selinux.md#air-gapped-and-offline-installs[Air-gapped and offline installs] for how to download the policy and its dependencies, and xref:../security/selinux.adoc[SELinux] for the rest of the SELinux requirements.
 
 ======
 
