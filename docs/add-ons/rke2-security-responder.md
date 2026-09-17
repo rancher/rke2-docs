@@ -2,15 +2,15 @@
 title: RKE2 security responder
 ---
 
-The RKE2 security responder is an optional component that helps identify security updates for the RKE2 version running in your cluster. It collects non-identifying cluster metadata and sends it to an endpoint. The endpoint returns information about newer versions and security advisories that may apply to the cluster. The source code for the security responder project is available in the [`rancher/rke2-security-responder` GitHub repository](https://github.com/rancher/rke2-security-responder).
+The RKE2 security responder client is an optional component that helps identify security updates for the RKE2 version running in your cluster. It collects non-identifying cluster metadata and sends it to a service managed by SUSE. The service returns information about available versions and security advisories that may apply to the cluster. The source code for the security responder project is available in the [`rancher/rke2-security-responder` GitHub repository](https://github.com/rancher/rke2-security-responder).
 
 :::info Version Gate
-The RKE2 security responder is available beginning with RKE2 v1.37 as an opt-out component.
+The RKE2 security responder client is bundled with RKE2 v1.37 and newer, and is enabled by default.
 :::
 
 ## How it works
 
-The security responder runs as a Kubernetes `CronJob` in the `kube-system` namespace. It runs every eight hours, collects the configured metadata, sends one request, and exits. It does not run as a persistent daemon or continuously monitor workloads.
+The security responder client runs as a Kubernetes `CronJob` in the `kube-system` namespace. It runs every eight hours, collects the configured metadata, sends one request, and exits. It does not run as a persistent daemon or continuously monitor workloads.
 
 The default schedule is:
 
@@ -18,12 +18,12 @@ The default schedule is:
 0 */8 * * *
 ```
 
-The responder retries a failed request up to three times. If the request cannot be completed, the failure does not affect the cluster and no data is queued for later delivery. The responder also operates in disconnected and air-gapped environments without requiring a successful request.
+The security responder client retries a failed request up to three times. If the request cannot be completed, the failure does not affect the cluster and no data is queued for later delivery. The client also operates in disconnected and air-gapped environments without requiring a successful request.
 
 
 ### Typical output
 
-You can view the responder's output in the logs of the Pod created for a scheduled run. A successful response can look like this:
+You can view the security responder client's output in the logs of the Pod created for a scheduled run. A successful response can look like this:
 
 ```text
 time="2026-08-28T09:42:04Z" level=info msg="response received" intervalMinutes=60 newer=13 versions=34
@@ -62,30 +62,33 @@ You should see something similar to what is shown as typical output in the above
 
 The responder collects the following metadata, depending on the configured [collection mode](#collection-mode):
 
-| Field | Description |
-|-------|-------------|
-| `kubernetesVersion` | Kubernetes version reported by the cluster. |
-| `clusteruuid` | UID of the `kube-system` namespace, used to avoid counting the same cluster more than once. |
-| `serverNodeCount` / `agentNodeCount` | Number of control-plane and agent nodes. |
-| `serverCPU` / `agentCPU` | Total allocatable CPU, in millicores, for control-plane and agent nodes. |
-| `serverMemory` / `agentMemory` | Total allocatable memory, in bytes, for control-plane and agent nodes. |
-| `cni-plugin` / `cni-version` | CNI plugin and version, when detected. |
-| `ingress-controller` / `ingress-version` | Ingress controller and version, when detected. |
-| `operating-system` / `os` | Operating system information reported by the nodes. |
-| `kernel` | Kernel version reported by the nodes. |
-| `arch` | Node architecture. |
-| `node-info-consistent` | Whether node operating system information is consistent across the cluster. |
-| `selinux` | SELinux status, when detected. |
-| `gpuNodeCount` / `gpu-vendor` | GPU node count and vendor, when detected. |
-| `gpu-operator` / `gpu-operator-version` | GPU operator and version, when detected. |
-| `rancher-managed` | Whether Rancher Manager manages the cluster. |
-| `rancher-version` | Rancher Manager version, when detected. |
-| `rancher-install-uuid` | Rancher Manager installation UUID, when detected. |
-| `rancher-prime` | Whether the cluster uses a Rancher Prime distribution. |
-| `system-default-registry` | The observed system default registry, when configured. |
-| `ip-stack` | Cluster IP stack configuration: IPv4-only, IPv6-only, or dual-stack. |
+| Field | Description | `recommended` | `minimal` |
+|-------|-------------|----------------|-----------|
+| `kubernetesVersion` | Kubernetes version reported by the cluster. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `clusteruuid` | UID of the `kube-system` namespace, used to avoid counting the same cluster more than once. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `serverNodeCount` / `agentNodeCount` | Number of control-plane and agent nodes. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'red'}} aria-label="Actual value not reported">✗</span> |
+| `serverCPU` / `agentCPU` | Total allocatable CPU, in millicores, for control-plane and agent nodes. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'red'}} aria-label="Actual value not reported">✗</span> |
+| `serverMemory` / `agentMemory` | Total allocatable memory, in bytes, for control-plane and agent nodes. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'red'}} aria-label="Actual value not reported">✗</span> |
+| `cni-plugin` / `cni-version` | CNI plugin and version, when detected. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `ingress-controller` / `ingress-version` | Ingress controller and version, when detected. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `operating-system` / `os` | Operating system information reported by the nodes. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `kernel` | Kernel version reported by the nodes. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `arch` | Node architecture. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `node-info-consistent` | Whether node operating system information is consistent across the cluster. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `selinux` | SELinux status, when detected. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `gpuNodeCount` | Number of nodes with a GPU. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'red'}} aria-label="Actual value not reported">✗</span> |
+| `gpu-vendor` | GPU vendor, when detected. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `gpu-operator` / `gpu-operator-version` | GPU operator and version, when detected. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `rancher-managed` | Whether Rancher Manager manages the cluster. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `rancher-version` | Rancher Manager version, when detected. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'red'}} aria-label="Actual value not reported">✗</span> |
+| `rancher-install-uuid` | Rancher Manager installation UUID, when detected. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'red'}} aria-label="Actual value not reported">✗</span> |
+| `rancher-prime` | Whether the cluster uses a Rancher Prime distribution. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `system-default-registry` | The observed system default registry, when configured. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
+| `ip-stack` | Cluster IP stack configuration: IPv4-only, IPv6-only, or dual-stack. | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> | <span style={{color: 'green'}} aria-label="Actual value reported">✓</span> |
 
 The `clusteruuid` is derived from the Kubernetes `kube-system` namespace UID. It is used only for report deduplication and is not tied to an account, organization, or person.
+
+The green check means that the actual value is reported in that mode. The red arrow means that the actual value is not reported. In `minimal` mode, these fields are still present in the payload with redacted placeholder values: numeric fields use `-1`, and Rancher version and installation UUID use an empty string.
 
 ## Collection mode
 
@@ -94,7 +97,7 @@ The `mode` Helm value controls how much cluster metadata is included in the repo
 | Mode | Description |
 |------|-------------|
 | `recommended` | Sends the complete set of supported metadata. This is the default. |
-| `minimal` | Reduces the report by redacting node counts, resource totals, and Rancher version and installation UUID. |
+| `minimal` | Reduces the report by deleting node counts, resource totals, and Rancher version and installation UUID. |
 
 In `minimal` mode, the redacted numeric fields are sent as `-1`. This value means that the field was intentionally not reported; it does not represent the actual number of nodes or resources. The redacted Rancher fields are sent as empty strings.
 
@@ -115,8 +118,6 @@ The security responder does not collect:
 - Hostnames, cluster names, company names, or other identifying labels
 - IP addresses as payload fields
 - Configuration file contents beyond the specific metadata listed above
-
-Requests are processed through Scarf for metadata enrichment. Scarf is an open-source artifact analytics platform that collects aggregate, non-personally identifiable telemetry to help us understand project adoption. It is well known and approved for usage in CNCF projects.
 
 
 ## Changing default options
