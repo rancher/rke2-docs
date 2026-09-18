@@ -83,6 +83,7 @@ module.exports = {
         'add-ons/helm',
         'add-ons/import-images',
         'add-ons/gpu_operators',
+        'add-ons/rke2-security-responder',
       ],
     },
     'advanced',
