@@ -124,7 +124,7 @@ The security responder does not collect:
 
 It is possible to change the default behavior by using a `HelmChartConfig`. The `HelmChartConfig` must be named `rke2-security-responder` and be created in the `kube-system` namespace.
 
-The following example changes the schedule to once per day at midnight (`0 0 * * *`) and enables `minimal` collection mode:
+The following example enables `minimal` collection mode:
 
 ```yaml
 apiVersion: helm.cattle.io/v1
@@ -135,7 +135,6 @@ metadata:
 spec:
     valuesContent: |-
         mode: minimal
-        schedule: "0 0 * * *"
 ```
 
 ## Disable the security responder
