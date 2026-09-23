@@ -99,7 +99,7 @@ RKE2 supports replicating etcd snapshots to and restoring etcd snapshots from S3
 | `--etcd-s3-bucket-lookup-type` | S3 bucket lookup type, one of 'auto', 'dns', 'path'; default is 'auto' if not set |
 | `--etcd-s3-region` | S3 region / bucket location (optional). defaults to us-east-1 |
 | `--etcd-s3-folder` | S3 folder |
-| `--etcd-s3-retention` | Number of snapshots to retain in S3 for the cluster (all nodes; default: 5) |
+| `--etcd-s3-retention` | Number of snapshots in S3 to retain cluster-wide (default: `5`) |
 | `--etcd-s3-proxy` | Proxy server to use when connecting to S3, overriding any proxy-releated environment variables |
 | `--etcd-s3-insecure` | Disables S3 over HTTPS |
 | `--etcd-s3-timeout` | S3 timeout (default: `5m0s`) |
