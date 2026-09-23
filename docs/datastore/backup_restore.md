@@ -21,7 +21,7 @@ For additional information on the etcd snapshot subcommands, run `rke2 etcd-snap
 <Tabs groupId="snapshots">
 <TabItem value="Scheduled">
 
-Scheduled snapshots are enabled by default, at 00:00 and 12:00 system time, with 5 snapshots retained. Scheduled snapshots have a name that starts with `etcd-snapshot`, followed by the node name and timestamp.
+Scheduled snapshots are enabled by default, at 00:00 and 12:00 system time, with 5 snapshots retained **per server node** on local disk. Scheduled snapshots have a name that starts with `etcd-snapshot`, followed by the node name and timestamp.
 
 The following options control the operation of scheduled snapshots:
 
@@ -31,7 +31,7 @@ The following options control the operation of scheduled snapshots:
 | `--etcd-snapshot-name` | Sets the base name of etcd scheduled snapshots. (Default: `etcd-snapshot`) |
 | `--etcd-snapshot-compress` | Compress etcd snapshots |
 | `--etcd-snapshot-dir` | Directory to save db snapshots. (Default location: `${data-dir}/db/snapshots`) |
-| `--etcd-snapshot-retention` | Number of snapshots to retain (default: 5) |
+| `--etcd-snapshot-retention` | Number of local snapshots to retain **per server node** (default: 5) |
 | `--etcd-snapshot-schedule-cron` |  Snapshot interval time in cron spec. eg. every 5 hours `0 */5 * * *` (default: `0 */12 * * *`) |
 
 The data-dir value defaults to `/var/lib/rancher/rke2` and can be changed independently by setting the `--data-dir` flag.
@@ -63,7 +63,7 @@ On-demand snapshots are saved to the path set by the server's `--etcd-snapshot-d
 
 ## Deleting Snapshots
 
-Scheduled snapshots are deleted automatically when the number of snapshots exceeds the configured retention count (5 by default). The oldest snapshots are removed first. 
+Scheduled snapshots are deleted automatically when the number of snapshots exceeds the configured retention count (5 by default). For local snapshots, retention is applied **per server node**. The oldest snapshots are removed first. 
 
 To manually delete scheduled snapshot(s) or on-demand snapshot(s), you can use the `rke2 etcd-snapshot delete` command:
 
@@ -99,7 +99,7 @@ RKE2 supports replicating etcd snapshots to and restoring etcd snapshots from S3
 | `--etcd-s3-bucket-lookup-type` | S3 bucket lookup type, one of 'auto', 'dns', 'path'; default is 'auto' if not set |
 | `--etcd-s3-region` | S3 region / bucket location (optional). defaults to us-east-1 |
 | `--etcd-s3-folder` | S3 folder |
-| `--etcd-s3-retention` | S3 retention limit (default: 5) |
+| `--etcd-s3-retention` | Number of snapshots to retain in S3 for the cluster (all nodes; default: 5) |
 | `--etcd-s3-proxy` | Proxy server to use when connecting to S3, overriding any proxy-releated environment variables |
 | `--etcd-s3-insecure` | Disables S3 over HTTPS |
 | `--etcd-s3-timeout` | S3 timeout (default: `5m0s`) |
@@ -154,12 +154,21 @@ Name                              Location                                      
 ### S3 Retention
 
 :::info Version Gate
-Starting in versions v1.34.0+rke2r1, v1.33.4+rke2r1, v1.32.8+rke2r1, v1.31.12+rke2r1, RKE2 includes a new flag for S3 retention. It has the same default value as the local snapshot retention.
+Starting in versions v1.34.0+rke2r1, v1.33.4+rke2r1, v1.32.8+rke2r1, v1.31.12+rke2r1, RKE2 includes a new flag for S3 retention. It has the same default value as the local snapshot retention, but the **scope differs**:
 :::
+
+| | Local (`--etcd-snapshot-retention`) | S3 (`--etcd-s3-retention`) |
+| --- | --- | --- |
+| Default | `5` | `5` |
+| Scope | Per server/etcd node (each node keeps its own last N files on disk) | Cluster-wide: N newest snapshot objects in the configured S3 bucket/folder, across **all** nodes |
+
+S3 retention is intentionally not per node. All etcd servers upload into the same bucket/folder; applying a single global count prevents orphaned snapshots from accumulating when nodes are replaced or removed.
+
+**Sizing tip:** With `N` etcd nodes, each snapshot schedule cycle typically uploads `N` objects. To keep about `C` cycles in S3, set `--etcd-s3-retention` to approximately `C × N` (for example, 3 etcd nodes and 2 cycles → retention `6`).
 
 | Flag | Description |
 | ----------- | --------------- |
-| `--etcd-s3-retention` | Number of snapshots in S3 to retain (default: `5`) |
+| `--etcd-s3-retention` | Number of snapshots in S3 to retain cluster-wide (default: `5`) |
 
 
 ### S3 Configuration Secret Support
