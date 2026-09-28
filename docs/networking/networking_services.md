@@ -240,7 +240,7 @@ spec:
       config:
         use-forwarded-headers: "true"
 ```
-For more information, refer to the official [ingress-nginx Helm configuration parameters](https://github.com/rancher/rke2-charts/tree/main/charts/rke2-ingress-nginx/rke2-ingress-nginx/4.14.400#configuration).
+For more information, refer to the official [ingress-nginx Helm configuration parameters](https://github.com/rancher/rke2-charts/tree/main/charts/rke2-ingress-nginx) (select the chart version packaged with your RKE2 release).
 
 </TabItem>
 <TabItem value="traefik" default>
@@ -269,7 +269,7 @@ spec:
       general:
         level: "DEBUG"
 ```
-To see all configurable options, visit the chart's [values.yaml](https://github.com/rancher/rke2-charts/blob/main/charts/rke2-traefik/rke2-traefik/39.0.502/values.yaml).
+To see all configurable options, visit the chart's [values.yaml](https://github.com/rancher/rke2-charts/tree/main/charts/rke2-traefik) (select the chart version packaged with your RKE2 release).
 
 </TabItem>
 </Tabs>
