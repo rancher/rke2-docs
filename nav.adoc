@@ -51,6 +51,7 @@
 ** xref:add-ons/helm.adoc[]
 ** xref:add-ons/import-images.adoc[]
 ** xref:add-ons/gpu_operators.adoc[]
+** xref:add-ons/rke2-security-responder.adoc[]
 * xref:advanced.adoc[]
 
 * Reference
