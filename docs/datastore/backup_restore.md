@@ -160,11 +160,11 @@ Starting in versions v1.34.0+rke2r1, v1.33.4+rke2r1, v1.32.8+rke2r1, v1.31.12+rk
 | | Local (`--etcd-snapshot-retention`) | S3 (`--etcd-s3-retention`) |
 | --- | --- | --- |
 | Default | `5` | `5` |
-| Scope | Per server/etcd node (each node keeps its own last N files on disk) | Cluster-wide: N newest snapshot objects in the configured S3 bucket/folder, across **all** nodes |
+| Scope | Per server/etcd node: each node prunes the local snapshot directory to retain no more than N snapshots on disk | Cluster-wide: each node prunes the configured S3 bucket+prefix to retain no more than N snapshots, regardless of what node uploaded the object |
 
-S3 retention is intentionally not per node. All etcd servers upload into the same bucket/folder; applying a single global count prevents orphaned snapshots from accumulating when nodes are replaced or removed.
+S3 retention is intentionally not per node. All etcd nodes upload into the same bucket/folder; applying a single global count prevents orphaned snapshots from accumulating when nodes are replaced or removed.
 
-**Sizing tip:** With `N` etcd nodes, each snapshot schedule cycle typically uploads `N` objects. To keep about `C` cycles in S3, set `--etcd-s3-retention` to approximately `C × N` (for example, 3 etcd nodes and 2 cycles → retention `6`).
+**Sizing tip:** With `N` etcd nodes, each snapshot schedule cycle typically uploads `N` objects. To keep about `C` cycles in S3, set `--etcd-s3-retention` to approximately `N × C` (for example, 3 etcd nodes and 2 cycles → retention `6`).
 
 | Flag | Description |
 | ----------- | --------------- |
