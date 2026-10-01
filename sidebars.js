@@ -74,6 +74,7 @@ module.exports = {
         'networking/multus_sriov',
         'networking/networking_services',
         'networking/windows_bgp',
+        'networking/cluster-loadbalancer',
       ],
     },
     {
