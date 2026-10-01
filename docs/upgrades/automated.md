@@ -16,6 +16,11 @@ If the RKE2 cluster is managed by Rancher, you should use the Rancher UI to mana
   See [Configuring Version Management for RKE2 and RKE2 Clusters](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/kubernetes-clusters-in-rancher-setup/register-existing-clusters#configuring-version-management-for-rke2-and-k3s-clusters) for more information.
 - If the RKE2 cluster was provisioned by Rancher, Rancher will use system agent to manage version upgrades. Do not follow the steps on this page.
 - If the RKE2 cluster is *not* managed by Rancher, you may follow the steps below.
+
+:::
+
+:::warning
+If RKE2 was installed using RPMs, please upgrade using the [package manager](https://docs.rke2.io/upgrades/manual#upgrade-rke2-using-the-rpm-upgrades)
 :::
 
 ## Using the System Upgrade Controller
