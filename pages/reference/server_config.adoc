@@ -93,7 +93,7 @@ The following options must be set to the same value on all servers in the cluste
 | etcd-snapshot-name | Set the base name of etcd snapshots, appended with UNIX timestamp  | "etcd-snapshot" |  |
 | etcd-snapshot-schedule-cron | Snapshot interval time in cron spec. eg. every 5 hours '0 */5 * * *'  | "0 */12 * * *" |  |
 | etcd-snapshot-reconcile-interval | Snapshot reconcile interval  | 10m0s |  |
-| etcd-snapshot-retention | Number of snapshots to retain  | 5 |  |
+| etcd-snapshot-retention | Number of local snapshots to retain on each server node  | 5 |  |
 | etcd-snapshot-dir | Directory to save db snapshots.  | $&#123;data-dir&#125;/server/db/snapshots |  |
 | etcd-snapshot-compress | Compress etcd snapshot  | false |  |
 
@@ -113,7 +113,7 @@ The following options must be set to the same value on all servers in the cluste
 | etcd-s3-bucket-lookup-type | S3 bucket lookup type, one of 'auto', 'dns', 'path'; default is 'auto' if not set |  |  |
 | etcd-s3-region | S3 region / bucket location (optional)  | "us-east-1" |  |
 | etcd-s3-folder | S3 folder |  |  |
-| etcd-s3-retention | S3 retention limit  | 5 |  |
+| etcd-s3-retention | Number of S3 snapshots to retain in the configured region, bucket, and prefix  | 5 |  |
 | etcd-s3-proxy | Proxy server to use when connecting to S3, overriding any proxy-releated environment variables |  |  |
 | etcd-s3-config-secret | Name of secret in the kube-system namespace used to configure S3, if etcd-s3 is enabled and no other etcd-s3 options are set |  |  |
 | etcd-s3-insecure | Disables S3 over HTTPS  | false |  |

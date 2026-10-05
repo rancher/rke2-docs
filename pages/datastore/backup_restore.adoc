@@ -30,7 +30,7 @@ Scheduled::
 +
 --
 
-Scheduled snapshots are enabled by default, at 00:00 and 12:00 system time, with 5 snapshots retained. Scheduled snapshots have a name that starts with `etcd-snapshot`, followed by the node name and timestamp.
+Scheduled snapshots are enabled by default, at 00:00 and 12:00 system time, with 5 snapshots retained *per server node* on local disk. Scheduled snapshots have a name that starts with `etcd-snapshot`, followed by the node name and timestamp.
 
 The following options control the operation of scheduled snapshots:
 
@@ -50,7 +50,7 @@ The following options control the operation of scheduled snapshots:
 | Directory to save db snapshots. (Default location: `+${data-dir}/db/snapshots+`)
 
 | `--etcd-snapshot-retention`
-| Number of snapshots to retain (default: 5)
+| Number of local snapshots to retain on each server node (default: 5)
 
 | `--etcd-snapshot-schedule-cron`
 | Snapshot interval time in cron spec. eg. every 5 hours `0 */5 * * *` (default: `0 */12 * * *`)
@@ -95,7 +95,7 @@ On-demand snapshots are saved to the path set by the server's `--etcd-snapshot-d
 
 == Deleting Snapshots
 
-Scheduled snapshots are deleted automatically when the number of snapshots exceeds the configured retention count (5 by default). The oldest snapshots are removed first.
+Scheduled snapshots are deleted automatically when the number of snapshots exceeds the configured retention count (5 by default). For local snapshots, retention is applied *per server node*. The oldest snapshots are removed first.
 
 To manually delete scheduled snapshot(s) or on-demand snapshot(s), you can use the `rke2 etcd-snapshot delete` command:
 
@@ -161,7 +161,7 @@ RKE2 supports replicating etcd snapshots to and restoring etcd snapshots from S3
 | S3 folder
 
 | `--etcd-s3-retention`
-| S3 retention limit (default: 5)
+| Number of S3 snapshots to retain in the configured region, bucket, and prefix (default: `5`)
 
 | `--etcd-s3-proxy`
 | Proxy server to use when connecting to S3, overriding any proxy-releated environment variables
@@ -229,14 +229,30 @@ Name                              Location                                      
 [IMPORTANT]
 .Version Gate
 ====
-Starting in versions v1.34.0+rke2r1, v1.33.4+rke2r1, v1.32.8+rke2r1, v1.31.12+rke2r1, RKE2 includes a new flag for S3 retention. It has the same default value as the local snapshot retention.
+Starting in versions v1.34.0+rke2r1, v1.33.4+rke2r1, v1.32.8+rke2r1, v1.31.12+rke2r1, RKE2 includes a new flag for S3 retention. It has the same default value as the local snapshot retention, but the *scope differs*:
 ====
+
+|===
+|  | Local (`--etcd-snapshot-retention`) | S3 (`--etcd-s3-retention`)
+
+| Default
+| `5`
+| `5`
+
+| Scope
+| Per server/etcd node: each node prunes the local snapshot directory to retain no more than N snapshots on disk
+| Cluster-wide: each node prunes the configured S3 bucket+prefix to retain no more than N snapshots, regardless of what node uploaded the object
+|===
+
+S3 retention is intentionally not per node. All etcd nodes upload into the same bucket/folder; applying a single global count prevents orphaned snapshots from accumulating when nodes are replaced or removed.
+
+*Sizing tip:* With `N` etcd nodes, each snapshot schedule cycle typically uploads `N` objects. To keep about `C` cycles in S3, set `--etcd-s3-retention` to approximately `N × C` (for example, 3 etcd nodes and 2 cycles → retention `6`).
 
 |===
 | Flag | Description
 
 | `--etcd-s3-retention`
-| Number of snapshots in S3 to retain (default: `5`)
+| Number of S3 snapshots to retain in the configured region, bucket, and prefix (default: `5`)
 |===
 
 === S3 Configuration Secret Support

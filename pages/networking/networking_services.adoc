@@ -262,7 +262,7 @@ spec:
         use-forwarded-headers: "true"
 ----
 
-For more information, refer to the official https://github.com/rancher/rke2-charts/tree/main/charts/rke2-ingress-nginx/rke2-ingress-nginx/4.14.400#configuration[ingress-nginx Helm configuration parameters].
+For more information, refer to the official https://github.com/rancher/rke2-charts/tree/main/charts/rke2-ingress-nginx[ingress-nginx Helm configuration parameters] (select the chart version packaged with your RKE2 release).
 
 --
 
@@ -297,7 +297,7 @@ spec:
         level: "DEBUG"
 ----
 
-To see all configurable options, visit the chart's https://github.com/rancher/rke2-charts/blob/main/charts/rke2-traefik/rke2-traefik/39.0.502/values.yaml[values.yaml].
+To see all configurable options, visit the chart's https://github.com/rancher/rke2-charts/tree/main/charts/rke2-traefik[values.yaml] (select the chart version packaged with your RKE2 release).
 
 --
 
