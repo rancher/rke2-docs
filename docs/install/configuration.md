@@ -126,6 +126,7 @@ When using this method to install RKE2, the following environment variables can 
 | `INSTALL_RKE2_CHANNEL_URL` | Channel URL for fetching RKE2 download URL. Defaults to `https://update.rke2.io/v1-release/channels`. |
 | `INSTALL_RKE2_CHANNEL` | Channel to use for fetching RKE2 download URL. Defaults to `stable`. Options include: `stable`, `latest`, `testing`. |
 | `INSTALL_RKE2_METHOD` | Method of installation to use. Default is on RPM-based systems `rpm`, all else `tar`. |
+| `INSTALL_RKE2_COMPLETION` | Either `bash` or `zsh`. Adds KUBECONFIG, crictl and ctr environment variables as completions to .bashrc/.zshrc of the root user. Currently only available for `tar` installations. |
 
 This installation script is straight-forward and will do the following:
 
