@@ -93,7 +93,7 @@ The following options must be set to the same value on all servers in the cluste
 | etcd-s3-region | S3 region / bucket location (optional)  | "us-east-1" |  |
 | etcd-s3-folder | S3 folder |  |  |
 | etcd-s3-retention | Number of S3 snapshots to retain in the configured region, bucket, and prefix  | 5 |  |
-| etcd-s3-proxy | Proxy server to use when connecting to S3, overriding any proxy-releated environment variables |  |  |
+| etcd-s3-proxy | Proxy server to use when connecting to S3, overriding any proxy-related environment variables |  |  |
 | etcd-s3-config-secret | Name of secret in the kube-system namespace used to configure S3, if etcd-s3 is enabled and no other etcd-s3 options are set |  |  |
 | etcd-s3-insecure | Disables S3 over HTTPS  | false |  |
 | etcd-s3-timeout | S3 timeout  | 5m0s |  |

@@ -115,7 +115,7 @@ hauler store save --filename haul.tar.zst --containerd
 ```bash
 hauler store load haul.tar.zst
 ```
-5. You can save the Hauler store content directly to the images directory. For RKE2, ensure the directory `/var/lib/rancher/rke2/agent/images/` exists on the node, then save the tarbarll to that path:
+5. You can save the Hauler store content directly to the images directory. For RKE2, ensure the directory `/var/lib/rancher/rke2/agent/images/` exists on the node, then save the tarball to that path:
 
 ```bash
 hauler store save --containerd -f /var/lib/rancher/rke2/agent/images/haul.tar.zst

@@ -44,7 +44,7 @@ The `name` field should follow the Helm chart naming conventions, in addition to
 | spec.version |   | Helm Chart version (when installing from repository) | `--version` |
 | spec.repo |   | Helm Chart repository URL | `--repo` |
 | spec.repoCA | | Verify certificates of HTTPS-enabled servers using this CA bundle. Should be a string containing one or more PEM-encoded CA Certificates. | `--ca-file` |
-| spec.repoCAConfigMap | | Reference to a ConfigMap containing CA Certificates to be be trusted by Helm. Can be used along with or instead of `repoCA` | `--ca-file` |
+| spec.repoCAConfigMap | | Reference to a ConfigMap containing CA Certificates to be trusted by Helm. Can be used along with or instead of `repoCA` | `--ca-file` |
 | spec.plainHTTP | false | Use insecure HTTP connections for the chart download. | `--plain-http` |
 | spec.insecureSkipTLSVerify | false | Skip TLS certificate checks for the chart download. | `--insecure-skip-tls-verify` |
 | spec.helmVersion | v3 | Helm version to use (`v2` or `v3`) |  |
