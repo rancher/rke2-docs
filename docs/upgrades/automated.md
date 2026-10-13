@@ -51,7 +51,7 @@ For this reason, it is recommended you create at least two plans: a plan for upg
 You can create additional plans as needed to control the rollout of the upgrade across nodes.
 Once the plans are created, the controller will pick them up and begin to upgrade your cluster.  
 
-The following two example plans will continuously keep your your cluster upgraded to the current stable release, by targeting the stable [release channel](manual.md#release-channels):
+The following two example plans will continuously keep your cluster upgraded to the current stable release, by targeting the stable [release channel](manual.md#release-channels):
 
 ```yaml
 # Server plan

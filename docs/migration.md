@@ -93,7 +93,7 @@ One of the migration-agent features is migrating all configuration for the clust
 
 RKE1 adds several configuration options for CoreDNS, migration-agent makes sure that these configs are migrated to a HelmchartConfig which will be used to configure the CoreDNS helmChart:
 
-| CoreDNS Optinos                                      	|
+| CoreDNS Options                                      	|
 |--------------------------------------------	|
 | PriorityClassName                          	|
 | NodeSelector                               	|

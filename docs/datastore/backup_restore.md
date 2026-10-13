@@ -5,7 +5,7 @@ title: Backup and Restore
 RKE2 backups up the cluster information using etcd snapshots. This page describes how to use the rke2 etcd-snapshot CLI tool to manage etcd snapshots and how to restore from an etcd snapshot. Snapshots are for embedded etcd only, if you use another datastore with `datastore-endpoint` config go to [Experimental](backup_restore.md#external-db-backups-experimental).
 
 
-RKE2 etcd snapshots are stored on the node file system, and may optionally be uploaded to an S3 compatible object store for disaster recovery scenarios. Snapshots can be both automated on a reoccurring schedule, and taken manually on-demand.  The `rke2 etcd-snapshot` CLI tool offers a set of subcommands that can be used to create, delete, and manage snapshots.
+RKE2 etcd snapshots are stored on the node file system, and may optionally be uploaded to an S3 compatible object store for disaster recovery scenarios. Snapshots can be both automated on a recurring schedule, and taken manually on-demand.  The `rke2 etcd-snapshot` CLI tool offers a set of subcommands that can be used to create, delete, and manage snapshots.
 
 | Subcommand | Description |
 | ----------- | --------------- |
@@ -100,7 +100,7 @@ RKE2 supports replicating etcd snapshots to and restoring etcd snapshots from S3
 | `--etcd-s3-region` | S3 region / bucket location (optional). defaults to us-east-1 |
 | `--etcd-s3-folder` | S3 folder |
 | `--etcd-s3-retention` | Number of S3 snapshots to retain in the configured region, bucket, and prefix (default: `5`) |
-| `--etcd-s3-proxy` | Proxy server to use when connecting to S3, overriding any proxy-releated environment variables |
+| `--etcd-s3-proxy` | Proxy server to use when connecting to S3, overriding any proxy-related environment variables |
 | `--etcd-s3-insecure` | Disables S3 over HTTPS |
 | `--etcd-s3-timeout` | S3 timeout (default: `5m0s`) |
 | `--etcd-s3-config-secret` | Name of secret in the kube-system namespace used to configure S3, if etcd-s3 is enabled and no other etcd-s3 options are set |
@@ -182,7 +182,7 @@ The S3 config Secret cannot be used when restoring a snapshot, as the apiserver 
 S3 configuration must be passed via the CLI when restoring a snapshot stored on S3.
 
 :::note
-Pass only the the `--etcd-s3` and `--etcd-s3-config-secret` flags to enable the Secret.  
+Pass only the `--etcd-s3` and `--etcd-s3-config-secret` flags to enable the Secret.  
 If any other S3 configuration flags are set, the Secret will be ignored.
 :::
 
