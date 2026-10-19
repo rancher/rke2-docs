@@ -11,7 +11,7 @@ This guide will provide step-by-step instructions as a general process for conve
 :::tip Prime customers 
 If you are a SUSE Rancher Prime customer and need assistance, please contact SUSE support for assistance.
 
-SUSE Rancher Prime LTS customers will receive Ingress NGINX [support through November 2027](https://www.suse.com/c/trade-the-ingress-nginx-retirement-for-up-to-2-years-of-rke2-support-stability/).
+SUSE Rancher Prime LTS customers will receive Ingress NGINX [support through December 2027](https://www.suse.com/c/trade-the-ingress-nginx-retirement-for-up-to-2-years-of-rke2-support-stability/).
 :::
 
 ## Prerequisites
