@@ -14,3 +14,10 @@ updates:
       remark-dependencies:
         patterns:
           - "remark-*"
+      other-dependencies:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@docusaurus/*"
+          - "react*"
+          - "remark-*"
