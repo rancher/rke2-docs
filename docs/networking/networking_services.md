@@ -214,7 +214,9 @@ This is done in 2 steps:
 <TabItem value="ingress-nginx">
 
 :::warning ingress-nginx EOL
-[ingress-nginx becomes EOL](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/) in March 2026. RKE2 still includes ingress-nginx in v1.36 but with a deprecated status. In v1.37 ingress-nginx is removed and unavailable for new clusters. No new images with fixes should be expected after March 2026. Please switch to Traefik or become a [Rancher Prime user](https://www.suse.com/products/rancher/) for an extended support period. 
+[ingress-nginx went EOL](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/) in March 2026. No new images or fixes are expected. Please switch to Traefik using [our migration guide](../reference/ingress_migration.md) or become a [Rancher Prime user](https://www.suse.com/products/rancher/) for an extended support period. 
+
+In v1.36, RKE2 still includes ingress-nginx but with a deprecated status. In v1.37, ingress-nginx is removed and unavailable for new clusters; existing clusters may operate in "dual-ingress" mode with both [ingress-nginx and Traefik](../reference/ingress_migration.md#2-update-rke2-configuration) or switch entirely to Traefik. 
 :::
 
 [ingress-nginx](https://github.com/kubernetes/ingress-nginx) is an Ingress controller powered by NGINX that uses a ConfigMap to store the NGINX configuration.
