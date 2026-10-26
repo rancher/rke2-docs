@@ -128,7 +128,7 @@ This data was retrieved under specific test conditions. It will vary depending u
 
 ==== Disks
 
-RKE2 performance depends on the performance of the database, and since RKE2 runs etcd embeddedly and it stores the data dir on disk, we recommend using an SSD when possible to ensure optimal performance.
+RKE2 performance depends on the performance of the database, and since RKE2 runs an embedded etcd and it stores the data dir on disk, we recommend using an SSD when possible to ensure optimal performance.
 
 == Kernel Parameters
 

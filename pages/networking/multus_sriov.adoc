@@ -47,7 +47,7 @@ spec:
 
 Any CNI Plugin can be used as secondary CNI Plugin for Multus to provide additional network interfaces attached to a pod. However, it is most common to use the CNI Plugins maintained by the Kubernetes ContainerNetworking team (bridge, host-device, macvlan, etc) as secondary CNI Plugins for Multus. The Kubernetes ContainerNetworking team plugins are automatically deployed when installing Multus. For more information about these plugins, refer to the https://www.cni.dev/plugins/current[ContainerNetworking Plugins] documentation.
 
-To use any of these plugins, a proper NetworkAttachmentDefinition object will need to be created to define the configuration of the secondary network. The definition is then referenced by pod annotations, which Multus will use to provide extra interfaces to that pod. An example using the `macvlan` CNI Pllugin with Multus is available https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/quickstart.md#storing-a-configuration-as-a-custom-resource[in the multus-cni repo].
+To use any of these plugins, a proper NetworkAttachmentDefinition object will need to be created to define the configuration of the secondary network. The definition is then referenced by pod annotations, which Multus will use to provide extra interfaces to that pod. An example using the `macvlan` CNI plugin with Multus is available https://github.com/k8snetworkplumbingwg/multus-cni/blob/master/docs/quickstart.md#storing-a-configuration-as-a-custom-resource[in the multus-cni repo].
 
 == Multus IPAM plugin options
 

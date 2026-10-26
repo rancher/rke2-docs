@@ -80,7 +80,7 @@ The `name` field should follow the Helm chart naming conventions, in addition to
 
 | spec.repoCAConfigMap
 |
-| Reference to a ConfigMap containing CA Certificates to be be trusted by Helm. Can be used along with or instead of `repoCA`
+| Reference to a ConfigMap containing CA Certificates to be trusted by Helm. Can be used along with or instead of `repoCA`
 | `--ca-file`
 
 | spec.plainHTTP
