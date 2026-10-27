@@ -58,43 +58,6 @@ The following three commands should return a correct output if the kernel driver
 Once the OS is ready and RKE2 is running, install the GPU Operator with the following yaml manifest:
 
 <Tabs groupId="GPUoperator" queryString>
-<TabItem value="v25.3.x">
-
-```yaml
-apiVersion: helm.cattle.io/v1
-kind: HelmChart
-metadata:
-  name: gpu-operator
-  namespace: kube-system
-spec:
-  repo: https://helm.ngc.nvidia.com/nvidia
-  chart: gpu-operator
-  version: v25.3.4
-  targetNamespace: gpu-operator
-  createNamespace: true
-  valuesContent: |-
-    toolkit:
-      env:
-      - name: CONTAINERD_SOCKET
-        value: /run/k3s/containerd/containerd.sock
-      - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED
-        value: "false"
-      - name: ACCEPT_NVIDIA_VISIBLE_DEVICES_AS_VOLUME_MOUNTS
-        value: "true"
-    devicePlugin:
-      env:
-      - name: DEVICE_LIST_STRATEGY
-        value: volume-mounts
-```
-:::info
-The envvars `ACCEPT_NVIDIA_VISIBLE_DEVICES_ENVVAR_WHEN_UNPRIVILEGED`, `ACCEPT_NVIDIA_VISIBLE_DEVICES_AS_VOLUME_MOUNTS` and `DEVICE_LIST_STRATEGY` are required to properly isolate GPU resources as explained in this nvidia [doc](https://docs.google.com/document/d/1zy0key-EL6JH50MZgwg96RPYxxXXnVUdxLZwGiyqLd8/edit?tab=t.0)
-:::
-
-:::warning
-The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
-:::
-
-</TabItem>
 <TabItem value="v25.10.x">
 
 ```yaml
@@ -124,9 +87,13 @@ NVIDIA GPU Operator v25.10.x uses [Container Device Interface (CDI) specificatio
 The NVIDIA operator restarts containerd with a hangup call which restarts RKE2
 :::
 
+:::danger End of Support
+Per NVIDIA's [GPU Operator life cycle policy](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#nvidia-gpu-operator-life-cycle), v25.10.x (and all older major versions) is now **End of Support** and no longer receives patch, bug fix, or CVE updates. Please upgrade to a currently supported major version.
+:::
+
 </TabItem>
 
-<TabItem value="v26.3.x" default>
+<TabItem value="v26.3.x">
 
 There are two installation options available.
 
@@ -141,7 +108,7 @@ metadata:
 spec:
   repo: https://helm.ngc.nvidia.com/nvidia
   chart: gpu-operator
-  version: v26.3.2
+  version: v26.3.3
   targetNamespace: gpu-operator
   createNamespace: true
   valuesContent: |-
@@ -162,7 +129,7 @@ metadata:
 spec:
   repo: https://helm.ngc.nvidia.com/nvidia
   chart: gpu-operator
-  version: v26.3.2
+  version: v26.3.3
   targetNamespace: gpu-operator
   createNamespace: true
   valuesContent: |-
@@ -175,17 +142,19 @@ spec:
       usePrecompiled: true
       version: 595 # This depends on the nvidia driver that works with your GPU architecture
 ```
-</TabItem>
 
-<TabItem value="v26.3.x with NRI">
-
-[Node Resource Interface (NRI) specification](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/cdi.html#about-the-node-resource-interface-nri-plugin) is a pluggable extension mechanism built into container runtimes like containerd and CRI-O that allows custom plugins to intercept container lifecycle events on a node. It is considered the future integration mechanism for GPUs.
-
-:::warning
-NVIDIA considers NRI as experimental
+:::warning Deprecated
+Per NVIDIA's [GPU Operator life cycle policy](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#nvidia-gpu-operator-life-cycle), v26.3.x is now **Deprecated**: it still receives critical bug fix and CVE patch updates, but no new features. We recommend moving to v26.7.x below.
 :::
 
-If you want to try it out, please use the following manifest:
+</TabItem>
+
+<TabItem value="v26.7.x" default>
+
+There are two installation options available.
+
+If drivers and libraries are pre-installed or you are using a [supported operating system by nvidia](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/platform-support.html#supported-operating-systems-and-kubernetes-platforms), please use the following manifest
+
 ```yaml
 apiVersion: helm.cattle.io/v1
 kind: HelmChart
@@ -195,10 +164,173 @@ metadata:
 spec:
   repo: https://helm.ngc.nvidia.com/nvidia
   chart: gpu-operator
-  version: v26.3.1
+  version: v26.7.2
   targetNamespace: gpu-operator
   createNamespace: true
   valuesContent: |-
+    toolkit:
+      env:
+      - name: CONTAINERD_SOCKET
+        value: /run/k3s/containerd/containerd.sock
+```
+
+If your operating system vendor supplies a compatible driver image, you can use the `driver` value field to point to it. For example, in SLES 16.0, you can use the following manifest:
+
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.7.2
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    toolkit:
+      env:
+      - name: CONTAINERD_SOCKET
+        value: /run/k3s/containerd/containerd.sock
+    driver:
+      repository: registry.suse.com/third-party/nvidia
+      usePrecompiled: true
+      version: 595 # This depends on the nvidia driver that works with your GPU architecture
+```
+
+:::info Minimum containerd version
+Starting with v26.7.0, the GPU Operator requires containerd 2.0 or later.
+:::
+
+:::tip Dynamic Resource Allocation (DRA)
+v26.7.x also supports installing with a `GPUCluster` custom resource instead of `ClusterPolicy`, enabling GPU allocation via native Kubernetes DRA. See the "DRA (Experimental)" tab.
+:::
+
+</TabItem>
+
+<TabItem value="DRA (Experimental)">
+
+v26.7.x introduces a `GPUCluster` custom resource as an alternative to `ClusterPolicy`. It deploys the DRA driver for NVIDIA GPUs and creates the `gpu.nvidia.com`, `mig.nvidia.com`, and `vfio.gpu.nvidia.com` `DeviceClass`es, enabling GPU allocation via native Kubernetes [Dynamic Resource Allocation](https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/) (`ResourceClaim`/`ResourceClaimTemplate`) instead of the classic device-plugin extended-resource model (`nvidia.com/gpu`).
+
+:::warning
+A cluster can run either `ClusterPolicy` or `GPUCluster`, not both. Per NVIDIA, in-place migration from an existing `ClusterPolicy` install to `GPUCluster` is not supported — if a `ClusterPolicy` resource already exists, use a new cluster for the `GPUCluster` workflow.
+:::
+
+:::info Minimum requirements
+Kubernetes v1.34+ (for the `resource.k8s.io` `DeviceClass` API), NVIDIA driver 580 or later, and a container runtime with CDI support enabled.
+:::
+
+```yaml
+apiVersion: helm.cattle.io/v1
+kind: HelmChart
+metadata:
+  name: gpu-operator
+  namespace: kube-system
+spec:
+  repo: https://helm.ngc.nvidia.com/nvidia
+  chart: gpu-operator
+  version: v26.7.2
+  targetNamespace: gpu-operator
+  createNamespace: true
+  valuesContent: |-
+    toolkit:
+      env:
+      - name: CONTAINERD_SOCKET
+        value: /run/k3s/containerd/containerd.sock
+    clusterPolicy:
+      deployCR: false
+    gpuCluster:
+      deployCR: true
+    driver:
+      nvidiaDriverCRD:
+        enabled: true
+      repository: registry.suse.com/third-party/nvidia
+      usePrecompiled: true
+      version: 595 # This depends on the nvidia driver that works with your GPU architecture
+```
+
+After a few minutes, verify the `GPUCluster` reconciled successfully:
+
+```
+kubectl get gpucluster gpu-cluster
+```
+
+Expected output:
+```
+NAME          STATUS   AGE
+gpu-cluster   ready    8m
+```
+
+Confirm the `DeviceClass`es were created:
+
+```
+kubectl get deviceclass
+```
+
+Expected output:
+```
+NAME                                        AGE
+compute-domain-daemon.nvidia.com            7m
+compute-domain-default-channel.nvidia.com   7m
+gpu.nvidia.com                              7m
+mig.nvidia.com                              7m
+vfio.gpu.nvidia.com                         7m
+```
+
+Run a pod requesting a GPU via a `ResourceClaimTemplate` instead of the classic `nvidia.com/gpu` extended resource:
+
+```yaml
+apiVersion: resource.k8s.io/v1
+kind: ResourceClaimTemplate
+metadata:
+  name: single-gpu
+spec:
+  spec:
+    devices:
+      requests:
+      - name: gpu
+        exactly:
+          deviceClassName: gpu.nvidia.com
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nbody-gpu-benchmark-dra
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: cuda-container
+    image: nvcr.io/nvidia/k8s/cuda-sample:nbody
+    args: ["nbody", "-gpu", "-benchmark"]
+    resources:
+      claims:
+      - name: gpu
+  resourceClaims:
+  - name: gpu
+    resourceClaimTemplateName: single-gpu
+```
+
+Check that the `ResourceClaim` was allocated and the pod ran successfully:
+
+```
+kubectl get resourceclaim
+kubectl logs nbody-gpu-benchmark-dra
+```
+
+</TabItem>
+
+<TabItem value="NRI (Experimental)">
+
+[Node Resource Interface (NRI) specification](https://docs.nvidia.com/datacenter/cloud-native/gpu-operator/latest/cdi.html#about-the-node-resource-interface-nri-plugin) is a pluggable extension mechanism built into container runtimes like containerd and CRI-O that allows custom plugins to intercept container lifecycle events on a node. It is considered the future integration mechanism for GPUs.
+
+:::warning
+NVIDIA considers NRI as experimental
+:::
+
+NRI is not tied to a specific GPU Operator release — it's enabled by adding the following to the `valuesContent` of whichever version's manifest you're using (`v26.3.x` or `v26.7.x` above):
+
+```yaml
     cdi:
       nriPluginEnabled: true
 ```
@@ -209,6 +341,10 @@ NRI requires containerd 2.1. Containerd 2.1 is available as of September 2025 re
 
 </TabItem>
 </Tabs>
+
+:::note
+The checks below apply to the `ClusterPolicy`-based (device-plugin) tabs above. If you installed with `GPUCluster`/DRA instead, see the verification steps in that tab instead — allocatable GPUs aren't exposed as the `nvidia.com/gpu` extended resource in DRA mode.
+:::
 
 After a few minutes, you can make the following checks to verify that everything worked as expected:
 
@@ -243,7 +379,6 @@ After a few minutes, you can make the following checks to verify that everything
       namespace: default
     spec:
       restartPolicy: OnFailure
-      # runtimeClassName: nvidia <== Only needed for v25.3.x
       containers:
       - name: cuda-container
         image: nvcr.io/nvidia/k8s/cuda-sample:nbody
@@ -252,22 +387,5 @@ After a few minutes, you can make the following checks to verify that everything
           limits:
             nvidia.com/gpu: 1
     ```
-
-RKE2 will now use `PATH` to find alternative container runtimes, in addition to checking the default paths used by the container runtime packages. In order to use this feature, you must modify the RKE2 service's PATH environment variable to add the directories containing the container runtime binaries.
-
-It's recommended that you modify one of this two environment files:
-
-- `/etc/default/rke2-server` # or rke2-agent
-- `/etc/sysconfig/rke2-server` # or rke2-agent
-
-This example will add the `PATH` in `/etc/default/rke2-server`:
-
-```bash
-echo PATH=$PATH >> /etc/default/rke2-server
-```
-
-:::warning
-`PATH` changes should be done with care to avoid placing untrusted binaries in the path of services that run as root.
-:::
 
 
