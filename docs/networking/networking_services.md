@@ -337,6 +337,12 @@ To run a cloud provider's own CCM instead (AWS, Azure, GCP, OpenStack, and so on
 2. Deploy the external CCM before nodes are expected to become fully schedulable. Prefer an RKE2 [`HelmChart`](../add-ons/helm.md) with `spec.bootstrap: true` so the chart is applied early enough in cluster bootstrap (the same pattern used for other bootstrap-critical components).
 3. Configure the CCM for your cloud according to the provider's documentation. Node addresses and provider IDs then come from the cloud instance metadata APIs rather than the RKE2 flag values.
 
+:::info Version Gate
+On v1.36 and v1.37 releases prior to November 2026 (v1.36.0+rke2r1 to v1.36.5+rke2r1, and v1.37.0+rke2r1 to v1.37.1+rke2r1), you must set `disable-cloud-controller: true` to disable the embedded CCM.
+
+Starting with the November 2026 releases (v1.36.6+rke2r1 and v1.37.2+rke2r1), setting `cloud-provider-name: external` on a server is enough: the embedded CCM is disabled by default.
+:::
+
 :::note
 If you disable the built-in CCM without deploying and correctly configuring an external substitute, nodes can remain tainted with `node.cloudprovider.kubernetes.io/uninitialized` and stay unschedulable. Do not set kubelet `cloud-provider=external` unless an external CCM is actually running and able to clear that taint.
 :::
