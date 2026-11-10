@@ -21,3 +21,11 @@ updates:
           - "@docusaurus/*"
           - "react*"
           - "remark-*"
+      other-security-dependencies:
+        applies-to: security-updates
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@docusaurus/*"
+          - "react*"
+          - "remark-*"
