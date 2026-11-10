@@ -23,6 +23,7 @@ For an exhaustive and up-to-date list of channels, you can visit the [rke2 chann
 
 :::warning
 When attempting to upgrade to a new version of RKE2, the [Kubernetes version skew policy](https://kubernetes.io/docs/setup/release/version-skew-policy/) applies. Ensure that your plan does not skip intermediate minor versions when upgrading. Nothing in the upgrade process will protect against unsupported changes to the Kubernetes version.
+It is also advised that you have a 24-48 hour 'bake-in' period after upgrading to a version, to allow the api object updates, caches, and other components to settle before running further upgrades to a component. 
 :::
 
 
