@@ -323,10 +323,6 @@ spec:
 Some cloud providers, such as Linode, will create machines with "localhost" as the hostname and others may not have a hostname set at all. This can cause problems with domain name resolution. You can run RKE2 with the `node-name` parameter and this will pass the node name to resolve this issue.
 
 ## Nftables support
-:::warning Experimental
-nftables support in rke2 is considered experimental.
-:::
-
 :::info Version Gate
 nftables support is available as of the July 2026 releases v1.36.3+rke2r1, v1.35.7+rke2r1, v1.34.10+rke2r1.
 :::
