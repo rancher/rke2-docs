@@ -52,7 +52,8 @@ The Windows Server Containers feature needs to be enabled for the RKE2 Windows a
 
 The RKE2 Windows Node (Worker) agent has been tested and validated on the following operating systems, and their subsequent non-major releases:
 
-* Windows Server 2022 LTSC (amd64) (OS Build 20348.169)
+* Windows Server 2022 LTSC (amd64)
+* Windows Server 2025 LTSC (amd64)
 
 Open a new Powershell window with Administrator privileges
 ```powershell
