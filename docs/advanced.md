@@ -109,9 +109,14 @@ CONTAINERD_NO_PROXY=127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16
 
 ## Node Labels and Taints
 
-RKE2 agents can be configured with the options `node-label` and `node-taint` which adds a label and taint to the kubelet. The two options only add labels and/or taints at registration time, and can only be added once and not removed after that through rke2 commands.
+RKE2 nodes can be configured with the options `node-label` and `node-taint`, which add labels and taints to the node. The two options behave differently once the node has registered:
 
-If you want to change node labels and taints after node registration you should use `kubectl`. Refer to the official Kubernetes documentation for details on how to add [taints](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/) and [node labels](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/#add-a-label-to-a-node).
+- `node-taint` is only applied when the node registers with the cluster. Adding, changing or removing a taint in the RKE2 configuration has no effect on a node that is already registered.
+- `node-label` is applied when the node registers, and applied again every time RKE2 starts. Labels are only added or updated, never removed:
+  - A label removed from the RKE2 configuration is not removed from the node.
+  - A label that is still in the RKE2 configuration is restored with its configured value the next time RKE2 starts, even if it was changed or removed with `kubectl` in the meantime.
+
+If you want to change node labels and taints after node registration you should use `kubectl`. When you remove or change a label with `kubectl`, also remove or change it in the RKE2 configuration, otherwise it is set back on the next restart. Refer to the official Kubernetes documentation for details on how to add [taints](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/) and [node labels](https://kubernetes.io/docs/tasks/configure-pod-container/assign-pods-nodes/#add-a-label-to-a-node).
 
 ## How Agent Node Registration Works
 
