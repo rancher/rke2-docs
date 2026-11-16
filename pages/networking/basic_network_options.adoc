@@ -368,12 +368,6 @@ Some cloud providers, such as Linode, will create machines with "localhost" as t
 
 == Nftables support
 
-[CAUTION]
-.Experimental
-====
-,nftables support in rke2 is considered experimental.
-====
-
 [IMPORTANT]
 .Version Gate
 ====
