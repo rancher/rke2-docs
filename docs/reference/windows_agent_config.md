@@ -6,6 +6,20 @@ This is a reference to all parameters that can be used to configure the Windows 
 
 **Windows Support requires choosing Calico or Flannel as the CNI for the RKE2 cluster**
 
+### Configuration value types
+
+Parameters can be set via CLI flags, the [configuration file](../install/configuration.md#configuration-file), or environment variables (when shown in brackets, for example `[%RKE2_DEBUG%]`).
+
+**Boolean options** appear in CLI help without a trailing `value` (for example `--debug`). Acceptable values:
+
+| Method | Acceptable values | Example |
+| --- | --- | --- |
+| Config file | `true` or `false` | `debug: true` |
+| CLI | Flag presence enables the option; optional explicit value | `--debug`, `--debug=true`, or `--debug=false` |
+| Environment variable | Boolean strings accepted by Go's `strconv.ParseBool`: `1`, `t`, `T`, `TRUE`, `true`, `True`, `0`, `f`, `F`, `FALSE`, `false`, `False` | `RKE2_DEBUG=true` |
+
+Options that take a free-form string show `value` after the flag name in the help text below (for example `--token value`).
+
 ## Windows RKE2 Agent CLI Help
 
 ```console
