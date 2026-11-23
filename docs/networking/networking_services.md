@@ -282,7 +282,53 @@ To disable the ingress controller, start each server with the `ingress-controlle
 
 Gateway API is a family of Kubernetes resources that provide dynamic infrastructure provisioning and advanced traffic routing. While the traditional Ingress API is still supported (and not planned to be deprecated), the Gateway API provides a more expressive, role-oriented, and extensible way to manage service exposure.
 
-In RKE2, to leverage Gateway API you must use Traefik. Please use the following HelmChartConfig to enable GatewayAPI:
+The Gateway API CRDs define the API resources; a Gateway API implementation is also required to use them.
+
+<Tabs groupId="GatewayAPI">
+<TabItem value="RKE2 v1.37+" default>
+
+The stable Gateway API CRDs are installed by the standalone `rke2-gateway-api-crd` chart, independently of the ingress controller.
+
+To disable the bundled CRDs, configure every server with the following in `/etc/rancher/rke2/config.yaml`:
+
+```yaml
+disable:
+  - rke2-gateway-api-crd
+```
+
+Disabling a packaged component uninstalls its chart. Removing a CRD also deletes its custom resources, so plan for CRD ownership and existing Gateway API resources before disabling the chart.
+
+To additionally install the experimental CRDs, create this HelmChartConfig:
+
+```yaml
+# /var/lib/rancher/rke2/server/manifests/rke2-gateway-api-crd-config.yaml
+---
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: rke2-gateway-api-crd
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    experimental:
+      enabled: true
+```
+
+</TabItem>
+<TabItem value="RKE2 v1.36 and earlier">
+
+The Traefik CRD chart installs the stable Gateway API CRDs when Traefik is deployed. The transition to the standalone chart on upgrade to v1.37 is designed to preserve and transfer ownership of existing CRDs. For details, see the [Architectural Decision Record](https://github.com/rancher/rke2/blob/master/docs/adrs/011-bundle-gatewayAPI.md#standalone-gateway-api-crd-management).
+
+:::warning Gateway API resources
+Prior to the April 2026 releases (v1.33.11+rke2r1, v1.34.7+rke2r1 and v1.35.4+rke2r1), Gateway API CRDs are removed if traefik is disabled after previously having been enabled. When using an affected release, avoid disabling traefik or uninstalling the traefik-crds AddOn if your cluster contains Gateway API resources that you do not want removed.
+:::
+
+To use experimental Gateway API resources, install the experimental CRDs separately. For example, for Gateway API v1.4, install the [v1.4 experimental-install.yaml](https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml) from the official [Gateway API releases](https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.4.0).
+
+</TabItem>
+</Tabs>
+
+To use Traefik as the Gateway API implementation, enable its provider with the following HelmChartConfig:
 
 ```yaml
 # /var/lib/rancher/rke2/server/manifests/rke2-traefik-config.yaml
@@ -297,21 +343,14 @@ spec:
     providers:
       kubernetesGateway:
         enabled: true
-#       experimentalChannel: true (read warning below)
 ```
 * Traefik v3.7.x is compatible with [Gateway API v1.5](https://gateway-api.sigs.k8s.io/reference/1.5/spec/).
 * Traefik v3.6.x is compatible with [Gateway API v1.4](https://gateway-api.sigs.k8s.io/reference/1.4/spec/).
 
 
-:::warning Gateway API resources
-Prior to the April 2026 releases (v1.33.11+rke2r1, v1.34.7+rke2r1 and v1.35.4+rke2r1), Gateway API CRDs are removed if traefik is disabled after previously having been enabled. When using an affected release, avoid disabling traefik or uninstalling the traefik-crds AddOn if your cluster contains Gateway API resources that you do not want removed.
-:::
-
 :::warning
-If you need support for experimental Gateway API resources, you must install them separately. For example, for Gateway API v1.4, install the [v1.4 experimental-install.yaml](https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml) from the official [gateway-api releases](https://github.com/kubernetes-sigs/gateway-api/releases/tag/v1.4.0) and use the option `providers.kubernetesGateway.experimentalChannel=true` in the rke2-traefik chart values.
+To use experimental Gateway API resources with Traefik, also set `providers.kubernetesGateway.experimentalChannel=true` in the `rke2-traefik` HelmChartConfig.
 :::
-
-Starting with RKE2 v1.37, Gateway API CRDs are no longer bundled with Traefik; they are now part of a standalone chart. For more information on this change, see the [Architectural Decision Record](https://github.com/rancher/rke2/blob/master/docs/adrs/011-bundle-gatewayAPI.md#standalone-gateway-api-crd-management).
 
 ## Service Load Balancer
 
