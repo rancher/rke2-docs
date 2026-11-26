@@ -347,6 +347,9 @@ spec:
 * Traefik v3.7.x is compatible with [Gateway API v1.5](https://gateway-api.sigs.k8s.io/reference/1.5/spec/).
 * Traefik v3.6.x is compatible with [Gateway API v1.4](https://gateway-api.sigs.k8s.io/reference/1.4/spec/).
 
+:::note TCPRoute and UDPRoute
+Whilst RKE2 include the standard v1 TCPRoute and UDPRoute CRDs, these are not currently supported by Traefik. Support for TCPRoute will be introduced in Traefik v3.8, whilst support for UDPRoute is currently unscheduled upstream, per [Traefik GitHub Issue #12322](https://github.com/traefik/traefik/issues/12322).
+:::
 
 :::warning
 To use experimental Gateway API resources with Traefik, also set `providers.kubernetesGateway.experimentalChannel=true` in the `rke2-traefik` HelmChartConfig.
